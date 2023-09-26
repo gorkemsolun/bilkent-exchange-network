@@ -2,11 +2,11 @@
 
 ## TEAM MEMBERS
 
-[Cahit Ediz Civan - 22003206](https://github.com/Edizc) <br>
-[Efe Kaan Fidancı - 22102589](https://github.com/EfeKN) <br>
-[Emir Tuğlu - 22003165](https://github.com/emirtuglu) <br>
-[Görkem Solun - 22003214](https://github.com/gorkemsolun) <br>
-[Mete Enes Yılmaz - 22102849](https://github.com/metenes) <br>
+[Cahit Ediz Civan](https://github.com/Edizc) <br>
+[Efe Kaan Fidancı](https://github.com/EfeKN) <br>
+[Emir Tuğlu](https://github.com/emirtuglu) <br>
+[Görkem Solun](https://github.com/gorkemsolun) <br>
+[Mete Enes Yılmaz](https://github.com/metenes) <br>
 
 ## WHAT IS BEN?
 
