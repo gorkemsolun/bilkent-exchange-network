@@ -5,7 +5,7 @@
 [Cahit Ediz Civan](https://github.com/Edizc) <br>
 [Efe Kaan Fidancı](https://github.com/EfeKN) <br>
 [Emir Tuğlu](https://github.com/emirtuglu) <br>
-[Görkem Solun](https://github.com/gorkemsolun) <br>
+[Görkem Kadir Solun](https://github.com/gorkemsolun) <br>
 [Mete Enes Yılmaz](https://github.com/metenes) <br>
 
 ## WHAT IS BEN?
