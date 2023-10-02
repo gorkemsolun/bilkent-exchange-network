@@ -15,13 +15,18 @@ export default function HomeNavbar() {
           </Link>
         </li>
         <li className="home-navbar-li">
+          <Link href="/donate" className="home-navbar-link">
+            Donate
+          </Link>
+        </li>
+        <li className="home-navbar-li">
           <Link href="/borrow" className="home-navbar-link">
             Borrow
           </Link>
         </li>
         <li className="home-navbar-li">
-          <Link href="/donate" className="home-navbar-link">
-            Donate
+          <Link href="/section-exchange" className="home-navbar-link">
+          Section Exchange
           </Link>
         </li>
         <li className="home-navbar-li">
