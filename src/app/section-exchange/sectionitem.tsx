@@ -2,8 +2,8 @@ import Link from "next/link";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import bootstrap CSS
 import "../../styles/globals.css";
 
-interface SecondHandItemProps {
-    secondHandItems: {
+interface SectionItemProps {
+    sectionItems: {
       id: number;
       title: string;
       description: string;
@@ -13,12 +13,12 @@ interface SecondHandItemProps {
     }[];
   }
 
-export default function SecondHandItem({secondHandItems} : SecondHandItemProps) {
+export default function SecondHandItem({sectionItems} : SectionItemProps) {
     return (
     <>
         <div className="container" >
         <div className="row">
-            {secondHandItems.map((item) => (
+            {sectionItems.map((item) => (
             <div className="col-12 col-sm-8 col-md-6 col-lg-4 mb-4" key={item.id}>
                 <div className="card">
                 <div className="position-relative">
