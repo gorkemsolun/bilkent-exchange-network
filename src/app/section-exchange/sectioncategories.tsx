@@ -1,4 +1,4 @@
-export default function LostFoundCategories() {
+export default function SectionCategories() {
     let categories = [
       {
         name: "Category 1",
