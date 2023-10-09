@@ -1,30 +1,33 @@
 import SectionCategories from "./sectioncategories";
-import SectionItem from "./sectionitem"
-import "../../styles/globals.css";
+import SectionItem from "./sectionitem";
+import "../../../styles/globals.css";
 
 export default function SecondHand() {
-  const sectionItems = [{  // dummy data
-    id: 1,
-    title: "Cs319 section 1",
-    description: "Eray Tüzün",
-    category: "Cs319",
-    imgSrc: "cs319.png",
-    price: "33"
-  },
-  {
-    id: 2,
-    title: "Cs202",
-    description: "Uğur Doğrusöz",
-    category: "Cs202",
-    imgSrc: "cs319.png",
-    price: "222"
-  }];
+  const sectionItems = [
+    {
+      // dummy data
+      id: 1,
+      title: "Cs319 section 1",
+      description: "Eray Tüzün",
+      category: "Cs319",
+      imgSrc: "cs319.png",
+      price: "33",
+    },
+    {
+      id: 2,
+      title: "Cs202",
+      description: "Uğur Doğrusöz",
+      category: "Cs202",
+      imgSrc: "cs319.png",
+      price: "222",
+    },
+  ];
 
   return (
     <div className="flex flex-row grow">
       <SectionCategories></SectionCategories>
       <div className="w-full h-full">
-        <SectionItem sectionItems={sectionItems}/>
+        <SectionItem sectionItems={sectionItems} />
       </div>
     </div>
   );
