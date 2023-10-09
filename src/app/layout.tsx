@@ -17,11 +17,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-slate-100 contain`}>
-        <Header></Header>
-        <HomeNavbar></HomeNavbar>
-        {children}
-      </body>
+      <head />
+      <body>{children}</body>
     </html>
   );
 }

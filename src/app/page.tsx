@@ -1,8 +1,19 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div>
-      <img className="w-full h-full" src="cs319.png" alt="cs319"/>
+      <button
+        onClick={() => {
+          router.push("/home");
+        }}
+      >
+        Enter to BEN
+      </button>
     </div>
   );
 }
