@@ -4,7 +4,7 @@
 
 @layer components {
   .home-navbar-li {
-    @apply rounded-lg divide-x grid-cols-4 p-5 text-xl font-bold text-sky-200 object-fill;
+    @apply rounded-lg divide-x grid-cols-4 p-5 text-xl font-bold text-sky-100 object-fill;
   }
   .home-navbar-link {
     @apply object-fill w-full h-full p-5;
@@ -15,4 +15,14 @@
   .second-hand-subcategory {
     @apply text-base ml-4 font-medium p-1;
   }
+}
+
+
+.search-bar {
+  width: 50vw;
+}
+
+.filter-dropdown {
+  z-index: 1000;
+  width: 25vw;
 }

@@ -1,6 +1,7 @@
 import DonateCategories from "./categories";
 import DonateItem from "./donateitem";
 import "../../../styles/globals.css";
+import SearchBar from "./searchbar";
 
 export default function Donate() {
   const donateItems = [
@@ -11,7 +12,7 @@ export default function Donate() {
       description:
         "desssscriptttttttttionnnnnnnnn offfffffffffff trrrrrrragedyyyyyyyyyyy offfffff hammmmmmlettttttttttt@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
       category: "Book",
-      imgSrc: "cs319.png",
+      imgSrc: "/cs319.png",
       price: "500",
     },
     {
@@ -19,7 +20,7 @@ export default function Donate() {
       title: "gilgamesh",
       description: "desssscrip",
       category: "Book",
-      imgSrc: "cs319.png",
+      imgSrc: "/cs319.png",
       price: "100",
     },
   ];
@@ -28,6 +29,7 @@ export default function Donate() {
     <div className="flex flex-row grow">
       <DonateCategories></DonateCategories>
       <div className="w-full h-full">
+        <SearchBar/>
         <DonateItem donateItems={donateItems} />
       </div>
     </div>

@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export default function HomeNavbar() {
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-cyan-100">
-      <ul className="flex flex-row object-fill divide-x-5 ml-1">
+    <nav className="bg-gradient-to-r from-blue-500 to-cyan-300">
+      <ul className="flex flex-row object-fill divide-x-5 ml-1 justify-center">
         <li className="home-navbar-li">
           <Link href="/home/secondhand" className="home-navbar-link">
             Secondhand

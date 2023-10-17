@@ -1,6 +1,7 @@
 import LostFoundCategories from "./categories";
 import LostFoundItem from "./lostfounditem";
 import "../../../styles/globals.css";
+import SearchBar from "./searchbar";
 
 export default function LostFound() {
   const lostFoundItems = [
@@ -11,7 +12,7 @@ export default function LostFound() {
       description:
         "desssscriptttttttttionnnnnnnnn offfffffffffff trrrrrrragedyyyyyyyyyyy offfffff hammmmmmlettttttttttt@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
       category: "Book",
-      imgSrc: "cs319.png",
+      imgSrc: "/cs319.png",
       price: "500",
       isLost: true,
     },
@@ -20,7 +21,7 @@ export default function LostFound() {
       title: "gilgamesh",
       description: "desssscrip",
       category: "Book",
-      imgSrc: "cs319.png",
+      imgSrc: "/cs319.png",
       price: "100",
       isLost: false,
     },
@@ -30,6 +31,7 @@ export default function LostFound() {
     <div className="flex flex-row grow">
       <LostFoundCategories></LostFoundCategories>
       <div className="w-full h-full">
+        <SearchBar/>
         <LostFoundItem lostFoundItems={lostFoundItems} />
       </div>
     </div>
