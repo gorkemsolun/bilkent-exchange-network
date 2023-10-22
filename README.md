@@ -28,3 +28,6 @@ One of the interesting features of the app is including a forum in which people 
 
 ## CLASS DIAGRAM OF BEN
 ![Class Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_CLASS_DIAGRAM.jpg)
+
+## STATE MACHINE DIAGRAM OF BEN
+![State Machine Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_STATE_MACHINE_DIAGRAM.jpg)
