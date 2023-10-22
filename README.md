@@ -23,3 +23,5 @@ The app will serve as a centralized platform for all exchange-related activities
 - What makes this web app **interesting/cool**? <br>
 One of the interesting features of the app is including a forum in which people can discuss. Having a forum dedicated to Bilkent University members may address different kinds of issues apart from the ones directly supported by the app. This introduces versatility to the application, making it adaptable for various potential scenarios. For example, such a communication place can be useful for coordination and communication between volunteers to organize donations and help campaigns during emergency situations. 
 
+## USE CASE DIAGRAM OF BEN
+![Use Case Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/ben-use-case-diagram.jpg)
