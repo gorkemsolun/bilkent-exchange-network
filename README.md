@@ -31,3 +31,9 @@ One of the interesting features of the app is including a forum in which people 
 
 ## STATE MACHINE DIAGRAM OF BEN
 ![State Machine Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_STATE_MACHINE_DIAGRAM.jpg)
+
+## SEQUENCE DIAGRAM OF BEN
+![Sequence Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_SEQUENCE_DIAGRAM.jpg)
+
+## ACTIVITY DIAGRAM OF BEN
+![Activity Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_ACTIVITY_DIAGRAM.jpg)
