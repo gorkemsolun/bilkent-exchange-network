@@ -1,6 +1,6 @@
-import SecondHandCategories from "./secondhandcategories";
-import SecondHandItem from "./secondhanditem";
-import SearchBar from "./searchbar";
+import SecondHandCategories from "../../../components/categories";
+import SecondHandItem from "./secondhandItem";
+import SearchBar from "../../../components/searchbar";
 import "../../../styles/globals.css";
 
 export default function SecondHand() {

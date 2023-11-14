@@ -1,6 +1,6 @@
-import ForumItem from "./forumitem";
+import ForumItem from "./forumItem";
 import "../../../styles/globals.css";
-import SearchBar from "./searchbar";
+import SearchBar from "../../../components/searchbar";
 
 export default function Forum() {
   const ForumItems = [

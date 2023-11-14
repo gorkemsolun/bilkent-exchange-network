@@ -1,7 +1,6 @@
-import DonateCategories from "./categories";
-import DonateItem from "./donateitem";
+import DonateItem from "./donateItem";
 import "../../../styles/globals.css";
-import SearchBar from "./searchbar";
+import SearchBar from "../../../components/searchbar";
 
 export default function Donate() {
   const donateItems = [
@@ -27,7 +26,6 @@ export default function Donate() {
 
   return (
     <div className="flex flex-row grow">
-      <DonateCategories></DonateCategories>
       <div className="w-full h-full">
         <SearchBar/>
         <DonateItem donateItems={donateItems} />
