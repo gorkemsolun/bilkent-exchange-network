@@ -1,4 +1,4 @@
-import SecondHandCategories from "../../../components/categories";
+import Categories from "../../../components/categories";
 import SecondHandItem from "./secondhandItem";
 import SearchBar from "../../../components/searchbar";
 import "../../../styles/globals.css";
@@ -35,7 +35,7 @@ export default function SecondHand() {
 
   return (
     <div className="flex flex-row grow">
-      <SecondHandCategories></SecondHandCategories>
+      <Categories type="secondhand"></Categories>
       <div className="w-full h-full">
         <SearchBar/>
         <SecondHandItem secondHandItems={secondHandItems} />

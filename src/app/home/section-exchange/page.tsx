@@ -1,6 +1,7 @@
 import SectionItem from "./sectionItem";
 import "../../../styles/globals.css";
 import SearchBar from "../../../components/searchbar";
+import Categories from "../../../components/categories";
 
 export default function SecondHand() {
   const sectionItems = [
@@ -25,6 +26,7 @@ export default function SecondHand() {
 
   return (
     <div className="flex flex-row grow">
+      <Categories type="sectionExchange"></Categories>
       <div className="w-full h-full">
         <SearchBar/>
         <SectionItem sectionItems={sectionItems} />

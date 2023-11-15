@@ -24,9 +24,11 @@ export default function Forum() {
   ];
 
   return (
-    <div className="flex flex-row grow">
+    <div className="flex flex-row  grow">
       <div className="w-full h-full">
-        <SearchBar/>
+        <div className="flex justify-center">
+          <SearchBar />
+        </div>
         <ForumItem forumItems={ForumItems} />
       </div>
     </div>

@@ -76,7 +76,7 @@ export default function Categories(props: any) {
           </div>
         ))}
       </div>
-      { /**TODO: this should be rendered with  */
+      {(props.type === "secondhand" || props.type === "sectionExchange") && (
         <div className="mb-3 flex flex-column second-hand-category">
           <div className="mb-1">
             <label>Min Price</label>
@@ -84,7 +84,7 @@ export default function Categories(props: any) {
               type="number"
               value={minPrice}
               onChange={(e) => setMinPrice(e.target.value)}
-              className="border p-2 rounded-md w-55"
+              className="border p-2 rounded-md w-30"
             />
           </div>
 
@@ -94,11 +94,11 @@ export default function Categories(props: any) {
               type="number"
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
-              className="border p-2 rounded-md w-55"
+              className="border p-2 rounded-md w-30"
             />
           </div>
         </div>
-      }
+      )}
 
       <div className="mb-3 flex flex-column second-hand-category">
         <div className="mb-1">
@@ -107,7 +107,7 @@ export default function Categories(props: any) {
             type="date"
             value={minDate}
             onChange={(e) => setMinDate(e.target.value)}
-            className="border p-2 rounded-md w-55"
+            className="border p-2 rounded-md w-30"
           />
         </div>
         <div>
@@ -116,20 +116,20 @@ export default function Categories(props: any) {
             type="date"
             value={maxDate}
             onChange={(e) => setMaxDate(e.target.value)}
-            className="border p-2 rounded-md w-55"
+            className="border p-2 rounded-md w-30"
           />
         </div>
       </div>
-      <div className="flex flex-column">
+      <div className="flex flex-row">
         <button
           onClick={handleFilter}
-          className="bg-red-500 text-white px-3 py-2 rounded-md m-2"
+          className="bg-red-500 text-white p-2 rounded-md ml-2 w-20"
         >
           Cancel
         </button>
         <button
           onClick={handleFilter}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md m-2"
+          className="bg-blue-500 text-white p-2 rounded-md ml-2 w-20"
         >
           Filter
         </button>

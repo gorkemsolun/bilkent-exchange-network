@@ -1,5 +1,6 @@
 import LostFoundItem from "./lostAndFoundItem";
 import "../../../styles/globals.css";
+import Categories from "../../../components/categories";
 import SearchBar from "../../../components/searchbar";
 
 export default function LostFound() {
@@ -28,6 +29,7 @@ export default function LostFound() {
 
   return (
     <div className="flex flex-row grow">
+      <Categories type="lostAndFound"></Categories>
       <div className="w-full h-full">
         <SearchBar/>
         <LostFoundItem lostFoundItems={lostFoundItems} />
