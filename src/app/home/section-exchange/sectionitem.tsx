@@ -1,65 +1,77 @@
+"use client";
+
 import "bootstrap/dist/css/bootstrap.min.css"; // Import bootstrap CSS
 import "../../../styles/globals.css";
 
 interface SectionItemProps {
   sectionItems: {
     id: number;
-    title: string;
-    description: string;
-    category: string;
-    imgSrc: string;
-    price: string;
+    name: string;
+    offeredSection: string;
+    desiredSection: string;
+    date: string;
   }[];
 }
 
-export default function SecondHandItem({ sectionItems }: SectionItemProps) {
+function handleDMClick(id: number): void {
+  console.log("DM Box Clicked");
+}
+
+export default function SectionItem({ sectionItems }: SectionItemProps) {
   return (
-    <>
-      <div className="container">
-        <div className="row">
-          {sectionItems.map((item) => (
+    <div className="container" style={{ width: "100%" }}>
+      {sectionItems.map((item) => (
+        <div className="row mb-1 mr-20 ml-5" key={item.id}>
+          <div className="col-12">
             <div
-              className="col-12 col-sm-8 col-md-6 col-lg-4 mb-4"
-              key={item.id}
+              className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2"
+              style={{ backgroundColor: "white" }}
             >
-              <div className="card">
-                <div className="position-relative">
-                  <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
-                    {item.category}
-                  </span>
-                  <img className="card-img" src={item.imgSrc} alt="Vans" />
+              <div className="row align-items-start justify-content-start">
+                <div
+                  className="col-md text-center" // Adjusted column size
+                  style={{ borderRight: "1px solid black" }}
+                >
+                  <p className="card-text">{item.name}</p>
                 </div>
-                <div className="card-img-overlay d-flex justify-content-end">
-                  <a href="#" className="card-link text-danger like">
-                    <i className="fas fa-heart"></i>
-                  </a>
+                <div
+                  className="col-md text-center" // Adjusted column size
+                  style={{ borderRight: "1px solid black" }}
+                >
+                  <p className="card-text">{item.offeredSection}</p>
                 </div>
-                <div className="card-body">
-                  <h4 className="card-title">{item.title}</h4>
-                  <div
-                    className="description-container"
-                    style={{ height: "100px" }}
-                  >
-                    <p className="card-text">
-                      {item.description.length < 75
-                        ? item.description
-                        : item.description.slice(0, 75) + "..."}
-                    </p>
-                  </div>{" "}
-                  <div className="buy d-flex justify-content-between align-items-center">
-                    <div className="price text-success">
-                      <h5 className="mt-4">${item.price}</h5>
-                    </div>
-                    <a href="#" className="btn btn-danger mt-3">
-                      <i className="fas fa-shopping-cart"></i> Details
-                    </a>
+                <div
+                  className="col-md text-center" // Adjusted column size
+                  style={{ borderRight: "1px solid black" }}
+                >
+                  <p className="card-text">{item.desiredSection}</p>
+                </div>
+                <div
+                  className="col-md text-center" // Adjusted column size
+                  style={{ borderRight: "1px solid black" }}
+                >
+                  <div>
+                    {/* DM Box Image with hover title and click event */}
+                    <img
+                      className="img-fluid mx-auto d-block"
+                      style={{ maxWidth: "4vw", maxHeight: "4vh" }}
+                      src="/dmbox.png" // Replace with your image URL
+                      alt="DM Box"
+                      title="Send DM" // Tooltip on hover
+                      onClick={() => handleDMClick(item.id)} // Your click handler
+                    />
                   </div>
+                </div>
+                <div
+                  className="col-md text-center" // Adjusted column size
+                >
+                  <p className="card-text">{item.date}</p>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-    </>
+      ))}
+    </div>
   );
 }

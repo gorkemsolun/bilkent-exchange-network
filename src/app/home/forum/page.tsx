@@ -1,6 +1,7 @@
-import ForumItem from "./forumItem";
+import ForumItem from "./forumitem";
 import "../../../styles/globals.css";
 import SearchBar from "../../../components/searchbar";
+import CreatePostButton from "@/components/createpostbutton";
 
 export default function Forum() {
   const ForumItems = [
@@ -27,7 +28,7 @@ export default function Forum() {
     <div className="flex flex-row  grow">
       <div className="w-full h-full">
         <div className="flex justify-center">
-          <SearchBar />
+          <SearchBar /> <CreatePostButton />
         </div>
         <ForumItem forumItems={ForumItems} />
       </div>

@@ -1,26 +1,75 @@
-import SectionItem from "./sectionItem";
+import SectionItem from "./sectionitem";
+import TopRow from "./toprow";
 import "../../../styles/globals.css";
 import SearchBar from "../../../components/searchbar";
 import Categories from "../../../components/categories";
+import CreatePostButton from "../../../components/createpostbutton";
 
-export default function SecondHand() {
+export default function SectionExchange() {
+  // dummy data
   const sectionItems = [
     {
-      // dummy data
       id: 1,
-      title: "Cs319 section 1",
-      description: "Eray Tüzün",
-      category: "Cs319",
-      imgSrc: "/cs319.png",
-      price: "33",
+      name: "Emir Tuğlu",
+      offeredSection: "CS 224-2",
+      desiredSection: "CS 224-1",
+      date: "21.11.2023 11.17",
     },
     {
-      id: 2,
-      title: "Cs202",
-      description: "Uğur Doğrusöz",
-      category: "Cs202",
-      imgSrc: "/cs319.png",
-      price: "222",
+      id: 1,
+      name: "Görkem Kadir Solun",
+      offeredSection: "CS 224-2",
+      desiredSection: "CS 224-1",
+      date: "21.11.2023 11.17",
+    },
+    {
+      id: 1,
+      name: "Emir Tuğlu",
+      offeredSection: "CS 224-2",
+      desiredSection: "CS 224-1",
+      date: "21.11.2023 11.17",
+    },
+    {
+      id: 1,
+      name: "Emir Tuğlu",
+      offeredSection: "CS 224-2",
+      desiredSection: "CS 224-1",
+      date: "21.11.2023 11.17",
+    },
+    {
+      id: 1,
+      name: "Emir Tuğlu",
+      offeredSection: "CS 224-2",
+      desiredSection: "CS 224-1",
+      date: "21.11.2023 11.17",
+    },
+    {
+      id: 1,
+      name: "Emir Tuğlu",
+      offeredSection: "CS 224-2",
+      desiredSection: "CS 224-1",
+      date: "21.11.2023 11.17",
+    },
+    {
+      id: 1,
+      name: "Emir Tuğlu",
+      offeredSection: "CS 224-2",
+      desiredSection: "CS 224-1",
+      date: "21.11.2023 11.17",
+    },
+    {
+      id: 1,
+      name: "Emir Tuğlu",
+      offeredSection: "CS 224-2",
+      desiredSection: "CS 224-1",
+      date: "21.11.2023 11.17",
+    },
+    {
+      id: 1,
+      name: "Emir Tuğlu",
+      offeredSection: "CS 224-2",
+      desiredSection: "CS 224-1",
+      date: "21.11.2023 11.17",
     },
   ];
 
@@ -28,7 +77,8 @@ export default function SecondHand() {
     <div className="flex flex-row grow">
       <Categories type="sectionExchange"></Categories>
       <div className="w-full h-full">
-        <SearchBar/>
+        <SearchBar /> <CreatePostButton />
+        <TopRow />
         <SectionItem sectionItems={sectionItems} />
       </div>
     </div>
