@@ -3,6 +3,7 @@ import TopRow from "./toprow";
 import "../../../styles/globals.css";
 import SearchBar from "../../../components/searchbar";
 import Categories from "../../../components/categories";
+import CreatePostButton from "../../../components/createpostbutton";
 
 export default function SectionExchange() {
   // dummy data
@@ -76,7 +77,7 @@ export default function SectionExchange() {
     <div className="flex flex-row grow">
       <Categories type="sectionExchange"></Categories>
       <div className="w-full h-full">
-        <SearchBar />
+        <SearchBar /> <CreatePostButton />
         <TopRow />
         <SectionItem sectionItems={sectionItems} />
       </div>

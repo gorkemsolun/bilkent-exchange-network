@@ -2,6 +2,7 @@ import LostFoundItem from "./lostAndFoundItem";
 import "../../../styles/globals.css";
 import Categories from "../../../components/categories";
 import SearchBar from "../../../components/searchbar";
+import CreatePostButton from "@/components/createpostbutton";
 
 export default function LostFound() {
   const lostFoundItems = [
@@ -31,7 +32,8 @@ export default function LostFound() {
     <div className="flex flex-row grow">
       <Categories type="lostAndFound"></Categories>
       <div className="w-full h-full">
-        <SearchBar/>
+        <SearchBar />
+        <CreatePostButton />
         <LostFoundItem lostFoundItems={lostFoundItems} />
       </div>
     </div>
