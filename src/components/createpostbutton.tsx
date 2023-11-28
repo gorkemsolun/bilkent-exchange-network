@@ -30,7 +30,7 @@ export default function CreatePostButton(props: any) {
 
   return (
     <div>
-      <button style={buttonStyle} onClick={handleCreatePost}>
+      <button className="create-post-button" onClick={handleCreatePost}>
         Create Post
       </button>
       {isModalOpen && (
