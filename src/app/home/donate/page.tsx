@@ -30,7 +30,15 @@ export default function Donate() {
     <div className="flex flex-row grow">
       <Categories type="donate"></Categories>
       <div className="w-full h-full">
-        <SearchBar /> <CreatePostButton />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <SearchBar type="donate" />
+          <CreatePostButton type="donate" />
+        </div>
         <DonateItem donateItems={donateItems} />
       </div>
     </div>
