@@ -3,8 +3,8 @@
 import "bootstrap/dist/css/bootstrap.min.css"; // Import bootstrap CSS
 import "../../../styles/globals.css";
 
-interface ForumItemProps {
-  forumItems: {
+interface BorrowItemProps {
+  borrowItems: {
     id: number;
     title: string;
     description: string;
@@ -12,22 +12,22 @@ interface ForumItemProps {
   }[];
 }
 
-const handleForumItemClick = (itemId: number) => {
-  // Replace this with your desired functionality when a forum element is clicked
-  console.log(`Forum item with ID ${itemId} clicked!`);
+const handleBorrowItemClick = (itemId: number) => {
+  // Replace this with your desired functionality when a borrow element is clicked
+  console.log(`Borrow item with ID ${itemId} clicked!`);
 };
 
-export default function ForumItem({ forumItems }: ForumItemProps) {
+export default function ForumItem({ borrowItems }: BorrowItemProps) {
   return (
     <>
       <div className="container">
         <div className="row">
-          {forumItems.map((item) => (
+          {borrowItems.map((item) => (
             <div className="col-12 mb-4" key={item.id}>
               <div
                 className="col-12"
                 key={item.id}
-                onClick={() => handleForumItemClick(item.id)}
+                onClick={() => handleBorrowItemClick(item.id)}
                 style={{ cursor: "pointer" }}
               >
                 <div className="card" style={{ width: "100%" }}>

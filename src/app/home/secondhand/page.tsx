@@ -38,7 +38,7 @@ export default function SecondHand() {
     <div className="flex flex-row grow">
       <Categories type="secondhand"></Categories>
       <div className="w-full h-full">
-        <SearchBar /> <CreatePostButton />
+        <SearchBar type="secondhand" /> <CreatePostButton />
         <SecondHandItem secondHandItems={secondHandItems} />
       </div>
     </div>

@@ -1,17 +1,15 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "../styles/globals.css";
 
-const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [sortType, setSortType] = useState('');
+export default function SearchBar(props: any) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortType, setSortType] = useState("");
 
   const handleSearch = () => {
     // Perform search based on `searchTerm`
   };
-
-  
 
   return (
     <div className="inline-flex items-center bg-purple-300 rounded-full m-2 p-0.5">
@@ -20,7 +18,7 @@ const SearchBar = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         onKeyPress={(e) => {
-          if (e.key === 'Enter') {
+          if (e.key === "Enter") {
             handleSearch();
           }
         }}
@@ -31,12 +29,20 @@ const SearchBar = () => {
       {/* Sort Dropdown */}
       <div className="relative">
         <div className=" right-0 mt-2 p-2 border bg-white center m-2 rounded-full">
-          <select value={sortType} onChange={(e) => setSortType(e.target.value)}>
+          <select
+            value={sortType}
+            onChange={(e) => setSortType(e.target.value)}
+          >
             <option value="" disabled hidden>
               Sort By
             </option>
-            <option value="price">Price ↓</option>
-            <option value="date">Price ↑</option>
+
+            {props.type === "secondhand" && (
+              <>
+                <option value="price">Price ↓</option>
+                <option value="price">Price ↑</option>
+              </>
+            )}
             <option value="date">Date ↓</option>
             <option value="date">Date ↑</option>
           </select>
@@ -44,6 +50,4 @@ const SearchBar = () => {
       </div>
     </div>
   );
-};
-
-export default SearchBar;
+}
