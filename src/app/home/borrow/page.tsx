@@ -35,8 +35,15 @@ export default function Borrow() {
   return (
     <div className="flex flex-row  grow">
       <div className="w-full h-full">
-        <div className="flex justify-center">
-          <SearchBar /> <CreatePostButton />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <SearchBar type="borrow" />
+          <CreatePostButton type="borrow" />
         </div>
         <BorrowItem borrowItems={BorrowItems} />
       </div>

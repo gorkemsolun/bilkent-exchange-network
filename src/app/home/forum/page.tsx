@@ -54,8 +54,15 @@ export default function Forum() {
   return (
     <div className="flex flex-row  grow">
       <div className="w-full h-full">
-        <div className="flex justify-center">
-          <SearchBar /> <CreatePostButton />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <SearchBar type="forum" />
+          <CreatePostButton type="forum" />
         </div>
         <ForumItem forumItems={ForumItems} />
       </div>

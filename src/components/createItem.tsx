@@ -1,4 +1,7 @@
+"use client";
+
 import React, { useState } from "react";
+import "../styles/modal.css"; // Import the CSS file for styling
 
 interface Product {
   name: string;
@@ -6,7 +9,12 @@ interface Product {
   price: number;
 }
 
-export default function CreateItem() {
+interface CreateItemProps {
+  onClose: () => void;
+  type: string;
+}
+
+const CreateItem: React.FC<CreateItemProps> = ({ onClose, type }) => {
   const [product, setProduct] = useState<Product>({
     name: "",
     description: "",
@@ -17,6 +25,7 @@ export default function CreateItem() {
     event.preventDefault();
     console.log(product);
     // TODO: Send product data to server
+    onClose(); // Close the modal after submission
   };
 
   const handleChange = (
@@ -30,37 +39,66 @@ export default function CreateItem() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input
-          type="text"
-          name="name"
-          value={product.name}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      <label>
-        Description:
-        <textarea
-          name="description"
-          value={product.description}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      <label>
-        Price:
-        <input
-          type="number"
-          name="price"
-          value={product.price}
-          onChange={handleChange}
-        />
-      </label>
-      <br />
-      <button type="submit">Create Product</button>
-    </form>
+    <div className="modal-overlay">
+      <div className="modal-header"></div>
+      <form onSubmit={handleSubmit} className="create-item-form">
+        <span className="close" onClick={onClose}>
+          &times;
+        </span>
+        <div className="modal-form-group pt-4">
+          <label htmlFor="name">Title:</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            value={product.name}
+            onChange={handleChange}
+            className="form-control"
+          />
+        </div>
+        <div className="modal-form-group">
+          <label htmlFor="description">Description:</label>
+          <textarea
+            id="description"
+            name="description"
+            value={product.description}
+            onChange={handleChange}
+            className="form-control"
+          />
+        </div>
+        {type == "secondhand" && (
+          <div className="modal-form-group">
+            <label htmlFor="price">Price:</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              value={product.price}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+        )}
+        {type != "forum" && type != "borrow" && (
+          <div className="modal-form-group">
+            <label htmlFor="image">Image:</label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="jpg, jpeg, png"
+              className="form-control"
+            />
+          </div>
+        )}
+        <div className="modal-form-group">
+          <button type="submit" className="btn btn-primary">
+            Create Post
+          </button>
+        </div>
+      </form>
+    </div>
   );
-}
+};
+
+export default CreateItem;

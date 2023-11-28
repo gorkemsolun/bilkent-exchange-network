@@ -17,7 +17,6 @@
   }
 }
 
-
 .search-bar {
   width: 50vw;
 }
@@ -30,4 +29,23 @@
 .card:hover {
   text-decoration: underline;
   cursor: pointer; /* Optional: Change cursor on hover */
+}
+
+.create-post-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 8vh;
+  align-self: center;
+}
+
+.create-post-button:hover {
+  background-color: #18741d; /* Darker green color */
+  transition: background-color 0.3s ease; /* Add transition for smoother effect */
 }

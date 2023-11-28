@@ -3,6 +3,7 @@ import SecondHandItem from "./secondhanditem";
 import SearchBar from "../../../components/searchbar";
 import "../../../styles/globals.css";
 import CreatePostButton from "@/components/createpostbutton";
+import CreateItem from "@/components/createItem";
 
 export default function SecondHand() {
   const secondHandItems = [
@@ -38,7 +39,15 @@ export default function SecondHand() {
     <div className="flex flex-row grow">
       <Categories type="secondhand"></Categories>
       <div className="w-full h-full">
-        <SearchBar type="secondhand" /> <CreatePostButton />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <SearchBar type="secondhand" />
+          <CreatePostButton type="secondhand" />
+        </div>
         <SecondHandItem secondHandItems={secondHandItems} />
       </div>
     </div>

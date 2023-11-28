@@ -32,8 +32,15 @@ export default function LostFound() {
     <div className="flex flex-row grow">
       <Categories type="lostAndFound"></Categories>
       <div className="w-full h-full">
-        <SearchBar />
-        <CreatePostButton />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <SearchBar type="lostAndFound" />
+          <CreatePostButton type="lostAndFound" />
+        </div>
         <LostFoundItem lostFoundItems={lostFoundItems} />
       </div>
     </div>

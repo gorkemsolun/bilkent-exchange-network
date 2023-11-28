@@ -1,11 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import CreateItem from "./createItem";
 
-const CreatePostButton = () => {
+export default function CreatePostButton(props: any) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleCreatePost = () => {
-    // Replace this with your desired functionality
-    console.log("Create Post button clicked!");
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   const buttonStyle = {
@@ -23,10 +29,13 @@ const CreatePostButton = () => {
   };
 
   return (
-    <button style={buttonStyle} onClick={handleCreatePost}>
-      Create Post
-    </button>
+    <div>
+      <button className="create-post-button" onClick={handleCreatePost}>
+        Create Post
+      </button>
+      {isModalOpen && (
+        <CreateItem onClose={handleCloseModal} type={props.type} />
+      )}
+    </div>
   );
-};
-
-export default CreatePostButton;
+}
