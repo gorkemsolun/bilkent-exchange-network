@@ -26,3 +26,8 @@
   z-index: 1000;
   width: 25vw;
 }
+
+.card:hover {
+  text-decoration: underline;
+  cursor: pointer; /* Optional: Change cursor on hover */
+}
