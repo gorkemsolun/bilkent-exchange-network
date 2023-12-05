@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\bilkent-exchange-network.Server.props" />
+</Project>
