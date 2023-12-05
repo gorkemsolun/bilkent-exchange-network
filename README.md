@@ -8,6 +8,14 @@
 [Görkem Kadir Solun](https://github.com/gorkemsolun) <br>
 [Mete Enes Yılmaz](https://github.com/metenes) <br>
 
+## NOTES FOR TEAM MEMBERS
+
+### HOW TO START THE PROJECT:
+In the root folder type ```npm start```. This should be sufficient but you ever encounter problems let me know. I copied the last stable code in case we encounter major problems. It is available in the last-stable-code directory. <br>
+### ADDITIONAL IMPORTANT NOTES:
+If you change the ClientApp name, the project will crash. If you want to change it, let me know. <br>
+There are a lot of redundant C# code currently in the project. They will be cleared out eventually. <br>
+
 ## WHAT IS BEN?
 
 - What is the **motivation**? <br>
