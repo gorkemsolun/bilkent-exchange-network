@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .home-navbar-li {
+    @apply rounded-lg divide-x grid-cols-4 p-5 text-xl font-bold text-sky-100 object-fill;
+  }
+  .home-navbar-link {
+    @apply object-fill w-full h-full p-5;
+  }
+  .second-hand-category {
+    @apply text-base ml-2 font-semibold p-1;
+  }
+  .second-hand-subcategory {
+    @apply text-base ml-4 font-medium p-1;
+  }
+}
+
+.search-bar {
+  width: 50vw;
+}
+
+.filter-dropdown {
+  z-index: 1000;
+  width: 25vw;
+}
+
+.card:hover {
+  text-decoration: underline;
+  cursor: pointer; /* Optional: Change cursor on hover */
+}
+
+.create-post-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: 8vh;
+  align-self: center;
+}
+
+.create-post-button:hover {
+  background-color: #18741d; /* Darker green color */
+  transition: background-color 0.3s ease; /* Add transition for smoother effect */
+}
