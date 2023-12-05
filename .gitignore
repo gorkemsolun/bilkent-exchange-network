@@ -2,3 +2,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 bilkent-exchange-network.sln
 bilkent-exchange-network.Server/obj/
+bilkent-exchange-network.Server/bin/Debug/net8.0/bilkent-exchange-network.Server.dll
+bilkent-exchange-network.Server/bin/Debug/net8.0/bilkent-exchange-network.Server.pdb
+bilkent-exchange-network.Server/bin/Debug/net8.0/bilkent-exchange-network.Server.exe
+bilkent-exchange-network.Server/bin/Debug/net8.0/spa.proxy.json
