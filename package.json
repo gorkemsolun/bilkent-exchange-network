@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"dotnet watch run\" \"cd ClientApp && npm run dev\"",
+    "start": "npm i && cd ClientApp && npm i && cd.. && concurrently \"dotnet watch run\" \"cd ClientApp && npm run dev\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
