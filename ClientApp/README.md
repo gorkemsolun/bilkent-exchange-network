@@ -22,18 +22,3 @@ The app will allow the users to both connect with other users, in the way of pri
 The app will serve as a centralized platform for all exchange-related activities of the Bilkent University members; therefore, it has a strong potential to be the go-to destination for anyone looking to exchange items within the campus community, whether it's for second-hand sales, lost and found items, or other exchange-related stuff. Currently, there are multiple platforms used for in-campus exchange activities such as Instagram pages, Facebook groups, or WhatsApp groups. Fragmentation of exchange-related activities in such platforms makes exchanges difficult. BEN unifies the functionality offered in such platforms in a single medium with a user-friendly and easy-to-use interface. 
 - What makes this web app **interesting/cool**? <br>
 One of the interesting features of the app is including a forum in which people can discuss. Having a forum dedicated to Bilkent University members may address different kinds of issues apart from the ones directly supported by the app. This introduces versatility to the application, making it adaptable for various potential scenarios. For example, such a communication place can be useful for coordination and communication between volunteers to organize donations and help campaigns during emergency situations. 
-
-## USE CASE DIAGRAM OF BEN
-![Use Case Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_USE_CASE_DIAGRAM.jpg)
-
-## CLASS DIAGRAM OF BEN
-![Class Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_CLASS_DIAGRAM.jpg)
-
-## STATE MACHINE DIAGRAM OF BEN
-![State Machine Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_STATE_MACHINE_DIAGRAM.jpg)
-
-## SEQUENCE DIAGRAM OF BEN
-![Sequence Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_SEQUENCE_DIAGRAM.jpg)
-
-## ACTIVITY DIAGRAM OF BEN
-![Activity Diagram of BEN](https://github.com/gorkemsolun/bilkent-exchange-network/blob/main/diagrams/jpg-files/BEN_ACTIVITY_DIAGRAM.jpg)
