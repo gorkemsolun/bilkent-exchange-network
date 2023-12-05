@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\bilkent-exchange-network.Server.props" />
-</Project>
