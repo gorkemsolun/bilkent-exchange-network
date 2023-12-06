@@ -1,7 +1,7 @@
 import ForumItem from "./forumitem";
-import "../../../styles/globals.css";
-import SearchBar from "../../../components/searchbar";
-import CreatePostButton from "@/components/createpostbutton";
+import "../../App.css";
+import SearchBar from "../../components/searchbar";
+import CreatePostButton from "../../components/createpostbutton";
 
 export default function Forum() {
   const ForumItems = [

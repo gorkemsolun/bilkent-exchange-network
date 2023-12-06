@@ -1,5 +1,5 @@
-import "bootstrap/dist/css/bootstrap.min.css"; // Import bootstrap CSS
-import "../../../styles/globals.css";
+import "../../../bootstrap.min.css";
+import "../../App.css";
 
 interface donateItemProps {
   donateItems: {

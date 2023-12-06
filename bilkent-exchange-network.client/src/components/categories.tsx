@@ -1,14 +1,12 @@
-"use client";
-
-import React, { useState } from "react";
-import "../styles/globals.css";
+import { useState } from "react";
+import "../App.css";
 
 interface Categories {
   /** TODO: prop types needed to be created */
 }
 
-export default function Categories(props: any) {
-  let categoriesData = [
+export default function Categories(props) {
+  const categoriesData = [
     {
       name: "Category 1",
       subcategories: [{ name: "Subcategory 1" }, { name: "Subcategory 2" }],
@@ -24,11 +22,11 @@ export default function Categories(props: any) {
     },
   ];
 
-  let [minPrice, setMinPrice] = useState("");
-  let [maxPrice, setMaxPrice] = useState("");
-  let [minDate, setMinDate] = useState("");
-  let [maxDate, setMaxDate] = useState("");
-  let [checkedCategories, setCheckedCategories] = useState<string[]>([]);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [minDate, setMinDate] = useState(0);
+  const [maxDate, setMaxDate] = useState(0);
+  const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
 
   const handleFilter = () => {
     props.onFilter({
@@ -67,7 +65,7 @@ export default function Categories(props: any) {
                     type="checkbox"
                     value={subcategory.name}
                     checked={checkedCategories.includes(subcategory.name)}
-                    onChange={(e) => handleCategoryChange(subcategory.name)}
+                    onChange={() => handleCategoryChange(subcategory.name)}
                   />
                   <label>{subcategory.name}</label>
                 </div>
@@ -83,7 +81,7 @@ export default function Categories(props: any) {
             <input
               type="number"
               value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
+              onChange={(e) => setMinPrice(Number(e.target.value))}
               className="border p-2 rounded-md w-30"
             />
           </div>
@@ -93,7 +91,7 @@ export default function Categories(props: any) {
             <input
               type="number"
               value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="border p-2 rounded-md w-30"
             />
           </div>
@@ -106,7 +104,7 @@ export default function Categories(props: any) {
           <input
             type="date"
             value={minDate}
-            onChange={(e) => setMinDate(e.target.value)}
+            onChange={(e) => setMinDate(Number(e.target.value))}
             className="border p-2 rounded-md w-30"
           />
         </div>
@@ -115,7 +113,7 @@ export default function Categories(props: any) {
           <input
             type="date"
             value={maxDate}
-            onChange={(e) => setMaxDate(e.target.value)}
+            onChange={(e) => setMaxDate(Number(e.target.value))}
             className="border p-2 rounded-md w-30"
           />
         </div>

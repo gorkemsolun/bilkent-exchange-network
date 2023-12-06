@@ -1,8 +1,8 @@
-import DonateItem from "./donateitem";
-import "../../../styles/globals.css";
-import SearchBar from "../../../components/searchbar";
-import Categories from "../../../components/categories";
-import CreatePostButton from "@/components/createpostbutton";
+import DonateItem from "./donateitem.tsx";
+import "../../App.css";
+import SearchBar from "../../components/searchbar.tsx";
+import Categories from "../../components/categories.tsx";
+import CreatePostButton from "../../components/createpostbutton.tsx";
 
 export default function Donate() {
   const donateItems = [

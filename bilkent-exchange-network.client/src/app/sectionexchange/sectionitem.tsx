@@ -1,7 +1,5 @@
-"use client";
-
-import "bootstrap/dist/css/bootstrap.min.css"; // Import bootstrap CSS
-import "../../../styles/globals.css";
+import "../../../bootstrap.min.css";
+import "../../App.css";
 
 interface SectionItemProps {
   sectionItems: {
@@ -13,7 +11,7 @@ interface SectionItemProps {
   }[];
 }
 
-function handleDMClick(id: number): void {
+function handleDMClick(): void {
   console.log("DM Box Clicked");
 }
 
@@ -58,7 +56,7 @@ export default function SectionItem({ sectionItems }: SectionItemProps) {
                       src="/dmbox.png" // Replace with your image URL
                       alt="DM Box"
                       title="Send DM" // Tooltip on hover
-                      onClick={() => handleDMClick(item.id)} // Your click handler
+                      onClick={() => handleDMClick()} // Your click handler
                     />
                   </div>
                 </div>

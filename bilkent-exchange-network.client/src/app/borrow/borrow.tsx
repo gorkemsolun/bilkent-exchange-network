@@ -1,7 +1,7 @@
+import CreatePostButton from "../../components/createpostbutton";
+import SearchBar from "../../components/searchbar";
+import "../../App.css";
 import BorrowItem from "./borrowitem";
-import "../../../styles/globals.css";
-import SearchBar from "../../../components/searchbar";
-import CreatePostButton from "@/components/createpostbutton";
 
 export default function Borrow() {
   const BorrowItems = [
@@ -10,7 +10,7 @@ export default function Borrow() {
       id: 1,
       title: "I need Basys3 for this semester",
       description: "I can give it back at the end of the semester.",
-      category: "Kategoriyi kaldıralım mı? burada ve forumda",
+      category: "Kategoriyi kaldiralim mi? burada ve forumda",
     },
     {
       id: 2,

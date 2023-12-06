@@ -1,16 +1,13 @@
-"use client";
+export default function Login() {
+  //const [username, setUsername] = useState("");
+  //const [password, setPassword] = useState("");
 
-import Link from "next/link";
-import { useState } from "react";
-
-export default function Home() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
+  /*
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(`Username: ${username}, Password: ${password}`);
   };
+  */
 
   return (
     <div
@@ -46,12 +43,7 @@ export default function Home() {
           className="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
           type="password"
         />
-        <Link
-          className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700"
-          href={"/home"}
-        >
-          Login
-        </Link>
+
         <div className="flex mt-6 justify-center text-xs">
           <a className="text-blue-400 hover:text-blue-500" href="#">
             Forgot Password

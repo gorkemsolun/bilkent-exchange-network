@@ -1,9 +1,8 @@
-import Categories from "../../../components/categories";
-import SecondHandItem from "./secondhanditem";
-import SearchBar from "../../../components/searchbar";
-import "../../../styles/globals.css";
-import CreatePostButton from "@/components/createpostbutton";
-import CreateItem from "@/components/createItem";
+import Categories from "../../components/categories.tsx";
+import SecondHandItem from "./secondhanditem.tsx";
+import SearchBar from "../../components/searchbar.tsx";
+import "../../App.css";
+import CreatePostButton from "../../components/createpostbutton.tsx";
 
 export default function SecondHand() {
   const secondHandItems = [

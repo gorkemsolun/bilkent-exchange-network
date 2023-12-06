@@ -1,9 +1,7 @@
-"use client";
+import { useState } from "react";
+import "../App.css";
 
-import React, { useState } from "react";
-import "../styles/globals.css";
-
-export default function SearchBar(props: any) {
+export default function SearchBar(props) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortType, setSortType] = useState("");
 

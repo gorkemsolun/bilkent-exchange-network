@@ -1,9 +1,9 @@
 import SectionItem from "./sectionitem";
 import TopRow from "./toprow";
-import "../../../styles/globals.css";
-import SearchBar from "../../../components/searchbar";
-import Categories from "../../../components/categories";
-import CreatePostButton from "../../../components/createpostbutton";
+import "../../App.css";
+import SearchBar from "../../components/searchbar";
+import Categories from "../../components/categories";
+import CreatePostButton from "../../components/createpostbutton";
 
 export default function SectionExchange() {
   // dummy data

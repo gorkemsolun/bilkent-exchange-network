@@ -1,7 +1,5 @@
-"use client";
-
 import React, { useState } from "react";
-import "../styles/modal.css"; // Import the CSS file for styling
+import "../App.css";
 
 interface Product {
   name: string;

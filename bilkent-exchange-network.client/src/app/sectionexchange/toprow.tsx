@@ -1,6 +1,4 @@
-"use client";
-
-export default function TopRow({}) {
+export default function TopRow() {
   return (
     <div className="container" style={{ width: "100%" }}>
       <div className="row mb-3 mr-20 ml-5">

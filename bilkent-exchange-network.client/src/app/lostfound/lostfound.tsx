@@ -1,8 +1,8 @@
-import LostFoundItem from "./lostAndFoundItem";
-import "../../../styles/globals.css";
-import Categories from "../../../components/categories";
-import SearchBar from "../../../components/searchbar";
-import CreatePostButton from "@/components/createpostbutton";
+import Categories from "../../components/categories.tsx";
+import CreatePostButton from "../../components/createpostbutton.tsx";
+import SearchBar from "../../components/searchbar.tsx";
+import "../../App.css";
+import LostFoundItem from "./lostfounditem.tsx";
 
 export default function LostFound() {
   const lostFoundItems = [
