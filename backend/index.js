@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { MONGO_URL, PORT } from "./config.js";
 import secondhandRouter from "./routes/secondhandRoute.js";
+import authRouter from "./routes/userRoute.js";
 import cors from "cors";
 
 const app = express();
@@ -11,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/secondhand", secondhandRouter);
+app.use("/user", authRouter)
 
 mongoose
   .connect(MONGO_URL)
