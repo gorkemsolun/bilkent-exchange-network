@@ -1,30 +1,30 @@
+using bilkent_exchange_network.Server.Data;
+using bilkent_exchange_network.Server.Services;
+using bilkent_exchange_network.Server.Models;
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.Configure<SecondhandDatabaseSettings>
+(builder.Configuration.GetSection("SecondhandItemsDatabaseSettings"));
+
+builder.Services.AddSingleton<SecondhandServices>();
+
 
 // Add services to the container.
 
+
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+app.MapGet("/", () => "Secondhand API");
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.MapPost("/api/secondhandItems", async (SecondhandServices secondHandServices, SecondhandPost post) =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.MapFallbackToFile("/index.html");
+    await secondHandServices.Create(post);
+    return Results.Ok();
+});
 
 app.Run();
