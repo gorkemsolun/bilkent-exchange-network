@@ -3,36 +3,26 @@ import SecondHandItem from "./secondhanditem.tsx";
 import SearchBar from "../../components/searchbar.tsx";
 import "../../App.css";
 import CreatePostButton from "../../components/createpostbutton.tsx";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function SecondHand() {
-  const secondHandItems = [
-    {
-      // dummy data
-      id: 1,
-      title: "tragedy of hamlet",
-      description:
-        "desssscriptttttttttionnnnnnnnn offfffffffffff trrrrrrragedyyyyyyyyyyy offfffff hammmmmmlettttttttttt@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-      category: "Book",
-      imgSrc: "/cs319.png",
-      price: "500",
-    },
-    {
-      id: 2,
-      title: "gilgamesh",
-      description: "desssscrip",
-      category: "Book",
-      imgSrc: "/cs319.png",
-      price: "100",
-    },
-    {
-      id: 3,
-      title: "gilgamesh",
-      description: "desssscrip",
-      category: "Book",
-      imgSrc: "/cs319.png",
-      price: "100",
-    },
-  ];
+  const [secondHandItems, setSecondHandItems] = useState([]);
+  //const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    //setLoading(true);
+    axios
+      .get("http://localhost:3000/secondhand/secondhanditem")
+      .then((res) => {
+        setSecondHandItems(res.data);
+        //setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        //setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="flex flex-row grow">

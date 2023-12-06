@@ -1,13 +1,26 @@
 import express from "express";
-import { PORT } from "./config.js";
+import mongoose from "mongoose";
+import { MONGO_URL, PORT } from "./config.js";
+import secondhandRouter from "./routes/secondhandRoute.js";
+import cors from "cors";
 
 const app = express();
 
-app.get("/", (req, res) => {
-  console.log("req");
-  return res.status(234).send("Hello World!");
-});
+app.use(express.json());
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+app.use(cors());
+
+app.use("/secondhand", secondhandRouter);
+
+mongoose
+  .connect(MONGO_URL)
+  .then(() => {
+    console.log("Connected to database");
+    app.listen(PORT, () => {
+      console.log(`Server listening on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("Failed to connect to database");
+    console.log(err);
+  });
