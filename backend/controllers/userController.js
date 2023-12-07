@@ -33,7 +33,7 @@ export const signupUser = async (req, res) => {
     //create a jwt
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
