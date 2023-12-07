@@ -4,7 +4,7 @@ import "../../App.css";
 import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
 import SearchBar from "../../components/searchbar.tsx";
-import { LostFoundPost } from "../../posttypes.ts";
+import { LostFoundPost } from "../../data-types/posttypes.ts";
 
 export default function LostFound() {
   const [lostFoundPosts, setLostFoundPosts] = useState([]);

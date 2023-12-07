@@ -4,7 +4,7 @@ import "../../App.css";
 import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
 import SearchBar from "../../components/searchbar.tsx";
-import { DonatePost } from "../../posttypes.ts";
+import { DonatePost } from "../../data-types/posttypes.ts";
 
 export default function Donate() {
   const [donatePosts, setDonatePosts] = useState([]);

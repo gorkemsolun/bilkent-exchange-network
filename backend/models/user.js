@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import mongoose from "mongoose";
 import validator from "validator";
 
 const UserSchema = new mongoose.Schema(
@@ -9,11 +9,11 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     bilkentId: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
     },
-    image: {
+    photo: {
       type: String,
     },
     email: {
@@ -35,7 +35,7 @@ const UserSchema = new mongoose.Schema(
 UserSchema.statics.signup = async function (
   name,
   bilkentId,
-  image,
+  photo,
   email,
   password
 ) {
@@ -59,7 +59,7 @@ UserSchema.statics.signup = async function (
   const user = await this.create({
     name,
     bilkentId,
-    image: "",
+    photo: "",
     email,
     password: hash,
   });

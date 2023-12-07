@@ -30,3 +30,5 @@ export interface DonatePost {
   category: string;
   image: string;
 }
+
+

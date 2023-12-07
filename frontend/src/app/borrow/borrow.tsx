@@ -4,7 +4,7 @@ import "../../App.css";
 import Categories from "../../components/categories";
 import CreatePostButton from "../../components/createpostbutton";
 import SearchBar from "../../components/searchbar";
-import { BorrowPost } from "../../posttypes";
+import { BorrowPost } from "../../data-types/posttypes";
 
 export default function Borrow() {
   const [borrowPosts, setBorrowPosts] = useState([]);

@@ -4,7 +4,7 @@ import "../../App.css";
 import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
 import SearchBar from "../../components/searchbar.tsx";
-import { SecondhandPost } from "../../posttypes.ts";
+import { SecondhandPost } from "../../data-types/posttypes.ts";
 
 export default function Secondhand() {
   const [secondhandPosts, setSecondhandPosts] = useState([]);
