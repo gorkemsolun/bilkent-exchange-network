@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const SecondhanditemSchema = new mongoose.Schema(
+const SecondhandpostSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -22,7 +22,7 @@ const SecondhanditemSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    seller: {
+    poster: {
       type: String,
       required: true,
     },
@@ -36,6 +36,7 @@ const SecondhanditemSchema = new mongoose.Schema(
   }
 );
 
-export const Secondhanditem = mongoose.model("Secondhanditem", SecondhanditemSchema);
-
-
+export const Secondhandpost = mongoose.model(
+  "Secondhandpost",
+  SecondhandpostSchema
+);

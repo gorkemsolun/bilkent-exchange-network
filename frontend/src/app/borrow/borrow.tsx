@@ -1,10 +1,10 @@
 import CreatePostButton from "../../components/createpostbutton";
 import SearchBar from "../../components/searchbar";
 import "../../App.css";
-import BorrowItem from "./borrowitem";
+import BorrowPost from "./borrowpost";
 
 export default function Borrow() {
-  const BorrowItems = [
+  const borrowPosts = [
     {
       // dummy data
       id: 1,
@@ -38,14 +38,13 @@ export default function Borrow() {
         <div
           style={{
             display: "flex",
-            alignItems: "center",
             justifyContent: "center",
           }}
         >
           <SearchBar type="borrow" />
           <CreatePostButton type="borrow" />
         </div>
-        <BorrowItem borrowItems={BorrowItems} />
+        {/*<BorrowPost borrowPosts={borrowPosts} />*/}
       </div>
     </div>
   );

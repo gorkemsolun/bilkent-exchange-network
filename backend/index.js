@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { MONGO_URL, PORT } from "./config.js";
 import secondhandRouter from "./routes/secondhandRoute.js";
+import lostfoundRouter from "./routes/lostfoundRoute.js";
 import authRouter from "./routes/userRoute.js";
 import cors from "cors";
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/secondhand", secondhandRouter);
+app.use("/lostfound", lostfoundRouter);
 app.use("/user", authRouter)
 
 mongoose

@@ -1,5 +1,5 @@
-import "../../bootstrap.css";
 import "../../App.css";
+import "../../bootstrap.css";
 
 interface SectionItemProps {
   sectionItems: {

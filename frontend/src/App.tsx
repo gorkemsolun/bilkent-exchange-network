@@ -25,15 +25,12 @@ export default function App() {
         </Link>
         <Routes>
           <Route path="/" element={<SecondHand />}></Route>
-          <Route path="/secondhand/secondhand" element={<SecondHand />}></Route>
-          <Route path="/lostfound/lostfound" element={<LostFound />}></Route>
-          <Route path="/donate/donate" element={<Donate />}></Route>
-          <Route path="/borrow/borrow" element={<Borrow />}></Route>
-          <Route
-            path="/sectionexchange/sectionexchange"
-            element={<SectionExchange />}
-          ></Route>
-          <Route path="/forum/forum" element={<Forum />}></Route>
+          <Route path="/secondhand" element={<SecondHand />}></Route>
+          <Route path="/lostfound" element={<LostFound />}></Route>
+          <Route path="/donate" element={<Donate />}></Route>
+          <Route path="/borrow" element={<Borrow />}></Route>
+          <Route path="/sectionexchange" element={<SectionExchange />}></Route>
+          <Route path="/forum" element={<Forum />}></Route>
           <Route path="/login" element={<Login />}></Route>
         </Routes>
       </BrowserRouter>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CreateItem from "./createitem.tsx";
+import CreatePost from "./createpost.tsx";
 
 export default function CreatePostButton(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +18,7 @@ export default function CreatePostButton(props) {
         Create Post
       </button>
       {isModalOpen && (
-        <CreateItem onClose={handleCloseModal} type={props.type} />
+        <CreatePost onClose={handleCloseModal} type={props.type} />
       )}
     </div>
   );

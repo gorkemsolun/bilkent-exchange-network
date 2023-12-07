@@ -1,10 +1,10 @@
-import ForumItem from "./forumitem";
+import ForumPost from "./forumpost";
 import "../../App.css";
 import SearchBar from "../../components/searchbar";
 import CreatePostButton from "../../components/createpostbutton";
 
 export default function Forum() {
-  const ForumItems = [
+  const ForumPosts = [
     {
       // dummy data
       id: 1,
@@ -54,17 +54,11 @@ export default function Forum() {
   return (
     <div className="flex flex-row  grow">
       <div className="w-full h-full">
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <div>
           <SearchBar type="forum" />
           <CreatePostButton type="forum" />
         </div>
-        <ForumItem forumItems={ForumItems} />
+        <ForumPost forumPosts={ForumPosts} />
       </div>
     </div>
   );

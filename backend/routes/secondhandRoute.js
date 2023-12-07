@@ -1,9 +1,9 @@
 import express from "express";
-import { Secondhanditem } from "../models/secondhanditem.js";
+import { Secondhandpost } from "../models/secondhandpost.js";
 
 const router = express.Router();
 
-router.post("/secondhanditem", async (req, res) => {
+router.post("/secondhandpost", async (req, res) => {
   try {
     if (
       !req.body.title ||
@@ -11,58 +11,58 @@ router.post("/secondhanditem", async (req, res) => {
       !req.body.price ||
       !req.body.image ||
       !req.body.date ||
-      !req.body.seller ||
+      !req.body.poster ||
       !req.body.category
     ) {
-      return res.status(400).send("Missing fields for secondhanditem");
+      return res.status(400).send("Missing fields for secondhandpost");
     }
 
-    const newSecondhanditem = {
+    const newSecondhandpost = {
       title: req.body.title,
       description: req.body.description,
       price: req.body.price,
       image: req.body.image,
       date: req.body.date,
-      seller: req.body.seller,
+      poster: req.body.poster,
       category: req.body.category,
     };
 
-    const secondhanditem = await Secondhanditem.create(newSecondhanditem);
+    const secondhandpost = await Secondhandpost.create(newSecondhandpost);
 
-    return res.status(201).send(secondhanditem);
+    return res.status(201).send(secondhandpost);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }
 });
 
-router.get("/secondhanditem", async (req, res) => {
+router.get("/secondhandpost", async (req, res) => {
   try {
-    const secondhanditems = await Secondhanditem.find({});
+    const secondhandposts = await Secondhandpost.find({});
 
-    return res.status(200).json(secondhanditems);
+    return res.status(200).json(secondhandposts);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }
 });
 
-router.get("/secondhanditem/:id", async (req, res) => {
+router.get("/secondhandpost/:id", async (req, res) => {
   try {
-    const secondhanditem = await Secondhanditem.findById(req.params.id);
+    const secondhandpost = await Secondhandpost.findById(req.params.id);
 
-    if (!secondhanditem) {
-      return res.status(404).send("Secondhanditem not found");
+    if (!secondhandpost) {
+      return res.status(404).send("Secondhandpost not found");
     }
 
-    return res.status(200).json(secondhanditem);
+    return res.status(200).json(secondhandpost);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }
 });
 
-router.put("/secondhanditem/:id", async (req, res) => {
+router.put("/secondhandpost/:id", async (req, res) => {
   try {
     if (
       !req.body.title ||
@@ -70,37 +70,37 @@ router.put("/secondhanditem/:id", async (req, res) => {
       !req.body.price ||
       !req.body.image ||
       !req.body.date ||
-      !req.body.seller ||
+      !req.body.poster ||
       !req.body.category
     ) {
-      return res.status(400).send("Missing fields for secondhanditem");
+      return res.status(400).send("Missing fields for secondhandpost");
     }
 
-    const result = await Secondhanditem.findByIdAndUpdate(
+    const result = await Secondhandpost.findByIdAndUpdate(
       req.params.id,
       req.body
     );
 
     if (!result) {
-      return res.status(404).send("Secondhanditem not found");
+      return res.status(404).send("Secondhandpost not found");
     }
 
-    return res.status(204).send("Secondhanditem updated");
+    return res.status(204).send("Secondhandpost updated");
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);
   }
 });
 
-router.delete("/secondhanditem/:id", async (req, res) => {
+router.delete("/secondhandpost/:id", async (req, res) => {
   try {
-    const result = await Secondhanditem.findByIdAndDelete(req.params.id);
+    const result = await Secondhandpost.findByIdAndDelete(req.params.id);
 
     if (!result) {
-      return res.status(404).send("Secondhanditem not found");
+      return res.status(404).send("Secondhandpost not found");
     }
 
-    return res.status(204).send("Secondhanditem deleted");
+    return res.status(204).send("Secondhandpost deleted");
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);

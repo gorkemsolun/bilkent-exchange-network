@@ -1,11 +1,11 @@
-import DonateItem from "./donateitem.tsx";
+import DonatePost from "./donatepost.tsx";
 import "../../App.css";
 import SearchBar from "../../components/searchbar.tsx";
 import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
 
 export default function Donate() {
-  const donateItems = [
+  const donatePosts = [
     {
       // dummy data
       id: 1,
@@ -30,16 +30,11 @@ export default function Donate() {
     <div className="flex flex-row grow">
       <Categories type="donate"></Categories>
       <div className="w-full h-full">
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+        <div>
           <SearchBar type="donate" />
           <CreatePostButton type="donate" />
         </div>
-        <DonateItem donateItems={donateItems} />
+        <DonatePost donatePosts={donatePosts} />
       </div>
     </div>
   );

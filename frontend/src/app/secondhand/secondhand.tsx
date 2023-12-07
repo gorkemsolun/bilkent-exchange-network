@@ -1,21 +1,21 @@
-import Categories from "../../components/categories.tsx";
-import SecondHandItem from "./secondhanditem.tsx";
-import SearchBar from "../../components/searchbar.tsx";
-import "../../App.css";
-import CreatePostButton from "../../components/createpostbutton.tsx";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import "../../App.css";
+import Categories from "../../components/categories.tsx";
+import CreatePostButton from "../../components/createpostbutton.tsx";
+import SearchBar from "../../components/searchbar.tsx";
+import { SecondHandPost } from "../../data-types/posttypes.ts";
 
 export default function SecondHand() {
-  const [secondHandItems, setSecondHandItems] = useState([]);
+  const [secondHandPosts, setSecondHandPosts] = useState([]);
   //const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     //setLoading(true);
     axios
-      .get("http://localhost:3000/secondhand/secondhanditem")
+      .get("http://localhost:3000/secondhand/secondhandpost")
       .then((res) => {
-        setSecondHandItems(res.data);
+        setSecondHandPosts(res.data);
         //setLoading(false);
       })
       .catch((err) => {
@@ -28,16 +28,58 @@ export default function SecondHand() {
     <div className="flex flex-row grow">
       <Categories type="secondhand"></Categories>
       <div className="w-full h-full">
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+        <div>
           <SearchBar type="secondhand" />
           <CreatePostButton type="secondhand" />
         </div>
-        <SecondHandItem secondHandItems={secondHandItems} />
+
+        <>
+          <div className="container">
+            <div className="row">
+              {secondHandPosts.map((post: SecondHandPost) => (
+                <div
+                  className="col-12 col-sm-8 col-md-6 col-lg-4 mb-4"
+                  key={post.id}
+                >
+                  <div className="card">
+                    <div className="position-relative">
+                      <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
+                        {post.category}
+                      </span>
+                      <img className="card-img" src={post.image} alt="Vans" />
+                    </div>
+                    <div className="card-img-overlay d-flex justify-content-end">
+                      <a href="#" className="card-link text-danger like">
+                        <i className="fas fa-heart"></i>
+                      </a>
+                    </div>
+                    <div className="card-body">
+                      <h4 className="card-title">{post.title}</h4>
+                      <div
+                        className="description-container"
+                        style={{ height: "100px" }}
+                      >
+                        <p className="card-text">
+                          {post.description.length < 75
+                            ? post.description
+                            : post.description.slice(0, 75) + "..."}
+                        </p>
+                      </div>{" "}
+                      <div className="buy d-flex justify-content-between align-posts-center">
+                        <div className="price text-success">
+                          <h5 className="mt-4">${post.price}</h5>
+                        </div>
+                        <a href="#" className="btn btn-danger mt-3">
+                          <i className="fas fa-shopping-cart"></i> Details
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
       </div>
     </div>
   );
