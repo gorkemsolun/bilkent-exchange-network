@@ -1,28 +1,24 @@
 import { Secondhandpost } from "../models/secondhandpost.js";
 
+function fieldController(reqBody) {
+  if (
+    !reqBody.title ||
+    !reqBody.description ||
+    !reqBody.price ||
+    !reqBody.image ||
+    !reqBody.date ||
+    !reqBody.poster ||
+    !reqBody.category
+  ) {
+    return res.status(400).send("Missing fields for secondhandpost");
+  }
+}
+
 export const secondhandPostPOST = async (req, res) => {
   try {
-    if (
-      !req.body.title ||
-      !req.body.description ||
-      !req.body.price ||
-      !req.body.image ||
-      !req.body.date ||
-      !req.body.poster ||
-      !req.body.category
-    ) {
-      return res.status(400).send("Missing fields for secondhandpost");
-    }
+    fieldController(req.body);
 
-    const newSecondhandpost = {
-      title: req.body.title,
-      description: req.body.description,
-      price: req.body.price,
-      image: req.body.image,
-      date: req.body.date,
-      poster: req.body.poster,
-      category: req.body.category,
-    };
+    const newSecondhandpost = req.body;
 
     const secondhandpost = await Secondhandpost.create(newSecondhandpost);
 
@@ -61,17 +57,7 @@ export const secondhandPostGETId = async (req, res) => {
 
 export const secondhandPostPUT = async (req, res) => {
   try {
-    if (
-      !req.body.title ||
-      !req.body.description ||
-      !req.body.price ||
-      !req.body.image ||
-      !req.body.date ||
-      !req.body.poster ||
-      !req.body.category
-    ) {
-      return res.status(400).send("Missing fields for secondhandpost");
-    }
+    fieldController(req.body);
 
     const result = await Secondhandpost.findByIdAndUpdate(
       req.params.id,

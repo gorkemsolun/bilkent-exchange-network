@@ -2,6 +2,7 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import { MONGO_URL, PORT } from "./config.js";
+import borrowRouter from "./routes/borrowRoute.js";
 import donateRouter from "./routes/donateRoute.js";
 import lostfoundRouter from "./routes/lostfoundRoute.js";
 import secondhandRouter from "./routes/secondhandRoute.js";
@@ -12,6 +13,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.use("/borrow", borrowRouter);
 app.use("/secondhand", secondhandRouter);
 app.use("/lostfound", lostfoundRouter);
 app.use("/donate", donateRouter);

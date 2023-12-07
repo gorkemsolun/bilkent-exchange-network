@@ -1,5 +1,5 @@
-import { User } from "../models/user.js";
 import jwt from "jsonwebtoken";
+import { User } from "../models/user.js";
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, "bununbirsecretolmasılazımnormalde", {

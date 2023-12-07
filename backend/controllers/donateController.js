@@ -1,27 +1,23 @@
 import { Donatepost } from "../models/donatepost.js";
 
+function fieldController(reqBody) {
+  if (
+    !reqBody.title ||
+    !reqBody.description ||
+    !reqBody.image ||
+    !reqBody.date ||
+    !reqBody.poster ||
+    !reqBody.category
+  ) {
+    return res.status(400).send("Missing fields for donatepost");
+  }
+}
+
 export const donatePostPOST = async (req, res) => {
   try {
-    if (
-      !req.body.title ||
-      !req.body.description ||
-      !req.body.image ||
-      !req.body.date ||
-      !req.body.poster ||
-      !req.body.category
-    ) {
-      return res.status(400).send("Missing fields for donatepost");
-    }
+    fieldController(req.body);
 
-    const newDonatepost = {
-      title: req.body.title,
-      description: req.body.description,
-      image: req.body.image,
-      date: req.body.date,
-      poster: req.body.poster,
-      category: req.body.category,
-    };
-
+    const newDonatepost = req.body;
     const donatepost = await Donatepost.create(newDonatepost);
 
     return res.status(201).send(donatepost);
@@ -59,16 +55,7 @@ export const donatePostGETId = async (req, res) => {
 
 export const donatePostPUT = async (req, res) => {
   try {
-    if (
-      !req.body.title ||
-      !req.body.description ||
-      !req.body.image ||
-      !req.body.date ||
-      !req.body.poster ||
-      !req.body.category
-    ) {
-      return res.status(400).send("Missing fields for donatepost");
-    }
+    fieldController(req.body);
 
     const result = await Donatepost.findByIdAndUpdate(req.params.id, req.body);
 

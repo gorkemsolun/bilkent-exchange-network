@@ -1,28 +1,24 @@
 import { Lostfoundpost } from "../models/lostfoundpost.js";
 
+function fieldController(reqBody) {
+  if (
+    !reqBody.title ||
+    !reqBody.description ||
+    !reqBody.image ||
+    !reqBody.date ||
+    !reqBody.poster ||
+    !reqBody.category ||
+    !reqBody.status
+  ) {
+    return res.status(400).send("Missing fields for lostfoundpost");
+  }
+}
+
 export const lostfoundPostPOST = async (req, res) => {
   try {
-    if (
-      !req.body.title ||
-      !req.body.description ||
-      !req.body.image ||
-      !req.body.date ||
-      !req.body.poster ||
-      !req.body.category ||
-      !req.body.status
-    ) {
-      return res.status(400).send("Missing fields for lostfoundpost");
-    }
+    fieldController(req.body);
 
-    const newLostfoundpost = {
-      title: req.body.title,
-      description: req.body.description,
-      image: req.body.image,
-      date: req.body.date,
-      poster: req.body.poster,
-      category: req.body.category,
-      status: req.body.status,
-    };
+    const newLostfoundpost = req.body;
 
     const lostfoundpost = await Lostfoundpost.create(newLostfoundpost);
 
@@ -61,17 +57,7 @@ export const lostfoundPostGETId = async (req, res) => {
 
 export const lostfoundPostPUT = async (req, res) => {
   try {
-    if (
-      !req.body.title ||
-      !req.body.description ||
-      !req.body.image ||
-      !req.body.date ||
-      !req.body.poster ||
-      !req.body.category ||
-      !req.body.status
-    ) {
-      return res.status(400).send("Missing fields for lostfoundpost");
-    }
+    fieldController(req.body);
 
     const result = await Lostfoundpost.findByIdAndUpdate(
       req.params.id,
