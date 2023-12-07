@@ -10,15 +10,11 @@ const BorrowpostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    date: {
+    category: {
       type: String,
       required: true,
     },
     poster: {
-      type: String,
-      required: true,
-    },
-    category: {
       type: String,
       required: true,
     },

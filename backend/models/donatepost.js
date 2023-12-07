@@ -10,11 +10,7 @@ const DonatepostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
-      required: true,
-    },
-    date: {
+    category: {
       type: String,
       required: true,
     },
@@ -22,7 +18,7 @@ const DonatepostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
+    image: {
       type: String,
       required: true,
     },
@@ -32,7 +28,4 @@ const DonatepostSchema = new mongoose.Schema(
   }
 );
 
-export const Donatepost = mongoose.model(
-  "Donatepost",
-  DonatepostSchema
-);
+export const Donatepost = mongoose.model("Donatepost", DonatepostSchema);

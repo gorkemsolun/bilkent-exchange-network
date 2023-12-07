@@ -6,6 +6,7 @@ import borrowRouter from "./routes/borrowRoute.js";
 import donateRouter from "./routes/donateRoute.js";
 import lostfoundRouter from "./routes/lostfoundRoute.js";
 import secondhandRouter from "./routes/secondhandRoute.js";
+import sectionexchangeRouter from "./routes/sectionexchangeRoute.js";
 import authRouter from "./routes/userRoute.js";
 
 const app = express();
@@ -17,6 +18,7 @@ app.use("/borrow", borrowRouter);
 app.use("/secondhand", secondhandRouter);
 app.use("/lostfound", lostfoundRouter);
 app.use("/donate", donateRouter);
+app.use("/sectionexchange", sectionexchangeRouter);
 app.use("/user", authRouter);
 
 mongoose

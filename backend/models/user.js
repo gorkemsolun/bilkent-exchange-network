@@ -1,20 +1,13 @@
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import validator from "validator";
+import crypto from "crypto"
 
 const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
-    },
-    bilkentId: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    photo: {
-      type: String,
     },
     email: {
       type: String,
@@ -25,6 +18,16 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    photo: {
+      type: String,
+    },
+    verified: {
+      type: Boolean,
+      default: false
+    },
+    emailToken: {
+      type: String
+    }
   },
   {
     timestamps: true,
@@ -34,12 +37,10 @@ const UserSchema = new mongoose.Schema(
 //signup method
 UserSchema.statics.signup = async function (
   name,
-  bilkentId,
-  photo,
   email,
   password
 ) {
-  if (!email || !password || !name || !bilkentId) {
+  if (!email || !password || !name) {
     throw Error("All fields must be filled");
   }
   if (!validator.isEmail(email)) {
@@ -56,12 +57,15 @@ UserSchema.statics.signup = async function (
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
+  const token = crypto.randomBytes(64).toString("hex")
+  
+
   const user = await this.create({
     name,
-    bilkentId,
-    photo: "",
     email,
     password: hash,
+    photo: "",
+    emailToken: token
   });
 
   return user;

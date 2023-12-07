@@ -1,34 +1,52 @@
 export interface LostFoundPost {
-  id: number;
+  id: string;
   title: string;
   description: string;
   category: string;
+  poster: string;
+  date: string;
   image: string;
   status: string;
 }
 
 export interface BorrowPost {
-  id: number;
+  id: string;
   title: string;
   description: string;
   category: string;
+  poster: string;
+  date: string;
 }
 
 export interface SecondhandPost {
-  id: number;
+  id: string;
   title: string;
   description: string;
   category: string;
+  poster: string;
+  date: string;
   image: string;
   price: string;
 }
 
 export interface DonatePost {
-  id: number;
+  id: string;
   title: string;
   description: string;
   category: string;
+  poster: string;
+  date: string;
   image: string;
 }
 
-
+export interface SectionexchangePost {
+  id: string;
+  title: string;
+  category: string;
+  poster: string;
+  date: string;
+  offeredSection: string;
+  desiredSection: string;
+  offeredCourse: string;
+  desiredCourse: string;
+}

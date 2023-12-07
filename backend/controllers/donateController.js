@@ -5,7 +5,6 @@ function fieldController(reqBody) {
     !reqBody.title ||
     !reqBody.description ||
     !reqBody.image ||
-    !reqBody.date ||
     !reqBody.poster ||
     !reqBody.category
   ) {
@@ -30,6 +29,11 @@ export const donatePostPOST = async (req, res) => {
 export const donatePostGET = async (req, res) => {
   try {
     const donateposts = await Donatepost.find({});
+
+    donateposts.forEach((donatepost) => {
+      donatepost["date"] = donatepost.createdAt.toDateString();
+      donatepost["id"] = donatepost._id;
+    });
 
     return res.status(200).json(donateposts);
   } catch (err) {
@@ -57,6 +61,9 @@ export const donatePostGETId = async (req, res) => {
     if (!donatepost) {
       return res.status(404).send("Donatepost not found");
     }
+
+    donatepost["date"] = donatepost.createdAt.toDateString();
+    donatepost["id"] = donatepost._id;
 
     return res.status(200).json(donatepost);
   } catch (err) {
