@@ -8,13 +8,24 @@ import { DonatePost } from "../../data-types/posttypes.ts";
 
 export default function Donate() {
   const [donatePosts, setDonatePosts] = useState([]);
-  //const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Callback function to handle search term
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+    console.log(searchTerm);
+  };
 
   useEffect(() => {
-    //setLoading(true);
+    const endpoint = searchTerm
+      ? `http://localhost:3000/donate/donatepost/${searchTerm}`
+      : "http://localhost:3000/donate/donatepost";
+    console.log(endpoint);
+
     axios
-      .get("http://localhost:3000/donate/donatepost")
+      .get(endpoint)
       .then((res) => {
+        //console.log(res.data);
         setDonatePosts(res.data);
         //setLoading(false);
       })
@@ -22,14 +33,14 @@ export default function Donate() {
         console.log(err);
         //setLoading(false);
       });
-  }, []);
+  }, [searchTerm]);
 
   return (
     <div className="flex flex-row grow">
       <Categories type="donate"></Categories>
       <div className="w-full h-full">
         <div>
-          <SearchBar type="donate" />
+          <SearchBar type="donate" onSearch={handleSearch} />
           <CreatePostButton type="donate" />
         </div>
         <div className="container">
