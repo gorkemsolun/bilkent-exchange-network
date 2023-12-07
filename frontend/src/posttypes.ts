@@ -4,7 +4,7 @@ export interface LostFoundPost {
   description: string;
   category: string;
   image: string;
-  isLost: boolean;
+  status: string;
 }
 
 export interface BorrowPost {
@@ -14,11 +14,19 @@ export interface BorrowPost {
   category: string;
 }
 
-export interface SecondHandPost {
+export interface SecondhandPost {
   id: number;
   title: string;
   description: string;
   category: string;
   image: string;
   price: string;
+}
+
+export interface DonatePost {
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  image: string;
 }

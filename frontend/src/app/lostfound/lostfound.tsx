@@ -1,10 +1,10 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import "../../App.css";
 import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
 import SearchBar from "../../components/searchbar.tsx";
-import "../../App.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { LostFoundPost } from "../../data-types/posttypes.ts";
+import { LostFoundPost } from "../../posttypes.ts";
 
 export default function LostFound() {
   const [lostFoundPosts, setLostFoundPosts] = useState([]);
@@ -44,15 +44,9 @@ export default function LostFound() {
                     <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
                       {post.category}
                     </span>
-                    {post.isLost ? (
-                      <span className="badge bg-danger rounded-pill position-absolute top-0 end-12 m-2">
-                        Lost
-                      </span>
-                    ) : (
-                      <span className="badge bg-success rounded-pill position-absolute top-0 end-12 m-2">
-                        Found
-                      </span>
-                    )}
+                    <span className="badge bg-danger rounded-pill position-absolute top-0 end-12 m-2">
+                      {post.status}
+                    </span>
                     <img className="card-img" src={post.image} alt="Vans" />
                   </div>
                   <div className="card-img-overlay d-flex justify-content-end">

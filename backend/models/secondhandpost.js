@@ -10,10 +10,6 @@ const SecondhandpostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
-      required: true,
-    },
     image: {
       type: String,
       required: true,
@@ -28,6 +24,10 @@ const SecondhandpostSchema = new mongoose.Schema(
     },
     category: {
       type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
       required: true,
     },
   },

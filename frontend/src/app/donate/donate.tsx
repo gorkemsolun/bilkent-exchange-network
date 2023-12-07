@@ -1,30 +1,28 @@
-import DonatePost from "./donatepost.tsx";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import "../../App.css";
-import SearchBar from "../../components/searchbar.tsx";
 import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
+import SearchBar from "../../components/searchbar.tsx";
+import { DonatePost } from "../../posttypes.ts";
 
 export default function Donate() {
-  const donatePosts = [
-    {
-      // dummy data
-      id: 1,
-      title: "tragedy of hamlet",
-      description:
-        "desssscriptttttttttionnnnnnnnn offfffffffffff trrrrrrragedyyyyyyyyyyy offfffff hammmmmmlettttttttttt@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
-      category: "Book",
-      imgSrc: "/cs319.png",
-      price: "500",
-    },
-    {
-      id: 2,
-      title: "gilgamesh",
-      description: "desssscrip",
-      category: "Book",
-      imgSrc: "/cs319.png",
-      price: "100",
-    },
-  ];
+  const [donatePosts, setDonatePosts] = useState([]);
+  //const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    //setLoading(true);
+    axios
+      .get("http://localhost:3000/donate/donatepost")
+      .then((res) => {
+        setDonatePosts(res.data);
+        //setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        //setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="flex flex-row grow">
@@ -34,7 +32,51 @@ export default function Donate() {
           <SearchBar type="donate" />
           <CreatePostButton type="donate" />
         </div>
-        <DonatePost donatePosts={donatePosts} />
+        <div className="container">
+          <div className="row">
+            {donatePosts.map((post: DonatePost) => (
+              <div
+                className="col-12 col-sm-8 col-md-6 col-lg-4 mb-4"
+                key={post.id}
+              >
+                <div className="card">
+                  <div className="position-relative">
+                    <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
+                      {post.category}
+                    </span>
+                    <img className="card-img" src={post.image} alt="Vans" />
+                  </div>
+                  <div className="card-img-overlay d-flex justify-content-end">
+                    <a href="#" className="card-link text-danger like">
+                      <i className="fas fa-heart"></i>
+                    </a>
+                  </div>
+                  <div className="card-body">
+                    <h4 className="card-title">{post.title}</h4>
+                    <div
+                      className="description-container"
+                      style={{ height: "100px" }}
+                    >
+                      <p className="card-text">
+                        {post.description.length < 75
+                          ? post.description
+                          : post.description.slice(0, 75) + "..."}
+                      </p>
+                    </div>{" "}
+                    <div className="buy d-flex justify-content-between align-posts-center">
+                      <div className="price text-success">
+                        <h5 className="mt-4"></h5>
+                      </div>
+                      <a href="#" className="btn btn-danger mt-3">
+                        <i className="fas fa-shopping-cart"></i> Details
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

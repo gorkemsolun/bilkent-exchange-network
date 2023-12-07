@@ -1,6 +1,6 @@
-import "../../bootstrap.css";
 import "../../App.css";
-import { BorrowPost } from "../../data-types/posttypes";
+import "../../bootstrap.css";
+import { BorrowPost } from "../../posttypes";
 
 const handleBorrowPostClick = (postId: number) => {
   // Replace this with your desired functionality when a borrow element is clicked
