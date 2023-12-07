@@ -5,7 +5,6 @@ function fieldController(reqBody) {
     !reqBody.title ||
     !reqBody.description ||
     !reqBody.image ||
-    !reqBody.date ||
     !reqBody.poster ||
     !reqBody.category ||
     !reqBody.status
@@ -33,6 +32,11 @@ export const lostfoundPostGET = async (req, res) => {
   try {
     const lostfoundposts = await Lostfoundpost.find({});
 
+    lostfoundposts.forEach((lostfoundpost) => {
+      lostfoundpost["date"] = lostfoundpost.createdAt.toDateString();
+      lostfoundpost["id"] = lostfoundpost._id;
+    });
+
     return res.status(200).json(lostfoundposts);
   } catch (err) {
     console.log(err);
@@ -47,6 +51,9 @@ export const lostfoundPostGETId = async (req, res) => {
     if (!lostfoundpost) {
       return res.status(404).send("Lostfoundpost not found");
     }
+
+    lostfoundpost["date"] = lostfoundpost.createdAt.toDateString();
+    lostfoundpost["id"] = lostfoundpost._id;
 
     return res.status(200).json(lostfoundpost);
   } catch (err) {

@@ -14,10 +14,6 @@ const SecondhandpostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    date: {
-      type: String,
-      required: true,
-    },
     poster: {
       type: String,
       required: true,

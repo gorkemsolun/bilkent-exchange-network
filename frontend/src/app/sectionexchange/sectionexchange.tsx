@@ -1,77 +1,32 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import "../../App.css";
 import Categories from "../../components/categories";
 import CreatePostButton from "../../components/createpostbutton";
 import SearchBar from "../../components/searchbar";
-import SectionItem from "./sectionitem";
-import TopRow from "./toprow";
+import { SectionexchangePost } from "../../data-types/posttypes";
 
 export default function SectionExchange() {
-  // dummy data
-  const sectionItems = [
-    {
-      id: 1,
-      name: "Emir Tuğlu",
-      offeredSection: "CS 224-2",
-      desiredSection: "CS 224-1",
-      date: "21.11.2023 11.17",
-    },
-    {
-      id: 1,
-      name: "Görkem Kadir Solun",
-      offeredSection: "CS 224-2",
-      desiredSection: "CS 224-1",
-      date: "21.11.2023 11.17",
-    },
-    {
-      id: 1,
-      name: "Emir Tuğlu",
-      offeredSection: "CS 224-2",
-      desiredSection: "CS 224-1",
-      date: "21.11.2023 11.17",
-    },
-    {
-      id: 1,
-      name: "Emir Tuğlu",
-      offeredSection: "CS 224-2",
-      desiredSection: "CS 224-1",
-      date: "21.11.2023 11.17",
-    },
-    {
-      id: 1,
-      name: "Emir Tuğlu",
-      offeredSection: "CS 224-2",
-      desiredSection: "CS 224-1",
-      date: "21.11.2023 11.17",
-    },
-    {
-      id: 1,
-      name: "Emir Tuğlu",
-      offeredSection: "CS 224-2",
-      desiredSection: "CS 224-1",
-      date: "21.11.2023 11.17",
-    },
-    {
-      id: 1,
-      name: "Emir Tuğlu",
-      offeredSection: "CS 224-2",
-      desiredSection: "CS 224-1",
-      date: "21.11.2023 11.17",
-    },
-    {
-      id: 1,
-      name: "Emir Tuğlu",
-      offeredSection: "CS 224-2",
-      desiredSection: "CS 224-1",
-      date: "21.11.2023 11.17",
-    },
-    {
-      id: 1,
-      name: "Emir Tuğlu",
-      offeredSection: "CS 224-2",
-      desiredSection: "CS 224-1",
-      date: "21.11.2023 11.17",
-    },
-  ];
+  function handleDMClick(): void {
+    console.log("DM Box Clicked");
+  }
+
+  const [sectionexchangePosts, setSectionexchangePosts] = useState([]);
+  //const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    //setLoading(true);
+    axios
+      .get("http://localhost:3000/sectionexchange/sectionexchangepost")
+      .then((res) => {
+        setSectionexchangePosts(res.data);
+        //setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        //setLoading(false);
+      });
+  }, []);
 
   return (
     <div className="flex flex-row grow">
@@ -86,8 +41,102 @@ export default function SectionExchange() {
           <SearchBar type="sectionExchange" />
           <CreatePostButton type="sectionExchange" />
         </div>
-        <TopRow />
-        <SectionItem sectionItems={sectionItems} />
+        <div className="container" style={{ width: "100%" }}>
+          <div className="row mb-3 mr-20 ml-5">
+            <div className="col-12">
+              <div
+                className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2"
+                style={{ backgroundColor: "white", fontWeight: "bold" }}
+              >
+                <div className="row align-items-start justify-content-start">
+                  <div
+                    className="col-md text-center" // Adjusted column size
+                    style={{ borderRight: "1px solid black" }}
+                  >
+                    <p className="card-text">{"Name"}</p>
+                  </div>
+                  <div
+                    className="col-md text-center" // Adjusted column size
+                    style={{ borderRight: "1px solid black" }}
+                  >
+                    <p className="card-text">{"Offered Section"}</p>
+                  </div>
+                  <div
+                    className="col-md text-center" // Adjusted column size
+                    style={{ borderRight: "1px solid black" }}
+                  >
+                    <p className="card-text">{"Desired Section"}</p>
+                  </div>
+                  <div
+                    className="col-md text-center" // Adjusted column size
+                    style={{ borderRight: "1px solid black" }}
+                  >
+                    <p className="card-text">{"DM"}</p>
+                  </div>
+                  <div
+                    className="col-md text-center" // Adjusted column size
+                  >
+                    <p className="card-text">{"Date"}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="container" style={{ width: "100%" }}>
+          {sectionexchangePosts.map((item: SectionexchangePost) => (
+            <div className="row mb-1 mr-20 ml-5" key={item.id}>
+              <div className="col-12">
+                <div
+                  className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2"
+                  style={{ backgroundColor: "white" }}
+                >
+                  <div className="row align-items-start justify-content-start">
+                    <div
+                      className="col-md text-center" // Adjusted column size
+                      style={{ borderRight: "1px solid black" }}
+                    >
+                      <p className="card-text">{item.title}</p>
+                    </div>
+                    <div
+                      className="col-md text-center" // Adjusted column size
+                      style={{ borderRight: "1px solid black" }}
+                    >
+                      <p className="card-text">{item.offeredSection}</p>
+                    </div>
+                    <div
+                      className="col-md text-center" // Adjusted column size
+                      style={{ borderRight: "1px solid black" }}
+                    >
+                      <p className="card-text">{item.desiredSection}</p>
+                    </div>
+                    <div
+                      className="col-md text-center" // Adjusted column size
+                      style={{ borderRight: "1px solid black" }}
+                    >
+                      <div>
+                        {/* DM Box Image with hover title and click event */}
+                        <img
+                          className="img-fluid mx-auto d-block"
+                          style={{ maxWidth: "4vw", maxHeight: "4vh" }}
+                          src="/dmbox.png" // Replace with your image URL
+                          alt="DM Box"
+                          title="Send DM" // Tooltip on hover
+                          onClick={() => handleDMClick()} // Your click handler
+                        />
+                      </div>
+                    </div>
+                    <div
+                      className="col-md text-center" // Adjusted column size
+                    >
+                      <p className="card-text">{item.date}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
