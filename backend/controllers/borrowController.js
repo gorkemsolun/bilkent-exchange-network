@@ -4,7 +4,6 @@ function fieldController(reqBody) {
   if (
     !reqBody.title ||
     !reqBody.description ||
-    !reqBody.date ||
     !reqBody.poster ||
     !reqBody.category
   ) {
@@ -31,6 +30,11 @@ export const borrowPostGET = async (req, res) => {
   try {
     const borrowposts = await Borrowpost.find({});
 
+    borrowposts.forEach((borrowpost) => {
+      borrowpost["date"] = borrowpost.createdAt.toDateString();
+      borrowpost["id"] = borrowpost._id;
+    });
+
     return res.status(200).json(borrowposts);
   } catch (err) {
     console.log(err);
@@ -45,6 +49,9 @@ export const borrowPostGETId = async (req, res) => {
     if (!borrowpost) {
       return res.status(404).send("Borrowpost not found");
     }
+
+    borrowpost["date"] = borrowpost.createdAt.toDateString();
+    borrowpost["id"] = borrowpost._id;
 
     return res.status(200).json(borrowpost);
   } catch (err) {
