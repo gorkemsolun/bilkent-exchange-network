@@ -15,14 +15,12 @@ export default function Donate() {
   // Callback function to handle search term
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
-    console.log(searchTerm);
   };
 
   useEffect(() => {
     const endpoint = searchTerm
       ? `http://localhost:3000/donate/donatepost/${searchTerm}`
       : "http://localhost:3000/donate/donatepost";
-    console.log(endpoint);
 
     axios
       .get(endpoint)
@@ -45,7 +43,7 @@ export default function Donate() {
         <Categories type="donate"></Categories>
         <div className="w-full h-full">
           <div className="flex items-center justify-center">
-            <SearchBar type="secondhand" />
+            <SearchBar type="secondhand" onSearch={handleSearch} />
             <CreatePostButton type="secondhand" />
           </div>
           <div className="container">

@@ -118,3 +118,15 @@ export const secondhandPostDEL = async (req, res) => {
     return res.status(500).send(err);
   }
 };
+
+export const secondhandpostGETSearch = async (req, res) => {
+  try {
+    const searchString = req.params.string;
+    const regex = new RegExp(searchString, 'i');
+    const posts = await Secondhandpost.find({title: regex});
+    return res.status(200).json(posts);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+};

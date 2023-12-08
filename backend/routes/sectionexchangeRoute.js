@@ -6,6 +6,7 @@ import {
   sectionexchangePostGETId,
   sectionexchangePostPOST,
   sectionexchangePostPUT,
+  sectionPostGETSearch,
 } from "../controllers/sectionexchangeController.js";
 
 const router = express.Router();
@@ -15,6 +16,7 @@ const router = express.Router();
 */
 router.post("/sectionexchangepost", sectionexchangePostPOST);
 router.get("/sectionexchangepost", sectionexchangePostGET);
+router.get("/sectionexchangepost/:string", sectionPostGETSearch);
 router.get("/sectionexchangepost/:id", sectionexchangePostGETId);
 router.put("/sectionexchangepost/:id", sectionexchangePostPUT);
 router.delete("/sectionexchangepost/:id", sectionexchangePostDEL);

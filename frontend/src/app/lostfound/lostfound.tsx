@@ -10,13 +10,22 @@ import Header from "../../components/header.tsx";
 
 export default function LostFound() {
   const [lostFoundPosts, setLostFoundPosts] = useState([]);
-  //const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Callback function to handle search term
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
 
   useEffect(() => {
-    //setLoading(true);
+    const endpoint = searchTerm
+      ? `http://localhost:3000/lostfound/lostfoundPost/${searchTerm}`
+      : "http://localhost:3000/lostfound/lostfoundPost";
+
     axios
-      .get("http://localhost:3000/lostfound/lostfoundPost")
+      .get(endpoint)
       .then((res) => {
+        //console.log(res.data);
         setLostFoundPosts(res.data);
         //setLoading(false);
       })
@@ -24,7 +33,7 @@ export default function LostFound() {
         console.log(err);
         //setLoading(false);
       });
-  }, []);
+  }, [searchTerm]);
 
   return (
     <>
@@ -34,7 +43,7 @@ export default function LostFound() {
         <Categories type="lostAndFound"></Categories>
         <div className="w-full h-full">
           <div className="flex items-center justify-center">
-            <SearchBar type="secondhand" />
+            <SearchBar type="secondhand" onSearch={handleSearch} />
             <CreatePostButton type="secondhand" />
           </div>
           <div className="container">

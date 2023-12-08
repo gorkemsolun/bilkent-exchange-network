@@ -10,13 +10,22 @@ import Navbar from "../../components/navbar";
 
 export default function Borrow() {
   const [borrowPosts, setBorrowPosts] = useState([]);
-  //const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Callback function to handle search term
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
 
   useEffect(() => {
-    //setLoading(true);
+    const endpoint = searchTerm
+      ? `http://localhost:3000/borrow/borrowpost/${searchTerm}`
+      : "http://localhost:3000/borrow/borrowpost";
+
     axios
-      .get("http://localhost:3000/borrow/borrowpost")
+      .get(endpoint)
       .then((res) => {
+        //console.log(res.data);
         setBorrowPosts(res.data);
         //setLoading(false);
       })
@@ -24,7 +33,7 @@ export default function Borrow() {
         console.log(err);
         //setLoading(false);
       });
-  }, []);
+  }, [searchTerm]);
 
   const handleBorrowPostClick = (postId: number) => {
     // Replace this with your desired functionality when a borrow element is clicked
@@ -39,7 +48,7 @@ export default function Borrow() {
         <Categories type="borrow"></Categories>
         <div className="w-full h-full">
           <div className="flex items-center justify-center">
-            <SearchBar type="secondhand" />
+            <SearchBar type="secondhand" onSearch={handleSearch} />
             <CreatePostButton type="secondhand" />
           </div>
           <div className="container">

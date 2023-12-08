@@ -11,7 +11,12 @@ import { SecondhandPost } from "../../data-types/posttypes.ts";
 export default function Secondhand() {
   const [secondhandPosts, setSecondhandPosts] = useState([]);
   const [categories, setCategories] = useState<string[]>([]);
-  //const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Callback function to handle search term
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
 
   /**
    * TODO: Implement loading
@@ -19,9 +24,13 @@ export default function Secondhand() {
 
   useEffect(() => {
     //setLoading(true);
-    if (categories.length == 0) {
+    if (true /*categories.length == 0*/) {
+      const endpoint = searchTerm
+        ? `http://localhost:3000/secondhand/secondhandpost/${searchTerm}`
+        : "http://localhost:3000/secondhand/secondhandpost";
+
       axios
-        .get("http://localhost:3000/secondhand/secondhandpost")
+        .get(endpoint)
         .then((res) => {
           setSecondhandPosts(res.data);
           //setLoading(false);
@@ -49,7 +58,7 @@ export default function Secondhand() {
           //setLoading(false);
         });
     }
-  }, [categories]);
+  }, [searchTerm]);
 
   function passCategories(passedCategories: string[]) {
     setCategories(passedCategories);
@@ -67,7 +76,7 @@ export default function Secondhand() {
         ></Categories>
         <div className="w-full h-full">
           <div className="flex items-center justify-center">
-            <SearchBar type="secondhand" />
+            <SearchBar type="secondhand" onSearch={handleSearch} />
             <CreatePostButton type="secondhand" />
           </div>
           <div className="container">

@@ -91,3 +91,15 @@ export const borrowPostDEL = async (req, res) => {
     return res.status(500).send(err);
   }
 };
+
+export const borrowPostGETSearch = async (req, res) => {
+  try {
+    const searchString = req.params.string;
+    const regex = new RegExp(searchString, 'i');
+    const borrowPosts = await Borrowpost.find({title: regex});
+    return res.status(200).json(borrowPosts);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+};

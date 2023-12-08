@@ -6,6 +6,7 @@ import {
   borrowPostPOST,
   borrowPostPUT,
   borrowPostGETId,
+  borrowPostGETSearch
 } from "../controllers/borrowController.js";
 
 const router = express.Router();
@@ -16,7 +17,8 @@ const router = express.Router();
 
 router.post("/borrowpost", borrowPostPOST);
 router.get("/borrowpost", borrowPostGET);
-router.get("/borrowpost/:id", borrowPostGETId);
+router.get("/borrowpost/:string", borrowPostGETSearch);
+//router.get("/borrowpost/:id", borrowPostGETId);
 router.put("/borrowpost/:id", borrowPostPUT);
 router.delete("/borrowpost/:id", borrowPostDEL);
 

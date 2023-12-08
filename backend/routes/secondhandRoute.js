@@ -7,6 +7,7 @@ import {
   secondhandPostGETId,
   secondhandPostPOST,
   secondhandPostPUT,
+  secondhandpostGETSearch,
 } from "../controllers/secondhandController.js";
 
 const router = express.Router();
@@ -16,6 +17,7 @@ const router = express.Router();
 */
 router.post("/secondhandpost", secondhandPostPOST);
 router.get("/secondhandpost", secondhandPostGET);
+router.get("/secondhandpost/:string", secondhandpostGETSearch);
 router.get("/secondhandpost/:id", secondhandPostGETId);
 router.get(
   "/secondhandpost/category/:categories",
