@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState(""); // Add state for surname
+  const [username, setUsername] = useState("");
   const { signUpRequest, isLoading, error } = useSignup();
 
   const handleSubmit = async (e) => {
@@ -34,43 +33,21 @@ const Signup = () => {
       </div>
       <form
         className="flex flex-col bg-white rounded shadow-lg p-12 mt-12 opacity-90"
-        style={{ width: "25rem" }}
+        style={{ width: "23rem" }}
         onSubmit={handleSubmit}
       >
-        <div className="flex">
-          <div className="flex-1 pr-1">
-            <div className="flex flex-col">
-              <label
-                className="font-semibold text-s mt-2"
-                style={{ textAlign: "left" }}
-              >
-                Name
-              </label>
-              <input
-                className="flex items-center h-12 px-4 w-full bg-gray-200 rounded focus:outline-none focus:ring-2"
-                type="text"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-              />
-            </div>
-          </div>
-          <div className="flex-1 pl-1">
-            <div className="flex flex-col">
-              <label
-                className="font-semibold text-s mt-2"
-                style={{ textAlign: "left" }}
-              >
-                Surname
-              </label>
-              <input
-                className="flex items-center h-12 px-4 w-full bg-gray-200 rounded focus:outline-none focus:ring-2"
-                type="text"
-                onChange={(e) => setSurname(e.target.value)}
-                value={surname}
-              />
-            </div>
-          </div>
-        </div>
+        <label
+          className="font-semibold text-s mt-2"
+          style={{ textAlign: "left" }}
+        >
+          Username
+        </label>
+        <input
+          className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
+          type="username"
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
+        />
 
         <label
           className="font-semibold text-s mt-2"
