@@ -2,6 +2,8 @@ import ForumPost from "./forumpost";
 import "../../App.css";
 import SearchBar from "../../components/searchbar";
 import CreatePostButton from "../../components/createpostbutton";
+import Header from "../../components/header";
+import Navbar from "../../components/navbar";
 
 export default function Forum() {
   const ForumPosts = [
@@ -52,14 +54,18 @@ export default function Forum() {
   ];
 
   return (
-    <div className="flex flex-row  grow">
-      <div className="w-full h-full">
-        <div>
-          <SearchBar type="forum" />
-          <CreatePostButton type="forum" />
+    <>
+      <Header />
+      <Navbar />
+      <div className="flex flex-row  grow">
+        <div className="w-full h-full">
+          <div>
+            <SearchBar type="forum" />
+            <CreatePostButton type="forum" />
+          </div>
+          <ForumPost forumPosts={ForumPosts} />
         </div>
-        <ForumPost forumPosts={ForumPosts} />
       </div>
-    </div>
+    </>
   );
 }

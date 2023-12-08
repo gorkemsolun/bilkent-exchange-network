@@ -1,12 +1,16 @@
 import { useState } from "react";
 import "../App.css";
 
-export default function SearchBar(props) {
+export default function SearchBar(props: {
+  type: string;
+  onSearch: (searchTerm: string) => void;
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortType, setSortType] = useState("");
 
   const handleSearch = () => {
     // Perform search based on `searchTerm`
+    props.onSearch(searchTerm);
   };
 
   return (

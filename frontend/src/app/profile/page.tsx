@@ -1,4 +1,6 @@
 import React from "react";
+import Navbar from "../../components/navbar";
+import Header from "../../components/header";
 
 interface UserProfileProps {
   user: {
@@ -13,30 +15,34 @@ const UserProfile: React.FC<UserProfileProps> = ({
   user = { name: "Name Surname", email: "mymail@gmail.com", reputation: 432 },
 }) => {
   return (
-    <div style={styles.container}>
-      <div style={styles.profileHeader}>
-        <img src="cs319.png" style={styles.profileImage} alt="Profile" />
+    <>
+      <Header />
+      <Navbar />
+      <div style={styles.container}>
+        <div style={styles.profileHeader}>
+          <img src="cs319.png" style={styles.profileImage} alt="Profile" />
+          <div>
+            <h2 style={styles.profileName}>{user.name}</h2>
+            <p style={styles.profileEmail}>{user.email}</p>
+          </div>
+        </div>
+        <div style={styles.profileStats}>
+          <div>
+            <p style={styles.statLabel}>Reputation</p>
+            <p style={styles.statValue}>{user.reputation}</p>
+          </div>
+        </div>
         <div>
-          <h2 style={styles.profileName}>{user.name}</h2>
-          <p style={styles.profileEmail}>{user.email}</p>
+          <p style={styles.statLabel}>Posts</p>
+          {/*user.posts.map((post) => (
+        <div key={post.id} style={styles.post}>
+          <h3 style={styles.postTitle}>{post.title}</h3>
+          <p style={styles.postContent}>{post.content}</p>
+        </div>
+      ))*/}
         </div>
       </div>
-      <div style={styles.profileStats}>
-        <div>
-          <p style={styles.statLabel}>Reputation</p>
-          <p style={styles.statValue}>{user.reputation}</p>
-        </div>
-      </div>
-      <div>
-        <p style={styles.statLabel}>Posts</p>
-        {/*user.posts.map((post) => (
-            <div key={post.id} style={styles.post}>
-              <h3 style={styles.postTitle}>{post.title}</h3>
-              <p style={styles.postContent}>{post.content}</p>
-            </div>
-          ))*/}
-      </div>
-    </div>
+    </>
   );
 };
 
