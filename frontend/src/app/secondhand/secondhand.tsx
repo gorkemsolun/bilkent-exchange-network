@@ -33,7 +33,7 @@ export default function Secondhand() {
       <div className="flex flex-row grow">
         <Categories type="secondhand"></Categories>
         <div className="w-full h-full">
-          <div>
+          <div className="flex items-center justify-center">
             <SearchBar type="secondhand" />
             <CreatePostButton type="secondhand" />
           </div>

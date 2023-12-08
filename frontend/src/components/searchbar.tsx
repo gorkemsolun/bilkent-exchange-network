@@ -25,15 +25,16 @@ export default function SearchBar(props: {
           }
         }}
         placeholder="Search..."
-        className="border p-2 search-bar rounded-full m-2"
+        className="border p-2 search-bar rounded-full m-2 bg-white"
       />
 
       {/* Sort Dropdown */}
       <div className="relative">
-        <div className=" right-0 mt-2 p-2 border bg-white center m-2 rounded-full">
+        <div className=" right-0 mt-2 p-2 border bg-white center m-2 rounded-full text-black">
           <select
             value={sortType}
             onChange={(e) => setSortType(e.target.value)}
+            className="bg-white"
           >
             <option value="" disabled hidden>
               Sort By

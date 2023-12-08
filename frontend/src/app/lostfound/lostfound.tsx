@@ -33,9 +33,9 @@ export default function LostFound() {
       <div className="flex flex-row grow">
         <Categories type="lostAndFound"></Categories>
         <div className="w-full h-full">
-          <div>
-            <SearchBar type="lostAndFound" />
-            <CreatePostButton type="lostAndFound" />
+          <div className="flex items-center justify-center">
+            <SearchBar type="secondhand" />
+            <CreatePostButton type="secondhand" />
           </div>
           <div className="container">
             <div className="row">
