@@ -1,16 +1,14 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import SecondHand from "./app/secondhand/secondhand";
-import LostFound from "./app/lostfound/lostfound.tsx";
-import Donate from "./app/donate/donate";
-import Borrow from "./app/borrow/borrow";
-import Forum from "./app/forum/forum";
-import SectionExchange from "./app/sectionexchange/sectionexchange";
-import Login from "./app/login/login";
-import Signup from "./app/signup/signup.jsx";
-import Header from "./components/header";
-import Navbar from "./components/navbar";
-import { AuthContextProvider } from "./context/AuthContext";
 import "./App.css";
+import Borrow from "./app/borrow/borrow";
+import Donate from "./app/donate/donate";
+import Forum from "./app/forum/forum";
+import Login from "./app/login/login";
+import LostFound from "./app/lostfound/lostfound";
+import SecondHand from "./app/secondhand/secondhand";
+import SectionExchange from "./app/sectionexchange/sectionexchange";
+import Signup from "./app/signup/signup";
+import { AuthContextProvider } from "./authentication/AuthContext";
 
 export default function App() {
   return (
