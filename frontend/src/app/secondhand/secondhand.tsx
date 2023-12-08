@@ -66,7 +66,7 @@ export default function Secondhand() {
           passCategories={passCategories}
         ></Categories>
         <div className="w-full h-full">
-          <div>
+          <div className="flex items-center justify-center">
             <SearchBar type="secondhand" />
             <CreatePostButton type="secondhand" />
           </div>

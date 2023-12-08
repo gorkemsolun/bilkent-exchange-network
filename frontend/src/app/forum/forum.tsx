@@ -57,13 +57,15 @@ export default function Forum() {
     <>
       <Header />
       <Navbar />
-      <div className="flex flex-row  grow">
+      <div className="flex flex-row grow">
         <div className="w-full h-full">
-          <div>
-            <SearchBar type="forum" />
-            <CreatePostButton type="forum" />
+          <div className="flex items-center justify-center">
+            <SearchBar type="secondhand" />
+            <CreatePostButton type="secondhand" />
           </div>
-          <ForumPost forumPosts={ForumPosts} />
+          <div className="justify-center">
+            <ForumPost forumPosts={ForumPosts} />
+          </div>
         </div>
       </div>
     </>

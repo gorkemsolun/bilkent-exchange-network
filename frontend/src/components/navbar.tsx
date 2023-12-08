@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-cyan-300">
+    <nav className="bg-gradient-to-r from-blue-500 to-cyan-300 w-screen">
       <ul className="flex flex-row object-fill divide-x-5 ml-1 justify-center">
         <li className="home-navbar-li">
           <Link className="home-navbar-link" to="/secondhand">
@@ -30,7 +30,7 @@ export default function Navbar() {
           </Link>
         </li>
         <li className="home-navbar-li">
-          <Link className="home-navbar-link" to="/home">
+          <Link className="home-navbar-link" to="/forum">
             Forum
           </Link>
         </li>

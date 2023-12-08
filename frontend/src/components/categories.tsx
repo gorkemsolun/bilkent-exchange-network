@@ -66,7 +66,8 @@ export default function Categories(props: CategoryProps) {
                       value={subcategory.name}
                       checked={checkedCategories.includes(subcategory.name)}
                       onChange={() => handleCategoryChange(subcategory.name)}
-                    />
+                      className="form-checkbox bg-white"
+                  />
                     <label>{subcategory.name}</label>
                   </div>
                 )
@@ -83,7 +84,7 @@ export default function Categories(props: CategoryProps) {
               type="number"
               value={minPrice}
               onChange={(e) => setMinPrice(Number(e.target.value))}
-              className="border p-2 rounded-md w-30"
+              className="border p-2 rounded-md w-30 bg-white"
             />
           </div>
 
@@ -93,7 +94,7 @@ export default function Categories(props: CategoryProps) {
               type="number"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="border p-2 rounded-md w-30"
+              className="border p-2 rounded-md w-30 bg-white"
             />
           </div>
         </div>
@@ -106,7 +107,7 @@ export default function Categories(props: CategoryProps) {
             type="date"
             value={minDate}
             onChange={(e) => setMinDate(Number(e.target.value))}
-            className="border p-2 rounded-md w-30"
+            className="border p-2 rounded-md w-30 bg-white"
           />
         </div>
         <div>
@@ -115,7 +116,7 @@ export default function Categories(props: CategoryProps) {
             type="date"
             value={maxDate}
             onChange={(e) => setMaxDate(Number(e.target.value))}
-            className="border p-2 rounded-md w-30"
+            className="border p-2 rounded-md w-30 bg-white"
           />
         </div>
       </div>

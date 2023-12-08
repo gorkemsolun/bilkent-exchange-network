@@ -44,9 +44,9 @@ export default function Donate() {
       <div className="flex flex-row grow">
         <Categories type="donate"></Categories>
         <div className="w-full h-full">
-          <div>
-            <SearchBar type="donate" onSearch={handleSearch} />
-            <CreatePostButton type="donate" />
+          <div className="flex items-center justify-center">
+            <SearchBar type="secondhand" />
+            <CreatePostButton type="secondhand" />
           </div>
           <div className="container">
             <div className="row">

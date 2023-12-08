@@ -6,7 +6,6 @@ interface ForumPostProps {
     id: number;
     title: string;
     description: string;
-    category: string;
   }[];
 }
 
@@ -28,11 +27,6 @@ export default function ForumPost({ forumPosts }: ForumPostProps) {
               style={{ cursor: "pointer" }}
             >
               <div className="card" style={{ width: "100%" }}>
-                <div className="position-relative">
-                  <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
-                    {post.category}
-                  </span>
-                </div>
                 <div className="card-img-overlay d-flex justify-content-end">
                   <a href="#" className="card-link text-danger like">
                     <i className="fas fa-heart"></i>
@@ -41,7 +35,11 @@ export default function ForumPost({ forumPosts }: ForumPostProps) {
                 <div className="card-body">
                   <h2
                     className="card-title"
-                    style={{ fontSize: "1.5rem", fontWeight: "bold" }}
+                    style={{
+                      fontSize: "1.5rem",
+                      fontWeight: "bold",
+                      textAlign: "left",
+                    }}
                   >
                     {post.title.length < 50
                       ? post.title
@@ -49,7 +47,7 @@ export default function ForumPost({ forumPosts }: ForumPostProps) {
                   </h2>
                   <div
                     className="description-container"
-                    style={{ height: "10%" }}
+                    style={{ height: "10%", textAlign: "left" }}
                   >
                     <p className="card-text">
                       {post.description.length < 315

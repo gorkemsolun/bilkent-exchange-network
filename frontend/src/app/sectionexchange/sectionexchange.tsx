@@ -37,14 +37,9 @@ export default function SectionExchange() {
       <div className="flex flex-row grow">
         <Categories type="sectionExchange"></Categories>
         <div className="w-full h-full">
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <SearchBar type="sectionExchange" />
-            <CreatePostButton type="sectionExchange" />
+          <div className="flex items-center justify-center">
+            <SearchBar type="secondhand" />
+            <CreatePostButton type="secondhand" />
           </div>
           <div className="container" style={{ width: "100%" }}>
             <div className="row mb-3 mr-20 ml-5">
