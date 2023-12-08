@@ -67,7 +67,7 @@ export default function Categories(props: CategoryProps) {
                       checked={checkedCategories.includes(subcategory.name)}
                       onChange={() => handleCategoryChange(subcategory.name)}
                       className="form-checkbox bg-white"
-                  />
+                    />
                     <label>{subcategory.name}</label>
                   </div>
                 )
