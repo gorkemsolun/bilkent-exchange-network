@@ -1,75 +1,76 @@
 import { useState } from "react";
 import "../App.css";
+import { categories } from "../data-types/constants";
+import { Category, CategoryProps, Subcategory } from "../data-types/datatypes";
 
-interface Categories {
-  /** TODO: prop types needed to be created */
-}
-
-export default function Categories(props) {
-  const categoriesData = [
-    {
-      name: "Category 1",
-      subcategories: [{ name: "Subcategory 1" }, { name: "Subcategory 2" }],
-    },
-    { name: "Category 2", subcategories: [{ name: "Subcategory 1" }] },
-    {
-      name: "Category 3",
-      subcategories: [
-        { name: "Subcategory 1" },
-        { name: "Subcategory 2" },
-        { name: "Subcategory 3" },
-      ],
-    },
-  ];
-
+export default function Categories(props: CategoryProps) {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [minDate, setMinDate] = useState(0);
   const [maxDate, setMaxDate] = useState(0);
   const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
 
-  const handleFilter = () => {
-    props.onFilter({
-      minPrice,
-      maxPrice,
-      minDate,
-      maxDate,
-      checkedCategories,
-    });
-  };
+  /*
+   TODO: props.type should be implemented for other pages
+  */
+  if (props.type === "") {
+    props.type = "secondhand";
+  }
 
-  /** TODO: This should be done by id instead of name */
-  const handleCategoryChange = (subcategoryName: string) => {
-    if (checkedCategories.includes(subcategoryName)) {
+  const handleCategoryChange = (category: string) => {
+    if (checkedCategories.includes(category)) {
       setCheckedCategories(
-        checkedCategories.filter((name) => name !== subcategoryName)
+        checkedCategories.filter((name) => name !== category)
       );
     } else {
-      setCheckedCategories([...checkedCategories, subcategoryName]);
+      setCheckedCategories([...checkedCategories, category]);
     }
+  };
+
+  const onFilterClicked = () => {
+    props.passCategories(checkedCategories);
+  };
+
+  const onResetClicked = () => {
+    setCheckedCategories([]);
+    setMinPrice(0);
+    setMaxPrice(0);
+    setMinDate(0);
+    setMaxDate(0);
   };
 
   return (
     <div className="flex flex-col object-contain m-3 bg-slate-100 border-r-4 pr-3">
       <div className="text-2xl font-bold p-1">Categories</div>
       <div className="mb-3">
-        {categoriesData.map((category, index) => (
+        {categories[props.type].map((category: Category, index: number) => (
           <div key={index}>
-            <div className="second-hand-category">{category.name}</div>
-            {/** TODO: We should be able to check categories */}
-            <div className="">
-              {category.subcategories.map((subcategory, subIndex) => (
-                <div key={subIndex} className="second-hand-subcategory">
-                  <input
-                    key={subIndex}
-                    type="checkbox"
-                    value={subcategory.name}
-                    checked={checkedCategories.includes(subcategory.name)}
-                    onChange={() => handleCategoryChange(subcategory.name)}
-                  />
-                  <label>{subcategory.name}</label>
-                </div>
-              ))}
+            <div className="second-hand-category">
+              <input
+                key={index}
+                type="checkbox"
+                value={category.name}
+                checked={checkedCategories.includes(category.name)}
+                onChange={() => handleCategoryChange(category.name)}
+              />
+              <label>{category.name}</label>
+            </div>
+
+            <div>
+              {category.subcategories.map(
+                (subcategory: Subcategory, subIndex: number) => (
+                  <div key={subIndex} className="second-hand-subcategory">
+                    <input
+                      key={subIndex}
+                      type="checkbox"
+                      value={subcategory.name}
+                      checked={checkedCategories.includes(subcategory.name)}
+                      onChange={() => handleCategoryChange(subcategory.name)}
+                    />
+                    <label>{subcategory.name}</label>
+                  </div>
+                )
+              )}
             </div>
           </div>
         ))}
@@ -120,13 +121,13 @@ export default function Categories(props) {
       </div>
       <div className="flex flex-row">
         <button
-          onClick={handleFilter}
+          onClick={onResetClicked}
           className="bg-red-500 text-white p-2 rounded-md ml-2 w-20"
         >
-          Cancel
+          Reset
         </button>
         <button
-          onClick={handleFilter}
+          onClick={onFilterClicked}
           className="bg-blue-500 text-white p-2 rounded-md ml-2 w-20"
         >
           Filter

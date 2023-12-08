@@ -19,6 +19,14 @@ const CreateItem: React.FC<CreateItemProps> = ({ onClose, type }) => {
     price: 0,
   });
 
+  /*
+  TODO: Add image to product
+  TODO: Add category to product
+  TODO: Add date to product
+  TODO: Category should be selected from the list of categories
+  TODO: Subcategory should be selected from the list of subcategories
+  */
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(product);

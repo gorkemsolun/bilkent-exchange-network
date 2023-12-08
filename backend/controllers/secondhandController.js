@@ -7,7 +7,7 @@ function fieldController(reqBody) {
     !reqBody.price ||
     !reqBody.image ||
     !reqBody.poster ||
-    !reqBody.category
+    !reqBody.categories
   ) {
     return res.status(400).send("Missing fields for secondhandpost");
   }
@@ -59,6 +59,28 @@ export const secondhandPostGETId = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
+  }
+};
+
+export const secondhandPostGETByCategories = async (req, res) => {
+  try {
+    let query = {};
+    const categories = req.params.categories.split(",");
+    console.log(categories);
+
+    if (!categories || !Array.isArray(categories)) {
+      return res.status(400).send("Missing categories");
+    }
+
+    // Build the query using an OR operator to include posts from any of the provided categories
+    query = { categories: { $in: categories } };
+
+    const posts = await Secondhandpost.find(query);
+
+    return res.status(200).json(posts);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
   }
 };
 

@@ -3,35 +3,68 @@ import { useEffect, useState } from "react";
 import "../../App.css";
 import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
-import SearchBar from "../../components/searchbar.tsx";
-import { SecondhandPost } from "../../data-types/posttypes.ts";
 import Header from "../../components/header.tsx";
 import Navbar from "../../components/navbar.tsx";
+import SearchBar from "../../components/searchbar.tsx";
+import { SecondhandPost } from "../../data-types/posttypes.ts";
 
 export default function Secondhand() {
   const [secondhandPosts, setSecondhandPosts] = useState([]);
+  const [categories, setCategories] = useState<string[]>([]);
   //const [loading, setLoading] = useState(false);
+
+  /**
+   * TODO: Implement loading
+   */
 
   useEffect(() => {
     //setLoading(true);
-    axios
-      .get("http://localhost:3000/secondhand/secondhandpost")
-      .then((res) => {
-        setSecondhandPosts(res.data);
-        //setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        //setLoading(false);
+    if (categories.length == 0) {
+      axios
+        .get("http://localhost:3000/secondhand/secondhandpost")
+        .then((res) => {
+          setSecondhandPosts(res.data);
+          //setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          //setLoading(false);
+        });
+    } else {
+      let url = "http://localhost:3000/secondhand/secondhandpost/category/";
+
+      categories.forEach((category) => {
+        url += category + ",";
       });
-  }, []);
+      url = url.slice(0, -1);
+
+      axios
+        .get(url)
+        .then((res) => {
+          setSecondhandPosts(res.data);
+          //setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+          //setLoading(false);
+        });
+    }
+  }, [categories]);
+
+  function passCategories(passedCategories: string[]) {
+    setCategories(passedCategories);
+    console.log(categories);
+  }
 
   return (
     <>
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Categories type="secondhand"></Categories>
+        <Categories
+          type="secondhand"
+          passCategories={passCategories}
+        ></Categories>
         <div className="w-full h-full">
           <div>
             <SearchBar type="secondhand" />
