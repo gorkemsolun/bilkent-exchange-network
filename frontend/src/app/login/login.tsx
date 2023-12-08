@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Login() {
   //const [username, setUsername] = useState("");
   //const [password, setPassword] = useState("");
@@ -24,7 +26,7 @@ export default function Login() {
     >
       <div className="flex flex-col items-center justify-center">
         {/* (potential) BUG_1: FIX THIS PART. EVEN THOUGH OTHER RESOURCES ADJUSTS THEIR SIZE ACCORDING TO CLIENT BILKENT LOGO DOES NOT DO THAT! */}
-        <img src="bilkent.png" width={"250"} height={"250"} />{" "}
+        {/*<img src="bilkent.png" width={"250"} height={"250"} />{" "}*/}
         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           Welcome to BEN!
         </h1>
@@ -33,26 +35,33 @@ export default function Login() {
         className="flex flex-col bg-white rounded shadow-lg p-12 mt-12 opacity-90"
         action=""
       >
-        <label className="font-semibold text-xs">Username or Email</label>
+        <label className="font-semibold text-s mt-2">Username or Email</label>
         <input
-          className="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
+          className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
           type="text"
         />
-        <label className="font-semibold text-xs mt-3">Password</label>
+        <label className="font-semibold text-s mt-2">Password</label>
         <input
-          className="flex items-center h-12 px-4 w-64 bg-gray-200 mt-2 rounded focus:outline-none focus:ring-2"
+          className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
           type="password"
         />
 
         <div className="flex mt-6 justify-center text-xs">
-          <a className="text-blue-400 hover:text-blue-500" href="#">
+          <Link className="text-blue-400 hover:text-blue-500" to="/">
             Forgot Password
-          </a>
+          </Link>
           <span className="mx-2 text-gray-300">/</span>
-          <a className="text-blue-400 hover:text-blue-500" href="#">
+          <Link className="text-blue-400 hover:text-blue-500" to="/signup">
             Sign Up
-          </a>
+          </Link>
         </div>
+
+        <Link
+          className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700"
+          to="/secondhand"
+        >
+          Login
+        </Link>
       </form>
     </div>
   );
