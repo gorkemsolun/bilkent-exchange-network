@@ -43,7 +43,7 @@ const Signup = () => {
           Username
         </label>
         <input
-          className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
+          className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
           type="username"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
@@ -56,7 +56,7 @@ const Signup = () => {
           Email
         </label>
         <input
-          className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
+          className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
           type="email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
@@ -69,7 +69,7 @@ const Signup = () => {
         </label>
         <input
           type="password"
-          className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
+          className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
           onChange={(e) => setPassword(e.target.value)}
         />
 
@@ -81,7 +81,7 @@ const Signup = () => {
 
         <button
           disabled={isLoading}
-          className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
+          className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
         >
           Sign Up
         </button>

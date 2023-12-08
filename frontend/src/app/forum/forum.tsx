@@ -1,9 +1,9 @@
-import ForumPost from "./forumpost";
 import "../../App.css";
-import SearchBar from "../../components/searchbar";
 import CreatePostButton from "../../components/createpostbutton";
 import Header from "../../components/header";
 import Navbar from "../../components/navbar";
+import SearchBar from "../../components/searchbar";
+import ForumPost from "./forumpost";
 
 export default function Forum() {
   const ForumPosts = [
