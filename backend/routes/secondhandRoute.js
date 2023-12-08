@@ -1,4 +1,5 @@
 import express from "express";
+import { requireAuth } from "../middleware/requireAuth.js";
 import {
   secondhandPostDEL,
   secondhandPostGET,
@@ -9,7 +10,10 @@ import {
 } from "../controllers/secondhandController.js";
 
 const router = express.Router();
-
+/*
+  When we finish the project remove it out of the comment
+  router.use(requireAuth)
+*/
 router.post("/secondhandpost", secondhandPostPOST);
 router.get("/secondhandpost", secondhandPostGET);
 router.get("/secondhandpost/:id", secondhandPostGETId);

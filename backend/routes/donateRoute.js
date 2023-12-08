@@ -1,4 +1,5 @@
 import express from "express";
+import { requireAuth } from "../middleware/requireAuth.js";
 import {
   donatePostDEL,
   donatePostGET,
@@ -9,7 +10,10 @@ import {
 } from "../controllers/donateController.js";
 
 const router = express.Router();
-
+/*
+  When we finish the project remove it out of the comment
+  router.use(requireAuth)
+*/
 router.post("/donatepost", donatePostPOST);
 router.get("/donatepost", donatePostGET);
 router.get("/donatepost/:string", donatePostGETSearch);

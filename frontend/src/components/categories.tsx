@@ -43,7 +43,7 @@ export default function Categories(props: CategoryProps) {
     <div className="flex flex-col object-contain m-3 bg-slate-100 border-r-4 pr-3">
       <div className="text-2xl font-bold p-1">Categories</div>
       <div className="mb-3">
-        {categories[props.type].map((category: Category, index: number) => (
+        {categories[props.type] && categories[props.type].map((category: Category, index: number) => (
           <div key={index}>
             <div className="second-hand-category">
               <input

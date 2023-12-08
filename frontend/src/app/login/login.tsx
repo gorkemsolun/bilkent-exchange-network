@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
+import { useLogin } from "../../authentication/useLogin";
+import { useState } from 'react'
 
 export default function Login() {
-  //const [username, setUsername] = useState("");
-  //const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const {login, error, isLoading} = useLogin()
 
-  /*
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(`Username: ${username}, Password: ${password}`);
-  };
-  */
+  const handleLogin = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault()
+    await login(email, password)
+  }
 
   return (
     <div
@@ -35,15 +36,18 @@ export default function Login() {
         className="flex flex-col bg-white rounded shadow-lg p-12 mt-12 opacity-90"
         action=""
       >
-        <label className="font-semibold text-s mt-2">Username or Email</label>
+        <label className="font-semibold text-s mt-2">Email</label>
         <input
           className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
           type="text"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
         <label className="font-semibold text-s mt-2">Password</label>
         <input
           className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
           type="password"
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <div className="flex mt-6 justify-center text-xs">
@@ -55,13 +59,18 @@ export default function Login() {
             Sign Up
           </Link>
         </div>
-
-        <Link
-          className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700"
-          to="/secondhand"
-        >
-          Login
-        </Link>
+        <div>
+         {
+          isLoading ? (<span>Loading...</span>) : (<Link
+            className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700"
+            to="/secondhand"
+            onClick={handleLogin}
+          >
+            Login
+          </Link> )
+         }
+        </div>
+        {error && <div className="error">{error}</div>}
       </form>
     </div>
   );

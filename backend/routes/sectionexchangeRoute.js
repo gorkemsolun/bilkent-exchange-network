@@ -1,4 +1,5 @@
 import express from "express";
+import { requireAuth } from "../middleware/requireAuth.js";
 import {
   sectionexchangePostDEL,
   sectionexchangePostGET,
@@ -8,7 +9,10 @@ import {
 } from "../controllers/sectionexchangeController.js";
 
 const router = express.Router();
-
+/*
+  When we finish the project remove it out of the comment
+  router.use(requireAuth)
+*/
 router.post("/sectionexchangepost", sectionexchangePostPOST);
 router.get("/sectionexchangepost", sectionexchangePostGET);
 router.get("/sectionexchangepost/:id", sectionexchangePostGETId);

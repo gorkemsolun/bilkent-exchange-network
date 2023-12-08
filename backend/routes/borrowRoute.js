@@ -1,4 +1,5 @@
 import express from "express";
+import {requireAuth} from "../middleware/requireAuth.js"
 import {
   borrowPostDEL,
   borrowPostGET,
@@ -8,6 +9,10 @@ import {
 } from "../controllers/borrowController.js";
 
 const router = express.Router();
+/*
+  When we finish the project remove it out of the comment
+  router.use(requireAuth)
+*/
 
 router.post("/borrowpost", borrowPostPOST);
 router.get("/borrowpost", borrowPostGET);

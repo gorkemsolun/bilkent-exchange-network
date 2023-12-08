@@ -47,7 +47,7 @@ export default function Header() {
               <Link to="/saved-posts" className="block px-4 py-2 text-gray-800">
                 Saved Posts
               </Link>
-              <Link to="/login" className="block px-4 py-2 text-gray-800">
+              <Link to="/login" className="block px-4 py-2 text-gray-800" onClick={handleClick}>
                 Logout
               </Link>
             </div>
