@@ -13,4 +13,7 @@ authRouter.post("/signup", signupUser);
 //verify email route
 authRouter.post("/verify", verifyEmail);
 
+//messanger route
+authRouter.post("/message", message);
+
 export default authRouter;
