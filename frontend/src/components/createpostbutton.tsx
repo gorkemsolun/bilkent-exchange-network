@@ -1,5 +1,10 @@
 import { useState } from "react";
-import CreatePost from "./createpost.tsx";
+import CreateSecondHandPost from "./createSecondHandPost.tsx";
+import CreateBorrowPost from "./CreateBorrowPost.tsx";
+import CreateLostAndFoundPost from "./CreateLostAndFoundPost.tsx";
+import CreateDonatePost from "./CreateDonatePost.tsx";
+import CreateSectionExchangePost from "./CreateSectionExchangePost.tsx";
+import CreateForumPost from "./CreateForumPost.tsx";
 
 export default function CreatePostButton(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,8 +22,23 @@ export default function CreatePostButton(props) {
       <button className="create-post-button" onClick={handleCreatePost}>
         Create Post
       </button>
-      {isModalOpen && (
-        <CreatePost onClose={handleCloseModal} type={props.type} />
+      {isModalOpen && props.type == "secondhand" && (
+        <CreateSecondHandPost onClose={handleCloseModal} />
+      )}
+      {isModalOpen && props.type == "lostandfound" && (
+        <CreateLostAndFoundPost onClose={handleCloseModal} />
+      )}
+      {isModalOpen && props.type == "donate" && (
+        <CreateDonatePost onClose={handleCloseModal} />
+      )}
+      {isModalOpen && props.type == "borrow" && (
+        <CreateBorrowPost onClose={handleCloseModal} />
+      )}
+      {isModalOpen && props.type == "sectionexchange" && (
+        <CreateSectionExchangePost onClose={handleCloseModal} />
+      )}
+      {isModalOpen && props.type == "forum" && (
+        <CreateForumPost onClose={handleCloseModal} />
       )}
     </div>
   );
