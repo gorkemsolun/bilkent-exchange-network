@@ -35,7 +35,7 @@ export default function Borrow() {
       });
   }, [searchTerm]);
 
-  const handleBorrowPostClick = (postId: number) => {
+  const handleBorrowPostClick = (postId: string) => {
     // Replace this with your desired functionality when a borrow element is clicked
     console.log(`Borrow post with ID ${postId} clicked!`);
   };
@@ -47,7 +47,7 @@ export default function Borrow() {
       <div className="flex flex-row  grow">
         <Categories type="borrow"></Categories>
         <div className="w-full h-full">
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center mb-3">
             <SearchBar type="secondhand" onSearch={handleSearch} />
             <CreatePostButton type="secondhand" />
           </div>
@@ -59,7 +59,7 @@ export default function Borrow() {
                     className="col-12"
                     key={post.id}
                     onClick={() => handleBorrowPostClick(post.id)}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", textAlign: "left" }}
                   >
                     <div className="card" style={{ width: "100%" }}>
                       <div className="position-relative">

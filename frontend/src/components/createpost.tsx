@@ -46,12 +46,15 @@ const CreateItem: React.FC<CreateItemProps> = ({ onClose, type }) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-header"></div>
-      <form onSubmit={handleSubmit} className="create-item-form">
+      <form
+        onSubmit={handleSubmit}
+        className="create-item-form"
+        style={{ height: "72vh", width: "35vw" }}
+      >
         <span className="close" onClick={onClose}>
           &times;
         </span>
-        <div className="modal-form-group pt-4">
+        <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
           <label htmlFor="name">Title:</label>
           <input
             type="text"
@@ -62,7 +65,7 @@ const CreateItem: React.FC<CreateItemProps> = ({ onClose, type }) => {
             className="form-control"
           />
         </div>
-        <div className="modal-form-group">
+        <div className="modal-form-group" style={{ textAlign: "left" }}>
           <label htmlFor="description">Description:</label>
           <textarea
             id="description"
@@ -70,10 +73,11 @@ const CreateItem: React.FC<CreateItemProps> = ({ onClose, type }) => {
             value={product.description}
             onChange={handleChange}
             className="form-control"
+            style={{ height: "15vh" }}
           />
         </div>
         {type == "secondhand" && (
-          <div className="modal-form-group">
+          <div className="modal-form-group" style={{ textAlign: "left" }}>
             <label htmlFor="price">Price:</label>
             <input
               type="number"
@@ -86,7 +90,7 @@ const CreateItem: React.FC<CreateItemProps> = ({ onClose, type }) => {
           </div>
         )}
         {type != "forum" && type != "borrow" && (
-          <div className="modal-form-group">
+          <div className="modal-form-group" style={{ textAlign: "left" }}>
             <label htmlFor="image">Image:</label>
             <input
               type="file"

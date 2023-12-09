@@ -42,7 +42,7 @@ export default function LostFound() {
       <div className="flex flex-row grow">
         <Categories type="lostAndFound"></Categories>
         <div className="w-full h-full">
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center mb-3">
             <SearchBar type="secondhand" onSearch={handleSearch} />
             <CreatePostButton type="secondhand" />
           </div>
@@ -61,7 +61,16 @@ export default function LostFound() {
                       <span className="badge bg-danger rounded-pill position-absolute top-0 end-12 m-2">
                         {post.status}
                       </span>
-                      <img className="card-img" src={post.image} alt="Vans" />
+                      <img
+                        className="card-img"
+                        style={{
+                          width: "30vw",
+                          height: "40vh",
+                          objectFit: "cover",
+                        }}
+                        src={post.image}
+                        alt="Image"
+                      />
                     </div>
                     <div className="card-img-overlay d-flex justify-content-end">
                       <a href="#" className="card-link text-danger like">
@@ -72,7 +81,7 @@ export default function LostFound() {
                       <h4 className="card-title">{post.title}</h4>
                       <div
                         className="description-container"
-                        style={{ height: "100px" }}
+                        style={{ height: "13vh", textAlign: "left" }}
                       >
                         <p className="card-text">
                           {post.description.length < 75

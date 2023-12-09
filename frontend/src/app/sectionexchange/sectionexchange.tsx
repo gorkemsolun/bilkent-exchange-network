@@ -46,7 +46,7 @@ export default function SectionExchange() {
       <div className="flex flex-row grow">
         <Categories type="sectionExchange"></Categories>
         <div className="w-full h-full">
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center mb-3">
             <SearchBar type="secondhand" onSearch={handleSearch} />
             <CreatePostButton type="secondhand" />
           </div>
