@@ -8,6 +8,10 @@ export interface Post {
   date: string;
   image: string;
   status: string;
+  offeredSection: string;
+  desiredSection: string;
+  offeredCourse: string;
+  desiredCourse: string;
   postType: string;
 }
 
@@ -54,8 +58,7 @@ export interface DonatePost {
 
 export interface SectionexchangePost {
   id: string;
-  title: string;
-  category: string;
+  username: string;
   poster: string;
   date: string;
   offeredSection: string;

@@ -2,15 +2,11 @@ import mongoose from "mongoose";
 
 const SectionexchangepostSchema = new mongoose.Schema(
   {
-    title: {
+    username: {
       type: String,
       required: true,
     },
     poster: {
-      type: String,
-      required: true,
-    },
-    category: {
       type: String,
       required: true,
     },

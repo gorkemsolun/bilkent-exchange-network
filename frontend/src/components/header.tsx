@@ -13,7 +13,7 @@ export default function Header() {
   // Dummy user data, replace with your actual user data
   const user = {
     username: "JohnDoe",
-    // Add more user information as needed
+    photo: "./src/assets/cs319.png",
   };
 
   return (
@@ -27,7 +27,7 @@ export default function Header() {
         {/* Profile Photo */}
         <div className="px-1 relative">
           <img
-            src="./src/assets/cs319.png"
+            src={user.photo}
             className="object-cover rounded-full"
             style={{ width: "40px", height: "40px" }}
           />
@@ -47,7 +47,11 @@ export default function Header() {
               <Link to="/saved-posts" className="block px-4 py-2 text-gray-800">
                 Saved Posts
               </Link>
-              <Link to="/login" className="block px-4 py-2 text-gray-800" onClick={handleClick}>
+              <Link
+                to="/login"
+                className="block px-4 py-2 text-gray-800"
+                onClick={handleClick}
+              >
                 Logout
               </Link>
             </div>

@@ -11,7 +11,7 @@ const UserProfile: React.FC = () => {
     username: "johndoe76",
     name: "John Doe",
     email: "johndoe@gmail.com",
-    photo: "../../assets/cs319.png",
+    photo: "./src/assets/cs319.png",
     reputation: 432,
     bio: "CS 4/∞",
     registerDate: "2023-01-01",

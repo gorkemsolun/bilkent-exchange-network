@@ -62,19 +62,19 @@ export default function SectionExchange() {
                       className="col-md text-center" // Adjusted column size
                       style={{ borderRight: "1px solid black" }}
                     >
-                      <p className="card-text">{"Name"}</p>
+                      <p className="card-text">{"Username"}</p>
                     </div>
                     <div
                       className="col-md text-center" // Adjusted column size
                       style={{ borderRight: "1px solid black" }}
                     >
-                      <p className="card-text">{"Offered Section"}</p>
+                      <p className="card-text">{"Offered Course-Section"}</p>
                     </div>
                     <div
                       className="col-md text-center" // Adjusted column size
                       style={{ borderRight: "1px solid black" }}
                     >
-                      <p className="card-text">{"Desired Section"}</p>
+                      <p className="card-text">{"Desired Course-Section"}</p>
                     </div>
                     <div
                       className="col-md text-center" // Adjusted column size
@@ -105,19 +105,23 @@ export default function SectionExchange() {
                         className="col-md text-center" // Adjusted column size
                         style={{ borderRight: "1px solid black" }}
                       >
-                        <p className="card-text">{item.title}</p>
+                        <p className="card-text">{"" + item.username}</p>
                       </div>
                       <div
                         className="col-md text-center" // Adjusted column size
                         style={{ borderRight: "1px solid black" }}
                       >
-                        <p className="card-text">{item.offeredSection}</p>
+                        <p className="card-text">
+                          {item.offeredCourse + "-" + item.offeredSection}
+                        </p>
                       </div>
                       <div
                         className="col-md text-center" // Adjusted column size
                         style={{ borderRight: "1px solid black" }}
                       >
-                        <p className="card-text">{item.desiredSection}</p>
+                        <p className="card-text">
+                          {item.desiredCourse + "-" + item.desiredSection}
+                        </p>
                       </div>
                       <div
                         className="col-md text-center" // Adjusted column size
@@ -128,7 +132,7 @@ export default function SectionExchange() {
                           <img
                             className="img-fluid mx-auto d-block"
                             style={{ maxWidth: "4vw", maxHeight: "4vh" }}
-                            src="/dmbox.png" // Replace with your image URL
+                            src="./src/assets/dmbox.png" // Replace with your image URL
                             alt="DM Box"
                             title="Send DM" // Tooltip on hover
                             onClick={() => handleDMClick()} // Your click handler
@@ -138,7 +142,7 @@ export default function SectionExchange() {
                       <div
                         className="col-md text-center" // Adjusted column size
                       >
-                        <p className="card-text">{item.date}</p>
+                        <p className="card-text">{"" + item.date}</p>
                       </div>
                     </div>
                   </div>

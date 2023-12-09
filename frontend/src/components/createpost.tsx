@@ -18,6 +18,10 @@ const CreatePost: React.FC<CreatePostProps> = ({ onClose, type }) => {
     date: "",
     image: "",
     status: "",
+    offeredSection: "",
+    desiredSection: "",
+    offeredCourse: "",
+    desiredCourse: "",
     postType: type,
   };
 
@@ -33,6 +37,10 @@ const CreatePost: React.FC<CreatePostProps> = ({ onClose, type }) => {
     const image = formData.get("image") as string;
     const category = formData.get("category") as string;
     const status = formData.get("status") as string;
+    const offeredCourse = formData.get("offeredCourse") as string;
+    const offeredSection = formData.get("offeredSection") as string;
+    const desiredCourse = formData.get("desiredCourse") as string;
+    const desiredSection = formData.get("desiredSection") as string;
 
     // Update the product
     product.title = title;
@@ -41,6 +49,10 @@ const CreatePost: React.FC<CreatePostProps> = ({ onClose, type }) => {
     product.image = image;
     product.category = category;
     product.status = status;
+    product.offeredCourse = offeredCourse;
+    product.offeredSection = offeredSection;
+    product.desiredCourse = desiredCourse;
+    product.desiredSection = desiredSection;
     product.postType = type;
 
     console.log(product);
@@ -59,19 +71,33 @@ const CreatePost: React.FC<CreatePostProps> = ({ onClose, type }) => {
         <span className="close" onClick={onClose}>
           &times;
         </span>
-        <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
-          <label htmlFor="name">Title:</label>
-          <input type="text" id="title" name="title" className="form-control" />
-        </div>
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="description">Description:</label>
-          <textarea
-            id="description"
-            name="description"
-            className="form-control"
-            style={{ height: "15vh" }}
-          />
-        </div>
+
+        {type != "sectionexchange" && (
+          <div>
+            <div
+              className="modal-form-group pt-4"
+              style={{ textAlign: "left" }}
+            >
+              <label htmlFor="name">Title:</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                className="form-control"
+              />
+            </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="description">Description:</label>
+              <textarea
+                id="description"
+                name="description"
+                className="form-control"
+                style={{ height: "15vh" }}
+              />
+            </div>
+          </div>
+        )}
+
         {type == "secondhand" && (
           <div className="modal-form-group" style={{ textAlign: "left" }}>
             <label htmlFor="price">Price:</label>
@@ -131,6 +157,58 @@ const CreatePost: React.FC<CreatePostProps> = ({ onClose, type }) => {
                 <label htmlFor="found" className="ml-2">
                   Found
                 </label>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {type == "sectionexchange" && (
+          <div>
+            <div
+              className="modal-form-group mt-6"
+              style={{ textAlign: "left" }}
+            >
+              <div className="flex justify-center ">
+                <div className="mx-4">
+                  <label htmlFor="offeredCourse">Offered Course</label>
+                  <input
+                    type="text"
+                    id="offeredCourse"
+                    name="offeredCourse"
+                    className="form-control"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="offeredSection">Offered Section</label>
+                  <input
+                    type="text"
+                    id="offeredSection"
+                    name="offeredSection"
+                    className="form-control"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <div className="flex justify-center ">
+                <div className="mx-4">
+                  <label htmlFor="desiredCourse">Desired Course</label>
+                  <input
+                    type="text"
+                    id="desiredCourse"
+                    name="desiredCourse"
+                    className="form-control"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="desiredSection">Desired Section</label>
+                  <input
+                    type="text"
+                    id="desiredSection"
+                    name="desiredSection"
+                    className="form-control"
+                  />
+                </div>
               </div>
             </div>
           </div>

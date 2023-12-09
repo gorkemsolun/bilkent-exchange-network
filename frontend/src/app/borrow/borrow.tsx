@@ -41,7 +41,7 @@ export default function Borrow() {
   };
 
   return (
-    <div className="w-screen">
+    <div className="w-screen h-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row  grow">
