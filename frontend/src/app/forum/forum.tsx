@@ -54,20 +54,20 @@ export default function Forum() {
   ];
 
   return (
-    <>
+    <div className="w-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="secondhand" />
-            <CreatePostButton type="secondhand" />
+            <SearchBar type="forum" />
+            <CreatePostButton type="forum" />
           </div>
           <div className="justify-center">
             <ForumPost forumPosts={ForumPosts} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -40,15 +40,15 @@ export default function SectionExchange() {
   }, [searchTerm]);
 
   return (
-    <>
+    <div className="w-screen h-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Categories type="sectionExchange"></Categories>
+        <Categories type="sectionexchange"></Categories>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="secondhand" onSearch={handleSearch} />
-            <CreatePostButton type="secondhand" />
+            <SearchBar type="sectionexchange" onSearch={handleSearch} />
+            <CreatePostButton type="sectionexchange" />
           </div>
           <div className="container" style={{ width: "100%" }}>
             <div className="row mb-3 mr-20 ml-5">
@@ -148,6 +148,6 @@ export default function SectionExchange() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

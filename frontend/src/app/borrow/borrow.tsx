@@ -41,15 +41,15 @@ export default function Borrow() {
   };
 
   return (
-    <>
+    <div className="w-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row  grow">
         <Categories type="borrow"></Categories>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="secondhand" onSearch={handleSearch} />
-            <CreatePostButton type="secondhand" />
+            <SearchBar type="borrow" onSearch={handleSearch} />
+            <CreatePostButton type="borrow" />
           </div>
           <div className="container">
             <div className="row">
@@ -100,6 +100,6 @@ export default function Borrow() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

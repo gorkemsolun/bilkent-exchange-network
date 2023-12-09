@@ -12,11 +12,11 @@
   }
 
   .second-hand-category {
-    @apply text-base ml-2 font-semibold p-1;
+    @apply text-left ml-2 font-semibold p-1;
   }
 
   .second-hand-subcategory {
-    @apply text-base ml-4 font-medium p-1;
+    @apply text-left ml-4 font-medium p-1;
   }
 }
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../App.css";
 import { categories } from "../data-types/constants";
-import { Category, CategoryProps, Subcategory } from "../data-types/datatypes";
+import { Category, CategoryProps } from "../data-types/datatypes";
 
 export default function Categories(props: CategoryProps) {
   const [minPrice, setMinPrice] = useState(0);
@@ -40,87 +40,82 @@ export default function Categories(props: CategoryProps) {
   };
 
   return (
-    <div className="flex flex-col object-contain m-3 bg-slate-100 border-r-4 pr-3">
+    <div
+      className="flex flex-col object-contain m-3 bg-slate-100 border-r-4 pr-1"
+      style={{ width: "18%" }}
+    >
       <div className="text-2xl font-bold p-1">Categories</div>
       <div className="mb-3">
-        {categories[props.type] && categories[props.type].map((category: Category, index: number) => (
-          <div key={index}>
-            <div className="second-hand-category">
-              <input
-                key={index}
-                type="checkbox"
-                value={category.name}
-                checked={checkedCategories.includes(category.name)}
-                onChange={() => handleCategoryChange(category.name)}
-              />
-              <label>{category.name}</label>
+        {categories[props.type] &&
+          categories[props.type].map((category: Category, index: number) => (
+            <div key={index} style={{ textAlign: "start", marginLeft: "1vw" }}>
+              <div className="second-hand-category">
+                <input
+                  key={index}
+                  type="checkbox"
+                  value={category.name}
+                  checked={checkedCategories.includes(category.name)}
+                  onChange={() => handleCategoryChange(category.name)}
+                  style={{ marginRight: "0.5vw" }}
+                />
+                <label>{category.name}</label>
+              </div>
             </div>
-
-            <div>
-              {category.subcategories.map(
-                (subcategory: Subcategory, subIndex: number) => (
-                  <div key={subIndex} className="second-hand-subcategory">
-                    <input
-                      key={subIndex}
-                      type="checkbox"
-                      value={subcategory.name}
-                      checked={checkedCategories.includes(subcategory.name)}
-                      onChange={() => handleCategoryChange(subcategory.name)}
-                      className="form-checkbox bg-white"
-                    />
-                    <label>{subcategory.name}</label>
-                  </div>
-                )
-              )}
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
+
       {(props.type === "secondhand" || props.type === "sectionExchange") && (
-        <div className="mb-3 flex flex-column second-hand-category">
-          <div className="mb-1">
+        <div className="mb-3 flex flex-row second-hand-category">
+          <div
+            className="mb-1"
+            style={{ flex: "1", marginRight: "1%", maxWidth: "50%" }}
+          >
             <label>Min Price</label>
             <input
               type="number"
               value={minPrice}
               onChange={(e) => setMinPrice(Number(e.target.value))}
-              className="border p-2 rounded-md w-30 bg-white"
+              className="border p-2 rounded-md bg-white w-full"
             />
           </div>
 
-          <div>
+          <div className="mb-1" style={{ flex: "1", maxWidth: "50%" }}>
             <label>Max Price</label>
             <input
               type="number"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="border p-2 rounded-md w-30 bg-white"
+              className="border p-2 rounded-md bg-white w-full"
             />
           </div>
         </div>
       )}
 
-      <div className="mb-3 flex flex-column second-hand-category">
-        <div className="mb-1">
+      <div className="mb-3 flex flex-row second-hand-category">
+        <div
+          className="mb-1"
+          style={{ flex: "1", marginRight: "1%", maxWidth: "50%" }}
+        >
           <label>Earliest Date</label>
           <input
             type="date"
             value={minDate}
             onChange={(e) => setMinDate(Number(e.target.value))}
-            className="border p-2 rounded-md w-30 bg-white"
+            className="border p-2 rounded-md bg-white w-full"
           />
         </div>
-        <div>
+        <div className="mb-1" style={{ flex: "1", maxWidth: "50%" }}>
           <label>Latest Date</label>
           <input
             type="date"
             value={maxDate}
             onChange={(e) => setMaxDate(Number(e.target.value))}
-            className="border p-2 rounded-md w-30 bg-white"
+            className="border p-2 rounded-md bg-white w-full"
           />
         </div>
       </div>
-      <div className="flex flex-row">
+
+      <div className="flex flex-row justify-center">
         <button
           onClick={onResetClicked}
           className="bg-red-500 text-white p-2 rounded-md ml-2 w-20"

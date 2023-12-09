@@ -1,3 +1,16 @@
+export interface Post {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  price: string;
+  poster: string;
+  date: string;
+  image: string;
+  status: string;
+  postType: string;
+}
+
 export interface LostFoundPost {
   id: string;
   title: string;

@@ -3,7 +3,7 @@ import axios from "axios";
 import Navbar from "../../components/navbar";
 import Header from "../../components/header";
 import { UserProfile } from "../../data-types/datatypes.ts";
-import "../../UserProfile.css"; // Import the CSS file
+import "../../App.css"; // Import the CSS file
 
 const UserProfile: React.FC = () => {
   const [userProfile, setUserProfile] = useState<UserProfile>({

@@ -43,15 +43,15 @@ export default function Donate() {
   }, [searchTerm]);
 
   return (
-    <>
+    <div className="w-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
         <Categories type="donate"></Categories>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="secondhand" onSearch={handleSearch} />
-            <CreatePostButton type="secondhand" />
+            <SearchBar type="donate" onSearch={handleSearch} />
+            <CreatePostButton type="donate" />
           </div>
           {loading ? (
             <Loader />
@@ -114,6 +114,6 @@ export default function Donate() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

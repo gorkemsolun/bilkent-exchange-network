@@ -21,10 +21,6 @@ export interface Category {
   subcategories: Subcategory[];
 }
 
-export interface Subcategory {
-  name: string;
-}
-
 export interface CategoryProps {
   type: string;
   passCategories: (categories: string[]) => void;

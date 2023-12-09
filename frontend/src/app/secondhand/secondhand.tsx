@@ -66,7 +66,7 @@ export default function Secondhand() {
   }
 
   return (
-    <>
+    <div className="w-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
@@ -135,6 +135,6 @@ export default function Secondhand() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
