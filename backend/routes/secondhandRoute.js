@@ -1,13 +1,10 @@
 import express from "express";
-import { requireAuth } from "../middleware/requireAuth.js";
 import {
   secondhandPostDEL,
   secondhandPostGET,
-  secondhandPostGETByCategories,
   secondhandPostGETId,
   secondhandPostPOST,
   secondhandPostPUT,
-  secondhandpostGETSearch,
 } from "../controllers/secondhandController.js";
 
 const router = express.Router();
@@ -16,12 +13,10 @@ const router = express.Router();
   router.use(requireAuth)
 */
 router.post("/secondhandpost", secondhandPostPOST);
-router.get("/secondhandpost", secondhandPostGET);
-router.get("/secondhandpost/:string", secondhandpostGETSearch);
 router.get("/secondhandpost/:id", secondhandPostGETId);
 router.get(
-  "/secondhandpost/category/:categories",
-  secondhandPostGETByCategories
+  "/secondhandpost/c/:categories/p/:price/d/:date/s/:search",
+  secondhandPostGET
 );
 router.put("/secondhandpost/:id", secondhandPostPUT);
 router.delete("/secondhandpost/:id", secondhandPostDEL);

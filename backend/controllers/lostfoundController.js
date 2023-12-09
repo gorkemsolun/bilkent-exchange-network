@@ -100,8 +100,8 @@ export const lostfoundPostDEL = async (req, res) => {
 export const lostfoundPostGETSearch = async (req, res) => {
   try {
     const searchString = req.params.string;
-    const regex = new RegExp(searchString, 'i');
-    const posts = await Lostfoundpost.find({title: regex});
+    const regex = new RegExp(searchString, "i");
+    const posts = await Lostfoundpost.find({ title: regex });
     return res.status(200).json(posts);
   } catch (err) {
     console.log(err);

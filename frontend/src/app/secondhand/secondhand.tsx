@@ -1,16 +1,27 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "../../App.css";
-import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
+import Filters from "../../components/filters.tsx";
 import Header from "../../components/header.tsx";
 import Navbar from "../../components/navbar.tsx";
 import SearchBar from "../../components/searchbar.tsx";
+import { FilterParams } from "../../data-types/datatypes.ts";
 import { SecondhandPost } from "../../data-types/posttypes.ts";
 
 export default function Secondhand() {
   const [secondhandPosts, setSecondhandPosts] = useState([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [filterParams, setFilterParams] = useState<FilterParams>({
+    categories: [],
+    prices: {
+      min: undefined,
+      max: undefined,
+    },
+    dates: {
+      startDate: undefined,
+      endDate: undefined,
+    },
+  });
   const [searchTerm, setSearchTerm] = useState("");
 
   // Callback function to handle search term
@@ -24,45 +35,70 @@ export default function Secondhand() {
 
   useEffect(() => {
     //setLoading(true);
-    if (true /*categories.length == 0*/) {
-      const endpoint = searchTerm
-        ? `http://localhost:3000/secondhand/secondhandpost/${searchTerm}`
-        : "http://localhost:3000/secondhand/secondhandpost";
+    let url =
+      "http://localhost:3000/secondhand/secondhandpost/c/:categories/p/:price/d/:date/s/:search";
 
-      axios
-        .get(endpoint)
-        .then((res) => {
-          setSecondhandPosts(res.data);
-          //setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          //setLoading(false);
-        });
+    if (filterParams.categories.length > 0) {
+      url = url.replace(":categories", filterParams.categories.join(","));
     } else {
-      let url = "http://localhost:3000/secondhand/secondhandpost/category/";
-
-      categories.forEach((category) => {
-        url += category + ",";
-      });
-      url = url.slice(0, -1);
-
-      axios
-        .get(url)
-        .then((res) => {
-          setSecondhandPosts(res.data);
-          //setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          //setLoading(false);
-        });
+      url = url.replace(":categories", "all");
     }
-  }, [searchTerm]);
 
-  function passCategories(passedCategories: string[]) {
-    setCategories(passedCategories);
-    console.log(categories);
+    if (filterParams.prices.min && filterParams.prices.max) {
+      url = url.replace(
+        ":price",
+        filterParams.prices.min + "*" + filterParams.prices.max
+      );
+    } else if (filterParams.prices.min) {
+      url = url.replace(":price", filterParams.prices.min + "*" + "all");
+    } else if (filterParams.prices.max) {
+      url = url.replace(":price", "all" + "*" + filterParams.prices.max);
+    } else {
+      url = url.replace(":price", "all");
+    }
+
+    if (filterParams.dates.startDate && filterParams.dates.endDate) {
+      url = url.replace(
+        ":date",
+        filterParams.dates.startDate.toISOString() +
+          "*" +
+          filterParams.dates.endDate.toISOString()
+      );
+    } else if (filterParams.dates.startDate) {
+      url = url.replace(
+        ":date",
+        filterParams.dates.startDate.toISOString() + "*" + "all"
+      );
+    } else if (filterParams.dates.endDate) {
+      url = url.replace(
+        ":date",
+        "all" + "*" + filterParams.dates.endDate.toISOString()
+      );
+    } else {
+      url = url.replace(":date", "all");
+    }
+
+    if (searchTerm) {
+      url = url.replace(":search", searchTerm);
+    } else {
+      url = url.replace(":search", "all");
+    }
+
+    axios
+      .get(url)
+      .then((res) => {
+        setSecondhandPosts(res.data);
+
+        //setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        //setLoading(false);
+      });
+  }, [filterParams, searchTerm]);
+
+  function passCategories(params: FilterParams) {
+    setFilterParams(params);
   }
 
   return (
@@ -70,10 +106,7 @@ export default function Secondhand() {
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Categories
-          type="secondhand"
-          passCategories={passCategories}
-        ></Categories>
+        <Filters type="secondhand" passFilters={passCategories}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="secondhand" onSearch={handleSearch} />
@@ -84,7 +117,7 @@ export default function Secondhand() {
               {secondhandPosts.map((post: SecondhandPost) => (
                 <div
                   className="col-12 col-sm-8 col-md-6 col-lg-4 mb-4"
-                  key={post.id}
+                  key={post._id}
                 >
                   <div className="card">
                     <div className="position-relative">

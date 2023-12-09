@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "../../App.css";
-import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
+import Filters from "../../components/filters.tsx";
+import Header from "../../components/header.tsx";
+import Loader from "../../components/loader.tsx";
+import Navbar from "../../components/navbar.tsx";
 import SearchBar from "../../components/searchbar.tsx";
 import { DonatePost } from "../../data-types/posttypes.ts";
-import Header from "../../components/header.tsx";
-import Navbar from "../../components/navbar.tsx";
-import Loader from "../../components/loader/loader.tsx";
 
 export default function Donate() {
   const [donatePosts, setDonatePosts] = useState([]);
@@ -47,7 +47,7 @@ export default function Donate() {
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Categories type="donate"></Categories>
+        <Filters type="donate"></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="donate" onSearch={handleSearch} />

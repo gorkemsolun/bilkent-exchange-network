@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "../../App.css";
-import Categories from "../../components/categories";
 import CreatePostButton from "../../components/createpostbutton";
-import SearchBar from "../../components/searchbar";
-import { BorrowPost } from "../../data-types/posttypes";
+import Filters from "../../components/filters";
 import Header from "../../components/header";
 import Navbar from "../../components/navbar";
+import SearchBar from "../../components/searchbar";
+import { BorrowPost } from "../../data-types/posttypes";
 
 export default function Borrow() {
   const [borrowPosts, setBorrowPosts] = useState([]);
@@ -45,7 +45,7 @@ export default function Borrow() {
       <Header />
       <Navbar />
       <div className="flex flex-row  grow">
-        <Categories type="borrow"></Categories>
+        <Filters type="borrow"></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="borrow" onSearch={handleSearch} />

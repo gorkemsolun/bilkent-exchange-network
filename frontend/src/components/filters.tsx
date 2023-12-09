@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "../App.css";
 import { categories } from "../data-types/constants";
-import { Category, CategoryProps } from "../data-types/datatypes";
+import { FilterProps } from "../data-types/datatypes";
 
-export default function Categories(props: CategoryProps) {
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-  const [minDate, setMinDate] = useState(0);
-  const [maxDate, setMaxDate] = useState(0);
+export default function Filters(props: FilterProps) {
+  const [minPrice, setMinPrice] = useState<number>();
+  const [maxPrice, setMaxPrice] = useState<number>();
+  const [minDate, setMinDate] = useState<Date>();
+  const [maxDate, setMaxDate] = useState<Date>();
   const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
 
   /*
@@ -28,15 +28,25 @@ export default function Categories(props: CategoryProps) {
   };
 
   const onFilterClicked = () => {
-    props.passCategories(checkedCategories);
+    props.passFilters({
+      categories: checkedCategories,
+      prices: {
+        min: minPrice,
+        max: maxPrice,
+      },
+      dates: {
+        startDate: minDate,
+        endDate: maxDate,
+      },
+    });
   };
 
   const onResetClicked = () => {
     setCheckedCategories([]);
-    setMinPrice(0);
-    setMaxPrice(0);
-    setMinDate(0);
-    setMaxDate(0);
+    setMinPrice(undefined);
+    setMaxPrice(undefined);
+    setMinDate(undefined);
+    setMaxDate(undefined);
   };
 
   return (
@@ -47,18 +57,18 @@ export default function Categories(props: CategoryProps) {
       <div className="text-2xl font-bold p-1">Categories</div>
       <div className="mb-3">
         {categories[props.type] &&
-          categories[props.type].map((category: Category, index: number) => (
+          categories[props.type].map((category: string, index: number) => (
             <div key={index} style={{ textAlign: "start", marginLeft: "1vw" }}>
               <div className="second-hand-category">
                 <input
                   key={index}
                   type="checkbox"
-                  value={category.name}
-                  checked={checkedCategories.includes(category.name)}
-                  onChange={() => handleCategoryChange(category.name)}
+                  value={category}
+                  checked={checkedCategories.includes(category)}
+                  onChange={() => handleCategoryChange(category)}
                   style={{ marginRight: "0.5vw" }}
                 />
-                <label>{category.name}</label>
+                <label>{category}</label>
               </div>
             </div>
           ))}
@@ -100,7 +110,7 @@ export default function Categories(props: CategoryProps) {
           <input
             type="date"
             value={minDate}
-            onChange={(e) => setMinDate(Number(e.target.value))}
+            onChange={(e) => setMinDate(e.target.value)}
             className="border p-2 rounded-md bg-white w-full"
           />
         </div>
@@ -109,7 +119,7 @@ export default function Categories(props: CategoryProps) {
           <input
             type="date"
             value={maxDate}
-            onChange={(e) => setMaxDate(Number(e.target.value))}
+            onChange={(e) => setMaxDate(e.target.value)}
             className="border p-2 rounded-md bg-white w-full"
           />
         </div>

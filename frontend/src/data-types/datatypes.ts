@@ -15,13 +15,19 @@ export interface UserProfile {
   bio: string;
   registerDate: string;
 }
-
-export interface Category {
-  name: string;
-  subcategories: Subcategory[];
+export interface FilterProps {
+  type: string;
+  passFilters: (params: FilterParams) => void;
 }
 
-export interface CategoryProps {
-  type: string;
-  passCategories: (categories: string[]) => void;
+export interface FilterParams {
+  categories: string[];
+  prices: {
+    min: number | undefined;
+    max: number | undefined;
+  };
+  dates: {
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  };
 }

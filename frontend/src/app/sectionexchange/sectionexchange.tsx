@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "../../App.css";
-import Categories from "../../components/categories";
 import CreatePostButton from "../../components/createpostbutton";
-import SearchBar from "../../components/searchbar";
-import { SectionexchangePost } from "../../data-types/posttypes";
+import Categories from "../../components/filters";
 import Header from "../../components/header";
 import Navbar from "../../components/navbar";
+import SearchBar from "../../components/searchbar";
+import { SectionexchangePost } from "../../data-types/posttypes";
 
 export default function SectionExchange() {
   function handleDMClick(): void {

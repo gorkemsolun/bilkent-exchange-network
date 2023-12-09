@@ -192,3 +192,128 @@ td {
   margin: 0;
   font-size: 18px;
 }
+
+.loader {
+    position: relative;
+    width: 100px;
+    height: 16px;
+  }
+  .loader:before , .loader:after{
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 32px 0 #fff;
+    left: 0;
+    top: 0;
+    animation: ballMoveX 1s linear infinite;
+  }
+  .loader:after {
+    box-shadow: none;
+    transform-origin: 40px 0;
+    transform: rotate(-153deg);
+    animation: rotateLoader 1s linear infinite;
+  }
+
+  @keyframes rotateLoader {
+    0% , 10%{ transform: rotate(-153deg); }
+    90%, 100% { transform: rotate(0deg); }
+  }
+  @keyframes ballMoveX {
+    0% , 10%{  transform: translateX(0) }
+    90%, 100% { transform: translateX(32px) }
+  }
+      
+
+
+.overlay {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.profileContainer {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.profileHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2vh;
+}
+
+.profileImage {
+  width: 150px;
+  height: 150px;
+  margin-right: 20px;
+}
+
+.profileUserInfo {
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+  font: bold;
+}
+
+.profileName {
+  font-size: 24px;
+  margin: 0;
+}
+
+.profileUsername {
+  color: #555;
+  margin: 0;
+}
+
+.profileDetails {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3vh;
+}
+
+.profileColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profileInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.infoLabel {
+  margin: 0;
+  font-size: 16px;
+  color: #888;
+  width: 150px; /* Adjust as needed */
+  text-align: left;
+}
+
+.infoValue {
+  margin: 0;
+  font-size: 16px;
+}
+
+.profilePosts {
+  margin-top: 20px;
+}
+
+.statLabel {
+  margin: 0;
+  font-size: 18px;
+}

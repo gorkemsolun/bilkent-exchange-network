@@ -45,8 +45,8 @@ export const donatePostGET = async (req, res) => {
 export const donatePostGETSearch = async (req, res) => {
   try {
     const searchString = req.params.string;
-    const regex = new RegExp(searchString, 'i');
-    const donatePosts = await Donatepost.find({title: regex});
+    const regex = new RegExp(searchString, "i");
+    const donatePosts = await Donatepost.find({ title: regex });
     return res.status(200).json(donatePosts);
   } catch (err) {
     console.log(err);

@@ -1,12 +1,10 @@
 import express from "express";
-import {requireAuth} from "../middleware/requireAuth.js"
 import {
   borrowPostDEL,
   borrowPostGET,
+  borrowPostGETSearch,
   borrowPostPOST,
   borrowPostPUT,
-  borrowPostGETId,
-  borrowPostGETSearch
 } from "../controllers/borrowController.js";
 
 const router = express.Router();

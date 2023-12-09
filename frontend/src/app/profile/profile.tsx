@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from "../../components/navbar";
+import { useEffect, useState } from "react";
+import "../../App.css";
 import Header from "../../components/header";
+import Navbar from "../../components/navbar";
 import { UserProfile } from "../../data-types/datatypes.ts";
-import "../../App.css"; // Import the CSS file
 
-const UserProfile: React.FC = () => {
+export default function UserProfile() {
   const [userProfile, setUserProfile] = useState<UserProfile>({
     // Replace with the data you get from the server
     username: "johndoe76",
@@ -75,6 +75,4 @@ const UserProfile: React.FC = () => {
       </div>
     </div>
   );
-};
-
-export default UserProfile;
+}

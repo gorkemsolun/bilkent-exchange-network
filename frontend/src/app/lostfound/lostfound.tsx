@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "../../App.css";
-import Categories from "../../components/categories.tsx";
 import CreatePostButton from "../../components/createpostbutton.tsx";
+import Filters from "../../components/filters.tsx";
+import Header from "../../components/header.tsx";
+import Navbar from "../../components/navbar.tsx";
 import SearchBar from "../../components/searchbar.tsx";
 import { LostFoundPost } from "../../data-types/posttypes.ts";
-import Navbar from "../../components/navbar.tsx";
-import Header from "../../components/header.tsx";
 
 export default function LostFound() {
   const [lostFoundPosts, setLostFoundPosts] = useState([]);
@@ -40,7 +40,7 @@ export default function LostFound() {
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Categories type="lostandfound"></Categories>
+        <Filters type="lostandfound"></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="lostandfound" onSearch={handleSearch} />

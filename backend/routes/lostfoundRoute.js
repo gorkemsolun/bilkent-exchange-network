@@ -1,12 +1,11 @@
 import express from "express";
-import { requireAuth } from "../middleware/requireAuth.js";
 import {
   lostfoundPostDEL,
   lostfoundPostGET,
-  lostfoundPostPOST,
-  lostfoundPostPUT,
   lostfoundPostGETId,
   lostfoundPostGETSearch,
+  lostfoundPostPOST,
+  lostfoundPostPUT,
 } from "../controllers/lostfoundController.js";
 
 const router = express.Router();
