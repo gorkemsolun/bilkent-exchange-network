@@ -21,14 +21,6 @@ const CreatePost: React.FC<CreatePostProps> = ({ onClose, type }) => {
     postType: type,
   };
 
-  /*
-  TODO: Add image to product
-  TODO: Add category to product
-  TODO: Add date to product
-  TODO: Category should be selected from the list of categories
-  TODO: Subcategory should be selected from the list of subcategories
-  */
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -39,12 +31,16 @@ const CreatePost: React.FC<CreatePostProps> = ({ onClose, type }) => {
     const description = formData.get("description") as string;
     const price = formData.get("price") as string;
     const image = formData.get("image") as string;
+    const category = formData.get("category") as string;
+    const status = formData.get("status") as string;
 
     // Update the product
     product.title = title;
     product.description = description;
     product.price = price;
     product.image = image;
+    product.category = category;
+    product.status = status;
     product.postType = type;
 
     console.log(product);
@@ -87,7 +83,22 @@ const CreatePost: React.FC<CreatePostProps> = ({ onClose, type }) => {
             />
           </div>
         )}
-        {type != "forum" && type != "borrow" && (
+        {type != "forum" && type != "sectionexchange" && (
+          <div className="modal-form-group" style={{ textAlign: "left" }}>
+            <label htmlFor="category">Category</label>
+            <select id="category" name="category" className="form-control">
+              <option value="Books">Books</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Home">Home</option>
+              <option value="Home">Lecture Materials</option>
+              <option value="Home">Clothes</option>
+              <option value="Home">Hobbies</option>
+              <option value="Home">Other</option>
+            </select>
+          </div>
+        )}
+
+        {type != "forum" && type != "borrow" && type != "sectionexchange" && (
           <div className="modal-form-group" style={{ textAlign: "left" }}>
             <label htmlFor="image">Image:</label>
             <input
@@ -99,7 +110,33 @@ const CreatePost: React.FC<CreatePostProps> = ({ onClose, type }) => {
             />
           </div>
         )}
-        <div className="modal-form-group">
+
+        {type == "lostandfound" && (
+          <div className="modal-form-group">
+            <div className="flex justify-center">
+              <div className="mx-2">
+                <input
+                  type="radio"
+                  id="lost"
+                  name="status"
+                  value="lost"
+                  defaultChecked
+                />
+                <label htmlFor="lost" className="ml-2">
+                  Lost
+                </label>
+              </div>
+              <div className="mx-2">
+                <input type="radio" id="found" name="status" value="found" />
+                <label htmlFor="found" className="ml-2">
+                  Found
+                </label>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div className="modal-form-group mt-4">
           <button type="submit" className="btn btn-primary">
             Create Post
           </button>
