@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSignup } from "../../authentication/useSignup";
+import { useSignup } from "../authentication/useSignup";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -15,14 +15,9 @@ const Signup = () => {
 
   return (
     <div
-      className="flex flex-col items-center justify-center w-screen h-screen bg-gray-200 text-gray-700"
+      className="flex flex-col items-center justify-center bg-gray-200 text-gray-700 bg-cover bg-center bg-no-repeat w-screen h-screen"
       style={{
         backgroundImage: `url("https://www.technopat.net/sosyal/eklenti/mountains_peaks_snow_192502_1920x1080-jpg.1367847/")`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        width: "100vw",
-        height: "100vh",
       }}
     >
       <div className="flex flex-col items-center justify-center">

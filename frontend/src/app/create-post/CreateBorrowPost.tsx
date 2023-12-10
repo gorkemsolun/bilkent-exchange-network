@@ -1,19 +1,14 @@
-import "../App.css";
-import { DonatePost } from "../data-types/posttypes";
+import "../../App.css";
+import { BorrowPost } from "../../data-types/posttypes";
 
-interface CreateDonatePostProps {
-  onClose: () => void;
-}
-
-const CreateDonatePost: React.FC<CreateDonatePostProps> = ({ onClose }) => {
-  let product: DonatePost = {
+export default function CreateBorrowPost({ onClose }) {
+  const product: BorrowPost = {
     id: "",
     title: "",
     description: "",
     category: "",
     poster: "",
     date: "",
-    image: "",
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -24,13 +19,11 @@ const CreateDonatePost: React.FC<CreateDonatePostProps> = ({ onClose }) => {
     // Retrieve values directly from the form data
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const image = formData.get("image") as string;
     const category = formData.get("category") as string;
 
     // Update the product
     product.title = title;
     product.description = description;
-    product.image = image;
     product.category = category;
 
     console.log(product);
@@ -84,17 +77,6 @@ const CreateDonatePost: React.FC<CreateDonatePostProps> = ({ onClose }) => {
           </select>
         </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="image">Image:</label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="jpg, jpeg, png"
-            className="form-control"
-          />
-        </div>
-
         <div className="modal-form-group mt-4">
           <button type="submit" className="btn btn-primary">
             Create Post
@@ -103,6 +85,4 @@ const CreateDonatePost: React.FC<CreateDonatePostProps> = ({ onClose }) => {
       </form>
     </div>
   );
-};
-
-export default CreateDonatePost;
+}

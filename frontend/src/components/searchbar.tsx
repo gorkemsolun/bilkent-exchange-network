@@ -35,6 +35,7 @@ export default function SearchBar(props: {
             value={sortType}
             onChange={(e) => setSortType(e.target.value)}
             className="bg-white"
+            title="Sort By"
           >
             <option value="" disabled hidden>
               Sort By

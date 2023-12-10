@@ -1,28 +1,24 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogin } from "../../authentication/useLogin";
-import { useState } from 'react'
+import { useLogin } from "../authentication/useLogin";
 
 export default function Login() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const {login, error, isLoading} = useLogin()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, error, isLoading } = useLogin();
 
-  const handleLogin = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault()
-    await login(email, password)
-  }
+  const handleLogin = async (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    await login(email, password);
+  };
 
   return (
     <div
-      className="flex flex-col items-center justify-center w-screen h-screen bg-gray-200 text-gray-700"
+      className="flex flex-col items-center justify-center bg-gray-200 text-gray-700 bg-cover bg-no-repeat bg-center w-screen h-screen"
       style={{
-        // Original Image: https://i.hbrcdn.com/haber/2023/08/18/fasulyesine-oynamam-ha-hangi-dizi-fasulyesine-16240029_1708_amp.jpg
         backgroundImage: `url("https://www.technopat.net/sosyal/eklenti/mountains_peaks_snow_192502_1920x1080-jpg.1367847/")`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        width: "100vw",
-        height: "100vh",
       }}
     >
       <div className="flex flex-col items-center justify-center">
@@ -42,12 +38,14 @@ export default function Login() {
           type="text"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          placeholder="Email"
         />
         <label className="font-semibold text-s mt-2">Password</label>
         <input
           className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
         />
 
         <div className="flex mt-6 justify-center text-xs">
@@ -60,15 +58,17 @@ export default function Login() {
           </Link>
         </div>
         <div>
-         {
-          isLoading ? (<span>Loading...</span>) : (<Link
-            className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700"
-            to="/secondhand"
-            onClick={handleLogin}
-          >
-            Login
-          </Link> )
-         }
+          {isLoading ? (
+            <span>Loading...</span>
+          ) : (
+            <Link
+              className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700"
+              to="/secondhand"
+              onClick={handleLogin}
+            >
+              Login
+            </Link>
+          )}
         </div>
         {error && <div className="error">{error}</div>}
       </form>

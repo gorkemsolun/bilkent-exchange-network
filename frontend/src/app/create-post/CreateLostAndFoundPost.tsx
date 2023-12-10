@@ -1,14 +1,8 @@
-import "../App.css";
-import { SecondhandPost } from "../data-types/posttypes";
+import { LostFoundPost } from "../../data-types/posttypes";
+import "../../App.css";
 
-interface CreateSecondHandPostProps {
-  onClose: () => void;
-}
-
-const CreateSecondHandPost: React.FC<CreateSecondHandPostProps> = ({
-  onClose,
-}) => {
-  let product: SecondhandPost = {
+export default function CreateLostAndFoundPost({ onClose }) {
+  const product: LostFoundPost = {
     id: "",
     title: "",
     description: "",
@@ -16,7 +10,7 @@ const CreateSecondHandPost: React.FC<CreateSecondHandPostProps> = ({
     poster: "",
     date: "",
     image: "",
-    price: "",
+    status: "",
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -27,16 +21,16 @@ const CreateSecondHandPost: React.FC<CreateSecondHandPostProps> = ({
     // Retrieve values directly from the form data
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const price = formData.get("price") as string;
     const image = formData.get("image") as string;
     const category = formData.get("category") as string;
+    const status = formData.get("status") as string;
 
     // Update the product
     product.title = title;
     product.description = description;
-    product.price = price;
     product.image = image;
     product.category = category;
+    product.status = status;
 
     console.log(product);
 
@@ -76,27 +70,27 @@ const CreateSecondHandPost: React.FC<CreateSecondHandPostProps> = ({
           </div>
         </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="price">Price:</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            className="form-control"
-          />
-        </div>
-
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="category">Category</label>
-          <select id="category" name="category" className="form-control">
-            <option value="Books">Books</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Home">Home</option>
-            <option value="Home">Lecture Materials</option>
-            <option value="Home">Clothes</option>
-            <option value="Home">Hobbies</option>
-            <option value="Home">Other</option>
-          </select>
+        <div className="modal-form-group">
+          <div className="flex justify-center">
+            <div className="mx-2">
+              <input
+                type="radio"
+                id="lost"
+                name="status"
+                value="lost"
+                defaultChecked
+              />
+              <label htmlFor="lost" className="ml-2">
+                Lost
+              </label>
+            </div>
+            <div className="mx-2">
+              <input type="radio" id="found" name="status" value="found" />
+              <label htmlFor="found" className="ml-2">
+                Found
+              </label>
+            </div>
+          </div>
         </div>
 
         <div className="modal-form-group" style={{ textAlign: "left" }}>
@@ -118,6 +112,4 @@ const CreateSecondHandPost: React.FC<CreateSecondHandPostProps> = ({
       </form>
     </div>
   );
-};
-
-export default CreateSecondHandPost;
+}

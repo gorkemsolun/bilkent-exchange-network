@@ -1,14 +1,8 @@
-import "../App.css";
-import { LostFoundPost } from "../data-types/posttypes";
+import "../../App.css";
+import { DonatePost } from "../../data-types/posttypes";
 
-interface CreateLostFoundPostProps {
-  onClose: () => void;
-}
-
-const CreateLostAndFoundPost: React.FC<CreateLostFoundPostProps> = ({
-  onClose,
-}) => {
-  let product: LostFoundPost = {
+export default function CreateDonatePost({ onClose }) {
+  const product: DonatePost = {
     id: "",
     title: "",
     description: "",
@@ -16,7 +10,6 @@ const CreateLostAndFoundPost: React.FC<CreateLostFoundPostProps> = ({
     poster: "",
     date: "",
     image: "",
-    status: "",
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -29,14 +22,12 @@ const CreateLostAndFoundPost: React.FC<CreateLostFoundPostProps> = ({
     const description = formData.get("description") as string;
     const image = formData.get("image") as string;
     const category = formData.get("category") as string;
-    const status = formData.get("status") as string;
 
     // Update the product
     product.title = title;
     product.description = description;
     product.image = image;
     product.category = category;
-    product.status = status;
 
     console.log(product);
 
@@ -76,27 +67,17 @@ const CreateLostAndFoundPost: React.FC<CreateLostFoundPostProps> = ({
           </div>
         </div>
 
-        <div className="modal-form-group">
-          <div className="flex justify-center">
-            <div className="mx-2">
-              <input
-                type="radio"
-                id="lost"
-                name="status"
-                value="lost"
-                defaultChecked
-              />
-              <label htmlFor="lost" className="ml-2">
-                Lost
-              </label>
-            </div>
-            <div className="mx-2">
-              <input type="radio" id="found" name="status" value="found" />
-              <label htmlFor="found" className="ml-2">
-                Found
-              </label>
-            </div>
-          </div>
+        <div className="modal-form-group" style={{ textAlign: "left" }}>
+          <label htmlFor="category">Category</label>
+          <select id="category" name="category" className="form-control">
+            <option value="Books">Books</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Home">Home</option>
+            <option value="Home">Lecture Materials</option>
+            <option value="Home">Clothes</option>
+            <option value="Home">Hobbies</option>
+            <option value="Home">Other</option>
+          </select>
         </div>
 
         <div className="modal-form-group" style={{ textAlign: "left" }}>
@@ -118,6 +99,4 @@ const CreateLostAndFoundPost: React.FC<CreateLostFoundPostProps> = ({
       </form>
     </div>
   );
-};
-
-export default CreateLostAndFoundPost;
+}

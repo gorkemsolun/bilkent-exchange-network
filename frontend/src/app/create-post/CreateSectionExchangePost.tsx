@@ -1,14 +1,8 @@
-import "../App.css";
-import { SectionexchangePost } from "../data-types/posttypes";
+import "../../App.css";
+import { SectionexchangePost } from "../../data-types/posttypes";
 
-interface CreateSectionExchangePostProps {
-  onClose: () => void;
-}
-
-const CreateSectionExchangePost: React.FC<CreateSectionExchangePostProps> = ({
-  onClose,
-}) => {
-  let product: SectionexchangePost = {
+export default function CreateSectionExchangePost({ onClose }) {
+  const product: SectionexchangePost = {
     id: "",
     username: "",
     poster: "",
@@ -44,17 +38,13 @@ const CreateSectionExchangePost: React.FC<CreateSectionExchangePostProps> = ({
 
   return (
     <div className="modal-overlay">
-      <form
-        onSubmit={handleSubmit}
-        className="create-item-form"
-        style={{ width: "35vw" }}
-      >
+      <form onSubmit={handleSubmit} className="create-item-form w-35vw">
         <span className="close" onClick={onClose}>
           &times;
         </span>
 
         <div>
-          <div className="modal-form-group mt-8" style={{ textAlign: "left" }}>
+          <div className="modal-form-group mt-8 text-left">
             <div className="flex justify-center ">
               <div className="mx-4">
                 <label htmlFor="offeredCourse">Offered Course</label>
@@ -76,7 +66,7 @@ const CreateSectionExchangePost: React.FC<CreateSectionExchangePostProps> = ({
               </div>
             </div>
           </div>
-          <div className="modal-form-group" style={{ textAlign: "left" }}>
+          <div className="modal-form-group text-left">
             <div className="flex justify-center ">
               <div className="mx-4">
                 <label htmlFor="desiredCourse">Desired Course</label>
@@ -108,6 +98,4 @@ const CreateSectionExchangePost: React.FC<CreateSectionExchangePostProps> = ({
       </form>
     </div>
   );
-};
-
-export default CreateSectionExchangePost;
+}

@@ -1,14 +1,14 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Borrow from "./app/borrow/borrow";
-import Donate from "./app/donate/donate";
-import Forum from "./app/forum/forum";
-import Login from "./app/login/login";
-import LostFound from "./app/lostfound/lostfound";
-import Profile from "./app/profile/profile";
-import SecondHand from "./app/secondhand/secondhand";
-import SectionExchange from "./app/sectionexchange/sectionexchange";
-import Signup from "./app/signup/signup";
+import Borrow from "./app/borrow";
+import Donate from "./app/donate";
+import Forum from "./app/forum";
+import Login from "./app/login";
+import LostFound from "./app/lostfound";
+import Profile from "./app/profile";
+import SecondHand from "./app/secondhand";
+import SectionExchange from "./app/sectionexchange";
+import Signup from "./app/signup";
 import { AuthContextProvider } from "./authentication/AuthContext";
 import { useAuthContext } from "./authentication/useAuthContext";
 

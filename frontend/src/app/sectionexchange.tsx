@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../../App.css";
-import CreatePostButton from "../../components/createpostbutton";
-import Categories from "../../components/filters";
-import Header from "../../components/header";
-import Navbar from "../../components/navbar";
-import SearchBar from "../../components/searchbar";
-import { SectionexchangePost } from "../../data-types/posttypes";
+import "../App.css";
+import Filters from "../components/filters";
+import Header from "../components/header";
+import Navbar from "../components/navbar";
+import SearchBar from "../components/searchbar";
+import { SectionexchangePost } from "../data-types/posttypes";
+import CreatePostButton from "./create-post/createPostButton";
 
 export default function SectionExchange() {
   function handleDMClick(): void {
@@ -44,42 +44,27 @@ export default function SectionExchange() {
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Categories type="sectionexchange"></Categories>
+        <Filters type="sectionexchange"></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="sectionexchange" onSearch={handleSearch} />
             <CreatePostButton type="sectionexchange" />
           </div>
-          <div className="container" style={{ width: "100%" }}>
+          <div className="container w-full">
             <div className="row mb-3 mr-20 ml-5">
               <div className="col-12">
-                <div
-                  className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2"
-                  style={{ backgroundColor: "white", fontWeight: "bold" }}
-                >
+                <div className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2 bg-white font-bold">
                   <div className="row align-items-start justify-content-start">
-                    <div
-                      className="col-md text-center" // Adjusted column size
-                      style={{ borderRight: "1px solid black" }}
-                    >
+                    <div className="col-md text-center border-r border-black">
                       <p className="card-text">{"Username"}</p>
                     </div>
-                    <div
-                      className="col-md text-center" // Adjusted column size
-                      style={{ borderRight: "1px solid black" }}
-                    >
+                    <div className="col-md text-center border-r border-black">
                       <p className="card-text">{"Offered Course-Section"}</p>
                     </div>
-                    <div
-                      className="col-md text-center" // Adjusted column size
-                      style={{ borderRight: "1px solid black" }}
-                    >
+                    <div className="col-md text-center border-r border-black">
                       <p className="card-text">{"Desired Course-Section"}</p>
                     </div>
-                    <div
-                      className="col-md text-center" // Adjusted column size
-                      style={{ borderRight: "1px solid black" }}
-                    >
+                    <div className="col-md text-center border-r border-black">
                       <p className="card-text">{"DM"}</p>
                     </div>
                     <div
@@ -92,46 +77,30 @@ export default function SectionExchange() {
               </div>
             </div>
           </div>
-          <div className="container" style={{ width: "100%" }}>
-            {sectionexchangePosts.map((item: SectionexchangePost) => (
-              <div className="row mb-1 mr-20 ml-5" key={item.id}>
+          <div className="container w-full">
+            {sectionexchangePosts.map((post: SectionexchangePost) => (
+              <div className="row mb-1 mr-20 ml-5" key={post._id}>
                 <div className="col-12">
-                  <div
-                    className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2"
-                    style={{ backgroundColor: "white" }}
-                  >
+                  <div className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2 bg-white">
                     <div className="row align-items-start justify-content-start">
-                      <div
-                        className="col-md text-center" // Adjusted column size
-                        style={{ borderRight: "1px solid black" }}
-                      >
-                        <p className="card-text">{"" + item.username}</p>
+                      <div className="col-md text-center border-r border-black">
+                        <p className="card-text">{"" + post.username}</p>
                       </div>
-                      <div
-                        className="col-md text-center" // Adjusted column size
-                        style={{ borderRight: "1px solid black" }}
-                      >
+                      <div className="col-md text-center border-r border-black">
                         <p className="card-text">
-                          {item.offeredCourse + "-" + item.offeredSection}
+                          {post.offeredCourse + "-" + post.offeredSection}
                         </p>
                       </div>
-                      <div
-                        className="col-md text-center" // Adjusted column size
-                        style={{ borderRight: "1px solid black" }}
-                      >
+                      <div className="col-md text-center border-r border-black">
                         <p className="card-text">
-                          {item.desiredCourse + "-" + item.desiredSection}
+                          {post.desiredCourse + "-" + post.desiredSection}
                         </p>
                       </div>
-                      <div
-                        className="col-md text-center" // Adjusted column size
-                        style={{ borderRight: "1px solid black" }}
-                      >
+                      <div className="col-md text-center border-r border-black">
                         <div>
                           {/* DM Box Image with hover title and click event */}
                           <img
-                            className="img-fluid mx-auto d-block"
-                            style={{ maxWidth: "4vw", maxHeight: "4vh" }}
+                            className="img-fluid mx-auto d-block max-w-4vw max-h-4vh"
                             src="./src/assets/dmbox.png" // Replace with your image URL
                             alt="DM Box"
                             title="Send DM" // Tooltip on hover
@@ -142,7 +111,7 @@ export default function SectionExchange() {
                       <div
                         className="col-md text-center" // Adjusted column size
                       >
-                        <p className="card-text">{"" + item.date}</p>
+                        <p className="card-text">{"" + post.createdAt}</p>
                       </div>
                     </div>
                   </div>

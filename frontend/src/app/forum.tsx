@@ -1,8 +1,8 @@
-import "../../App.css";
-import CreatePostButton from "../../components/createpostbutton";
-import Header from "../../components/header";
-import Navbar from "../../components/navbar";
-import SearchBar from "../../components/searchbar";
+import "../App.css";
+import Header from "../components/header";
+import Navbar from "../components/navbar";
+import SearchBar from "../components/searchbar";
+import CreatePostButton from "./create-post/createPostButton";
 import ForumPost from "./forumpost";
 
 export default function Forum() {

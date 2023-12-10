@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../../App.css";
-import CreatePostButton from "../../components/createpostbutton.tsx";
-import Filters from "../../components/filters.tsx";
-import Header from "../../components/header.tsx";
-import Navbar from "../../components/navbar.tsx";
-import SearchBar from "../../components/searchbar.tsx";
-import { FilterParams } from "../../data-types/datatypes.ts";
-import { SecondhandPost } from "../../data-types/posttypes.ts";
+import "../App.css";
+import Filters from "../components/filters.tsx";
+import Header from "../components/header.tsx";
+import Navbar from "../components/navbar.tsx";
+import SearchBar from "../components/searchbar.tsx";
+import { FilterParams } from "../data-types/datatypes.ts";
+import { SecondhandPost } from "../data-types/posttypes.ts";
+import CreatePostButton from "./create-post/createPostButton.tsx";
 
 export default function Secondhand() {
   const [secondhandPosts, setSecondhandPosts] = useState([]);
@@ -125,27 +125,23 @@ export default function Secondhand() {
                         {post.category}
                       </span>
                       <img
-                        className="card-img"
-                        style={{
-                          width: "30vw",
-                          height: "40vh",
-                          objectFit: "cover",
-                        }}
+                        className="card-img w-30vw h-40vh object-cover"
                         src={post.image}
                         alt="Image"
                       />
                     </div>
                     <div className="card-img-overlay d-flex justify-content-end">
-                      <a href="#" className="card-link text-danger like">
+                      <a
+                        href="#"
+                        className="card-link text-danger like"
+                        title="card"
+                      >
                         <i className="fas fa-heart"></i>
                       </a>
                     </div>
                     <div className="card-body">
                       <h4 className="card-title">{post.title}</h4>
-                      <div
-                        className="description-container"
-                        style={{ height: "13vh", textAlign: "left" }}
-                      >
+                      <div className="description-container h-13vh text-left">
                         <p className="card-text">
                           {post.description.length < 75
                             ? post.description

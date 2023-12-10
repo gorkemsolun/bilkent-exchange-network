@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../../App.css";
-import CreatePostButton from "../../components/createpostbutton.tsx";
-import Filters from "../../components/filters.tsx";
-import Header from "../../components/header.tsx";
-import Navbar from "../../components/navbar.tsx";
-import SearchBar from "../../components/searchbar.tsx";
-import { LostFoundPost } from "../../data-types/posttypes.ts";
+import "../App.css";
+import Filters from "../components/filters.tsx";
+import Header from "../components/header.tsx";
+import Navbar from "../components/navbar.tsx";
+import SearchBar from "../components/searchbar.tsx";
+import { LostFoundPost } from "../data-types/posttypes.ts";
+import CreatePostButton from "./create-post/createPostButton.tsx";
 
 export default function LostFound() {
   const [lostFoundPosts, setLostFoundPosts] = useState([]);

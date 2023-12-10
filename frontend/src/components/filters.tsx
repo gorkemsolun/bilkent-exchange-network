@@ -50,77 +50,74 @@ export default function Filters(props: FilterProps) {
   };
 
   return (
-    <div
-      className="flex flex-col object-contain m-3 bg-slate-100 border-r-4 pr-1"
-      style={{ width: "18%" }}
-    >
+    <div className="flex flex-col object-contain m-3 bg-slate-100 border-r-4 pr-1 w-18">
       <div className="text-2xl font-bold p-1">Categories</div>
       <div className="mb-3">
-        {categories[props.type] &&
-          categories[props.type].map((category: string, index: number) => (
-            <div key={index} style={{ textAlign: "start", marginLeft: "1vw" }}>
-              <div className="second-hand-category">
-                <input
-                  key={index}
-                  type="checkbox"
-                  value={category}
-                  checked={checkedCategories.includes(category)}
-                  onChange={() => handleCategoryChange(category)}
-                  style={{ marginRight: "0.5vw" }}
-                />
-                <label>{category}</label>
+        {categories[props.type as keyof typeof categories] &&
+          categories[props.type as keyof typeof categories].map(
+            (category: string, index: number) => (
+              <div key={index} className="text-start ml-1">
+                <div className="second-hand-category">
+                  <input
+                    key={index}
+                    type="checkbox"
+                    value={category}
+                    checked={checkedCategories.includes(category)}
+                    onChange={() => handleCategoryChange(category)}
+                    className="mr-0.5"
+                    placeholder="Search..."
+                  />
+                  <label>{category}</label>
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          )}
       </div>
-
       {(props.type === "secondhand" || props.type === "sectionExchange") && (
         <div className="mb-3 flex flex-row second-hand-category">
-          <div
-            className="mb-1"
-            style={{ flex: "1", marginRight: "1%", maxWidth: "50%" }}
-          >
+          <div className="mb-1 mr-1 max-w-1/2">
             <label>Min Price</label>
             <input
               type="number"
               value={minPrice}
               onChange={(e) => setMinPrice(Number(e.target.value))}
               className="border p-2 rounded-md bg-white w-full"
+              placeholder="Min Price"
             />
           </div>
 
-          <div className="mb-1" style={{ flex: "1", maxWidth: "50%" }}>
+          <div className="mb-1 max-w-1/2">
             <label>Max Price</label>
             <input
               type="number"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
               className="border p-2 rounded-md bg-white w-full"
+              placeholder="Max Price"
             />
           </div>
         </div>
       )}
 
-      <div className="mb-3 flex flex-row second-hand-category">
-        <div
-          className="mb-1"
-          style={{ flex: "1", marginRight: "1%", maxWidth: "50%" }}
-        >
+      <div className="mb-3 flex flex-column second-hand-category max-w-1/4">
+        <div className="flex flex-column mb-1 basis-1/4 max-w-1/8">
           <label>Earliest Date</label>
           <input
             type="date"
-            value={minDate}
-            onChange={(e) => setMinDate(e.target.value)}
-            className="border p-2 rounded-md bg-white w-full"
+            value={minDate?.toString()}
+            onChange={(e) => setMinDate(new Date(e.target.value))}
+            className="border p-2 rounded-md bg-white w-1"
+            placeholder="Earliest Date"
           />
         </div>
-        <div className="mb-1" style={{ flex: "1", maxWidth: "50%" }}>
+        <div className="flex flex-column mb-1 basis-1/4 max-w-1/4">
           <label>Latest Date</label>
           <input
             type="date"
-            value={maxDate}
-            onChange={(e) => setMaxDate(e.target.value)}
-            className="border p-2 rounded-md bg-white w-full"
+            value={maxDate?.toString()}
+            onChange={(e) => setMaxDate(new Date(e.target.value))}
+            className="border p-2 rounded-md bg-white max-w-1/4 w-1"
+            placeholder="Latest Date"
           />
         </div>
       </div>
@@ -129,12 +126,14 @@ export default function Filters(props: FilterProps) {
         <button
           onClick={onResetClicked}
           className="bg-red-500 text-white p-2 rounded-md ml-2 w-20"
+          type="reset"
         >
           Reset
         </button>
         <button
           onClick={onFilterClicked}
           className="bg-blue-500 text-white p-2 rounded-md ml-2 w-20"
+          type="submit"
         >
           Filter
         </button>

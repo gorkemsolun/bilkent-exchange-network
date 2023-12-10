@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../../App.css";
-import CreatePostButton from "../../components/createpostbutton";
-import Filters from "../../components/filters";
-import Header from "../../components/header";
-import Navbar from "../../components/navbar";
-import SearchBar from "../../components/searchbar";
-import { BorrowPost } from "../../data-types/posttypes";
+import "../App.css";
+import Filters from "../components/filters";
+import Header from "../components/header";
+import Navbar from "../components/navbar";
+import SearchBar from "../components/searchbar";
+import { BorrowPost } from "../data-types/posttypes";
+import CreatePostButton from "./create-post/createPostButton";
 
 export default function Borrow() {
   const [borrowPosts, setBorrowPosts] = useState([]);

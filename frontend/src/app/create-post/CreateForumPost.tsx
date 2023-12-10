@@ -1,16 +1,11 @@
-import "../App.css";
-import { BorrowPost } from "../data-types/posttypes";
+import "../../App.css";
+import { ForumPost } from "../../data-types/posttypes";
 
-interface CreateBorrowPostProps {
-  onClose: () => void;
-}
-
-const CreateBorrowPost: React.FC<CreateBorrowPostProps> = ({ onClose }) => {
-  let product: BorrowPost = {
+export default function CreateForumPost({ onClose }) {
+  const product: ForumPost = {
     id: "",
     title: "",
     description: "",
-    category: "",
     poster: "",
     date: "",
   };
@@ -23,12 +18,10 @@ const CreateBorrowPost: React.FC<CreateBorrowPostProps> = ({ onClose }) => {
     // Retrieve values directly from the form data
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const category = formData.get("category") as string;
 
     // Update the product
     product.title = title;
     product.description = description;
-    product.category = category;
 
     console.log(product);
 
@@ -68,19 +61,6 @@ const CreateBorrowPost: React.FC<CreateBorrowPostProps> = ({ onClose }) => {
           </div>
         </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="category">Category</label>
-          <select id="category" name="category" className="form-control">
-            <option value="Books">Books</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Home">Home</option>
-            <option value="Home">Lecture Materials</option>
-            <option value="Home">Clothes</option>
-            <option value="Home">Hobbies</option>
-            <option value="Home">Other</option>
-          </select>
-        </div>
-
         <div className="modal-form-group mt-4">
           <button type="submit" className="btn btn-primary">
             Create Post
@@ -89,6 +69,4 @@ const CreateBorrowPost: React.FC<CreateBorrowPostProps> = ({ onClose }) => {
       </form>
     </div>
   );
-};
-
-export default CreateBorrowPost;
+}

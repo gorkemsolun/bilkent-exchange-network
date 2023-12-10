@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../../App.css";
-import Header from "../../components/header";
-import Navbar from "../../components/navbar";
-import { UserProfile } from "../../data-types/datatypes.ts";
+import "../App.css";
+import Header from "../components/header.tsx";
+import Navbar from "../components/navbar.tsx";
+import { UserProfile } from "../data-types/datatypes.ts";
 
 export default function UserProfile() {
   const [userProfile, setUserProfile] = useState<UserProfile>({
