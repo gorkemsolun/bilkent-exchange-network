@@ -1,54 +1,17 @@
-import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { useSignup } from "../../authentication/useSignup";
-import { useVerificationEmail } from "../../authentication/useVerificationEmail";
-import { useLocalStorage } from "@uidotdev/usehooks";
-import { useEmailToken } from '../../authentication/useEmailToken'
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useVerificationEmail } from "./authHelpers";
 
-
-const Signup = () => {
-  const [password, setPassword] = useState("");
+export default function VerificationPage() {
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const { signUpRequest, isLoading, error } = useSignup();
+  const { sendEmail } = useVerificationEmail();
   const [isVerifying, setIsVerifying] = useState(false);
-  const {sendEmail, verificationError} = useVerificationEmail();
-  const [searchParams, setSearchParams] = useSearchParams()
-  const emailToken = searchParams.get("emailToken")
-  const email = searchParams.get("email")
-  const [verified, setVerified] = useState(false)
-  const {getToken} = useEmailToken() 
-
-  useEffect(() => {
-        const fetchData = async () => {
-            if (emailToken) {
-                try {
-                    const json = await getToken(emailToken);
-                    if (json.error) {
-                        return 
-                    }
-                   localStorage.setItem("verified", "true")
-                    
-                    setVerified(true)
-                   
-                } catch (error) {
-                    console.log(error);
-                }
-            } 
-            
-        };
-    
-        fetchData();
-    }, [emailToken]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(verified){
-      console.log("inside")
-      console.log("username",username)
-      console.log("email", email)
-      console.log("password", password)
-      await signUpRequest(username, email, password);
-    }
+    setIsVerifying(true);
+    await sendEmail(username, email);
   };
 
   return (
@@ -66,14 +29,14 @@ const Signup = () => {
       <div className="flex flex-col items-center justify-center">
         {/*<img src="bilkent.png" width={"250"} height={"250"} />*/}
         <h1 className="mb-1 text-xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-          Sign Up
+          Verification
         </h1>
       </div>
       <form
         className="flex flex-col bg-white rounded shadow-lg p-12 mt-12 opacity-90"
         style={{ width: "23rem" }}
         onSubmit={handleSubmit}
-        //disabled = {isLoading}
+        disabled={isVerifying}
       >
         <label
           className="font-semibold text-s mt-2"
@@ -87,16 +50,18 @@ const Signup = () => {
           onChange={(e) => setUsername(e.target.value)}
           value={username}
         />
+
         <label
           className="font-semibold text-s mt-2"
           style={{ textAlign: "left" }}
         >
-          Password
+          Email
         </label>
         <input
-          type="password"
           className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
-          onChange={(e) => setPassword(e.target.value)}
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
 
         <div className="flex mt-6 justify-center text-xs">
@@ -106,13 +71,12 @@ const Signup = () => {
         </div>
 
         <button
+          disabled={isVerifying}
           className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
         >
-          Sign Up
+          Send Verification Mail
         </button>
       </form>
     </div>
   );
-};
-
-export default Signup;
+}

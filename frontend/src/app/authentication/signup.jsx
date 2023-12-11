@@ -1,26 +1,62 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useSignup } from "./authHelpers";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useEmailToken, useSignup } from "./authHelpers";
 
 export default function Signup() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const { signUpRequest, isLoading, error } = useSignup();
+  const { signUpRequest } = useSignup();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const emailToken = searchParams.get("emailToken");
+  const email = searchParams.get("email");
+  const [verified, setVerified] = useState(false);
+  const { getToken } = useEmailToken();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (emailToken) {
+        try {
+          const json = await getToken(emailToken);
+          if (json.error) {
+            return;
+          }
+          localStorage.setItem("verified", "true");
+
+          setVerified(true);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [emailToken, getToken]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await signUpRequest(username, email, password);
+    if (verified) {
+      console.log("inside");
+      console.log("username", username);
+      console.log("email", email);
+      console.log("password", password);
+      await signUpRequest(username, email, password);
+    }
   };
 
   return (
     <div
-      className="flex flex-col items-center justify-center bg-gray-200 text-gray-700 bg-cover bg-center bg-no-repeat w-screen h-screen"
+      className="flex flex-col items-center justify-center w-screen h-screen bg-gray-200 text-gray-700"
       style={{
         backgroundImage: `url("https://www.technopat.net/sosyal/eklenti/mountains_peaks_snow_192502_1920x1080-jpg.1367847/")`,
+        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        width: "100vw",
+        height: "100vh",
       }}
     >
       <div className="flex flex-col items-center justify-center">
+        {/*<img src="bilkent.png" width={"250"} height={"250"} />*/}
         <h1 className="mb-1 text-xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           Sign Up
         </h1>
@@ -29,6 +65,7 @@ export default function Signup() {
         className="flex flex-col bg-white rounded shadow-lg p-12 mt-12 opacity-90"
         style={{ width: "23rem" }}
         onSubmit={handleSubmit}
+        //disabled = {isLoading}
       >
         <label
           className="font-semibold text-s mt-2"
@@ -41,19 +78,6 @@ export default function Signup() {
           type="username"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
-        />
-
-        <label
-          className="font-semibold text-s mt-2"
-          style={{ textAlign: "left" }}
-        >
-          Email
-        </label>
-        <input
-          className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
-          type="email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
         />
         <label
           className="font-semibold text-s mt-2"
@@ -73,13 +97,9 @@ export default function Signup() {
           </Link>
         </div>
 
-        <button
-          disabled={isLoading}
-          className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
-        >
+        <button className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full">
           Sign Up
         </button>
-        {error && <div className="error">{error}</div>}
       </form>
     </div>
   );

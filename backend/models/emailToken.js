@@ -1,5 +1,5 @@
+import crypto from "crypto";
 import mongoose from "mongoose";
-import crypto from "crypto"
 
 const emailTokenSchema = new mongoose.Schema(
   {
@@ -13,13 +13,10 @@ const emailTokenSchema = new mongoose.Schema(
   }
 );
 
-emailTokenSchema.statics.createToken = async function() {
-    const token = crypto.randomBytes(64).toString("hex")
-    const theToken = await this.create({emailToken:token})
-    return theToken
-}
+emailTokenSchema.statics.createToken = async function () {
+  const token = crypto.randomBytes(64).toString("hex");
+  const theToken = await this.create({ emailToken: token });
+  return theToken;
+};
 
-export const emailTokenDB = mongoose.model(
-  "emailToken",
-  emailTokenSchema
-);
+export const emailTokenDB = mongoose.model("emailToken", emailTokenSchema);
