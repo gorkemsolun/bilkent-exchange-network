@@ -1,103 +1,110 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../App.css";
-import Filters from "../components/filters";
-import Header from "../components/header";
-import Navbar from "../components/navbar";
-import SearchBar from "../components/searchbar";
+import { defaultFilterParams } from "../data-types/constants";
+import { FilterParams } from "../data-types/datatypes";
 import { BorrowPost } from "../data-types/posttypes";
+import Filters from "./components/filters";
+import Header from "./components/header";
+import Loader from "./components/loader";
+import Navbar from "./components/navbar";
+import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/createPostButton";
+import prepareUrl from "./fetchHelpers";
 
 export default function Borrow() {
+  const [loading, setLoading] = useState(false);
   const [borrowPosts, setBorrowPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [filterParams, setFilterParams] =
+    useState<FilterParams>(defaultFilterParams);
 
-  // Callback function to handle search term
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
 
+  function passFilters(params: FilterParams) {
+    setFilterParams(params);
+  }
+
   useEffect(() => {
-    const endpoint = searchTerm
-      ? `http://localhost:3000/borrow/borrowpost/${searchTerm}`
-      : "http://localhost:3000/borrow/borrowpost";
+    setLoading(true);
+    const url = prepareUrl(searchTerm, "borrow", filterParams);
 
     axios
-      .get(endpoint)
+      .get(url)
       .then((res) => {
-        //console.log(res.data);
         setBorrowPosts(res.data);
-        //setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        //setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-  }, [searchTerm]);
-
-  const handleBorrowPostClick = (postId: string) => {
-    // Replace this with your desired functionality when a borrow element is clicked
-    console.log(`Borrow post with ID ${postId} clicked!`);
-  };
+  }, [searchTerm, filterParams]);
 
   return (
     <div className="w-screen h-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row  grow">
-        <Filters type="borrow"></Filters>
+        <Filters type="borrow" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="borrow" onSearch={handleSearch} />
             <CreatePostButton type="borrow" />
           </div>
-          <div className="container">
-            <div className="row">
-              {borrowPosts.map((post: BorrowPost) => (
-                <div className="col-12 mb-4" key={post.id}>
-                  <div
-                    className="col-12"
-                    key={post.id}
-                    onClick={() => handleBorrowPostClick(post.id)}
-                    style={{ cursor: "pointer", textAlign: "left" }}
-                  >
-                    <div className="card" style={{ width: "100%" }}>
-                      <div className="position-relative">
-                        <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
-                          {post.category}
-                        </span>
-                      </div>
-                      <div className="card-img-overlay d-flex justify-content-end">
-                        <a href="#" className="card-link text-danger like">
-                          <i className="fas fa-heart"></i>
-                        </a>
-                      </div>
-                      <div className="card-body">
-                        <h2
-                          className="card-title"
-                          style={{ fontSize: "1.5rem", fontWeight: "bold" }}
-                        >
-                          {post.title.length < 50
-                            ? post.title
-                            : post.title.slice(0, 50) + "..."}
-                        </h2>
-                        <div
-                          className="description-container"
-                          style={{ height: "10%" }}
-                        >
-                          <p className="card-text">
-                            {post.description.length < 315
-                              ? post.description
-                              : post.description.slice(0, 315) + "..."}
-                          </p>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="container">
+              <div className="row">
+                {borrowPosts.map((post: BorrowPost) => (
+                  <div className="col-12 mb-4" key={post._id}>
+                    <div
+                      className="col-12"
+                      key={post._id}
+                      onClick={() => {}}
+                      style={{ cursor: "pointer", textAlign: "left" }}
+                    >
+                      <div className="card" style={{ width: "100%" }}>
+                        <div className="position-relative">
+                          <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
+                            {post.category}
+                          </span>
+                        </div>
+                        <div className="card-img-overlay d-flex justify-content-end">
+                          <a href="#" className="card-link text-danger like">
+                            <i className="fas fa-heart"></i>
+                          </a>
+                        </div>
+                        <div className="card-body">
+                          <h2
+                            className="card-title"
+                            style={{ fontSize: "1.5rem", fontWeight: "bold" }}
+                          >
+                            {post.title.length < 50
+                              ? post.title
+                              : post.title.slice(0, 50) + "..."}
+                          </h2>
+                          <div
+                            className="description-container"
+                            style={{ height: "10%" }}
+                          >
+                            <p className="card-text">
+                              {post.description.length < 315
+                                ? post.description
+                                : post.description.slice(0, 315) + "..."}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -31,4 +31,8 @@ export interface FilterParams {
     endDate: Date | undefined;
   };
   status: string;
+  desiredCourse: string;
+  offeredCourse: string;
+  desiredSection: number | undefined;
+  offeredSection: number | undefined;
 }

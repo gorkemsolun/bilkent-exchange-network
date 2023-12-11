@@ -2,7 +2,7 @@ import express from "express";
 import {
   borrowPostDEL,
   borrowPostGET,
-  borrowPostGETSearch,
+  borrowPostGETId,
   borrowPostPOST,
   borrowPostPUT,
 } from "../controllers/borrowController.js";
@@ -14,9 +14,8 @@ const router = express.Router();
 */
 
 router.post("/borrowpost", borrowPostPOST);
-router.get("/borrowpost", borrowPostGET);
-router.get("/borrowpost/:string", borrowPostGETSearch);
-//router.get("/borrowpost/:id", borrowPostGETId);
+router.get("/borrowpost/c/:categories/d/:date/s/:search", borrowPostGET);
+router.get("/borrowpost/:id", borrowPostGETId);
 router.put("/borrowpost/:id", borrowPostPUT);
 router.delete("/borrowpost/:id", borrowPostDEL);
 

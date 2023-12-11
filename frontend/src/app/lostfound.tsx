@@ -1,36 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../App.css";
-import Filters from "../components/filters.tsx";
-import Header from "../components/header.tsx";
-import Loader from "../components/loader.tsx";
-import Navbar from "../components/navbar.tsx";
-import SearchBar from "../components/searchbar.tsx";
+import { defaultFilterParams } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 import { LostFoundPost } from "../data-types/posttypes.ts";
+import Filters from "./components/filters.tsx";
+import Header from "./components/header.tsx";
+import Loader from "./components/loader.tsx";
+import Navbar from "./components/navbar.tsx";
+import SearchBar from "./components/searchbar.tsx";
 import CreatePostButton from "./create-post/createPostButton.tsx";
-import prepareUrl from "./prepareUrl.ts";
+import prepareUrl from "./fetchHelpers.ts";
 
 export default function LostFound() {
   const [loading, setLoading] = useState(false);
   const [lostFoundPosts, setLostFoundPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterParams, setFilterParams] = useState<FilterParams>({
-    categories: [],
-    prices: {
-      min: undefined,
-      max: undefined,
-    },
-    dates: {
-      startDate: undefined,
-      endDate: undefined,
-    },
-    status: "all",
-  });
+  const [filterParams, setFilterParams] =
+    useState<FilterParams>(defaultFilterParams);
 
   useEffect(() => {
     setLoading(true);
-    const url = prepareUrl(filterParams, searchTerm, "lostfound");
+    const url = prepareUrl(searchTerm, "lostfound", filterParams);
     console.log(url);
 
     axios

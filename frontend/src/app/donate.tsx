@@ -1,34 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../App.css";
-import Filters from "../components/filters.tsx";
-import Header from "../components/header.tsx";
-import Loader from "../components/loader.tsx";
-import Navbar from "../components/navbar.tsx";
-import SearchBar from "../components/searchbar.tsx";
+import { defaultFilterParams } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 import { DonatePost } from "../data-types/posttypes.ts";
+import Filters from "./components/filters.tsx";
+import Header from "./components/header.tsx";
+import Loader from "./components/loader.tsx";
+import Navbar from "./components/navbar.tsx";
+import SearchBar from "./components/searchbar.tsx";
 import CreatePostButton from "./create-post/createPostButton.tsx";
-import prepareUrl from "./prepareUrl.ts";
+import prepareUrl from "./fetchHelpers.ts";
 
 export default function Donate() {
   const [donatePosts, setDonatePosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [filterParams, setFilterParams] = useState<FilterParams>({
-    categories: [],
-    prices: {
-      min: undefined,
-      max: undefined,
-    },
-    dates: {
-      startDate: undefined,
-      endDate: undefined,
-    },
-    status: "all",
-  });
+  const [loading, setLoading] = useState(false);
+  const [filterParams, setFilterParams] =
+    useState<FilterParams>(defaultFilterParams);
 
-  // Callback function to handle search term
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
@@ -40,7 +29,7 @@ export default function Donate() {
   useEffect(() => {
     setLoading(true);
 
-    const url = prepareUrl(filterParams, searchTerm, "donate");
+    const url = prepareUrl(searchTerm, "donate", filterParams);
     console.log(url);
 
     axios

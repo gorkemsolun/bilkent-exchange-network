@@ -1,8 +1,8 @@
-import { Sectionexchangepost } from "../models/sectionexchangepost.js";
+import { SectionexchangePost } from "../models/sectionexchangepost.js";
 
 function fieldController(reqBody) {
   if (
-    !reqBody.username ||
+    !reqBody.price ||
     !reqBody.poster ||
     !reqBody.offeredSection ||
     !reqBody.desiredSection ||
@@ -19,7 +19,7 @@ export const sectionexchangePostPOST = async (req, res) => {
 
     const newSectionexchangepost = req.body;
 
-    const sectionexchangepost = await Sectionexchangepost.create(
+    const sectionexchangepost = await SectionexchangePost.create(
       newSectionexchangepost
     );
 
@@ -32,13 +32,44 @@ export const sectionexchangePostPOST = async (req, res) => {
 
 export const sectionexchangePostGET = async (req, res) => {
   try {
-    const sectionexchangeposts = await Sectionexchangepost.find({});
+    let query = {};
+    let regexSearch = new RegExp(req.params.search, "i");
+    let priceMin = req.params.price.split("*")[0],
+      priceMax = req.params.price.split("*")[1];
+    let dateMin = req.params.date.split("*")[0],
+      dateMax = req.params.date.split("*")[1];
 
-    sectionexchangeposts.forEach((sectionexchangepost) => {
-      sectionexchangepost["date"] =
-        sectionexchangepost.createdAt.toDateString();
-      sectionexchangepost["id"] = sectionexchangepost._id;
-    });
+    if (req.params.search !== "All") {
+      query.title = { $regex: regexSearch };
+    }
+    if (priceMin !== "All" && priceMax !== "All" && priceMin && priceMax) {
+      query.price = { $gte: priceMin, $lte: priceMax };
+    } else if (priceMin !== "All" && priceMin) {
+      query.price = { $gte: priceMin };
+    } else if (priceMax !== "All" && priceMax) {
+      query.price = { $lte: priceMax };
+    }
+    if (dateMin && dateMin !== "All" && dateMax !== "All" && dateMax) {
+      query.timestamp = { $gte: dateMin, $lte: dateMax };
+    } else if (dateMin !== "All" && dateMin) {
+      query.timestamp = { $gte: dateMin };
+    } else if (dateMax !== "All" && dateMax) {
+      query.timestamp = { $lte: dateMax };
+    }
+    if (req.params.offeredCourse !== "undefined") {
+      query.offeredCourse = req.params.offeredCourse;
+    }
+    if (req.params.offeredSection !== "undefined") {
+      query.offeredSection = Number(req.params.offeredSection);
+    }
+    if (req.params.desiredCourse !== "undefined") {
+      query.desiredCourse = req.params.desiredCourse;
+    }
+    if (req.params.desiredSection !== "undefined") {
+      query.desiredSection = Number(req.params.desiredSection);
+    }
+
+    const sectionexchangeposts = await SectionexchangePost.find(query);
 
     return res.status(200).json(sectionexchangeposts);
   } catch (err) {
@@ -49,16 +80,13 @@ export const sectionexchangePostGET = async (req, res) => {
 
 export const sectionexchangePostGETId = async (req, res) => {
   try {
-    const sectionexchangepost = await Sectionexchangepost.findById(
+    const sectionexchangepost = await SectionexchangePost.findById(
       req.params.id
     );
 
     if (!sectionexchangepost) {
-      return res.status(404).send("Sectionexchangepost not found");
+      return res.status(404).send("SectionexchangePost not found");
     }
-
-    sectionexchangepost["date"] = sectionexchangepost.createdAt.toDateString();
-    sectionexchangepost["id"] = sectionexchangepost._id;
 
     return res.status(200).json(sectionexchangepost);
   } catch (err) {
@@ -71,16 +99,16 @@ export const sectionexchangePostPUT = async (req, res) => {
   try {
     fieldController(req.body);
 
-    const result = await Sectionexchangepost.findByIdAndUpdate(
+    const result = await SectionexchangePost.findByIdAndUpdate(
       req.params.id,
       req.body
     );
 
     if (!result) {
-      return res.status(404).send("Sectionexchangepost not found");
+      return res.status(404).send("SectionexchangePost not found");
     }
 
-    return res.status(204).send("Sectionexchangepost updated");
+    return res.status(204).send("SectionexchangePost updated");
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);
@@ -89,27 +117,15 @@ export const sectionexchangePostPUT = async (req, res) => {
 
 export const sectionexchangePostDEL = async (req, res) => {
   try {
-    const result = await Sectionexchangepost.findByIdAndDelete(req.params.id);
+    const result = await SectionexchangePost.findByIdAndDelete(req.params.id);
 
     if (!result) {
-      return res.status(404).send("Sectionexchangepost not found");
+      return res.status(404).send("SectionexchangePost not found");
     }
 
-    return res.status(204).send("Sectionexchangepost deleted");
+    return res.status(204).send("SectionexchangePost deleted");
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);
-  }
-};
-
-export const sectionPostGETSearch = async (req, res) => {
-  try {
-    const searchString = req.params.string;
-    const regex = new RegExp(searchString, "i");
-    const sectionPosts = await Sectionexchangepost.find({ title: regex });
-    return res.status(200).json(sectionPosts);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
   }
 };

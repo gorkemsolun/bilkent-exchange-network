@@ -1,5 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { AuthContextProvider } from "./app/authentication/AuthContext";
+import { useAuthContext } from "./app/authentication/authHelpers";
+import Signup from "./app/authentication/signup";
 import Borrow from "./app/borrow";
 import Donate from "./app/donate";
 import Forum from "./app/forum";

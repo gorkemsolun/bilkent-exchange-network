@@ -1,4 +1,4 @@
-import { Secondhandpost } from "../models/secondhandpost.js";
+import { SecondhandPost } from "../models/secondhandpost.js";
 
 function fieldController(reqBody) {
   if (
@@ -19,7 +19,7 @@ export const secondhandPostPOST = async (req, res) => {
 
     const newSecondhandpost = req.body;
 
-    const secondhandpost = await Secondhandpost.create(newSecondhandpost);
+    const secondhandpost = await SecondhandPost.create(newSecondhandpost);
 
     return res.status(201).send(secondhandpost);
   } catch (err) {
@@ -30,14 +30,11 @@ export const secondhandPostPOST = async (req, res) => {
 
 export const secondhandPostGETId = async (req, res) => {
   try {
-    const secondhandpost = await Secondhandpost.findById(req.params.id);
+    const secondhandpost = await SecondhandPost.findById(req.params.id);
 
     if (!secondhandpost) {
-      return res.status(404).send("Secondhandpost not found");
+      return res.status(404).send("SecondhandPost not found");
     }
-
-    secondhandpost["date"] = secondhandpost.createdAt.toDateString();
-    secondhandpost["id"] = secondhandpost._id;
 
     return res.status(200).json(secondhandpost);
   } catch (err) {
@@ -56,28 +53,28 @@ export const secondhandPostGET = async (req, res) => {
     let dateMin = req.params.date.split("*")[0],
       dateMax = req.params.date.split("*")[1];
 
-    if (!categories || !Array.isArray || categories[0] !== "all") {
+    if (!categories || !Array.isArray || categories[0] !== "All") {
       query.categories = { $in: categories };
     }
-    if (req.params.search !== "all") {
+    if (req.params.search !== "All") {
       query.title = { $regex: regexSearch };
     }
-    if (priceMin !== "all" && priceMax !== "all" && priceMin && priceMax) {
+    if (priceMin !== "All" && priceMax !== "All" && priceMin && priceMax) {
       query.price = { $gte: priceMin, $lte: priceMax };
-    } else if (priceMin !== "all" && priceMin) {
+    } else if (priceMin !== "All" && priceMin) {
       query.price = { $gte: priceMin };
-    } else if (priceMax !== "all" && priceMax) {
+    } else if (priceMax !== "All" && priceMax) {
       query.price = { $lte: priceMax };
     }
-    if (dateMin && dateMin !== "all" && dateMax !== "all" && dateMax) {
+    if (dateMin && dateMin !== "All" && dateMax !== "All" && dateMax) {
       query.timestamp = { $gte: dateMin, $lte: dateMax };
-    } else if (dateMin !== "all" && dateMin) {
+    } else if (dateMin !== "All" && dateMin) {
       query.timestamp = { $gte: dateMin };
-    } else if (dateMax !== "all" && dateMax) {
+    } else if (dateMax !== "All" && dateMax) {
       query.timestamp = { $lte: dateMax };
     }
 
-    const secondhandposts = await Secondhandpost.find(query);
+    const secondhandposts = await SecondhandPost.find(query);
 
     return res.status(200).json(secondhandposts);
   } catch (err) {
@@ -90,16 +87,16 @@ export const secondhandPostPUT = async (req, res) => {
   try {
     fieldController(req.body);
 
-    const result = await Secondhandpost.findByIdAndUpdate(
+    const result = await SecondhandPost.findByIdAndUpdate(
       req.params.id,
       req.body
     );
 
     if (!result) {
-      return res.status(404).send("Secondhandpost not found");
+      return res.status(404).send("SecondhandPost not found");
     }
 
-    return res.status(204).send("Secondhandpost updated");
+    return res.status(204).send("SecondhandPost updated");
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);
@@ -108,13 +105,13 @@ export const secondhandPostPUT = async (req, res) => {
 
 export const secondhandPostDEL = async (req, res) => {
   try {
-    const result = await Secondhandpost.findByIdAndDelete(req.params.id);
+    const result = await SecondhandPost.findByIdAndDelete(req.params.id);
 
     if (!result) {
-      return res.status(404).send("Secondhandpost not found");
+      return res.status(404).send("SecondhandPost not found");
     }
 
-    return res.status(204).send("Secondhandpost deleted");
+    return res.status(204).send("SecondhandPost deleted");
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);

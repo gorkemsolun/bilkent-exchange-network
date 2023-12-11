@@ -1,71 +1,107 @@
-import "../App.css";
-import Header from "../components/header";
-import Navbar from "../components/navbar";
-import SearchBar from "../components/searchbar";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { defaultFilterParams } from "../data-types/constants";
+import { FilterParams } from "../data-types/datatypes";
+import { ForumPost } from "../data-types/posttypes";
+import Filters from "./components/filters";
+import Header from "./components/header";
+import Loader from "./components/loader";
+import Navbar from "./components/navbar";
+import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/createPostButton";
-import ForumPost from "./forumpost";
+import prepareUrl from "./fetchHelpers";
 
 export default function Forum() {
-  const ForumPosts = [
-    {
-      // dummy data
-      id: 1,
-      title:
-        "Help Me Find Her@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@qq",
-      description:
-        "As I stood waiting at the bustling subway platform one ordinary afternoon, my eyes were suddenly captivated by a sight that transcended the ordinary. A girl, with an aura of effortless grace, stepped onto the train, and I felt an instant connection that left me utterly spellbound. She had long, flowing auburn hair that danced around her shoulders with each step, and her emerald-green eyes held a mysterious depth that seemed to hint at a thousand untold stories. Dressed in a vintage-inspired floral dress that swayed gently with her movements, she radiated a timeless elegance. Her laughter was as melodious as a songbird's, and it echoed in my mind long after she disappeared into the bustling crowd. In that fleeting moment, I fell hopelessly in love, and I couldn't help but wish for a serendipitous encounter that would reunite our paths once more, for she was a vision of enchantment that I yearned to know better@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@QQ.",
-      category: "Find Me The Girl",
-    },
-    {
-      id: 2,
-      title: "gilgamesh",
-      description:
-        "Gilgamesh, the ancient epic of Mesopotamia, is often regarded as a cornerstone of world literature and mythology, but some readers may find it less engaging due to its archaic language, cultural disconnect, and lengthy descriptions. The narrative, while rich in historical and cultural significance, can come across as monotonous to modern readers who are more accustomed to fast-paced storytelling. Additionally, Gilgamesh's character, while complex, may not resonate with everyone, as his arrogance and quest for immortality can be seen as self-centered and lacking relatability. However, it's essential to acknowledge that personal preferences play a significant role in one's perception of literature, and what one person finds boring, another might find profoundly meaningful and enlightening.",
-      category: "Book",
-    },
-    {
-      id: 2,
-      title: "gilgamesh",
-      description:
-        "Gilgamesh, the ancient epic of Mesopotamia, is often regarded as a cornerstone of world literature and mythology, but some readers may find it less engaging due to its archaic language, cultural disconnect, and lengthy descriptions. The narrative, while rich in historical and cultural significance, can come across as monotonous to modern readers who are more accustomed to fast-paced storytelling. Additionally, Gilgamesh's character, while complex, may not resonate with everyone, as his arrogance and quest for immortality can be seen as self-centered and lacking relatability. However, it's essential to acknowledge that personal preferences play a significant role in one's perception of literature, and what one person finds boring, another might find profoundly meaningful and enlightening.",
-      category: "Book",
-    },
-    {
-      id: 2,
-      title: "gilgamesh",
-      description:
-        "Gilgamesh, the ancient epic of Mesopotamia, is often regarded as a cornerstone of world literature and mythology, but some readers may find it less engaging due to its archaic language, cultural disconnect, and lengthy descriptions. The narrative, while rich in historical and cultural significance, can come across as monotonous to modern readers who are more accustomed to fast-paced storytelling. Additionally, Gilgamesh's character, while complex, may not resonate with everyone, as his arrogance and quest for immortality can be seen as self-centered and lacking relatability. However, it's essential to acknowledge that personal preferences play a significant role in one's perception of literature, and what one person finds boring, another might find profoundly meaningful and enlightening.",
-      category: "Book",
-    },
-    {
-      id: 2,
-      title: "gilgamesh",
-      description:
-        "Gilgamesh, the ancient epic of Mesopotamia, is often regarded as a cornerstone of world literature and mythology, but some readers may find it less engaging due to its archaic language, cultural disconnect, and lengthy descriptions. The narrative, while rich in historical and cultural significance, can come across as monotonous to modern readers who are more accustomed to fast-paced storytelling. Additionally, Gilgamesh's character, while complex, may not resonate with everyone, as his arrogance and quest for immortality can be seen as self-centered and lacking relatability. However, it's essential to acknowledge that personal preferences play a significant role in one's perception of literature, and what one person finds boring, another might find profoundly meaningful and enlightening.",
-      category: "Book",
-    },
-    {
-      id: 2,
-      title: "gilgamesh",
-      description:
-        "Gilgamesh, the ancient epic of Mesopotamia, is often regarded as a cornerstone of world literature and mythology, but some readers may find it less engaging due to its archaic language, cultural disconnect, and lengthy descriptions. The narrative, while rich in historical and cultural significance, can come across as monotonous to modern readers who are more accustomed to fast-paced storytelling. Additionally, Gilgamesh's character, while complex, may not resonate with everyone, as his arrogance and quest for immortality can be seen as self-centered and lacking relatability. However, it's essential to acknowledge that personal preferences play a significant role in one's perception of literature, and what one person finds boring, another might find profoundly meaningful and enlightening.",
-      category: "Book",
-    },
-  ];
+  const [forumPosts, setForumPosts] = useState<ForumPost[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [filterParams, setFilterParams] =
+    useState<FilterParams>(defaultFilterParams);
+
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    const url = prepareUrl(searchTerm, "forum", filterParams);
+    console.log(url);
+
+    axios
+      .get(url)
+      .then((res) => {
+        setForumPosts(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [searchTerm, filterParams]);
 
   return (
     <div className="w-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
+        <Filters type="forum" passFilters={setFilterParams}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="forum" />
+            <SearchBar type="forum" onSearch={handleSearch} />
             <CreatePostButton type="forum" />
           </div>
-          <div className="justify-center">
-            <ForumPost forumPosts={ForumPosts} />
-          </div>
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="justify-center">
+              <div className="container">
+                <div className="row">
+                  {forumPosts.map((post) => (
+                    <div className="col-12 mb-4" key={post._id}>
+                      <div
+                        className="col-12 cursor-pointer"
+                        key={post._id}
+                        onClick={() => {}}
+                      >
+                        <div className="card w-full">
+                          <div className="card-img-overlay d-flex justify-content-end">
+                            <a href="#" className="card-link text-danger like">
+                              <i className="fas fa-heart"></i>
+                            </a>
+                          </div>
+                          <div className="card-body">
+                            <h2
+                              className="card-title"
+                              style={{
+                                fontSize: "1.5rem",
+                                fontWeight: "bold",
+                                textAlign: "left",
+                              }}
+                            >
+                              {post.title.length < 50
+                                ? post.title
+                                : post.title.slice(0, 50) + "..."}
+                            </h2>
+                            <div
+                              className="description-container"
+                              style={{ height: "10%", textAlign: "left" }}
+                            >
+                              <p className="card-text">
+                                {post.description.length < 315
+                                  ? post.description
+                                  : post.description.slice(0, 315) + "..."}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -1,17 +1,13 @@
 import mongoose from "mongoose";
 
-const SectionexchangepostSchema = new mongoose.Schema(
+const SectionexchangePostSchema = new mongoose.Schema(
   {
-    username: {
-      type: String,
-      required: true,
-    },
     poster: {
       type: String,
       required: true,
     },
     offeredSection: {
-      type: String,
+      type: Number,
       required: true,
     },
     offeredCourse: {
@@ -19,7 +15,7 @@ const SectionexchangepostSchema = new mongoose.Schema(
       required: true,
     },
     desiredSection: {
-      type: String,
+      type: Number,
       required: true,
     },
     desiredCourse: {
@@ -32,7 +28,7 @@ const SectionexchangepostSchema = new mongoose.Schema(
   }
 );
 
-export const Sectionexchangepost = mongoose.model(
-  "Sectionexchangepost",
-  SectionexchangepostSchema
+export const SectionexchangePost = mongoose.model(
+  "SectionexchangePost",
+  SectionexchangePostSchema
 );

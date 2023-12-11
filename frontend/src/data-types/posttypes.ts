@@ -12,9 +12,9 @@ export interface LostFoundPost {
   description: string;
   category: string;
   poster: string;
-  createdAt: Date;
   image: string;
   status: string;
+  createdAt: Date;
 }
 
 export interface BorrowPost {
@@ -34,7 +34,7 @@ export interface SecondhandPost {
   poster: string;
   createdAt: Date;
   image: string;
-  price: string;
+  price: number;
 }
 
 export interface DonatePost {
@@ -49,9 +49,9 @@ export interface DonatePost {
 
 export interface SectionexchangePost {
   _id: string;
-  username: string;
   poster: string;
   createdAt: Date;
+  price: number;
   offeredSection: string;
   desiredSection: string;
   offeredCourse: string;
@@ -63,5 +63,6 @@ export interface ForumPost {
   title: string;
   description: string;
   poster: string;
+  category: string;
   createdAt: string;
 }

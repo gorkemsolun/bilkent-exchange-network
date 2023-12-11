@@ -1,4 +1,4 @@
-import { Lostfoundpost } from "../models/lostfoundpost.js";
+import { LostfoundPost } from "../models/lostfoundpost.js";
 
 function fieldController(reqBody) {
   if (
@@ -6,7 +6,7 @@ function fieldController(reqBody) {
     !reqBody.description ||
     !reqBody.image ||
     !reqBody.poster ||
-    !reqBody.category ||
+    !reqBody.categories ||
     !reqBody.status
   ) {
     return res.status(400).send("Missing fields for lostfoundpost");
@@ -19,7 +19,7 @@ export const lostfoundPostPOST = async (req, res) => {
 
     const newLostfoundpost = req.body;
 
-    const lostfoundpost = await Lostfoundpost.create(newLostfoundpost);
+    const lostfoundpost = await LostfoundPost.create(newLostfoundpost);
 
     return res.status(201).send(lostfoundpost);
   } catch (err) {
@@ -37,26 +37,26 @@ export const lostfoundPostGET = async (req, res) => {
       dateMax = req.params.date.split("*")[1];
     let status = req.params.status;
 
-    if (!categories || !Array.isArray || categories[0] !== "all") {
+    if (!categories || !Array.isArray || categories[0] !== "All") {
       query.categories = { $in: categories };
     }
-    if (req.params.search !== "all") {
+    if (req.params.search !== "All") {
       query.title = { $regex: regexSearch };
     }
 
-    if (dateMin && dateMin !== "all" && dateMax !== "all" && dateMax) {
+    if (dateMin && dateMin !== "All" && dateMax !== "All" && dateMax) {
       query.timestamp = { $gte: dateMin, $lte: dateMax };
-    } else if (dateMin !== "all" && dateMin) {
+    } else if (dateMin !== "All" && dateMin) {
       query.timestamp = { $gte: dateMin };
-    } else if (dateMax !== "all" && dateMax) {
+    } else if (dateMax !== "All" && dateMax) {
       query.timestamp = { $lte: dateMax };
     }
 
-    if (status !== "all") {
+    if (status !== "All") {
       query.status = status;
     }
 
-    const lostfoundposts = await Lostfoundpost.find(query);
+    const lostfoundposts = await LostfoundPost.find(query);
 
     return res.status(200).json(lostfoundposts);
   } catch (err) {
@@ -67,14 +67,11 @@ export const lostfoundPostGET = async (req, res) => {
 
 export const lostfoundPostGETId = async (req, res) => {
   try {
-    const lostfoundpost = await Lostfoundpost.findById(req.params.id);
+    const lostfoundpost = await LostfoundPost.findById(req.params.id);
 
     if (!lostfoundpost) {
-      return res.status(404).send("Lostfoundpost not found");
+      return res.status(404).send("LostfoundPost not found");
     }
-
-    lostfoundpost["date"] = lostfoundpost.createdAt.toDateString();
-    lostfoundpost["id"] = lostfoundpost._id;
 
     return res.status(200).json(lostfoundpost);
   } catch (err) {
@@ -87,16 +84,16 @@ export const lostfoundPostPUT = async (req, res) => {
   try {
     fieldController(req.body);
 
-    const result = await Lostfoundpost.findByIdAndUpdate(
+    const result = await LostfoundPost.findByIdAndUpdate(
       req.params.id,
       req.body
     );
 
     if (!result) {
-      return res.status(404).send("Lostfoundpost not found");
+      return res.status(404).send("LostfoundPost not found");
     }
 
-    return res.status(204).send("Lostfoundpost updated");
+    return res.status(204).send("LostfoundPost updated");
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);
@@ -105,13 +102,13 @@ export const lostfoundPostPUT = async (req, res) => {
 
 export const lostfoundPostDEL = async (req, res) => {
   try {
-    const result = await Lostfoundpost.findByIdAndDelete(req.params.id);
+    const result = await LostfoundPost.findByIdAndDelete(req.params.id);
 
     if (!result) {
-      return res.status(404).send("Lostfoundpost not found");
+      return res.status(404).send("LostfoundPost not found");
     }
 
-    return res.status(204).send("Lostfoundpost deleted");
+    return res.status(204).send("LostfoundPost deleted");
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);
