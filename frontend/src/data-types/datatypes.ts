@@ -30,4 +30,5 @@ export interface FilterParams {
     startDate: Date | undefined;
     endDate: Date | undefined;
   };
+  status: string;
 }

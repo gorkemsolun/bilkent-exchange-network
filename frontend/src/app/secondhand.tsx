@@ -8,6 +8,7 @@ import SearchBar from "../components/searchbar.tsx";
 import { FilterParams } from "../data-types/datatypes.ts";
 import { SecondhandPost } from "../data-types/posttypes.ts";
 import CreatePostButton from "./create-post/createPostButton.tsx";
+import prepareUrl from "./prepareUrl.ts";
 
 export default function Secondhand() {
   const [secondhandPosts, setSecondhandPosts] = useState([]);
@@ -21,6 +22,7 @@ export default function Secondhand() {
       startDate: undefined,
       endDate: undefined,
     },
+    status: "all",
   });
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -35,54 +37,9 @@ export default function Secondhand() {
 
   useEffect(() => {
     //setLoading(true);
-    let url =
-      "http://localhost:3000/secondhand/secondhandpost/c/:categories/p/:price/d/:date/s/:search";
 
-    if (filterParams.categories.length > 0) {
-      url = url.replace(":categories", filterParams.categories.join(","));
-    } else {
-      url = url.replace(":categories", "all");
-    }
-
-    if (filterParams.prices.min && filterParams.prices.max) {
-      url = url.replace(
-        ":price",
-        filterParams.prices.min + "*" + filterParams.prices.max
-      );
-    } else if (filterParams.prices.min) {
-      url = url.replace(":price", filterParams.prices.min + "*" + "all");
-    } else if (filterParams.prices.max) {
-      url = url.replace(":price", "all" + "*" + filterParams.prices.max);
-    } else {
-      url = url.replace(":price", "all");
-    }
-
-    if (filterParams.dates.startDate && filterParams.dates.endDate) {
-      url = url.replace(
-        ":date",
-        filterParams.dates.startDate.toISOString() +
-          "*" +
-          filterParams.dates.endDate.toISOString()
-      );
-    } else if (filterParams.dates.startDate) {
-      url = url.replace(
-        ":date",
-        filterParams.dates.startDate.toISOString() + "*" + "all"
-      );
-    } else if (filterParams.dates.endDate) {
-      url = url.replace(
-        ":date",
-        "all" + "*" + filterParams.dates.endDate.toISOString()
-      );
-    } else {
-      url = url.replace(":date", "all");
-    }
-
-    if (searchTerm) {
-      url = url.replace(":search", searchTerm);
-    } else {
-      url = url.replace(":search", "all");
-    }
+    const url = prepareUrl(filterParams, searchTerm, "secondhand");
+    console.log(url);
 
     axios
       .get(url)
@@ -97,7 +54,7 @@ export default function Secondhand() {
       });
   }, [filterParams, searchTerm]);
 
-  function passCategories(params: FilterParams) {
+  function passFilters(params: FilterParams) {
     setFilterParams(params);
   }
 
@@ -106,7 +63,7 @@ export default function Secondhand() {
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Filters type="secondhand" passFilters={passCategories}></Filters>
+        <Filters type="secondhand" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="secondhand" onSearch={handleSearch} />

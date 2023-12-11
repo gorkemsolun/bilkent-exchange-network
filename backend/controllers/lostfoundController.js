@@ -30,12 +30,33 @@ export const lostfoundPostPOST = async (req, res) => {
 
 export const lostfoundPostGET = async (req, res) => {
   try {
-    const lostfoundposts = await Lostfoundpost.find({});
+    let query = {};
+    let categories = req.params.categories.split(",");
+    let regexSearch = new RegExp(req.params.search, "i");
+    let dateMin = req.params.date.split("*")[0],
+      dateMax = req.params.date.split("*")[1];
+    let status = req.params.status;
 
-    lostfoundposts.forEach((lostfoundpost) => {
-      lostfoundpost["date"] = lostfoundpost.createdAt.toDateString();
-      lostfoundpost["id"] = lostfoundpost._id;
-    });
+    if (!categories || !Array.isArray || categories[0] !== "all") {
+      query.categories = { $in: categories };
+    }
+    if (req.params.search !== "all") {
+      query.title = { $regex: regexSearch };
+    }
+
+    if (dateMin && dateMin !== "all" && dateMax !== "all" && dateMax) {
+      query.timestamp = { $gte: dateMin, $lte: dateMax };
+    } else if (dateMin !== "all" && dateMin) {
+      query.timestamp = { $gte: dateMin };
+    } else if (dateMax !== "all" && dateMax) {
+      query.timestamp = { $lte: dateMax };
+    }
+
+    if (status !== "all") {
+      query.status = status;
+    }
+
+    const lostfoundposts = await Lostfoundpost.find(query);
 
     return res.status(200).json(lostfoundposts);
   } catch (err) {
@@ -94,17 +115,5 @@ export const lostfoundPostDEL = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);
-  }
-};
-
-export const lostfoundPostGETSearch = async (req, res) => {
-  try {
-    const searchString = req.params.string;
-    const regex = new RegExp(searchString, "i");
-    const posts = await Lostfoundpost.find({ title: regex });
-    return res.status(200).json(posts);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
   }
 };

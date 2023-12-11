@@ -8,4 +8,20 @@ export const categories = {
     "Hobbies",
     "Other",
   ],
+  lostfound: [
+    "Books",
+    "Electronics",
+    "Home ",
+    "Lecture Materials",
+    "Clothes",
+    "Hobbies",
+    "Other",
+  ],
+};
+
+export const urls = {
+  secondhand:
+    "http://localhost:3000/secondhand/secondhandpost/c/:categories/p/:price/d/:date/s/:search",
+  lostfound:
+    "http://localhost:3000/lostfound/lostfoundpost/c/:categories/s/:status/d/:date/s/:search",
 };

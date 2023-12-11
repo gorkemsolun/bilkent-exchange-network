@@ -9,6 +9,7 @@ export default function Filters(props: FilterProps) {
   const [minDate, setMinDate] = useState<Date>();
   const [maxDate, setMaxDate] = useState<Date>();
   const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
+  const [checkedStatus, setCheckedStatus] = useState<string>("all");
 
   /*
    TODO: props.type should be implemented for other pages
@@ -38,7 +39,28 @@ export default function Filters(props: FilterProps) {
         startDate: minDate,
         endDate: maxDate,
       },
+      status: checkedStatus,
     });
+  };
+
+  const onCheckStatus = (status: string) => {
+    if (checkedStatus === "all") {
+      if (status === "Lost") {
+        setCheckedStatus("Lost");
+      } else {
+        setCheckedStatus("Found");
+      }
+    } else {
+      if (status === "Lost" && checkedStatus === "Lost") {
+        setCheckedStatus("all");
+      } else if (status === "Found" && checkedStatus === "Found") {
+        setCheckedStatus("all");
+      } else if (status === "Lost" && checkedStatus === "Found") {
+        setCheckedStatus("Lost");
+      } else if (status === "Found" && checkedStatus === "Lost") {
+        setCheckedStatus("Found");
+      }
+    }
   };
 
   const onResetClicked = () => {
@@ -98,7 +120,32 @@ export default function Filters(props: FilterProps) {
           </div>
         </div>
       )}
-
+      {props.type === "lostfound" && (
+        <div>
+          <div>
+            <input
+              type="checkbox"
+              value="Lost"
+              checked={checkedStatus === "Lost"}
+              onChange={() => onCheckStatus("Lost")}
+              className="mr-0.5"
+              placeholder="Lost"
+            />
+            <label>Lost</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              value="Found"
+              checked={checkedStatus === "Found"}
+              onChange={() => onCheckStatus("Found")}
+              className="mr-0.5"
+              placeholder="Found"
+            />
+            <label>Found</label>
+          </div>
+        </div>
+      )}
       <div className="mb-3 flex flex-column second-hand-category max-w-1/4">
         <div className="flex flex-column mb-1 basis-1/4 max-w-1/8">
           <label>Earliest Date</label>

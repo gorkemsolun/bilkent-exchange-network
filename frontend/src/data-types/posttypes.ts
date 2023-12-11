@@ -1,4 +1,5 @@
-export interface Post { // this will be used for retrieving posts in profile and saved-posts
+export interface Post {
+  // this will be used for retrieving posts in profile and saved-posts
   _id: string;
   title: string;
   createdAt: Date;
@@ -58,9 +59,9 @@ export interface SectionexchangePost {
 }
 
 export interface ForumPost {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   poster: string;
-  date: string;
+  createdAt: string;
 }

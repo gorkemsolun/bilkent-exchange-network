@@ -5,27 +5,35 @@ import Filters from "../components/filters.tsx";
 import Header from "../components/header.tsx";
 import Navbar from "../components/navbar.tsx";
 import SearchBar from "../components/searchbar.tsx";
+import { FilterParams } from "../data-types/datatypes.ts";
 import { LostFoundPost } from "../data-types/posttypes.ts";
 import CreatePostButton from "./create-post/createPostButton.tsx";
+import prepareUrl from "./prepareUrl.ts";
 
 export default function LostFound() {
   const [lostFoundPosts, setLostFoundPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
-  // Callback function to handle search term
-  const handleSearch = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-  };
+  const [filterParams, setFilterParams] = useState<FilterParams>({
+    categories: [],
+    prices: {
+      min: undefined,
+      max: undefined,
+    },
+    dates: {
+      startDate: undefined,
+      endDate: undefined,
+    },
+    status: "all",
+  });
 
   useEffect(() => {
-    const endpoint = searchTerm
-      ? `http://localhost:3000/lostfound/lostfoundPost/${searchTerm}`
-      : "http://localhost:3000/lostfound/lostfoundPost";
+    //setLoading(true);
+    const url = prepareUrl(filterParams, searchTerm, "lostfound");
+    console.log(url);
 
     axios
-      .get(endpoint)
+      .get(url)
       .then((res) => {
-        //console.log(res.data);
         setLostFoundPosts(res.data);
         //setLoading(false);
       })
@@ -33,14 +41,22 @@ export default function LostFound() {
         console.log(err);
         //setLoading(false);
       });
-  }, [searchTerm]);
+  }, [searchTerm, filterParams]);
+
+  function passFilters(params: FilterParams) {
+    setFilterParams(params);
+  }
+
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
 
   return (
     <div className="w-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Filters type="lostandfound"></Filters>
+        <Filters type="lostfound" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="lostandfound" onSearch={handleSearch} />
@@ -51,7 +67,7 @@ export default function LostFound() {
               {lostFoundPosts.map((post: LostFoundPost) => (
                 <div
                   className="col-12 col-sm-8 col-md-6 col-lg-4 mb-4"
-                  key={post.id}
+                  key={post._id}
                 >
                   <div className="card">
                     <div className="position-relative">

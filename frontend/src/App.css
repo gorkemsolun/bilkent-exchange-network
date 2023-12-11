@@ -359,9 +359,7 @@ td {
 }
 
 .header-profile-dropdown {
-  position: absolute;
-  top: 10%;
-  left: 10%;
+  position: fixed;
   background-color: #fff;
   border: 1px solid #fff;
   border-radius: 5px;
@@ -371,7 +369,7 @@ td {
 .header-profile-dropdown-link {
   display: block;
   padding: 5px 10px;
-  color: #fff;
+  color: #93c5fd;
   text-decoration: none;
   transition: background-color 0.2s ease-in-out;
 }

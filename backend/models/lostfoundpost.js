@@ -10,7 +10,7 @@ const LostfoundpostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
+    image: {
       type: String,
       required: true,
     },
@@ -18,8 +18,8 @@ const LostfoundpostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image: {
-      type: String,
+    categories: {
+      type: [String],
       required: true,
     },
     status: {

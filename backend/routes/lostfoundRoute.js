@@ -3,7 +3,6 @@ import {
   lostfoundPostDEL,
   lostfoundPostGET,
   lostfoundPostGETId,
-  lostfoundPostGETSearch,
   lostfoundPostPOST,
   lostfoundPostPUT,
 } from "../controllers/lostfoundController.js";
@@ -14,8 +13,10 @@ const router = express.Router();
   router.use(requireAuth)
 */
 router.post("/lostfoundpost", lostfoundPostPOST);
-router.get("/lostfoundpost", lostfoundPostGET);
-router.get("/lostfoundpost/:string", lostfoundPostGETSearch);
+router.get(
+  "/lostfoundpost/c/:categories/s/:status/d/:date/s/:search",
+  lostfoundPostGET
+);
 router.get("/lostfoundpost/:id", lostfoundPostGETId);
 router.put("/lostfoundpost/:id", lostfoundPostPUT);
 router.delete("/lostfoundpost/:id", lostfoundPostDEL);
