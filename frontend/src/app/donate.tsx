@@ -6,48 +6,62 @@ import Header from "../components/header.tsx";
 import Loader from "../components/loader.tsx";
 import Navbar from "../components/navbar.tsx";
 import SearchBar from "../components/searchbar.tsx";
+import { FilterParams } from "../data-types/datatypes.ts";
 import { DonatePost } from "../data-types/posttypes.ts";
 import CreatePostButton from "./create-post/createPostButton.tsx";
+import prepareUrl from "./prepareUrl.ts";
 
 export default function Donate() {
   const [donatePosts, setDonatePosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [filterParams, setFilterParams] = useState<FilterParams>({
+    categories: [],
+    prices: {
+      min: undefined,
+      max: undefined,
+    },
+    dates: {
+      startDate: undefined,
+      endDate: undefined,
+    },
+    status: "all",
+  });
 
   // Callback function to handle search term
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
 
+  function passFilters(params: FilterParams) {
+    setFilterParams(params);
+  }
+
   useEffect(() => {
     setLoading(true);
 
-    const endpoint = searchTerm
-      ? `http://localhost:3000/donate/donatepost/${searchTerm}`
-      : "http://localhost:3000/donate/donatepost";
+    const url = prepareUrl(filterParams, searchTerm, "donate");
+    console.log(url);
 
     axios
-      .get(endpoint)
+      .get(url)
       .then((res) => {
-        //console.log(res.data);
         setDonatePosts(res.data);
-        //setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        //setLoading(false);
       })
       .finally(() => {
-        setLoading(false); // Set loading to false regardless of success or error
+        setLoading(false);
       });
-  }, [searchTerm]);
+  }, [searchTerm, filterParams]);
 
   return (
     <div className="w-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Filters type="donate" passFilters={undefined}></Filters>
+        <Filters type="donate" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="donate" onSearch={handleSearch} />

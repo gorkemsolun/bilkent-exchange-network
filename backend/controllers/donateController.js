@@ -28,26 +28,29 @@ export const donatePostPOST = async (req, res) => {
 
 export const donatePostGET = async (req, res) => {
   try {
-    const donateposts = await Donatepost.find({});
+    let query = {};
+    let categories = req.params.categories.split(",");
+    let regexSearch = new RegExp(req.params.search, "i");
+    let dateMin = req.params.date.split("*")[0],
+      dateMax = req.params.date.split("*")[1];
 
-    donateposts.forEach((donatepost) => {
-      donatepost["date"] = donatepost.createdAt.toDateString();
-      donatepost["id"] = donatepost._id;
-    });
+    if (!categories || !Array.isArray || categories[0] !== "all") {
+      query.categories = { $in: categories };
+    }
+    if (req.params.search !== "all") {
+      query.title = { $regex: regexSearch };
+    }
+    if (dateMin && dateMin !== "all" && dateMax !== "all" && dateMax) {
+      query.timestamp = { $gte: dateMin, $lte: dateMax };
+    } else if (dateMin !== "all" && dateMin) {
+      query.timestamp = { $gte: dateMin };
+    } else if (dateMax !== "all" && dateMax) {
+      query.timestamp = { $lte: dateMax };
+    }
+
+    const donateposts = await Donatepost.find(query);
 
     return res.status(200).json(donateposts);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
-};
-
-export const donatePostGETSearch = async (req, res) => {
-  try {
-    const searchString = req.params.string;
-    const regex = new RegExp(searchString, "i");
-    const donatePosts = await Donatepost.find({ title: regex });
-    return res.status(200).json(donatePosts);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
