@@ -10,13 +10,14 @@ import SectionExchange from "./app/sectionexchange/sectionexchange";
 import Signup from "./app/signup/signup";
 import { AuthContextProvider } from "./authentication/AuthContext";
 import { useAuthContext } from "./authentication/useAuthContext";
+import VerificationPage from "./app/verificationPage/Verification"
 
 export default function App() {
  
   return (
     <div>
       <AuthContextProvider>
-        <AppContent />
+          <AppContent />
       </AuthContextProvider>
     </div>
   );
@@ -36,7 +37,8 @@ function AppContent() {
             <Route path="/sectionexchange" element={user ? <SectionExchange /> : <Navigate to ="/login"/>} />
             <Route path="/forum" element={user ? <Forum /> : <Navigate to ="/login"/>} />
             <Route path="/login" element={!user ? <Login /> : <Navigate to ="/secondhand"/>} />
-            <Route path="/signup" element={!user ? <Signup /> : <Navigate to ="/secondhand"/>} />
+            <Route path="/signup" element={!user ? <Signup/> : <Navigate to ="/secondhand"/>} />
+            <Route path="/verification" element={!user ? <VerificationPage /> : <Navigate to ="/secondhand"/>} />
           </Routes>
         </BrowserRouter>
     </div>
