@@ -11,13 +11,16 @@ import LostFound from "./app/lostfound";
 import Profile from "./app/profile";
 import SecondHand from "./app/secondhand";
 import SectionExchange from "./app/sectionexchange";
-import "./bootstrap.css";
+import Signup from "./app/signup";
+import { AuthContextProvider } from "./authentication/AuthContext";
+import { useAuthContext } from "./authentication/useAuthContext";
+import VerificationPage from "./app/verificationPage/Verification"
 
 export default function App() {
   return (
     <div>
       <AuthContextProvider>
-        <AppContent />
+          <AppContent />
       </AuthContextProvider>
     </div>
   );
@@ -69,6 +72,7 @@ function AppContent() {
             path="/profile"
             element={user ? <Profile /> : <Navigate to="/login" />}
           />
+          <Route path="/verification" element={!user ? <VerificationPage /> : <Navigate to ="/secondhand"/>} />
         </Routes>
       </BrowserRouter>
     </div>
