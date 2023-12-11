@@ -6,16 +6,29 @@ export interface User {
   password: string;
 }
 
-export interface Category {
+export interface UserProfile {
+  username: string;
   name: string;
-  subcategories: Subcategory[];
+  email: string;
+  photo: string;
+  reputation: number;
+  bio: string;
+  registerDate: string;
 }
-
-export interface Subcategory {
-  name: string;
-}
-
-export interface CategoryProps {
+export interface FilterProps {
   type: string;
-  passCategories: (categories: string[]) => void;
+  passFilters: (params: FilterParams) => void;
+}
+
+export interface FilterParams {
+  categories: string[];
+  prices: {
+    min: number | undefined;
+    max: number | undefined;
+  };
+  dates: {
+    startDate: Date | undefined;
+    endDate: Date | undefined;
+  };
+  status: string;
 }

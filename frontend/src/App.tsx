@@ -1,19 +1,19 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Borrow from "./app/borrow/borrow";
-import Donate from "./app/donate/donate";
-import Forum from "./app/forum/forum";
-import Login from "./app/login/login";
-import LostFound from "./app/lostfound/lostfound";
-import SecondHand from "./app/secondhand/secondhand";
-import SectionExchange from "./app/sectionexchange/sectionexchange";
-import Signup from "./app/newSignup/signup";
+import Borrow from "./app/borrow";
+import Donate from "./app/donate";
+import Forum from "./app/forum";
+import Login from "./app/login";
+import LostFound from "./app/lostfound";
+import Profile from "./app/profile";
+import SecondHand from "./app/secondhand";
+import SectionExchange from "./app/sectionexchange";
+import Signup from "./app/signup";
 import { AuthContextProvider } from "./authentication/AuthContext";
 import { useAuthContext } from "./authentication/useAuthContext";
 import VerificationPage from "./app/verificationPage/Verification"
 
 export default function App() {
- 
   return (
     <div>
       <AuthContextProvider>
@@ -24,23 +24,54 @@ export default function App() {
 }
 
 function AppContent() {
-  const {user} = useAuthContext()
+  const { user } = useAuthContext();
   return (
     <div>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={!user ? <Login /> :<Navigate to ="/secondhand"/> } />
-            <Route path="/secondhand" element={user ? <SecondHand /> : <Navigate to ="/login"/>} />
-            <Route path="/lostfound" element={user ? <LostFound /> : <Navigate to ="/login"/>} />
-            <Route path="/donate" element={user ? <Donate /> : <Navigate to ="/login"/>} />
-            <Route path="/borrow" element={user ? <Borrow /> : <Navigate to ="/login"/>} />
-            <Route path="/sectionexchange" element={user ? <SectionExchange /> : <Navigate to ="/login"/>} />
-            <Route path="/forum" element={user ? <Forum /> : <Navigate to ="/login"/>} />
-            <Route path="/login" element={!user ? <Login /> : <Navigate to ="/secondhand"/>} />
-            <Route path="/signup" element={!user ? <Signup/> : <Navigate to ="/secondhand"/>} />
-            <Route path="/verification" element={!user ? <VerificationPage /> : <Navigate to ="/secondhand"/>} />
-          </Routes>
-        </BrowserRouter>
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={!user ? <Login /> : <Navigate to="/secondhand" />}
+          />
+          <Route
+            path="/secondhand"
+            element={user ? <SecondHand /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/lostfound"
+            element={user ? <LostFound /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/donate"
+            element={user ? <Donate /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/borrow"
+            element={user ? <Borrow /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/sectionexchange"
+            element={user ? <SectionExchange /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/forum"
+            element={user ? <Forum /> : <Navigate to="/login" />}
+          />
+          <Route
+            path="/login"
+            element={!user ? <Login /> : <Navigate to="/secondhand" />}
+          />
+          <Route
+            path="/signup"
+            element={!user ? <Signup /> : <Navigate to="/secondhand" />}
+          />
+          <Route
+            path="/profile"
+            element={user ? <Profile /> : <Navigate to="/login" />}
+          />
+          <Route path="/verification" element={!user ? <VerificationPage /> : <Navigate to ="/secondhand"/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

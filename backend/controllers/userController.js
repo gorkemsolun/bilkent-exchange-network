@@ -1,5 +1,5 @@
-import { User } from "../models/user.js";
 import jwt from "jsonwebtoken";
+import { User } from "../models/user.js";
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, "bununbirsecretolmasılazımnormalde", {
@@ -41,28 +41,27 @@ export const signupUser = async (req, res) => {
 
 //verify
 export const verifyEmail = async (req, res) => {
-  try
-  {
-    const emailToken = req.body.emailToken
+  try {
+    const emailToken = req.body.emailToken;
 
     if (!emailToken) {
-      return res.status(404).json("Email token not found")
+      return res.status(404).json("Email token not found");
     }
 
-    const user = User.findOne({ emailToken })
+    const user = User.findOne({ emailToken });
 
     if (user) {
-      user.emailToken = null
-      user.isVerified = true
-      await user.save()
+      user.emailToken = null;
+      user.isVerified = true;
+      await user.save();
       //create a jwt
-      const token = createToken(user._id)
+      const token = createToken(user._id);
 
-      res.status(200).json({user, token})
+      res.status(200).json({ user, token });
     } else {
-      res.status(404).json("Email verification failed")
+      res.status(404).json("Email verification failed");
     }
   } catch (error) {
-    res.status(500).json(error.message)
+    res.status(500).json(error.message);
   }
-}
+};

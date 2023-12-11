@@ -2,9 +2,8 @@ import { Sectionexchangepost } from "../models/sectionexchangepost.js";
 
 function fieldController(reqBody) {
   if (
-    !reqBody.title ||
+    !reqBody.username ||
     !reqBody.poster ||
-    !reqBody.category ||
     !reqBody.offeredSection ||
     !reqBody.desiredSection ||
     !reqBody.offeredCourse ||
@@ -100,5 +99,17 @@ export const sectionexchangePostDEL = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.status(500).send(err);
+  }
+};
+
+export const sectionPostGETSearch = async (req, res) => {
+  try {
+    const searchString = req.params.string;
+    const regex = new RegExp(searchString, "i");
+    const sectionPosts = await Sectionexchangepost.find({ title: regex });
+    return res.status(200).json(sectionPosts);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
   }
 };

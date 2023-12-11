@@ -1,10 +1,8 @@
 import express from "express";
-import { requireAuth } from "../middleware/requireAuth.js";
 import {
   donatePostDEL,
   donatePostGET,
   donatePostGETId,
-  donatePostGETSearch,
   donatePostPOST,
   donatePostPUT,
 } from "../controllers/donateController.js";
@@ -15,8 +13,10 @@ const router = express.Router();
   router.use(requireAuth)
 */
 router.post("/donatepost", donatePostPOST);
-router.get("/donatepost", donatePostGET);
-router.get("/donatepost/:string", donatePostGETSearch);
+router.get(
+  "/donatepost/c/:categories/p/:price/d/:date/s/:search",
+  donatePostGET
+);
 router.get("/donatepost/:id", donatePostGETId);
 router.put("/donatepost/:id", donatePostPUT);
 router.delete("/donatepost/:id", donatePostDEL);

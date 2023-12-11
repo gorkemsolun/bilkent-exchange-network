@@ -1,8 +1,8 @@
-import jwt from 'jsonwebtoken'
+//import jwt from 'jsonwebtoken'
 //import User from "../models/user"
 
 export const requireAuth = async (req, res, next) => {
-    /*
+  /*
     //verify authentication
     const {authorization} = req.headers
 
@@ -22,5 +22,4 @@ export const requireAuth = async (req, res, next) => {
         res.status(401).json({error: 'Request is not authorized'})
     }
     */
-
-}
+};

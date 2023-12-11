@@ -14,7 +14,7 @@ export default function SearchBar(props: {
   };
 
   return (
-    <div className="inline-flex items-center bg-purple-300 rounded-full m-2 p-0.5">
+    <div className="inline-flex items-center bg-purple-300 rounded-full mx-2 ">
       <input
         type="text"
         value={searchTerm}
@@ -35,6 +35,7 @@ export default function SearchBar(props: {
             value={sortType}
             onChange={(e) => setSortType(e.target.value)}
             className="bg-white"
+            title="Sort By"
           >
             <option value="" disabled hidden>
               Sort By

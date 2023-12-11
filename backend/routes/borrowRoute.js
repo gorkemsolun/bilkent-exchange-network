@@ -1,11 +1,10 @@
 import express from "express";
-import {requireAuth} from "../middleware/requireAuth.js"
 import {
   borrowPostDEL,
   borrowPostGET,
+  borrowPostGETSearch,
   borrowPostPOST,
   borrowPostPUT,
-  borrowPostGETId,
 } from "../controllers/borrowController.js";
 
 const router = express.Router();
@@ -16,7 +15,8 @@ const router = express.Router();
 
 router.post("/borrowpost", borrowPostPOST);
 router.get("/borrowpost", borrowPostGET);
-router.get("/borrowpost/:id", borrowPostGETId);
+router.get("/borrowpost/:string", borrowPostGETSearch);
+//router.get("/borrowpost/:id", borrowPostGETId);
 router.put("/borrowpost/:id", borrowPostPUT);
 router.delete("/borrowpost/:id", borrowPostDEL);
 

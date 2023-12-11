@@ -1,22 +1,31 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../../App.css";
-import Categories from "../../components/categories";
-import CreatePostButton from "../../components/createpostbutton";
-import SearchBar from "../../components/searchbar";
-import { BorrowPost } from "../../data-types/posttypes";
-import Header from "../../components/header";
-import Navbar from "../../components/navbar";
+import "../App.css";
+import Filters from "../components/filters";
+import Header from "../components/header";
+import Navbar from "../components/navbar";
+import SearchBar from "../components/searchbar";
+import { BorrowPost } from "../data-types/posttypes";
+import CreatePostButton from "./create-post/createPostButton";
 
 export default function Borrow() {
   const [borrowPosts, setBorrowPosts] = useState([]);
-  //const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Callback function to handle search term
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
 
   useEffect(() => {
-    //setLoading(true);
+    const endpoint = searchTerm
+      ? `http://localhost:3000/borrow/borrowpost/${searchTerm}`
+      : "http://localhost:3000/borrow/borrowpost";
+
     axios
-      .get("http://localhost:3000/borrow/borrowpost")
+      .get(endpoint)
       .then((res) => {
+        //console.log(res.data);
         setBorrowPosts(res.data);
         //setLoading(false);
       })
@@ -24,23 +33,23 @@ export default function Borrow() {
         console.log(err);
         //setLoading(false);
       });
-  }, []);
+  }, [searchTerm]);
 
-  const handleBorrowPostClick = (postId: number) => {
+  const handleBorrowPostClick = (postId: string) => {
     // Replace this with your desired functionality when a borrow element is clicked
     console.log(`Borrow post with ID ${postId} clicked!`);
   };
 
   return (
-    <>
+    <div className="w-screen h-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row  grow">
-        <Categories type="borrow"></Categories>
+        <Filters type="borrow"></Filters>
         <div className="w-full h-full">
-          <div className="flex items-center justify-center">
-            <SearchBar type="secondhand" />
-            <CreatePostButton type="secondhand" />
+          <div className="flex items-center justify-center mb-3">
+            <SearchBar type="borrow" onSearch={handleSearch} />
+            <CreatePostButton type="borrow" />
           </div>
           <div className="container">
             <div className="row">
@@ -50,7 +59,7 @@ export default function Borrow() {
                     className="col-12"
                     key={post.id}
                     onClick={() => handleBorrowPostClick(post.id)}
-                    style={{ cursor: "pointer" }}
+                    style={{ cursor: "pointer", textAlign: "left" }}
                   >
                     <div className="card" style={{ width: "100%" }}>
                       <div className="position-relative">
@@ -91,6 +100,6 @@ export default function Borrow() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

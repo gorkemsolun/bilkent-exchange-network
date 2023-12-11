@@ -1,52 +1,67 @@
+export interface Post {
+  // this will be used for retrieving posts in profile and saved-posts
+  _id: string;
+  title: string;
+  createdAt: Date;
+  postType: string;
+}
+
 export interface LostFoundPost {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: string;
   poster: string;
-  date: string;
+  createdAt: Date;
   image: string;
   status: string;
 }
 
 export interface BorrowPost {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: string;
   poster: string;
-  date: string;
+  createdAt: Date;
 }
 
 export interface SecondhandPost {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: string;
   poster: string;
-  date: string;
+  createdAt: Date;
   image: string;
   price: string;
 }
 
 export interface DonatePost {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   category: string;
   poster: string;
-  date: string;
+  createdAt: Date;
   image: string;
 }
 
 export interface SectionexchangePost {
-  id: string;
-  title: string;
-  category: string;
+  _id: string;
+  username: string;
   poster: string;
-  date: string;
+  createdAt: Date;
   offeredSection: string;
   desiredSection: string;
   offeredCourse: string;
   desiredCourse: string;
+}
+
+export interface ForumPost {
+  _id: string;
+  title: string;
+  description: string;
+  poster: string;
+  createdAt: string;
 }

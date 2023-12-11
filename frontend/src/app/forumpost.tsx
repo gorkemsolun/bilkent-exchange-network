@@ -1,5 +1,5 @@
-import "../../bootstrap.css";
-import "../../App.css";
+import "../App.css";
+import "../bootstrap.css";
 
 interface ForumPostProps {
   forumPosts: {
@@ -21,12 +21,11 @@ export default function ForumPost({ forumPosts }: ForumPostProps) {
         {forumPosts.map((post) => (
           <div className="col-12 mb-4" key={post.id}>
             <div
-              className="col-12"
+              className="col-12 cursor-pointer"
               key={post.id}
               onClick={() => handleForumPostClick(post.id)}
-              style={{ cursor: "pointer" }}
             >
-              <div className="card" style={{ width: "100%" }}>
+              <div className="card w-full">
                 <div className="card-img-overlay d-flex justify-content-end">
                   <a href="#" className="card-link text-danger like">
                     <i className="fas fa-heart"></i>

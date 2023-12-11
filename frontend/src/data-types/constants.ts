@@ -1,29 +1,38 @@
-export const secondhandCategories = [
-  "Books",
-  "Kitchen",
-  "Clothes",
-  "Math",
-  "Economy",
-  "Utensils",
-  "Shirts",
-  "Pants",
-  "Dresses",
-];
-
 export const categories = {
   secondhand: [
-    {
-      name: "Books",
-      subcategories: [{ name: "Math" }, { name: "Economy" }],
-    },
-    { name: "Kitchen", subcategories: [{ name: "Utensils" }] },
-    {
-      name: "Clothes",
-      subcategories: [
-        { name: "Shirts" },
-        { name: "Pants" },
-        { name: "Dresses" },
-      ],
-    },
+    "Books",
+    "Electronics",
+    "Home",
+    "Lecture Materials",
+    "Clothes",
+    "Hobbies",
+    "Other",
   ],
+  lostfound: [
+    "Books",
+    "Electronics",
+    "Home ",
+    "Lecture Materials",
+    "Clothes",
+    "Hobbies",
+    "Other",
+  ],
+  donate: [
+    "Books",
+    "Electronics",
+    "Home",
+    "Lecture Materials",
+    "Clothes",
+    "Hobbies",
+    "Other",
+  ],
+};
+
+export const urls = {
+  secondhand:
+    "http://localhost:3000/secondhand/secondhandpost/c/:categories/p/:price/d/:date/s/:search",
+  lostfound:
+    "http://localhost:3000/lostfound/lostfoundpost/c/:categories/s/:status/d/:date/s/:search",
+  donate:
+    "http://localhost:3000/donate/donatepost/c/:categories/d/:date/s/:search",
 };

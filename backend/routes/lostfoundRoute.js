@@ -1,11 +1,10 @@
 import express from "express";
-import { requireAuth } from "../middleware/requireAuth.js";
 import {
   lostfoundPostDEL,
   lostfoundPostGET,
+  lostfoundPostGETId,
   lostfoundPostPOST,
   lostfoundPostPUT,
-  lostfoundPostGETId,
 } from "../controllers/lostfoundController.js";
 
 const router = express.Router();
@@ -14,7 +13,10 @@ const router = express.Router();
   router.use(requireAuth)
 */
 router.post("/lostfoundpost", lostfoundPostPOST);
-router.get("/lostfoundpost", lostfoundPostGET);
+router.get(
+  "/lostfoundpost/c/:categories/s/:status/d/:date/s/:search",
+  lostfoundPostGET
+);
 router.get("/lostfoundpost/:id", lostfoundPostGETId);
 router.put("/lostfoundpost/:id", lostfoundPostPUT);
 router.delete("/lostfoundpost/:id", lostfoundPostDEL);

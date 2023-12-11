@@ -1,8 +1,8 @@
-import "../../App.css";
-import CreatePostButton from "../../components/createpostbutton";
-import Header from "../../components/header";
-import Navbar from "../../components/navbar";
-import SearchBar from "../../components/searchbar";
+import "../App.css";
+import Header from "../components/header";
+import Navbar from "../components/navbar";
+import SearchBar from "../components/searchbar";
+import CreatePostButton from "./create-post/createPostButton";
 import ForumPost from "./forumpost";
 
 export default function Forum() {
@@ -54,20 +54,20 @@ export default function Forum() {
   ];
 
   return (
-    <>
+    <div className="w-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
         <div className="w-full h-full">
-          <div className="flex items-center justify-center">
-            <SearchBar type="secondhand" />
-            <CreatePostButton type="secondhand" />
+          <div className="flex items-center justify-center mb-3">
+            <SearchBar type="forum" />
+            <CreatePostButton type="forum" />
           </div>
           <div className="justify-center">
             <ForumPost forumPosts={ForumPosts} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

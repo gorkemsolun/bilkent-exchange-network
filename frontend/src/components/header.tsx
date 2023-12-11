@@ -13,66 +13,54 @@ export default function Header() {
   // Dummy user data, replace with your actual user data
   const user = {
     username: "JohnDoe",
-    // Add more user information as needed
+    photo: "./src/assets/cs319.png",
   };
 
   return (
-    <div className="bg-gradient-to-r from-blue-500 to-cyan-300 flex items-center p-2 justify-center">
-      {/* User Profile Section */}
+    <div className="header-outer">
       <div
-        className="flex cursor-pointer relative items-center justify-start ml-2"
-        style={{ width: "15%" }}
+        className="header-profile-outer"
         onClick={() => setDropdownOpen(!isDropdownOpen)}
       >
-        {/* Profile Photo */}
-        <div className="px-1 relative">
+        <div className="header-profile">
           <img
-            src="./src/assets/cs319.png"
-            className="object-cover rounded-full"
-            style={{ width: "40px", height: "40px" }}
+            src={user.photo}
+            className="header-profile-image"
+            alt="Profile"
+            title="Profile"
           />
-
-          {/* Dropdown Content */}
+          <span>{user.username}</span>
           {isDropdownOpen && (
-            <div
-              className="fixed mt-2 mr-1 w-48 bg-white rounded-md shadow-lg z-50 text-left"
-              style={{ zIndex: 50, textAlign: "left" }} // Set a high z-index value
-            >
-              <Link
-                to="/profile"
-                className="block px-4 py-2 text-gray-800 text-left"
-              >
+            <div className="header-profile-dropdown">
+              <Link to="/profile" className="header-profile-dropdown-link">
                 View Profile
               </Link>
-              <Link to="/saved-posts" className="block px-4 py-2 text-gray-800">
+              <Link to="/saved-posts" className="header-profile-dropdown-link">
                 Saved Posts
               </Link>
-              <Link to="/login" className="block px-4 py-2 text-gray-800" onClick={handleClick}>
+              <Link
+                to="/login"
+                className="header-profile-dropdown-link"
+                onClick={handleClick}
+              >
                 Logout
               </Link>
             </div>
           )}
         </div>
-
-        {/* Username */}
-        <span className="text-white text-xl" style={{ fontSize: "18px" }}>
-          {user.username}
-        </span>
       </div>
-
-      {/* Bilkent Exchange Network */}
-      <div className="flex justify-center" style={{ width: "70%" }}>
-        <Link
-          className="px-4 justify-center text-2xl text-white flex items-center"
-          to="/secondhand"
-        >
-          <img className="w-20 p-2" src="./src/assets/logo.png" alt="Logo" />
+      <div className="header-title-outer">
+        <Link className="header-title-link" to="/secondhand">
+          <img
+            className="header-title-image"
+            src="./src/assets/logo.png"
+            alt="Logo"
+          />
           Bilkent Exchange Network
         </Link>
       </div>
-
-      <div style={{ width: "15%" }}>
-        <Link to="/login" className="block px-4 py-2 text-gray-800">
+      <div className="header-message-link">
+        <Link to="/login" className="header-message-link">
           Message
         </Link>
       </div>
