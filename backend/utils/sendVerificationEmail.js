@@ -23,7 +23,7 @@ export const sendVerificationMail = async (username, email) => {
             to: email,
             subject: "Verify your email.",
             html: `<p> Hi ${username}, please verify your email by clicking this link </p> 
-                <a href = 'http://localhost:5173/signup?emailToken=${token.emailToken}&email=${email}'>Verify Your Email</a> `
+                <a href = 'http://localhost:5000/signup?emailToken=${token.emailToken}&email=${email}'>Verify Your Email</a> `
         }
     transporter.sendMail(MailOptions, (error, info) => {
         if (error) {

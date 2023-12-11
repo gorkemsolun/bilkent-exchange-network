@@ -53,7 +53,7 @@ export default function Login() {
             Forgot Password
           </Link>
           <span className="mx-2 text-gray-300">/</span>
-          <Link className="text-blue-400 hover:text-blue-500" to="/signup">
+          <Link className="text-blue-400 hover:text-blue-500" to="/verification">
             Sign Up
           </Link>
         </div>
