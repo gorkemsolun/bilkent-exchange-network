@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSignup } from "../authentication/useSignup";
+import { useSignup } from "./authHelpers";
 
-const Signup = () => {
+export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -21,7 +21,6 @@ const Signup = () => {
       }}
     >
       <div className="flex flex-col items-center justify-center">
-        {/*<img src="bilkent.png" width={"250"} height={"250"} />*/}
         <h1 className="mb-1 text-xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           Sign Up
         </h1>
@@ -84,6 +83,4 @@ const Signup = () => {
       </form>
     </div>
   );
-};
-
-export default Signup;
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogin } from "../authentication/useLogin";
+import { useLogin } from "./authentication/authHelpers";
 
 export default function Login() {
   const [email, setEmail] = useState("");

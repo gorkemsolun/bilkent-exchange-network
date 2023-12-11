@@ -1,22 +1,22 @@
 import { useState } from "react";
-import "../App.css";
-import { categories } from "../data-types/constants";
-import { FilterProps } from "../data-types/datatypes";
+import { categories, courses } from "../../data-types/constants";
+import { FilterProps } from "../../data-types/datatypes";
 
 export default function Filters(props: FilterProps) {
   const [minPrice, setMinPrice] = useState<number>();
   const [maxPrice, setMaxPrice] = useState<number>();
   const [minDate, setMinDate] = useState<Date>();
   const [maxDate, setMaxDate] = useState<Date>();
+  const [desiredCourse, setDesiredCourse] = useState<string>("All");
+  const [offeredCourse, setOfferedCourse] = useState<string>("All");
+  const [desiredSection, setDesiredSection] = useState<number | undefined>(
+    undefined
+  );
+  const [offeredSection, setOfferedSection] = useState<number | undefined>(
+    undefined
+  );
   const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
-  const [checkedStatus, setCheckedStatus] = useState<string>("all");
-
-  /*
-   TODO: props.type should be implemented for other pages
-  */
-  if (props.type === "") {
-    props.type = "secondhand";
-  }
+  const [checkedStatus, setCheckedStatus] = useState<string>("All");
 
   const handleCategoryChange = (category: string) => {
     if (checkedCategories.includes(category)) {
@@ -40,11 +40,15 @@ export default function Filters(props: FilterProps) {
         endDate: maxDate,
       },
       status: checkedStatus,
+      desiredCourse: desiredCourse,
+      offeredCourse: offeredCourse,
+      desiredSection: desiredSection,
+      offeredSection: offeredSection,
     });
   };
 
   const onCheckStatus = (status: string) => {
-    if (checkedStatus === "all") {
+    if (checkedStatus === "All") {
       if (status === "Lost") {
         setCheckedStatus("Lost");
       } else {
@@ -52,9 +56,9 @@ export default function Filters(props: FilterProps) {
       }
     } else {
       if (status === "Lost" && checkedStatus === "Lost") {
-        setCheckedStatus("all");
+        setCheckedStatus("All");
       } else if (status === "Found" && checkedStatus === "Found") {
-        setCheckedStatus("all");
+        setCheckedStatus("All");
       } else if (status === "Lost" && checkedStatus === "Found") {
         setCheckedStatus("Lost");
       } else if (status === "Found" && checkedStatus === "Lost") {
@@ -69,13 +73,50 @@ export default function Filters(props: FilterProps) {
     setMaxPrice(undefined);
     setMinDate(undefined);
     setMaxDate(undefined);
+    setCheckedStatus("All");
+    setDesiredCourse("All");
+    setOfferedCourse("All");
+    setDesiredSection(undefined);
+    setOfferedSection(undefined);
+  };
+
+  const onCourseChange = (course: string, isDesired: boolean) => {
+    if (isDesired) {
+      if (!course) {
+        setDesiredCourse("All");
+      } else {
+        setDesiredCourse(course);
+      }
+    } else {
+      if (!course) {
+        setOfferedCourse("All");
+      } else {
+        setOfferedCourse(course);
+      }
+    }
+  };
+
+  const onSectionChange = (section: number, isDesired: boolean) => {
+    if (isDesired) {
+      if (section === 0) {
+        setDesiredSection(undefined);
+      } else {
+        setDesiredSection(section);
+      }
+    } else {
+      if (section === 0) {
+        setOfferedSection(undefined);
+      } else {
+        setOfferedSection(section);
+      }
+    }
   };
 
   return (
     <div className="flex flex-col object-contain m-3 bg-slate-100 border-r-4 pr-1 w-18">
-      <div className="text-2xl font-bold p-1">Categories</div>
+      <div className="text-2xl font-bold p-1">Filters</div>
       <div className="mb-3">
-        {categories[props.type as keyof typeof categories] &&
+        {props.type !== "sectionexchange" &&
           categories[props.type as keyof typeof categories].map(
             (category: string, index: number) => (
               <div key={index} className="text-start ml-1">
@@ -95,7 +136,7 @@ export default function Filters(props: FilterProps) {
             )
           )}
       </div>
-      {(props.type === "secondhand" || props.type === "sectionExchange") && (
+      {(props.type === "secondhand" || props.type === "sectionexchange") && (
         <div className="mb-3 flex flex-row second-hand-category">
           <div className="mb-1 mr-1 max-w-1/2">
             <label>Min Price</label>
@@ -143,6 +184,68 @@ export default function Filters(props: FilterProps) {
               placeholder="Found"
             />
             <label>Found</label>
+          </div>
+        </div>
+      )}
+      {props.type === "sectionexchange" && (
+        <div>
+          <div>
+            <div className="mb-3">
+              <label>Desired Course</label>
+              <select
+                value={desiredCourse}
+                onChange={(e) => onCourseChange(e.target.value, true)}
+                className="border p-2 rounded-md bg-white"
+                title="Desired Course"
+              >
+                <option value="">Select Course</option>
+                {courses.map((course, index) => (
+                  <option key={index} value={course}>
+                    {course}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-3">
+              <label>Offered Course</label>
+              <select
+                value={offeredCourse}
+                onChange={(e) => onCourseChange(e.target.value, false)}
+                className="border p-2 rounded-md bg-white"
+                title="Offered Course"
+              >
+                <option value="">Select Course</option>
+                {courses.map((course, index) => (
+                  <option key={index} value={course}>
+                    {course}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div>
+            <div className="mb-3">
+              <label>Desired Section Number</label>
+              <input
+                type="number"
+                defaultValue={desiredSection}
+                onChange={(e) => onSectionChange(Number(e.target.value), true)}
+                min={1}
+                className="border p-2 rounded-md bg-white"
+                placeholder="Desired Section Number"
+              />
+            </div>
+            <div className="mb-3">
+              <label>Offered Section Number</label>
+              <input
+                type="number"
+                defaultValue={offeredSection}
+                onChange={(e) => onSectionChange(Number(e.target.value), false)}
+                min={1}
+                className="border p-2 rounded-md bg-white"
+                placeholder="Offered Section Number"
+              />
+            </div>
           </div>
         </div>
       )}

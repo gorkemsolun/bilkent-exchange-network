@@ -1,0 +1,107 @@
+import { useContext, useState } from "react";
+import { AuthContext } from "./AuthContext";
+
+export const useLogout = () => {
+  const { dispatch } = useAuthContext();
+  const logout = () => {
+    //remove user from storage
+    localStorage.removeItem("user");
+
+    // update auth context with logout
+    dispatch({ type: "LOGOUT" });
+  };
+  return { logout };
+};
+
+export const authReducer = (state, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      return { user: action.payload };
+    case "LOGOUT":
+      return { user: null };
+    default:
+      return state;
+  }
+};
+
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
+
+  if (!context) {
+    throw Error("useAuthContext must be used inside an AuthContextProvider");
+  }
+
+  return context;
+};
+
+export const useLogin = () => {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+
+  const { dispatch } = useAuthContext();
+
+  const login = async (email, password) => {
+    setIsLoading(true);
+    setError(null);
+
+    const res = await fetch("http://localhost:3000/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setIsLoading(false);
+      setError(json.error);
+    } else {
+      //save the user to local storage
+      localStorage.setItem("user", JSON.stringify(json));
+
+      //update auth context
+      dispatch({ type: "LOGIN", payload: json });
+      setIsLoading(false);
+    }
+  };
+
+  return { login, isLoading, error };
+};
+
+export const useSignup = () => {
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+
+  const { dispatch } = useAuthContext();
+
+  const signUpRequest = async (name, email, password) => {
+    setIsLoading(true);
+    setError(null);
+
+    const res = await fetch("http://localhost:3000/user/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    });
+
+    const json = await res.json();
+
+    if (!res.ok) {
+      setIsLoading(false);
+      setError(json.error);
+    } else {
+      //save the user to local storage
+      localStorage.setItem("user", JSON.stringify(json));
+
+      /*
+       * Update the auth context.
+       * TODO: might need some change when email verification is added
+       * maybe it should update auth context after we verify the user.
+       */
+      dispatch({ type: "LOGIN", payload: json });
+      setIsLoading(false);
+    }
+  };
+
+  return { signUpRequest, isLoading, error };
+};

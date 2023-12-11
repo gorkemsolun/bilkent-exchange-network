@@ -1,4 +1,4 @@
-import { BorrowPost } from "../models/borrowpost.js";
+import { ForumPost } from "../models/forumpost.js";
 
 function fieldController(reqBody) {
   if (
@@ -7,30 +7,30 @@ function fieldController(reqBody) {
     !reqBody.poster ||
     !reqBody.categories
   ) {
-    return res.status(400).send("Missing fields for borrowpost");
+    return res.status(400).send("Missing fields for forumpost");
   }
 }
 
-export const borrowPostPOST = async (req, res) => {
+export const forumPostPOST = async (req, res) => {
   try {
     fieldController(req.body);
 
-    const newBorrowpost = req.body;
+    const newForumpost = req.body;
 
-    const borrowpost = await BorrowPost.create(newBorrowpost);
+    const forumpost = await ForumPost.create(newForumpost);
 
-    return res.status(201).send(borrowpost);
+    return res.status(201).send(forumpost);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }
 };
 
-export const borrowPostGET = async (req, res) => {
+export const forumPostGET = async (req, res) => {
   try {
     let query = {};
-    let categories = req.params.categories.split(",");
     let regexSearch = new RegExp(req.params.search, "i");
+    let categories = req.params.categories.split(",");
     let dateMin = req.params.date.split("*")[0],
       dateMax = req.params.date.split("*")[1];
 
@@ -48,58 +48,58 @@ export const borrowPostGET = async (req, res) => {
       query.timestamp = { $lte: dateMax };
     }
 
-    const borrowposts = await BorrowPost.find(query);
+    const forumposts = await ForumPost.find(query);
 
-    return res.status(200).json(borrowposts);
+    return res.status(200).json(forumposts);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }
 };
 
-export const borrowPostGETId = async (req, res) => {
+export const forumPostGETId = async (req, res) => {
   try {
-    const borrowpost = await BorrowPost.findById(req.params.id);
+    const forumpost = await ForumPost.findById(req.params.id);
 
-    if (!borrowpost) {
-      return res.status(404).send("BorrowPost not found");
+    if (!forumpost) {
+      return res.status(404).send("ForumPost not found");
     }
 
-    return res.status(200).json(borrowpost);
+    return res.status(200).json(forumpost);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }
 };
 
-export const borrowPostPUT = async (req, res) => {
+export const forumPostPUT = async (req, res) => {
   try {
     fieldController(req.body);
 
-    const result = await BorrowPost.findByIdAndUpdate(req.params.id, req.body);
+    const result = await ForumPost.findByIdAndUpdate(req.params.id, req.body);
 
     if (!result) {
-      return res.status(404).send("BorrowPost not found");
+      return res.status(404).send("ForumPost not found");
     }
 
-    return res.status(204).send("BorrowPost updated");
+    return res.status(204).send("ForumPost updated");
   } catch (err) {
     console.log(err);
-    return res.status(500).send(err);
+    res.status(500).send(err);
   }
 };
 
-export const borrowPostDEL = async (req, res) => {
+export const forumPostDEL = async (req, res) => {
   try {
-    const result = await BorrowPost.findByIdAndDelete(req.params.id);
+    const result = await ForumPost.findByIdAndDelete(req.params.id);
 
     if (!result) {
-      return res.status(404).send("BorrowPost not found");
+      return res.status(404).send("ForumPost not found");
     }
 
-    return res.status(204).send("BorrowPost deleted");
+    return res.status(204).send("ForumPost deleted");
   } catch (err) {
     console.log(err);
-    return res.status(500).send(err);
+    res.status(500).send(err);
   }
 };

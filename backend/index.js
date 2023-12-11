@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { MONGO_URL, PORT } from "./config.js";
 import borrowRouter from "./routes/borrowRoute.js";
 import donateRouter from "./routes/donateRoute.js";
+import forumRouter from "./routes/forumRoute.js";
 import lostfoundRouter from "./routes/lostfoundRoute.js";
 import secondhandRouter from "./routes/secondhandRoute.js";
 import sectionexchangeRouter from "./routes/sectionexchangeRoute.js";
@@ -19,6 +20,7 @@ app.use("/secondhand", secondhandRouter);
 app.use("/lostfound", lostfoundRouter);
 app.use("/donate", donateRouter);
 app.use("/sectionexchange", sectionexchangeRouter);
+app.use("/forum", forumRouter);
 app.use("/user", authRouter);
 
 mongoose

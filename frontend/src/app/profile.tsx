@@ -1,13 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../App.css";
-import Header from "../components/header.tsx";
-import Navbar from "../components/navbar.tsx";
 import { UserProfile } from "../data-types/datatypes.ts";
+import Header from "./components/header.tsx";
+import Navbar from "./components/navbar.tsx";
 
 export default function UserProfile() {
   const [userProfile, setUserProfile] = useState<UserProfile>({
-    // Replace with the data you get from the server
     username: "johndoe76",
     name: "John Doe",
     email: "johndoe@gmail.com",
@@ -18,16 +16,15 @@ export default function UserProfile() {
   });
 
   useEffect(() => {
-    // Fetch user profile data from the server
     axios
-      .get("http://localhost:3000/user-profile") // Replace with your endpoint
+      .get("http://localhost:3000/user-profile")
       .then((res) => {
         setUserProfile(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []); // Empty dependency array ensures useEffect runs only once
+  }, []);
 
   return (
     <div className="w-screen h-screen">

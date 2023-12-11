@@ -1,32 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../App.css";
-import Filters from "../components/filters.tsx";
-import Header from "../components/header.tsx";
-import Loader from "../components/loader.tsx";
-import Navbar from "../components/navbar.tsx";
-import SearchBar from "../components/searchbar.tsx";
+import { defaultFilterParams } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 import { SecondhandPost } from "../data-types/posttypes.ts";
+import Filters from "./components/filters.tsx";
+import Header from "./components/header.tsx";
+import Loader from "./components/loader.tsx";
+import Navbar from "./components/navbar.tsx";
+import SearchBar from "./components/searchbar.tsx";
 import CreatePostButton from "./create-post/createPostButton.tsx";
-import prepareUrl from "./prepareUrl.ts";
+import prepareUrl from "./fetchHelpers.ts";
 
 export default function Secondhand() {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [secondhandPosts, setSecondhandPosts] = useState([]);
-  const [filterParams, setFilterParams] = useState<FilterParams>({
-    categories: [],
-    prices: {
-      min: undefined,
-      max: undefined,
-    },
-    dates: {
-      startDate: undefined,
-      endDate: undefined,
-    },
-    status: "all",
-  });
+  const [filterParams, setFilterParams] =
+    useState<FilterParams>(defaultFilterParams);
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -39,7 +29,7 @@ export default function Secondhand() {
   useEffect(() => {
     setLoading(true);
 
-    const url = prepareUrl(filterParams, searchTerm, "secondhand");
+    const url = prepareUrl(searchTerm, "secondhand", filterParams);
     console.log(url);
 
     axios

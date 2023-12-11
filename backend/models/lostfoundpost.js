@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const LostfoundpostSchema = new mongoose.Schema(
+const LostfoundPostSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -32,7 +32,7 @@ const LostfoundpostSchema = new mongoose.Schema(
   }
 );
 
-export const Lostfoundpost = mongoose.model(
-  "Lostfoundpost",
-  LostfoundpostSchema
+export const LostfoundPost = mongoose.model(
+  "LostfoundPost",
+  LostfoundPostSchema
 );

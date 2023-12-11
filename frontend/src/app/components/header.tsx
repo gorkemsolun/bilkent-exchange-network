@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogout } from "../authentication/useLogout";
+import { useLogout } from "../authentication/authHelpers";
 
 export default function Header() {
   const { logout } = useLogout();

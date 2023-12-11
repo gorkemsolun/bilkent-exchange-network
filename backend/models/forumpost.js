@@ -1,16 +1,16 @@
 import mongoose from "mongoose";
 
-const BorrowPostSchema = new mongoose.Schema(
+const ForumPostSchema = new mongoose.Schema(
   {
+    poster: {
+      type: String,
+      required: true,
+    },
     title: {
       type: String,
       required: true,
     },
     description: {
-      type: String,
-      required: true,
-    },
-    poster: {
       type: String,
       required: true,
     },
@@ -24,4 +24,4 @@ const BorrowPostSchema = new mongoose.Schema(
   }
 );
 
-export const BorrowPost = mongoose.model("BorrowPost", BorrowPostSchema);
+export const ForumPost = mongoose.model("ForumPost", ForumPostSchema);

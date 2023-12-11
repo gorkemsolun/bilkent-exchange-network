@@ -1,50 +1,55 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import "../App.css";
-import Filters from "../components/filters";
-import Header from "../components/header";
-import Navbar from "../components/navbar";
-import SearchBar from "../components/searchbar";
+import { defaultFilterParams } from "../data-types/constants";
+import { FilterParams } from "../data-types/datatypes";
 import { SectionexchangePost } from "../data-types/posttypes";
+import Filters from "./components/filters";
+import Header from "./components/header";
+import Loader from "./components/loader.tsx";
+import Navbar from "./components/navbar";
+import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/createPostButton";
+import prepareUrl from "./fetchHelpers";
 
 export default function SectionExchange() {
-  function handleDMClick(): void {
-    console.log("DM Box Clicked");
-  }
-
   const [sectionexchangePosts, setSectionexchangePosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [filterParams, setFilterParams] =
+    useState<FilterParams>(defaultFilterParams);
 
-  // Callback function to handle search term
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
 
+  function passFilters(params: FilterParams) {
+    setFilterParams(params);
+  }
+
   useEffect(() => {
-    const endpoint = searchTerm
-      ? `http://localhost:3000/sectionexchange/sectionexchangepost/${searchTerm}`
-      : "http://localhost:3000/sectionexchange/sectionexchangepost";
+    setLoading(true);
+    const url = prepareUrl(searchTerm, "sectionexchange", filterParams);
+    console.log(url);
 
     axios
-      .get(endpoint)
+      .get(url)
       .then((res) => {
-        //console.log(res.data);
         setSectionexchangePosts(res.data);
-        //setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        //setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
       });
-  }, [searchTerm]);
+  }, [searchTerm, filterParams]);
 
   return (
     <div className="w-screen h-screen">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">
-        <Filters type="sectionexchange"></Filters>
+        <Filters type="sectionexchange" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar type="sectionexchange" onSearch={handleSearch} />
@@ -67,9 +72,7 @@ export default function SectionExchange() {
                     <div className="col-md text-center border-r border-black">
                       <p className="card-text">{"DM"}</p>
                     </div>
-                    <div
-                      className="col-md text-center" // Adjusted column size
-                    >
+                    <div className="col-md text-center">
                       <p className="card-text">{"Date"}</p>
                     </div>
                   </div>
@@ -77,48 +80,49 @@ export default function SectionExchange() {
               </div>
             </div>
           </div>
-          <div className="container w-full">
-            {sectionexchangePosts.map((post: SectionexchangePost) => (
-              <div className="row mb-1 mr-20 ml-5" key={post._id}>
-                <div className="col-12">
-                  <div className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2 bg-white">
-                    <div className="row align-items-start justify-content-start">
-                      <div className="col-md text-center border-r border-black">
-                        <p className="card-text">{"" + post.username}</p>
-                      </div>
-                      <div className="col-md text-center border-r border-black">
-                        <p className="card-text">
-                          {post.offeredCourse + "-" + post.offeredSection}
-                        </p>
-                      </div>
-                      <div className="col-md text-center border-r border-black">
-                        <p className="card-text">
-                          {post.desiredCourse + "-" + post.desiredSection}
-                        </p>
-                      </div>
-                      <div className="col-md text-center border-r border-black">
-                        <div>
-                          {/* DM Box Image with hover title and click event */}
-                          <img
-                            className="img-fluid mx-auto d-block max-w-4vw max-h-4vh"
-                            src="./src/assets/dmbox.png" // Replace with your image URL
-                            alt="DM Box"
-                            title="Send DM" // Tooltip on hover
-                            onClick={() => handleDMClick()} // Your click handler
-                          />
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="container w-full">
+              {sectionexchangePosts.map((post: SectionexchangePost) => (
+                <div className="row mb-1 mr-20 ml-5" key={post._id}>
+                  <div className="col-12">
+                    <div className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2 bg-white">
+                      <div className="row align-items-start justify-content-start">
+                        <div className="col-md text-center border-r border-black">
+                          <p className="card-text">{String(post.poster)}</p>
                         </div>
-                      </div>
-                      <div
-                        className="col-md text-center" // Adjusted column size
-                      >
-                        <p className="card-text">{"" + post.createdAt}</p>
+                        <div className="col-md text-center border-r border-black">
+                          <p className="card-text">
+                            {post.offeredCourse + "-" + post.offeredSection}
+                          </p>
+                        </div>
+                        <div className="col-md text-center border-r border-black">
+                          <p className="card-text">
+                            {post.desiredCourse + "-" + post.desiredSection}
+                          </p>
+                        </div>
+                        <div className="col-md text-center border-r border-black">
+                          <div>
+                            <img
+                              className="img-fluid mx-auto d-block max-w-4vw max-h-4vh"
+                              src="./src/assets/dmbox.png"
+                              alt="DM Box"
+                              title="Send DM"
+                              onClick={() => {}}
+                            />
+                          </div>
+                        </div>
+                        <div className="col-md text-center">
+                          <p className="card-text">{String(post.createdAt)}</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

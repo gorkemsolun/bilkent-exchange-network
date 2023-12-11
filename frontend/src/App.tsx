@@ -1,5 +1,8 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
+import { AuthContextProvider } from "./app/authentication/AuthContext";
+import { useAuthContext } from "./app/authentication/authHelpers";
+import Signup from "./app/authentication/signup";
 import Borrow from "./app/borrow";
 import Donate from "./app/donate";
 import Forum from "./app/forum";
@@ -8,9 +11,7 @@ import LostFound from "./app/lostfound";
 import Profile from "./app/profile";
 import SecondHand from "./app/secondhand";
 import SectionExchange from "./app/sectionexchange";
-import Signup from "./app/signup";
-import { AuthContextProvider } from "./authentication/AuthContext";
-import { useAuthContext } from "./authentication/useAuthContext";
+import "./bootstrap.css";
 
 export default function App() {
   return (
