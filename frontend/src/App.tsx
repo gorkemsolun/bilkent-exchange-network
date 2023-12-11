@@ -7,7 +7,7 @@ import Login from "./app/login/login";
 import LostFound from "./app/lostfound/lostfound";
 import SecondHand from "./app/secondhand/secondhand";
 import SectionExchange from "./app/sectionexchange/sectionexchange";
-import Signup from "./app/signup/signup";
+import Signup from "./app/newSignup/signup";
 import { AuthContextProvider } from "./authentication/AuthContext";
 import { useAuthContext } from "./authentication/useAuthContext";
 import VerificationPage from "./app/verificationPage/Verification"
