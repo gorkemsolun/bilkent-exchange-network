@@ -533,8 +533,22 @@ td {
   display: flex;
   flex-direction: column;
   border: 1px solid #ccc;
-  padding: 15px;
-  margin-bottom: 20px;
+  border-radius: 0.25rem;
+  margin-bottom: 4vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
+.forumpostdetails-entry-container {
+  margin-bottom: 3vh;
+  padding-top: 2vh;
+  padding-bottom: 1vh;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
 }
 
 .forumpostdetails-entry-top {
@@ -543,7 +557,7 @@ td {
   margin-bottom: 1vh;
   width: 100%;
   height: fit-content;
-  align-items: left;
+  align-items: center;
 }
 
 .forumpostdetails-profile-picture {
@@ -565,6 +579,8 @@ td {
   font-size: 16px;
   color: #888;
   align-self: center;
+  margin-left: auto;
+  margin-right: 2vw;
 }
 
 .forumpostdetails-title {
@@ -575,12 +591,15 @@ td {
   margin-bottom: 2vh;
 }
 
-.forumpostdetails-entry {
+.forumpostdetails-entry-content {
   display: flex;
   flex-direction: row;
   font-size: large;
   text-align: left;
   margin-left: 2vw;
+  overflow-wrap: break-word;
+  overflow: auto;
+  max-width: 100%;
 }
 
 .forumpostdetails-vote-container {
@@ -609,4 +628,10 @@ td {
   margin-top: 1vh;
   padding-left: 2vw;
   padding-right: 2vw;
+}
+
+.outer-container {
+  width: 100vw;
+  min-height: 100vh;
+  height: fit-content;
 }

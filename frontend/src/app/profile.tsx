@@ -27,7 +27,7 @@ export default function UserProfile() {
   }, []);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="outer-container">
       <Header />
       <Navbar />
       <div className="profileContainer">

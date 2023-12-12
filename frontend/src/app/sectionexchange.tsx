@@ -9,7 +9,7 @@ import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton.tsx";
-import {prepareUrl} from "./fetchPostHelpers.ts";
+import { prepareUrl } from "./fetchPostHelpers.ts";
 
 export default function SectionExchange() {
   const [sectionexchangePosts, setSectionexchangePosts] = useState([]);
@@ -45,7 +45,7 @@ export default function SectionExchange() {
   }, [searchTerm, filterParams]);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="outer-container">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">

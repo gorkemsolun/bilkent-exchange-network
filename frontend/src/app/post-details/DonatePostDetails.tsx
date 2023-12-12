@@ -28,7 +28,7 @@ export default function DonatePostDetails() {
   }, [id]);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="outer-container">
       <Header />
       <Navbar />
       {loading ? (

@@ -45,7 +45,7 @@ export default function Borrow() {
   }, [searchTerm, filterParams]);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="outer-container">
       <Header />
       <Navbar />
       <div className="flex flex-row  grow">

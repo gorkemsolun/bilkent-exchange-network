@@ -27,7 +27,7 @@ export default function BorrowPostDetails() {
   }, [id]);
 
   return (
-    <div className="w-screen h-screen">
+    <div className="outer-container">
       <Header />
       <Navbar />
       {loading ? (

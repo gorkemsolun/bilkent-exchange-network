@@ -46,7 +46,7 @@ export default function LostFound() {
   };
 
   return (
-    <div className="w-screen">
+    <div className="outer-container">
       <Header />
       <Navbar />
       <div className="flex flex-row grow">

@@ -30,10 +30,8 @@ export default function ForumPostDetails() {
       });
   }, [id]);
 
-  console.log(user);
-
   return (
-    <div className="w-screen h-screen">
+    <div className="outer-container">
       <Header />
       <Navbar />
       {loading ? (
@@ -47,12 +45,18 @@ export default function ForumPostDetails() {
                 className="forumpostdetails-profile-picture"
               />
               <div className="forumpostdetails-username">{"username"}</div>
-              <div className="forumpostdetails-date">{post.createdAt}</div>
+              <div className="forumpostdetails-date">
+                {("" + post.createdAt).slice(11, 16) +
+                  " " +
+                  ("" + post.createdAt).slice(0, 10)}
+              </div>
             </div>
 
             <div className="forumpostdetails-title">{post.title}</div>
 
-            <div className="forumpostdetails-entry">{post.description}</div>
+            <div className="forumpostdetails-entry-content">
+              {post.description}
+            </div>
           </div>
 
           <div className="forumpostdetails-entries-container">
@@ -66,11 +70,15 @@ export default function ForumPostDetails() {
                     />
                     <div className="forumpostdetails-username">{"doe123"}</div>
                     <div className="forumpostdetails-date">
-                      {"123.123.12321312"}
+                      {entry.createdAt.slice(11, 16) +
+                        " " +
+                        entry.createdAt.slice(0, 10)}
                     </div>
                   </div>
 
-                  <div className="forumpostdetails-entry">{entry.content}</div>
+                  <div className="forumpostdetails-entry-content">
+                    {entry.content}
+                  </div>
                 </div>
               ))}
           </div>
