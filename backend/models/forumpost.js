@@ -1,5 +1,23 @@
 import mongoose from "mongoose";
 
+const ForumEntrySchema = new mongoose.Schema(
+  {
+    content: {
+      type: String,
+      required: true,
+    },
+    poster: {
+      type: String,
+      required: true,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const ForumEntry = mongoose.model("ForumEntry", ForumEntrySchema);
+
 const ForumPostSchema = new mongoose.Schema(
   {
     poster: {
@@ -14,13 +32,9 @@ const ForumPostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    voteScore: {
-      type: Number,
-      default: 0,
-    },
+
     entries: {
-      type: [mongoose.Schema.Types.ObjectId],
-      ref: "ForumEntry",
+      type: [ForumEntrySchema],
     },
   },
   {

@@ -609,8 +609,4 @@ td {
   margin-top: 1vh;
   padding-left: 2vw;
   padding-right: 2vw;
-  border-left: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  border-radius: 0 0 5px 5px;
 }

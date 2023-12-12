@@ -7,9 +7,11 @@ import Header from "../components/header";
 import Navbar from "../components/navbar";
 import { ForumEntry } from "../../data-types/datatypes";
 import "../../App.css";
+import { useAuthContext } from "../authentication/authHelpers";
 
 export default function ForumPostDetails() {
   const [post, setPost] = useState<ForumPost>({} as ForumPost);
+  const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
@@ -28,6 +30,8 @@ export default function ForumPostDetails() {
       });
   }, [id]);
 
+  console.log(user);
+
   return (
     <div className="w-screen h-screen">
       <Header />
@@ -43,28 +47,32 @@ export default function ForumPostDetails() {
                 className="forumpostdetails-profile-picture"
               />
               <div className="forumpostdetails-username">{"username"}</div>
-              <div className="forumpostdetails-date">{"date"}</div>
+              <div className="forumpostdetails-date">{post.createdAt}</div>
             </div>
 
             <div className="forumpostdetails-title">{post.title}</div>
 
-            <div className="forumpostdetails-entry">
-              <div className="forumpostdetails-vote-container">
-                <div className="forumpostdetails-vote-button">
-                  <img src="/src/assets/upvote.jpeg" />
-                </div>
-                <div className="forumpostdetails-vote-score">{"0"}</div>
-                <div className="forumpostdetails-vote-button">
-                  <img src="/src/assets/downvote.jpeg" />
-                </div>
-              </div>
-              {post.description}
-            </div>
+            <div className="forumpostdetails-entry">{post.description}</div>
           </div>
 
           <div className="forumpostdetails-entries-container">
             {post.entries &&
-              post.entries.map((entry: ForumEntry) => <p>{entry.content}</p>)}
+              post.entries.map((entry: ForumEntry) => (
+                <div className="forumpostdetails-entry-container">
+                  <div className="forumpostdetails-entry-top">
+                    <img
+                      src="/src/assets/cs319.png"
+                      className="forumpostdetails-profile-picture"
+                    />
+                    <div className="forumpostdetails-username">{"doe123"}</div>
+                    <div className="forumpostdetails-date">
+                      {"123.123.12321312"}
+                    </div>
+                  </div>
+
+                  <div className="forumpostdetails-entry">{entry.content}</div>
+                </div>
+              ))}
           </div>
         </div>
       )}

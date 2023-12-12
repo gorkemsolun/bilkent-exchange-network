@@ -1,12 +1,7 @@
-import { ForumPost } from "../models/forumpost.js";
+import { ForumPost, ForumEntry } from "../models/forumpost.js";
 
 function fieldController(reqBody) {
-  if (
-    !reqBody.title ||
-    !reqBody.description ||
-    !reqBody.poster ||
-    !reqBody.categories
-  ) {
+  if (!reqBody.title || !reqBody.description || !reqBody.poster) {
     return false;
   }
 }
@@ -22,6 +17,30 @@ export const forumPostPOST = async (req, res) => {
     const forumpost = await ForumPost.create(newForumpost);
 
     return res.status(201).send(forumpost);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+};
+
+export const forumEntryPOST = async (req, res) => {
+  try {
+    if (!req.body.content || !req.body.poster) {
+      return res.status(400).send("Missing fields for forumentry");
+    }
+
+    const newForumEntry = req.body;
+
+    const forumentry = await ForumEntry.create(newForumEntry);
+    const forumpost = await ForumPost.findById(req.params.id);
+
+    if (!forumpost) {
+      return res.status(404).send("ForumPost not found");
+    }
+    forumpost.entries.push(forumentry);
+    await forumpost.save();
+
+    return res.status(201).send(forumentry);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
