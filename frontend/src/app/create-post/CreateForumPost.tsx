@@ -1,32 +1,32 @@
-import "../../App.css";
+import axios from "axios";
+import { categories, urlsPost } from "../../data-types/constants";
+import { CreatePostProps } from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posttypes";
 
-export default function CreateForumPost({ onClose }) {
-  const product: ForumPost = {
-    id: "",
-    title: "",
-    description: "",
-    poster: "",
-    date: "",
-  };
-
+export default function CreateForumPost(props: CreatePostProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
-    // Retrieve values directly from the form data
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
+    const post: ForumPost = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      category: formData.get("category") as string,
+      poster: "31", //  TODO: Change this to the actual user id
+    };
 
-    // Update the product
-    product.title = title;
-    product.description = description;
+    axios
+      .post(urlsPost.forum, post)
+      .then((res) => {
+        // TODO SUCCESFULLY SENT
+      })
+      .catch((err) => {
+        console.log(err);
+        // TODO ERROR MODAL
+      });
 
-    console.log(product);
-
-    // TODO: Send product data and image to server
-    onClose(); // Close the modal after submission
+    props.onClose();
   };
 
   return (
@@ -36,7 +36,7 @@ export default function CreateForumPost({ onClose }) {
         className="create-item-form"
         style={{ width: "35vw" }}
       >
-        <span className="close" onClick={onClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
 
@@ -48,6 +48,7 @@ export default function CreateForumPost({ onClose }) {
               id="title"
               name="title"
               className="form-control"
+              placeholder="Enter title"
             />
           </div>
           <div className="modal-form-group" style={{ textAlign: "left" }}>
@@ -59,6 +60,17 @@ export default function CreateForumPost({ onClose }) {
               style={{ height: "15vh" }}
             />
           </div>
+        </div>
+
+        <div className="modal-form-group" style={{ textAlign: "left" }}>
+          <label htmlFor="category">Category</label>
+          <select id="category" name="category" className="form-control">
+            {categories.forum.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="modal-form-group mt-4">

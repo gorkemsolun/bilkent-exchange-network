@@ -1,35 +1,33 @@
+import axios from "axios";
 import "../../App.css";
+import { categories, urlsPost } from "../../data-types/constants";
+import { CreatePostProps } from "../../data-types/datatypes";
 import { BorrowPost } from "../../data-types/posttypes";
 
-export default function CreateBorrowPost({ onClose }) {
-  const product: BorrowPost = {
-    id: "",
-    title: "",
-    description: "",
-    category: "",
-    poster: "",
-    date: "",
-  };
-
+export default function CreateBorrowPost(props: CreatePostProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
-    // Retrieve values directly from the form data
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
-    const category = formData.get("category") as string;
+    const post: BorrowPost = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      category: formData.get("category") as string,
+      poster: "31", //  TODO: Change this to the actual user id
+    };
 
-    // Update the product
-    product.title = title;
-    product.description = description;
-    product.category = category;
+    axios
+      .post(urlsPost.borrow, post)
+      .then((res) => {
+        // TODO SUCCESFULLY SENT
+      })
+      .catch((err) => {
+        console.log(err);
+        // TODO ERROR MODAL
+      });
 
-    console.log(product);
-
-    // TODO: Send product data and image to server
-    onClose(); // Close the modal after submission
+    props.onClose(); // Close the modal after submission
   };
 
   return (
@@ -39,7 +37,7 @@ export default function CreateBorrowPost({ onClose }) {
         className="create-item-form"
         style={{ width: "35vw" }}
       >
-        <span className="close" onClick={onClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
 
@@ -51,6 +49,7 @@ export default function CreateBorrowPost({ onClose }) {
               id="title"
               name="title"
               className="form-control"
+              placeholder="Enter title"
             />
           </div>
           <div className="modal-form-group" style={{ textAlign: "left" }}>
@@ -67,13 +66,11 @@ export default function CreateBorrowPost({ onClose }) {
         <div className="modal-form-group" style={{ textAlign: "left" }}>
           <label htmlFor="category">Category</label>
           <select id="category" name="category" className="form-control">
-            <option value="Books">Books</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Home">Home</option>
-            <option value="Home">Lecture Materials</option>
-            <option value="Home">Clothes</option>
-            <option value="Home">Hobbies</option>
-            <option value="Home">Other</option>
+            {categories.borrow.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
           </select>
         </div>
 

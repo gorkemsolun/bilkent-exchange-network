@@ -8,7 +8,7 @@ import Header from "./components/header";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
-import CreatePostButton from "./create-post/createPostButton";
+import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import prepareUrl from "./fetchHelpers";
 
 export default function SectionExchange() {

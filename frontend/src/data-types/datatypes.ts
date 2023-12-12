@@ -37,3 +37,11 @@ export interface FilterParams {
   desiredSection: number | undefined;
   offeredSection: number | undefined;
 }
+
+export interface CreatePostProps {
+  onClose: () => void;
+}
+
+export interface CreatePostButtonProps {
+  type: string;
+}

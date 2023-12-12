@@ -70,7 +70,7 @@ export const courses = [
   "FIN 101",
 ];
 
-export const urls = {
+export const urlsGet = {
   secondhand:
     "http://localhost:3000/secondhand/secondhandpost/c/:categories/p/:price/d/:date/s/:search",
   lostfound:
@@ -83,6 +83,15 @@ export const urls = {
     "http://localhost:3000/sectionexchange/sectionexchangepost/p/:price/d/:date/s/:search/o/:offeredCourse/:offeredSection/d/:desiredCourse/:desiredSection",
   forum:
     "http://localhost:3000/forum/forumpost/c/:categories/d/:date/s/:search",
+};
+
+export const urlsPost = {
+  secondhand: "http://localhost:3000/secondhand/secondhandpost",
+  lostfound: "http://localhost:3000/lostfound/lostfoundpost",
+  donate: "http://localhost:3000/donate/donatepost",
+  borrow: "http://localhost:3000/borrow/borrowpost",
+  sectionexchange: "http://localhost:3000/sectionexchange/sectionexchangepost",
+  forum: "http://localhost:3000/forum/forumpost",
 };
 
 export const defaultFilterParams = {
