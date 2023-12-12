@@ -2,10 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { LostFoundPost } from "../../data-types/posttypes";
-import "../../App.css";
 import Header from "../components/header";
-import Navbar from "../components/navbar";
 import Loader from "../components/loader";
+import Navbar from "../components/navbar";
 
 export default function LostFoundPostDetails() {
   // TODO: pull user info from backend and put it into the user-info container

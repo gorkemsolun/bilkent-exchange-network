@@ -1,10 +1,16 @@
 import axios from "axios";
+import React, { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { SecondhandPost } from "../../data-types/posttypes";
+import Loader from "../components/loader";
+import { getBase64 } from "../fetchPostHelpers";
 
 export default function CreateSecondHandPost(props: CreatePostProps) {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -13,7 +19,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       price: formData.get("price") as unknown as number,
-      image: formData.get("image") as string,
+      image: await getBase64(formData.get("image") as File),
       category: formData.get("category") as string,
       poster: "31", //  TODO: Change this to the actual user id
     };
@@ -28,8 +34,8 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
         // TODO ERROR MODAL
       });
 
-    // TODO: Send product data and image to server
-    props.onClose(); // Close the modal after submission
+    setLoading(false);
+    props.onClose();
   };
 
   return (
@@ -39,6 +45,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
         className="create-item-form"
         style={{ width: "35vw" }}
       >
+        {loading && <Loader />}
         <span className="close" onClick={props.onClose}>
           &times;
         </span>

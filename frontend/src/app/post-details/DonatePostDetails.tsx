@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { DonatePost } from "../../data-types/posttypes";
-import "../../App.css";
 import Header from "../components/header";
 import Navbar from "../components/navbar";
 import Loader from "../components/loader";

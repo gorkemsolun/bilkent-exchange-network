@@ -1,11 +1,16 @@
 import axios from "axios";
-import "../../App.css";
+import { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posttypes";
+import Loader from "../components/loader";
+import { getBase64 } from "../fetchPostHelpers";
 
 export default function CreateDonatePost(props: CreatePostProps) {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -14,7 +19,7 @@ export default function CreateDonatePost(props: CreatePostProps) {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       category: formData.get("category") as string,
-      image: formData.get("image") as string,
+      image: await getBase64(formData.get("image") as File),
       poster: "31", //  TODO: Change this to the actual user id
     };
 
@@ -28,7 +33,8 @@ export default function CreateDonatePost(props: CreatePostProps) {
         // TODO ERROR MODAL
       });
 
-    props.onClose(); // Close the modal after submission
+    setLoading(false);
+    props.onClose();
   };
 
   return (
@@ -38,6 +44,7 @@ export default function CreateDonatePost(props: CreatePostProps) {
         className="create-item-form"
         style={{ width: "35vw" }}
       >
+        {loading && <Loader />}
         <span className="close" onClick={props.onClose}>
           &times;
         </span>

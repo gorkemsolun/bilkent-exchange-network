@@ -1,7 +1,7 @@
 import { urlsGet } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 
-export default function prepareUrl(
+export function prepareUrl(
   searchTerm: string,
   type: string,
   filterParams?: FilterParams
@@ -71,4 +71,17 @@ export default function prepareUrl(
   }
 
   return url;
+}
+
+export async function getBase64(file: File) {
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      resolve(reader.result as string);
+    };
+    reader.onerror = function (error) {
+      reject(error);
+    };
+  });
 }

@@ -9,13 +9,15 @@ function fieldController(reqBody) {
     !reqBody.offeredCourse ||
     !reqBody.desiredCourse
   ) {
-    return res.status(400).send("Missing fields for sectionexchangepost");
+    return false;
   }
 }
 
 export const sectionexchangePostPOST = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for sectionexchangepost");
+    }
 
     const newSectionexchangepost = req.body;
 
@@ -97,7 +99,9 @@ export const sectionexchangePostGETId = async (req, res) => {
 
 export const sectionexchangePostPUT = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for sectionexchangepost");
+    }
 
     const result = await SectionexchangePost.findByIdAndUpdate(
       req.params.id,

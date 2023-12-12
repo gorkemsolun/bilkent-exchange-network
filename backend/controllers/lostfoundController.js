@@ -9,13 +9,15 @@ function fieldController(reqBody) {
     !reqBody.categories ||
     !reqBody.status
   ) {
-    return res.status(400).send("Missing fields for lostfoundpost");
+    return false;
   }
 }
 
 export const lostfoundPostPOST = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      res.status(400).send("Missing fields for lostfoundpost");
+    }
 
     const newLostfoundpost = req.body;
 
@@ -82,7 +84,9 @@ export const lostfoundPostGETId = async (req, res) => {
 
 export const lostfoundPostPUT = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      res.status(400).send("Missing fields for lostfoundpost");
+    }
 
     const result = await LostfoundPost.findByIdAndUpdate(
       req.params.id,

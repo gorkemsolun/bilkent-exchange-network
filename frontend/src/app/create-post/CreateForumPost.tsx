@@ -1,10 +1,15 @@
 import axios from "axios";
+import { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posttypes";
+import Loader from "../components/loader";
 
 export default function CreateForumPost(props: CreatePostProps) {
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -26,6 +31,7 @@ export default function CreateForumPost(props: CreatePostProps) {
         // TODO ERROR MODAL
       });
 
+    setLoading(false);
     props.onClose();
   };
 
@@ -36,6 +42,7 @@ export default function CreateForumPost(props: CreatePostProps) {
         className="create-item-form"
         style={{ width: "35vw" }}
       >
+        {loading && <Loader />}
         <span className="close" onClick={props.onClose}>
           &times;
         </span>

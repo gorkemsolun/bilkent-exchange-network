@@ -8,13 +8,15 @@ function fieldController(reqBody) {
     !reqBody.poster ||
     !reqBody.categories
   ) {
-    return res.status(400).send("Missing fields for donatepost");
+    return false;
   }
 }
 
 export const donatePostPOST = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for donatepost");
+    }
 
     const newDonatepost = req.body;
     const donatepost = await DonatePost.create(newDonatepost);
@@ -74,7 +76,9 @@ export const donatePostGETId = async (req, res) => {
 
 export const donatePostPUT = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for donatepost");
+    }
 
     const result = await DonatePost.findByIdAndUpdate(req.params.id, req.body);
 

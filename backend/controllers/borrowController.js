@@ -7,13 +7,15 @@ function fieldController(reqBody) {
     !reqBody.poster ||
     !reqBody.categories
   ) {
-    return res.status(400).send("Missing fields for borrowpost");
+    return false;
   }
 }
 
 export const borrowPostPOST = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for borrowpost");
+    }
 
     const newBorrowpost = req.body;
 
@@ -74,7 +76,9 @@ export const borrowPostGETId = async (req, res) => {
 
 export const borrowPostPUT = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for borrowpost");
+    }
 
     const result = await BorrowPost.findByIdAndUpdate(req.params.id, req.body);
 

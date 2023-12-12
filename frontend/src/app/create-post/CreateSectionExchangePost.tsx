@@ -1,10 +1,15 @@
 import axios from "axios";
+import { useState } from "react";
 import { urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posttypes";
+import Loader from "../components/loader";
 
 export default function CreateSectionExchangePost(props: CreatePostProps) {
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setLoading(true);
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -28,12 +33,14 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
         // TODO ERROR MODAL
       });
 
+    setLoading(false);
     props.onClose();
   };
 
   return (
     <div className="modal-overlay">
       <form onSubmit={handleSubmit} className="create-item-form w-35vw">
+        {loading && <Loader />}
         <span className="close" onClick={props.onClose}>
           &times;
         </span>

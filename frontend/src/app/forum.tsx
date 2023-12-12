@@ -9,7 +9,7 @@ import Loader from "./components/loader";
 import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton";
-import prepareUrl from "./fetchHelpers";
+import { prepareUrl } from "./fetchPostHelpers";
 
 export default function Forum() {
   const [forumPosts, setForumPosts] = useState<ForumPost[]>([]);

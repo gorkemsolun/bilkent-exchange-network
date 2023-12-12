@@ -9,15 +9,18 @@ function fieldController(reqBody) {
     !reqBody.poster ||
     !reqBody.categories
   ) {
-    return res.status(400).send("Missing fields for secondhandpost");
+    return false;
   }
 }
 
 export const secondhandPostPOST = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for secondhandpost");
+    }
 
     const newSecondhandpost = req.body;
+    console.log(newSecondhandpost);
 
     const secondhandpost = await SecondhandPost.create(newSecondhandpost);
 
@@ -85,7 +88,9 @@ export const secondhandPostGET = async (req, res) => {
 
 export const secondhandPostPUT = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for secondhandpost");
+    }
 
     const result = await SecondhandPost.findByIdAndUpdate(
       req.params.id,

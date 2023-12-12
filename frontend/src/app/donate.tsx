@@ -10,7 +10,7 @@ import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
 import SearchBar from "./components/searchbar.tsx";
 import CreatePostButton from "./create-post/CreatePostButton.tsx";
-import prepareUrl from "./fetchHelpers.ts";
+import { prepareUrl } from "./fetchPostHelpers.ts";
 
 export default function Donate() {
   const [donatePosts, setDonatePosts] = useState([]);

@@ -7,13 +7,15 @@ function fieldController(reqBody) {
     !reqBody.poster ||
     !reqBody.categories
   ) {
-    return res.status(400).send("Missing fields for forumpost");
+    return false;
   }
 }
 
 export const forumPostPOST = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for forumpost");
+    }
 
     const newForumpost = req.body;
 
@@ -74,7 +76,9 @@ export const forumPostGETId = async (req, res) => {
 
 export const forumPostPUT = async (req, res) => {
   try {
-    fieldController(req.body);
+    if (fieldController(req.body)) {
+      return res.status(400).send("Missing fields for forumpost");
+    }
 
     const result = await ForumPost.findByIdAndUpdate(req.params.id, req.body);
 
