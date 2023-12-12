@@ -14,9 +14,13 @@ const ForumPostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    categories: {
-      type: [String],
-      required: true,
+    voteScore: {
+      type: Number,
+      default: 0,
+    },
+    entries: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "ForumEntry",
     },
   },
   {

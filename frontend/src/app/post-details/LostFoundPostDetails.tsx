@@ -66,7 +66,7 @@ export default function LostFoundPostDetails() {
               </div>
               <div className="postdetails-details-info">
                 <div className="postdetails-details-info-label">Category:</div>
-                <div className="postdetails-details-info-item">
+                <div className="postdetails-details-info-value">
                   {" "}
                   {post.category}
                 </div>
@@ -74,7 +74,7 @@ export default function LostFoundPostDetails() {
 
               <div className="postdetails-details-info">
                 <div className="postdetails-details-info-label">Date:</div>
-                <div className="postdetails-details-info-item">
+                <div className="postdetails-details-info-value">
                   {("" + post.createdAt).slice(0, 10)}
                 </div>
               </div>

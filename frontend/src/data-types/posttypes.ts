@@ -1,3 +1,5 @@
+import { ForumEntry } from "./datatypes";
+
 export interface Post {
   _id?: string;
   title: string;
@@ -63,5 +65,5 @@ export interface ForumPost {
   description: string;
   poster: string;
   category: string;
-  createdAt?: string;
+  createdAt: string;
 }

@@ -4,7 +4,6 @@ export interface User {
   photo: string;
   email: string;
   password: string;
-  reputation: number;
 }
 
 export interface UserProfile {
@@ -16,6 +15,15 @@ export interface UserProfile {
   bio: string;
   registerDate: string;
 }
+
+export interface ForumEntry {
+  _id: string;
+  content: string;
+  poster: string;
+  createdAt: string;
+  voteScore: number;
+}
+
 export interface FilterProps {
   type: string;
   passFilters: (params: FilterParams) => void;

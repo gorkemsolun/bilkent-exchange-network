@@ -16,6 +16,8 @@ import "./bootstrap.css";
 import LostFoundPostDetails from "./app/post-details/LostFoundPostDetails";
 import SecondHandPostDetails from "./app/post-details/SecondHandPostDetails";
 import DonatePostDetails from "./app/post-details/DonatePostDetails";
+import ForumPostDetails from "./app/post-details/ForumPostDetails";
+import BorrowPostDetails from "./app/post-details/BorrowPostDetails";
 
 export default function App() {
   return (
@@ -85,6 +87,8 @@ function AppContent() {
           />
           <Route path="/lostfoundpost/:id" element={<LostFoundPostDetails />} />
           <Route path="/donatepost/:id" element={<DonatePostDetails />} />
+          <Route path="/borrowpost/:id" element={<BorrowPostDetails />} />
+          <Route path="/forumpost/:id" element={<ForumPostDetails />} />
         </Routes>
       </BrowserRouter>
     </div>
