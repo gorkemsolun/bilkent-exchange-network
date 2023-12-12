@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { defaultFilterParams } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 import { DonatePost } from "../data-types/posttypes.ts";
@@ -8,7 +9,7 @@ import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
 import SearchBar from "./components/searchbar.tsx";
-import CreatePostButton from "./create-post/createPostButton.tsx";
+import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import prepareUrl from "./fetchHelpers.ts";
 
 export default function Donate() {
@@ -77,11 +78,6 @@ export default function Donate() {
                           alt="Image"
                         />
                       </div>
-                      <div className="card-img-overlay d-flex justify-content-end">
-                        <a href="#" className="card-link text-danger like">
-                          <i className="fas fa-heart"></i>
-                        </a>
-                      </div>
                       <div className="card-body">
                         <h4 className="card-title">{post.title}</h4>
                         <div className="description-container h-13vh text-left">
@@ -95,9 +91,12 @@ export default function Donate() {
                           <div className="price text-success">
                             <h5 className="mt-4"></h5>
                           </div>
-                          <a href="#" className="btn btn-danger mt-3">
+                          <Link
+                            className="btn btn-danger mt-3"
+                            to={`/donatepost/${post._id}`}
+                          >
                             <i className="fas fa-shopping-cart"></i> Details
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>

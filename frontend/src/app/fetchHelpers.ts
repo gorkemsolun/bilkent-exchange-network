@@ -1,4 +1,4 @@
-import { urls } from "../data-types/constants.ts";
+import { urlsGet } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 
 export default function prepareUrl(
@@ -6,7 +6,7 @@ export default function prepareUrl(
   type: string,
   filterParams?: FilterParams
 ) {
-  let url: string = urls[type as keyof typeof urls];
+  let url: string = urlsGet[type as keyof typeof urlsGet];
   if (filterParams) {
     if (type !== "sectionexchange") {
       if (filterParams.categories.length > 0) {

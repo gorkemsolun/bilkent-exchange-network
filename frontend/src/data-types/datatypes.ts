@@ -15,6 +15,15 @@ export interface UserProfile {
   bio: string;
   registerDate: string;
 }
+
+export interface ForumEntry {
+  _id: string;
+  content: string;
+  poster: string;
+  createdAt: string;
+  voteScore: number;
+}
+
 export interface FilterProps {
   type: string;
   passFilters: (params: FilterParams) => void;
@@ -35,4 +44,12 @@ export interface FilterParams {
   offeredCourse: string;
   desiredSection: number | undefined;
   offeredSection: number | undefined;
+}
+
+export interface CreatePostProps {
+  onClose: () => void;
+}
+
+export interface CreatePostButtonProps {
+  type: string;
 }

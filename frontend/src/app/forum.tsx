@@ -8,8 +8,9 @@ import Header from "./components/header";
 import Loader from "./components/loader";
 import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
-import CreatePostButton from "./create-post/createPostButton";
+import CreatePostButton from "./create-post/CreatePostButton";
 import prepareUrl from "./fetchHelpers";
+import { Link } from "react-router-dom";
 
 export default function Forum() {
   const [forumPosts, setForumPosts] = useState<ForumPost[]>([]);
@@ -59,17 +60,12 @@ export default function Forum() {
                 <div className="row">
                   {forumPosts.map((post) => (
                     <div className="col-12 mb-4" key={post._id}>
-                      <div
+                      <Link
+                        to={`/forumpost/${post._id}`}
                         className="col-12 cursor-pointer"
                         key={post._id}
-                        onClick={() => {}}
                       >
                         <div className="card w-full">
-                          <div className="card-img-overlay d-flex justify-content-end">
-                            <a href="#" className="card-link text-danger like">
-                              <i className="fas fa-heart"></i>
-                            </a>
-                          </div>
                           <div className="card-body">
                             <h2
                               className="card-title"
@@ -95,7 +91,7 @@ export default function Forum() {
                             </div>
                           </div>
                         </div>
-                      </div>
+                      </Link>
                     </div>
                   ))}
                 </div>

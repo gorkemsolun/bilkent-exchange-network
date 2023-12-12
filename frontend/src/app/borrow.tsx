@@ -8,8 +8,9 @@ import Header from "./components/header";
 import Loader from "./components/loader";
 import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
-import CreatePostButton from "./create-post/createPostButton";
+import CreatePostButton from "./create-post/CreatePostButton";
 import prepareUrl from "./fetchHelpers";
+import { Link } from "react-router-dom";
 
 export default function Borrow() {
   const [loading, setLoading] = useState(false);
@@ -61,10 +62,10 @@ export default function Borrow() {
               <div className="row">
                 {borrowPosts.map((post: BorrowPost) => (
                   <div className="col-12 mb-4" key={post._id}>
-                    <div
+                    <Link
+                      to={`/borrowpost/${post._id}`}
                       className="col-12"
                       key={post._id}
-                      onClick={() => {}}
                       style={{ cursor: "pointer", textAlign: "left" }}
                     >
                       <div className="card" style={{ width: "100%" }}>
@@ -72,11 +73,6 @@ export default function Borrow() {
                           <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
                             {post.category}
                           </span>
-                        </div>
-                        <div className="card-img-overlay d-flex justify-content-end">
-                          <a href="#" className="card-link text-danger like">
-                            <i className="fas fa-heart"></i>
-                          </a>
                         </div>
                         <div className="card-body">
                           <h2
@@ -99,7 +95,7 @@ export default function Borrow() {
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>

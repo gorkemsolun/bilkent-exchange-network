@@ -14,8 +14,8 @@ const BorrowPostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    categories: {
-      type: [String],
+    category: {
+      type: String,
       required: true,
     },
   },

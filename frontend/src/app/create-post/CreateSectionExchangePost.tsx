@@ -1,47 +1,52 @@
-import "../../App.css";
+import axios from "axios";
+import { urlsPost } from "../../data-types/constants";
+import { CreatePostProps } from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posttypes";
 
-export default function CreateSectionExchangePost({ onClose }) {
-  const product: SectionexchangePost = {
-    id: "",
-    username: "",
-    poster: "",
-    date: "",
-    offeredSection: "",
-    desiredSection: "",
-    offeredCourse: "",
-    desiredCourse: "",
-  };
-
+export default function CreateSectionExchangePost(props: CreatePostProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
-    // Retrieve values directly from the form data
-    const offeredCourse = formData.get("offeredCourse") as string;
-    const offeredSection = formData.get("offeredSection") as string;
-    const desiredCourse = formData.get("desiredCourse") as string;
-    const desiredSection = formData.get("desiredSection") as string;
+    const post: SectionexchangePost = {
+      price: formData.get("price") as unknown as number,
+      offeredCourse: formData.get("offeredCourse") as string,
+      offeredSection: formData.get("offeredSection") as string,
+      desiredCourse: formData.get("desiredCourse") as string,
+      desiredSection: formData.get("desiredSection") as string,
+      poster: "31", //  TODO: Change this to the actual user id
+    };
 
-    // Update the product
-    product.offeredCourse = offeredCourse;
-    product.offeredSection = offeredSection;
-    product.desiredCourse = desiredCourse;
-    product.desiredSection = desiredSection;
+    axios
+      .post(urlsPost.sectionexchange, post)
+      .then((res) => {
+        // TODO SUCCESFULLY SENT
+      })
+      .catch((err) => {
+        console.log(err);
+        // TODO ERROR MODAL
+      });
 
-    console.log(product);
-
-    // TODO: Send product data and image to server
-    onClose(); // Close the modal after submission
+    props.onClose();
   };
 
   return (
     <div className="modal-overlay">
       <form onSubmit={handleSubmit} className="create-item-form w-35vw">
-        <span className="close" onClick={onClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
+
+        <div className="modal-form-group" style={{ textAlign: "left" }}>
+          <label htmlFor="price">Price:</label>
+          <input
+            type="number"
+            id="price"
+            name="price"
+            className="form-control"
+          />
+        </div>
 
         <div>
           <div className="modal-form-group mt-8 text-left">

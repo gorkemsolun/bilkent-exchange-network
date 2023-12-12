@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { defaultFilterParams } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 import { SecondhandPost } from "../data-types/posttypes.ts";
@@ -8,7 +9,7 @@ import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
 import SearchBar from "./components/searchbar.tsx";
-import CreatePostButton from "./create-post/createPostButton.tsx";
+import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import prepareUrl from "./fetchHelpers.ts";
 
 export default function Secondhand() {
@@ -77,15 +78,7 @@ export default function Secondhand() {
                           alt="Image"
                         />
                       </div>
-                      <div className="card-img-overlay d-flex justify-content-end">
-                        <a
-                          href="#"
-                          className="card-link text-danger like"
-                          title="card"
-                        >
-                          <i className="fas fa-heart"></i>
-                        </a>
-                      </div>
+
                       <div className="card-body">
                         <h4 className="card-title">{post.title}</h4>
                         <div className="description-container h-13vh text-left">
@@ -97,11 +90,14 @@ export default function Secondhand() {
                         </div>{" "}
                         <div className="buy d-flex justify-content-between align-posts-center">
                           <div className="price text-success">
-                            <h5 className="mt-4">${post.price}</h5>
+                            <h5 className="mt-4">{post.price}₺</h5>
                           </div>
-                          <a href="#" className="btn btn-danger mt-3">
+                          <Link
+                            className="btn btn-danger mt-3"
+                            to={`/secondhandpost/${post._id}`}
+                          >
                             <i className="fas fa-shopping-cart"></i> Details
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>

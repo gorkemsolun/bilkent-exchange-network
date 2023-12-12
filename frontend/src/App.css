@@ -25,11 +25,6 @@ td {
   width: 25vw;
 }
 
-.card:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
 .create-post-button {
   background-color: #4caf50;
   color: white;
@@ -397,4 +392,225 @@ td {
 }
 
 .header-message-link {
+}
+
+.postdetails-container {
+  display: flex;
+}
+
+.postdetails-left-container {
+  width: 60vw;
+
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 1vh;
+  padding-bottom: 3vh;
+  margin-top: 3vh;
+  margin-bottom: 2vh;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  justify-content: center;
+  justify-items: center;
+}
+
+.postdetails-right-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 25vw;
+  margin-top: 3vh;
+  margin-bottom: 2vh;
+  margin-left: 2vw;
+  margin-right: 2vw;
+}
+
+.postdetails-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: xx-large;
+  font-weight: bold;
+  border-bottom: 1px solid #000000;
+}
+
+.postdetails-image img {
+  height: 55vh;
+  width: 55vw;
+  object-fit: contain;
+}
+
+.postdetails-user-info-container {
+  flex-shrink: 0;
+  height: fit-content;
+  background-color: #c4e1fa;
+  border: #000000 1px solid;
+  border-radius: 5%;
+  padding: 1w;
+  margin-bottom: 2vw;
+  width: 100%;
+}
+
+.postdetails-username {
+  font-size: x-large;
+  margin-bottom: 10px;
+}
+
+.postdetails-user-info {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 3vw;
+  padding-right: 3vw;
+}
+
+.postdetails-user-info-label {
+  font-size: 16px;
+}
+
+.postdetails-user-info-value {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.postdetails-details-container {
+  border: #000000 1px solid;
+  border-radius: 5%;
+  padding-top: 2vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-bottom: 2vh;
+  width: 100%;
+  max-height: 68%;
+}
+
+.postdetails-price {
+  font-size: x-large;
+  color: green;
+  text-align: left;
+}
+
+.postdetails-status {
+  font-size: x-large;
+  color: red;
+  text-align: left;
+}
+
+.postdetails-description {
+  font-size: large;
+  border-bottom: 1px solid #000000;
+  text-align: left;
+  max-height: 82%;
+  overflow: auto;
+  overflow-wrap: break-word;
+}
+
+.postdetails-details-info {
+  display: flex;
+  margin-top: 1vh;
+  margin-bottom: 1.5vh;
+  justify-content: space-between;
+  padding-left: 3vw;
+  padding-right: 3vw;
+}
+
+.postdetails-details-info-value {
+  font-weight: bold;
+}
+
+.postdetails-borrow-description {
+  font-size: large;
+  text-align: left;
+  max-height: 70%;
+  overflow: auto;
+  overflow-wrap: break-word;
+}
+
+.forumpostdetails-container {
+  width: 80%;
+  margin: 2vw auto;
+}
+
+.forumpostdetails-first-entry-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.forumpostdetails-entry-top {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1vh;
+  width: 100%;
+  height: fit-content;
+  align-items: left;
+}
+
+.forumpostdetails-profile-picture {
+  width: 3vw;
+  height: 5vh;
+  border-radius: 50%;
+  margin-right: 1vw;
+  align-self: center;
+}
+
+.forumpostdetails-username {
+  font-weight: bold;
+  font-size: 18px;
+  margin-right: 2vw;
+  align-self: center;
+}
+
+.forumpostdetails-date {
+  font-size: 16px;
+  color: #888;
+  align-self: center;
+}
+
+.forumpostdetails-title {
+  font-weight: bold;
+  font-size: x-large;
+  text-align: left;
+  margin-left: 2vw;
+  margin-bottom: 2vh;
+}
+
+.forumpostdetails-entry {
+  display: flex;
+  flex-direction: row;
+  font-size: large;
+  text-align: left;
+  margin-left: 2vw;
+}
+
+.forumpostdetails-vote-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 2vw;
+  height: 10vh;
+  font-size: x-small;
+  border-radius: 0 0 5px 5px;
+}
+
+.forumpostdetails-vote-container img {
+  width: 2vw;
+  height: 3vh;
+  width: fit-content;
+}
+
+.forumpostdetails-entries-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  align-items: left;
+  margin-bottom: 1vh;
+  margin-top: 1vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-radius: 0 0 5px 5px;
 }

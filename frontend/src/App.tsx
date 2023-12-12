@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AuthContextProvider } from "./app/authentication/AuthContext";
+import VerificationPage from "./app/authentication/Verification";
 import { useAuthContext } from "./app/authentication/authHelpers";
 import Signup from "./app/authentication/signup";
 import Borrow from "./app/borrow";
@@ -11,16 +12,18 @@ import LostFound from "./app/lostfound";
 import Profile from "./app/profile";
 import SecondHand from "./app/secondhand";
 import SectionExchange from "./app/sectionexchange";
-import Signup from "./app/newSignup/signup";
-import { AuthContextProvider } from "./authentication/AuthContext";
-import { useAuthContext } from "./authentication/useAuthContext";
-import VerificationPage from "./app/verificationPage/Verification"
+import "./bootstrap.css";
+import LostFoundPostDetails from "./app/post-details/LostFoundPostDetails";
+import SecondHandPostDetails from "./app/post-details/SecondHandPostDetails";
+import DonatePostDetails from "./app/post-details/DonatePostDetails";
+import ForumPostDetails from "./app/post-details/ForumPostDetails";
+import BorrowPostDetails from "./app/post-details/BorrowPostDetails";
 
 export default function App() {
   return (
     <div>
       <AuthContextProvider>
-          <AppContent />
+        <AppContent />
       </AuthContextProvider>
     </div>
   );
@@ -72,7 +75,20 @@ function AppContent() {
             path="/profile"
             element={user ? <Profile /> : <Navigate to="/login" />}
           />
-          <Route path="/verification" element={!user ? <VerificationPage /> : <Navigate to ="/secondhand"/>} />
+          <Route
+            path="/verification"
+            element={
+              !user ? <VerificationPage /> : <Navigate to="/secondhand" />
+            }
+          />
+          <Route
+            path="/secondhandpost/:id"
+            element={<SecondHandPostDetails />}
+          />
+          <Route path="/lostfoundpost/:id" element={<LostFoundPostDetails />} />
+          <Route path="/donatepost/:id" element={<DonatePostDetails />} />
+          <Route path="/borrowpost/:id" element={<BorrowPostDetails />} />
+          <Route path="/forumpost/:id" element={<ForumPostDetails />} />
         </Routes>
       </BrowserRouter>
     </div>
