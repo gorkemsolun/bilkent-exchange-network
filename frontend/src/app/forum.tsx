@@ -65,11 +65,6 @@ export default function Forum() {
                         onClick={() => {}}
                       >
                         <div className="card w-full">
-                          <div className="card-img-overlay d-flex justify-content-end">
-                            <a href="#" className="card-link text-danger like">
-                              <i className="fas fa-heart"></i>
-                            </a>
-                          </div>
                           <div className="card-body">
                             <h2
                               className="card-title"

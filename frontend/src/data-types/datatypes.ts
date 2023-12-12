@@ -4,6 +4,7 @@ export interface User {
   photo: string;
   email: string;
   password: string;
+  reputation: number;
 }
 
 export interface UserProfile {

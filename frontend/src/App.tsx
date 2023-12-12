@@ -13,6 +13,9 @@ import Profile from "./app/profile";
 import SecondHand from "./app/secondhand";
 import SectionExchange from "./app/sectionexchange";
 import "./bootstrap.css";
+import LostFoundPostDetails from "./app/post-details/LostFoundPostDetails";
+import SecondHandPostDetails from "./app/post-details/SecondHandPostDetails";
+import DonatePostDetails from "./app/post-details/DonatePostDetails";
 
 export default function App() {
   return (
@@ -76,6 +79,12 @@ function AppContent() {
               !user ? <VerificationPage /> : <Navigate to="/secondhand" />
             }
           />
+          <Route
+            path="/secondhandpost/:id"
+            element={<SecondHandPostDetails />}
+          />
+          <Route path="/lostfoundpost/:id" element={<LostFoundPostDetails />} />
+          <Route path="/donatepost/:id" element={<DonatePostDetails />} />
         </Routes>
       </BrowserRouter>
     </div>
