@@ -1,41 +1,34 @@
+import axios from "axios";
+import { categories, urlsPost } from "../../data-types/constants";
+import { CreatePostProps } from "../../data-types/datatypes";
 import { LostFoundPost } from "../../data-types/posttypes";
-import "../../App.css";
 
-export default function CreateLostAndFoundPost({ onClose }) {
-  const product: LostFoundPost = {
-    id: "",
-    title: "",
-    description: "",
-    category: "",
-    poster: "",
-    date: "",
-    image: "",
-    status: "",
-  };
-
+export default function CreateLostAndFoundPost(props: CreatePostProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
-    // Retrieve values directly from the form data
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
-    const image = formData.get("image") as string;
-    const category = formData.get("category") as string;
-    const status = formData.get("status") as string;
+    const post: LostFoundPost = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      image: formData.get("image") as string,
+      category: formData.get("category") as string,
+      status: formData.get("status") as string,
+      poster: "31", //  TODO: Change this to the actual user id
+    };
 
-    // Update the product
-    product.title = title;
-    product.description = description;
-    product.image = image;
-    product.category = category;
-    product.status = status;
+    axios
+      .post(urlsPost.lostfound, post)
+      .then((res) => {
+        // TODO SUCCESFULLY SENT
+      })
+      .catch((err) => {
+        console.log(err);
+        // TODO ERROR MODAL
+      });
 
-    console.log(product);
-
-    // TODO: Send product data and image to server
-    onClose(); // Close the modal after submission
+    props.onClose(); // Close the modal after submission
   };
 
   return (
@@ -45,7 +38,7 @@ export default function CreateLostAndFoundPost({ onClose }) {
         className="create-item-form"
         style={{ width: "35vw" }}
       >
-        <span className="close" onClick={onClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
 
@@ -57,6 +50,7 @@ export default function CreateLostAndFoundPost({ onClose }) {
               id="title"
               name="title"
               className="form-control"
+              placeholder="Enter title"
             />
           </div>
           <div className="modal-form-group" style={{ textAlign: "left" }}>
@@ -91,6 +85,17 @@ export default function CreateLostAndFoundPost({ onClose }) {
               </label>
             </div>
           </div>
+        </div>
+
+        <div className="modal-form-group" style={{ textAlign: "left" }}>
+          <label htmlFor="category">Category</label>
+          <select id="category" name="category" className="form-control">
+            {categories.lostfound.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="modal-form-group" style={{ textAlign: "left" }}>

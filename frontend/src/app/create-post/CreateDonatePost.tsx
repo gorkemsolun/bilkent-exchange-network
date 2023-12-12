@@ -1,38 +1,34 @@
+import axios from "axios";
 import "../../App.css";
+import { categories, urlsPost } from "../../data-types/constants";
+import { CreatePostProps } from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posttypes";
 
-export default function CreateDonatePost({ onClose }) {
-  const product: DonatePost = {
-    id: "",
-    title: "",
-    description: "",
-    category: "",
-    poster: "",
-    date: "",
-    image: "",
-  };
-
+export default function CreateDonatePost(props: CreatePostProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
-    // Retrieve values directly from the form data
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
-    const image = formData.get("image") as string;
-    const category = formData.get("category") as string;
+    const post: DonatePost = {
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      category: formData.get("category") as string,
+      image: formData.get("image") as string,
+      poster: "31", //  TODO: Change this to the actual user id
+    };
 
-    // Update the product
-    product.title = title;
-    product.description = description;
-    product.image = image;
-    product.category = category;
+    axios
+      .post(urlsPost.donate, post)
+      .then((res) => {
+        // TODO SUCCESFULLY SENT
+      })
+      .catch((err) => {
+        console.log(err);
+        // TODO ERROR MODAL
+      });
 
-    console.log(product);
-
-    // TODO: Send product data and image to server
-    onClose(); // Close the modal after submission
+    props.onClose(); // Close the modal after submission
   };
 
   return (
@@ -42,7 +38,7 @@ export default function CreateDonatePost({ onClose }) {
         className="create-item-form"
         style={{ width: "35vw" }}
       >
-        <span className="close" onClick={onClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
 
@@ -54,6 +50,7 @@ export default function CreateDonatePost({ onClose }) {
               id="title"
               name="title"
               className="form-control"
+              placeholder="Enter title"
             />
           </div>
           <div className="modal-form-group" style={{ textAlign: "left" }}>
@@ -70,13 +67,11 @@ export default function CreateDonatePost({ onClose }) {
         <div className="modal-form-group" style={{ textAlign: "left" }}>
           <label htmlFor="category">Category</label>
           <select id="category" name="category" className="form-control">
-            <option value="Books">Books</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Home">Home</option>
-            <option value="Home">Lecture Materials</option>
-            <option value="Home">Clothes</option>
-            <option value="Home">Hobbies</option>
-            <option value="Home">Other</option>
+            {categories.donate.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
           </select>
         </div>
 

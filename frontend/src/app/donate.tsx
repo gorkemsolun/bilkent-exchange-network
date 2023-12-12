@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { defaultFilterParams } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 import { DonatePost } from "../data-types/posttypes.ts";
@@ -8,9 +9,8 @@ import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
 import SearchBar from "./components/searchbar.tsx";
-import CreatePostButton from "./create-post/createPostButton.tsx";
+import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import prepareUrl from "./fetchHelpers.ts";
-import { Link } from "react-router-dom";
 
 export default function Donate() {
   const [donatePosts, setDonatePosts] = useState([]);

@@ -1,21 +1,22 @@
 import { useState } from "react";
-import CreateBorrowPost from "./CreateBorrowPost.tsx";
-import CreateDonatePost from "./CreateDonatePost.tsx";
-import CreateForumPost from "./CreateForumPost.tsx";
-import CreateLostAndFoundPost from "./CreateLostAndFoundPost.tsx";
-import CreateSectionExchangePost from "./CreateSectionExchangePost.tsx";
-import CreateSecondHandPost from "./createSecondHandPost.tsx";
+import { CreatePostButtonProps } from "../../data-types/datatypes";
+import CreateBorrowPost from "./CreateBorrowPost";
+import CreateDonatePost from "./CreateDonatePost";
+import CreateForumPost from "./CreateForumPost";
+import CreateLostAndFoundPost from "./CreateLostAndFoundPost";
+import CreateSecondHandPost from "./CreateSecondHandPost";
+import CreateSectionExchangePost from "./CreateSectionExchangePost";
 
-export default function CreatePostButton(props) {
+export default function CreatePostButton(props: CreatePostButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleCreatePost = () => {
+  function handleCreatePost(): void {
     setIsModalOpen(true);
-  };
+  }
 
-  const handleCloseModal = () => {
+  function handleCloseModal(): void {
     setIsModalOpen(false);
-  };
+  }
 
   return (
     <div>
