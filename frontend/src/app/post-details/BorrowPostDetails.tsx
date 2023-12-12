@@ -1,22 +1,20 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { BorrowPost } from "../../data-types/posttypes";
 import { Link, useParams } from "react-router-dom";
-import { SecondhandPost } from "../../data-types/posttypes";
-import "../../App.css";
+import axios from "axios";
+import Loader from "../components/loader";
 import Header from "../components/header";
 import Navbar from "../components/navbar";
-import Loader from "../components/loader";
 
-export default function SecondHandPostDetails() {
-  // TODO: pull user info from backend and put it into the user-info container
-  const [post, setPost] = useState<SecondhandPost>({} as SecondhandPost);
+export default function BorrowPostDetails() {
+  const [post, setPost] = useState<BorrowPost>({} as BorrowPost);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/secondhand/secondhandpost/${id}`)
+      .get(`http://localhost:3000/borrow/borrowpost/${id}`)
       .then((res) => {
         setPost(res.data);
       })
@@ -38,8 +36,8 @@ export default function SecondHandPostDetails() {
         <div className="postdetails-container">
           <div className="postdetails-left-container">
             <div className="postdetails-title">{post.title}</div>
-            <div className="postdetails-image">
-              <img src={post.image} alt={post.title} />
+            <div className="postdetails-borrow-description">
+              <p>{post.description}</p>
             </div>
           </div>
 
@@ -59,12 +57,6 @@ export default function SecondHandPostDetails() {
             </div>
 
             <div className="postdetails-details-container">
-              <div className="postdetails-price">
-                <p>{post.price}₺</p>
-              </div>
-              <div className="postdetails-description">
-                <p>{post.description}</p>
-              </div>
               <div className="postdetails-details-info">
                 <div className="postdetails-details-info-label">Category:</div>
                 <div className="postdetails-details-info-value">

@@ -1,3 +1,5 @@
+import { ForumEntry } from "./datatypes";
+
 export interface Post {
   // this will be used for retrieving posts in profile and saved-posts
   _id: string;
@@ -63,6 +65,7 @@ export interface ForumPost {
   title: string;
   description: string;
   poster: string;
-  category: string;
-  createdAt: string;
+  createdAt: Date;
+  voteScore: number;
+  entries: ForumEntry[];
 }

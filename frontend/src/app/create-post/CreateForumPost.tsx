@@ -1,13 +1,17 @@
 import "../../App.css";
 import { ForumPost } from "../../data-types/posttypes";
+import { useAuthContext } from "../authentication/authHelpers";
 
 export default function CreateForumPost({ onClose }) {
+  const { user } = useAuthContext();
   const product: ForumPost = {
-    id: "",
+    _id: "",
     title: "",
     description: "",
     poster: "",
-    date: "",
+    createdAt: "",
+    voteScore: 0,
+    entries: [],
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
