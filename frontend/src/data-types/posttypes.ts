@@ -65,5 +65,5 @@ export interface ForumPost {
   description: string;
   poster: string;
   category: string;
-  createdAt: string;
+  createdAt?: string;
 }

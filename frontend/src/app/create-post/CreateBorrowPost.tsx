@@ -4,10 +4,11 @@ import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { BorrowPost } from "../../data-types/posttypes";
 import Loader from "../components/loader";
+import { useAuthContext } from "../authentication/authHelpers";
 
 export default function CreateBorrowPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
-
+  const {user} = useAuthContext()
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -18,7 +19,7 @@ export default function CreateBorrowPost(props: CreatePostProps) {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       category: formData.get("category") as string,
-      poster: "31", //  TODO: Change this to the actual user id
+      poster: user._id, 
     };
 
     axios
