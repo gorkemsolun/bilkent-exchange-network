@@ -3,23 +3,31 @@ import { useEffect, useState } from "react";
 import { UserProfile } from "../data-types/datatypes.ts";
 import Header from "./components/header.tsx";
 import Navbar from "./components/navbar.tsx";
+import { useAuthContext } from "./authentication/authHelpers.js";
 
 export default function UserProfile() {
+  const {user} = useAuthContext()
+  const date = new Date(Date.now());
   const [userProfile, setUserProfile] = useState<UserProfile>({
-    username: "johndoe76",
-    name: "John Doe",
-    email: "johndoe@gmail.com",
-    photo: "./src/assets/cs319.png",
-    reputation: 432,
-    bio: "CS 4/∞",
-    registerDate: "2023-01-01",
+    userID: "0",
+    username: "huy",
+    email: "sikibidi",
+    name: "toilet",
+    image: "",
+    bio: "DESCRİPTİON",
+    reputation: 10,
+    JoinedAt: date,
+    ownPosts: [""],
+    savedPosts: [""],
   });
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/user-profile")
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
       .then((res) => {
+        console.log(res.data)
         setUserProfile(res.data);
+        console.log(userProfile.username)
       })
       .catch((err) => {
         console.log(err);
@@ -33,7 +41,7 @@ export default function UserProfile() {
       <div className="profileContainer">
         <div className="profileHeader">
           <img
-            src={userProfile.photo}
+            src={userProfile.image}
             className="profileImage"
             alt="Profile Image"
           />
@@ -62,7 +70,7 @@ export default function UserProfile() {
             </div>
             <div className="profileInfo">
               <p className="infoLabel">Joined at:</p>
-              <p className="infoValue">{userProfile.registerDate}</p>
+              <p className="infoValue"></p>
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import lostfoundRouter from "./routes/lostfoundRoute.js";
 import secondhandRouter from "./routes/secondhandRoute.js";
 import sectionexchangeRouter from "./routes/sectionexchangeRoute.js";
 import authRouter from "./routes/userRoute.js";
+import profileRouter from "./routes/profileRoute.js"
 
 const app = express();
 
@@ -22,6 +23,9 @@ app.use("/donate", donateRouter);
 app.use("/sectionexchange", sectionexchangeRouter);
 app.use("/forum", forumRouter);
 app.use("/user", authRouter);
+app.use("/profile", profileRouter);
+
+
 
 mongoose
   .connect(MONGO_URL)

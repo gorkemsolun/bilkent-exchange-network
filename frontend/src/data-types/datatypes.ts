@@ -7,13 +7,18 @@ export interface User {
 }
 
 export interface UserProfile {
+  _id?: string;
+  userID: string;
   username: string;
-  name: string;
   email: string;
-  photo: string;
-  reputation: number;
+  name: string;
+  image: string;
   bio: string;
-  registerDate: string;
+  reputation: number;
+  JoinedAt: Date;
+  ownPosts: [string];
+  savedPosts: [string];
+  createdAt?: Date;
 }
 
 export interface ForumEntry {
