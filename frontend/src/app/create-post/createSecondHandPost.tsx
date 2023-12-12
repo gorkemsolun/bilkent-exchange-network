@@ -5,10 +5,11 @@ import { CreatePostProps } from "../../data-types/datatypes";
 import { SecondhandPost } from "../../data-types/posttypes";
 import Loader from "../components/loader";
 import { getBase64 } from "../fetchPostHelpers";
+import { useAuthContext } from "../authentication/authHelpers";
 
 export default function CreateSecondHandPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
-
+  const {user} = useAuthContext()
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -21,7 +22,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       price: formData.get("price") as unknown as number,
       image: await getBase64(formData.get("image") as File),
       category: formData.get("category") as string,
-      poster: "31", //  TODO: Change this to the actual user id
+      poster: user._id, 
     };
 
     axios

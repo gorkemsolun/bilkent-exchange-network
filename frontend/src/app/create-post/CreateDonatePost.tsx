@@ -5,10 +5,11 @@ import { CreatePostProps } from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posttypes";
 import Loader from "../components/loader";
 import { getBase64 } from "../fetchPostHelpers";
+import { useAuthContext } from "../authentication/authHelpers";
 
 export default function CreateDonatePost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
-
+  const {user} = useAuthContext()
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -20,7 +21,7 @@ export default function CreateDonatePost(props: CreatePostProps) {
       description: formData.get("description") as string,
       category: formData.get("category") as string,
       image: await getBase64(formData.get("image") as File),
-      poster: "31", //  TODO: Change this to the actual user id
+      poster: user._id, 
     };
 
     axios

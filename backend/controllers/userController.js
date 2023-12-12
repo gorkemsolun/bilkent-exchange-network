@@ -19,6 +19,7 @@ export const loginUser = async (req, res) => {
     const _id = user._id;
 
     res.status(200).json({ email, _id, token });
+
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -33,8 +34,9 @@ export const signupUser = async (req, res) => {
 
     //create a jwt
     const token = createToken(user._id);
+    const _id = user._id
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, _id, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
