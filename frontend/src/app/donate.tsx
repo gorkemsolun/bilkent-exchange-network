@@ -65,7 +65,8 @@ export default function Donate() {
         )
       );
     }
-  }, [sortType, donatePosts]);
+    // do not add donatePosts to the dependency array
+  }, [sortType]);
 
   return (
     <div className="outer-container">

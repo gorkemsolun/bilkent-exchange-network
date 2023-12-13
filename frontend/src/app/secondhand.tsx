@@ -77,7 +77,8 @@ export default function Secondhand() {
         )
       );
     }
-  }, [sortType, secondhandPosts]);
+    // do not add secondhandPosts to the dependency array
+  }, [sortType]);
 
   return (
     <div className="outer-container">

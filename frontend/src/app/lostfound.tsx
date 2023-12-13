@@ -56,7 +56,8 @@ export default function LostFound() {
         )
       );
     }
-  }, [sortType, lostFoundPosts]);
+    // do not add lostFoundPosts to the dependency array
+  }, [sortType]);
 
   function passFilters(params: FilterParams) {
     setFilterParams(params);

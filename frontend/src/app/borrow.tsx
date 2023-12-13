@@ -63,7 +63,8 @@ export default function Borrow() {
         )
       );
     }
-  }, [sortType, borrowPosts]);
+    // do not add borrowPosts to the dependency array
+  }, [sortType]);
 
   return (
     <div className="outer-container">

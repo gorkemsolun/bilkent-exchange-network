@@ -75,7 +75,8 @@ export default function SectionExchange() {
         )
       );
     }
-  }, [sortType, sectionexchangePosts]);
+    // do not add sectionexchangePosts to the dependency array
+  }, [sortType]);
 
   return (
     <div className="outer-container">
