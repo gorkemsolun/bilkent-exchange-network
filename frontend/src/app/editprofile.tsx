@@ -24,8 +24,9 @@ export default function EditProfile() {
 
     userProfile.username = formData.get("username") as string;
     userProfile.description = formData.get("description") as string;
-    userProfile.image = await getBase64(formData.get("image") as File);
-
+    let image = await getBase64(formData.get("image") as File);
+    //if no file is submitted then do not include image in the userProfile body
+    if (image !== "data:application/octet-stream;base64,") userProfile.image = image;
     axios
       .put(`http://localhost:3000/profile/update-profile/`, userProfile)
       .then((res) => {
