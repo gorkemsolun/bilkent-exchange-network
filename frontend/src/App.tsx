@@ -9,6 +9,7 @@ import Donate from "./app/donate";
 import Forum from "./app/forum";
 import Login from "./app/login";
 import LostFound from "./app/lostfound";
+import MyProfile from "./app/myprofile";
 import Profile from "./app/profile";
 import SecondHand from "./app/secondhand";
 import SectionExchange from "./app/sectionexchange";
@@ -72,10 +73,6 @@ function AppContent() {
             element={!user ? <Signup /> : <Navigate to="/secondhand" />}
           />
           <Route
-            path="/profile"
-            element={user ? <Profile /> : <Navigate to="/login" />}
-          />
-          <Route
             path="/verification"
             element={
               !user ? <VerificationPage /> : <Navigate to="/secondhand" />
@@ -89,6 +86,8 @@ function AppContent() {
           <Route path="/donatepost/:id" element={<DonatePostDetails />} />
           <Route path="/borrowpost/:id" element={<BorrowPostDetails />} />
           <Route path="/forumpost/:id" element={<ForumPostDetails />} />
+          <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/profile/:id" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </div>

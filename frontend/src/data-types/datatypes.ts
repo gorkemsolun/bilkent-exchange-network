@@ -15,7 +15,6 @@ export interface UserProfile {
   image: string;
   bio: string;
   reputation: number;
-  JoinedAt: Date;
   ownPosts: [string];
   savedPosts: [string];
   createdAt?: Date;

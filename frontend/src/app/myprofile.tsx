@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { UserProfile } from "../data-types/datatypes.ts";
 import Header from "./components/header.tsx";
 import Navbar from "./components/navbar.tsx";
-import { useParams } from "react-router-dom";
+import { useAuthContext } from "./authentication/authHelpers.js";
 import Loader from "./components/loader.tsx";
 
-export default function Profile() {
-  const { id } = useParams();
+export default function MyProfile() {
+  const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile>(
     {} as UserProfile
@@ -16,7 +16,7 @@ export default function Profile() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/profile/profile/${id}`)
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
       .then((res) => {
         setUserProfile(res.data.profile);
       })
@@ -44,7 +44,6 @@ export default function Profile() {
             />
             <div className="profileUserInfo">
               <p className="profileUsername">@{userProfile.username}</p>
-              <h1>"{"This is someone else's profile"}</h1>
             </div>
           </div>
           <div className="profileDetails">

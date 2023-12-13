@@ -5,9 +5,11 @@ import axios from "axios";
 import Loader from "../components/loader";
 import Header from "../components/header";
 import Navbar from "../components/navbar";
+import { UserProfile } from "../../data-types/datatypes";
 
 export default function BorrowPostDetails() {
   const [post, setPost] = useState<BorrowPost>({} as BorrowPost);
+  const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
@@ -25,6 +27,18 @@ export default function BorrowPostDetails() {
         setLoading(false);
       });
   }, [id]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/profile/profile/${post.poster}`)
+      .then((res) => {
+        setPoster(res.data.profile);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  }, [post]);
 
   return (
     <div className="outer-container">
@@ -44,15 +58,20 @@ export default function BorrowPostDetails() {
           <div className="postdetails-right-container">
             <div className="postdetails-user-info-container">
               <div className="postdetails-username">
-                <Link to={`/profile`}>{"johndoe"}</Link>
+                <Link to={`/profile`}>{poster.username}</Link>
               </div>
               <div className="postdetails-user-info">
                 <div className="postdetails-user-info-label"> Reputation:</div>
-                <div className="postdetails-user-info-value"> {"213"}</div>
+                <div className="postdetails-user-info-value">
+                  {" "}
+                  {poster.reputation}
+                </div>
               </div>
               <div className="postdetails-user-info">
                 <div className="postdetails-user-info-label"> Joined At:</div>
-                <div className="postdetails-user-info-value">{"1.1.2012"}</div>
+                <div className="postdetails-user-info-value">
+                  {("" + poster.createdAt).slice(0, 10)}
+                </div>
               </div>
             </div>
 

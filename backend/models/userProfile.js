@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const UserProfileSchema = new mongoose.Schema(
   {
-    userID: { // for the owner of this profile's ID
+    userID: {
+      // for the owner of this profile's ID
       type: String,
       required: true,
     },
@@ -15,27 +16,25 @@ const UserProfileSchema = new mongoose.Schema(
       required: true,
     },
     name: {
-        type: String,
+      type: String,
     },
     image: {
-        type: String,
-      },
+      type: String,
+    },
     bio: {
       type: String,
-      default: ""
+      default: "",
     },
     reputation: {
       type: Number,
     },
-    JoinedAt: {
-      type: Date,
-      default: Date.now,
-    },
-    ownPosts: { // for this user's posts
+    ownPosts: {
+      // for this user's posts
       type: [String],
       default: [],
     },
-    savedPosts: { // for posts saved by this user
+    savedPosts: {
+      // for posts saved by this user
       type: [String],
       default: [],
     },
@@ -46,19 +45,17 @@ const UserProfileSchema = new mongoose.Schema(
 );
 
 UserProfileSchema.statics.createProfile = async function (
-    userID,
-    username,
-    email
-  ) {
-    
-  
-    const userProfile = await this.create({
-      userID: userID,
-      username: username,
-      email : email
-    });
-  
-    return userProfile;
-  };
+  userID,
+  username,
+  email
+) {
+  const userProfile = await this.create({
+    userID: userID,
+    username: username,
+    email: email,
+  });
+
+  return userProfile;
+};
 
 export const UserProfile = mongoose.model("UserProfile", UserProfileSchema);

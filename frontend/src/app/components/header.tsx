@@ -32,7 +32,7 @@ export default function Header() {
           <span>{user.username}</span>
           {isDropdownOpen && (
             <div className="header-profile-dropdown">
-              <Link to="/profile" className="header-profile-dropdown-link">
+              <Link to="/myprofile" className="header-profile-dropdown-link">
                 View Profile
               </Link>
               <Link to="/saved-posts" className="header-profile-dropdown-link">
