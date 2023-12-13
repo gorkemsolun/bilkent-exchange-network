@@ -1,28 +1,5 @@
 import { UserProfile } from "../models/userProfile.js"
 
-function fieldTracker(reqBody, profile) { 
-    //When updated, we will only get one or more updates but we only use 1 method to update
-    //so we will get the previously filled areas and put them into the req body 
-    //so that we don't lose the unchanged fields when updated because they will be null inside the request
-    
-    //these fields cannot be changed
-    reqBody.userID = profile.userID
-    reqBody.username = profile.username   
-    reqBody.email = profile.email
-    //these fields can be changed but not in this function
-    reqBody.ownPosts = profile.ownPosts
-    reqBody.savedPosts = profile.savedPosts
-    //these fields can change
-    if (!reqBody.name){
-        reqBody.name = profile.name
-    }
-    if (!reqBody.image) {
-        reqBody.image = profile.image
-    }
-    if (!reqBody.description) {
-        reqBody.description = profile.description;
-    }
-  }
 
 export const getProfileByUsersID = async(req, res) => {
     const _id = req.params.id
@@ -64,18 +41,17 @@ export const getProfileByUsername = async(req, res) => { //this is for searching
 
 export const profileUpdate = async (req, res) => {
     try {
-      const profile = await UserProfile.find({userID: req.body._id})
+      const profile = await UserProfile.find({userID: req.body.userID})
       if (!profile) {
         return res.status(404).send("Profile not found");
       }
-      fieldTracker(req.body, profile)
-
+      
 
       const result = await UserProfile.findByIdAndUpdate(
         req.body._id,
         req.body
       );
-  
+      
       return res.status(200).json({result});
     } catch (err) {
       console.log(err);
@@ -88,11 +64,11 @@ export const addOwnPost = async (req, res) => {
         if (!req.body) {
             throw Error("hollow body")
         }
-        profileId = req.body._id
-        newPost = req.body.newPost
+        const profileId = req.body._id
+        const newPost = req.body.newPost
         await UserProfile.updateOne({ _id: profileId }, { $push: { ownPosts: newPost } });
 
-        return res.status(200).json({profile});
+        return res.status(200).json({});
       } catch (err) {
         console.log(err);
         return res.status(500).send(err);
@@ -104,11 +80,11 @@ export const deleteOwnPost = async (req, res) => {
         if (!req.body) {
             throw Error("hollow body")
         }
-        profileId = req.body._id
-        toBeRemoved = req.body.toBeRemoved
+        const profileId = req.body._id
+        const toBeRemoved = req.body.toBeRemoved
         await UserProfile.updateOne({ _id: profileId }, { $pull: { ownPosts: toBeRemoved } });
 
-        return res.status(200).json({profile});
+        return res.status(200).json({});
       } catch (err) {
         console.log(err);
         return res.status(500).send(err);
@@ -120,11 +96,11 @@ export const savePost = async (req, res) => {
         if (!req.body) {
             throw Error("hollow body")
         }
-        profileId = req.body._id
-        newPost = req.body.newPost
+        const profileId = req.body._id
+        const newPost = req.body.newPost
         await UserProfile.updateOne({ _id: profileId }, { $push: { savedPosts: newPost } });
 
-        return res.status(200).json({profile});
+        return res.status(200).json({});
       } catch (err) {
         console.log(err);
         return res.status(500).send(err);
@@ -136,11 +112,11 @@ export const unSavePost = async (req, res) => {
         if (!req.body) {
             throw Error("hollow body")
         }
-        profileId = req.body._id
-        toBeRemoved = req.body.toBeRemoved
+        const profileId = req.body._id
+        const toBeRemoved = req.body.toBeRemoved
         await UserProfile.updateOne({ _id: profileId }, { $pull: { savedPosts: toBeRemoved } });
 
-        return res.status(200).json({profile});
+        return res.status(200).json({});
       } catch (err) {
         console.log(err);
         return res.status(500).send(err);
