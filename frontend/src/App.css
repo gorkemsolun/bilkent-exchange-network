@@ -154,6 +154,29 @@ td {
   margin-bottom: 3vh;
 }
 
+.profileEditIcon {
+  max-height: 5vh;
+  max-width: 5vw;
+  margin-left: 37vw;
+  margin-bottom: 1vh;
+}
+
+.editProfileButtonContainer {
+  align-self: center;
+  margin-top: 5vh;
+}
+
+.editProfileButtonContainer > * {
+  margin-right: 1vw;
+}
+
+.editProfileHeader {
+  text-align: center;
+  font-size: xx-large;
+  width: 100%;
+  margin-bottom: 3vh;
+}
+
 .profileColumn {
   display: flex;
   flex-direction: column;
@@ -170,7 +193,7 @@ td {
   margin: 0;
   font-size: 16px;
   color: #888;
-  width: 150px; /* Adjust as needed */
+  width: 20vw;
   text-align: left;
 }
 
@@ -282,6 +305,8 @@ td {
 .profileUsername {
   color: #555;
   margin: 0;
+  width: 25vw;
+  overflow: hidden;
 }
 
 .profileDetails {

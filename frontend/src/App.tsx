@@ -19,6 +19,7 @@ import SecondHandPostDetails from "./app/post-details/SecondHandPostDetails";
 import DonatePostDetails from "./app/post-details/DonatePostDetails";
 import ForumPostDetails from "./app/post-details/ForumPostDetails";
 import BorrowPostDetails from "./app/post-details/BorrowPostDetails";
+import EditProfile from "./app/editprofile";
 
 export default function App() {
   return (
@@ -88,6 +89,7 @@ function AppContent() {
           <Route path="/forumpost/:id" element={<ForumPostDetails />} />
           <Route path="/myprofile" element={<MyProfile />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/myprofile/edit" element={<EditProfile />} />
         </Routes>
       </BrowserRouter>
     </div>

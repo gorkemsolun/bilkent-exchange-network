@@ -5,6 +5,7 @@ import { useAuthContext } from "./authentication/authHelpers.js";
 import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
+import { Link } from "react-router-dom";
 
 export default function MyProfile() {
   const { user } = useAuthContext();
@@ -46,6 +47,9 @@ export default function MyProfile() {
               <p className="profileUsername">@{userProfile.username}</p>
             </div>
           </div>
+          <Link to={"/myprofile/edit"}>
+            <img src="./src/assets/editicon.png" className="profileEditIcon" />
+          </Link>
           <div className="profileDetails">
             <div className="profileColumn">
               <div className="profileInfo">
