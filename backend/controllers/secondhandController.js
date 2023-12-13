@@ -20,7 +20,6 @@ export const secondhandPostPOST = async (req, res) => {
     }
 
     const newSecondhandpost = req.body;
-    console.log(newSecondhandpost);
 
     const secondhandpost = await SecondhandPost.create(newSecondhandpost);
 

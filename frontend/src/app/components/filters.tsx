@@ -3,8 +3,8 @@ import { categories, courses } from "../../data-types/constants";
 import { FilterProps } from "../../data-types/datatypes";
 
 export default function Filters(props: FilterProps) {
-  const [minPrice, setMinPrice] = useState<number>();
-  const [maxPrice, setMaxPrice] = useState<number>();
+  const [minPrice, setMinPrice] = useState<number | undefined>();
+  const [maxPrice, setMaxPrice] = useState<number | undefined>();
   const [minDate, setMinDate] = useState<Date>();
   const [maxDate, setMaxDate] = useState<Date>();
   const [desiredCourse, setDesiredCourse] = useState<string>("All");
@@ -142,8 +142,12 @@ export default function Filters(props: FilterProps) {
             <label>Min Price</label>
             <input
               type="number"
-              value={minPrice}
-              onChange={(e) => setMinPrice(Number(e.target.value))}
+              value={minPrice === undefined ? "" : minPrice}
+              onChange={(e) =>
+                setMinPrice(
+                  e.target.value === "" ? undefined : Number(e.target.value)
+                )
+              }
               className="border p-2 rounded-md bg-white w-full"
               placeholder="Min Price"
             />
@@ -153,8 +157,12 @@ export default function Filters(props: FilterProps) {
             <label>Max Price</label>
             <input
               type="number"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(Number(e.target.value))}
+              value={maxPrice === undefined ? "" : maxPrice}
+              onChange={(e) =>
+                setMaxPrice(
+                  e.target.value === "" ? undefined : Number(e.target.value)
+                )
+              }
               className="border p-2 rounded-md bg-white w-full"
               placeholder="Max Price"
             />
