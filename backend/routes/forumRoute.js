@@ -1,11 +1,11 @@
 import express from "express";
 import {
+  forumEntryPOST,
   forumPostDEL,
   forumPostGET,
   forumPostGETId,
   forumPostPOST,
   forumPostPUT,
-  forumEntryPOST,
 } from "../controllers/forumController.js";
 
 const router = express.Router();

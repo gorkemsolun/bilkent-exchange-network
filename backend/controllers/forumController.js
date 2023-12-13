@@ -1,7 +1,12 @@
 import { ForumEntry, ForumPost } from "../models/forumpost.js";
 
 function fieldController(reqBody) {
-  if (!reqBody.title || !reqBody.description || !reqBody.poster) {
+  if (
+    !reqBody.title ||
+    !reqBody.description ||
+    !reqBody.poster ||
+    !reqBody.categories
+  ) {
     return false;
   }
 }

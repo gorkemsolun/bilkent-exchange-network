@@ -40,7 +40,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       description: formData.get("description") as string,
       price: formData.get("price") as unknown as number,
       image: await getBase64(formData.get("image") as File),
-      category: formData.get("category") as string,
+      category: [formData.get("category") as string],
       poster: user._id,
     };
 

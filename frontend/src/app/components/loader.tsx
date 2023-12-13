@@ -3,7 +3,7 @@ export default function Loader() {
     <div>
       <div className="overlay"></div>
       <div>
-        <span className="loader"></span>;
+        <span className="loader"></span>
       </div>
     </div>
   );

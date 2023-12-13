@@ -38,7 +38,7 @@ export default function CreateLostAndFoundPost(props: CreatePostProps) {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       image: await getBase64(formData.get("image") as File),
-      category: formData.get("category") as string,
+      category: [formData.get("category") as string],
       status: formData.get("status") as string,
       poster: user._id,
     };
