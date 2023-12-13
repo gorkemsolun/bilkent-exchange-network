@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { UserProfile } from "../data-types/datatypes.ts";
-import Header from "./components/header.tsx";
-import Navbar from "./components/navbar.tsx";
 import { useAuthContext } from "./authentication/authHelpers.js";
+import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
+import Navbar from "./components/navbar.tsx";
 
 export default function MyProfile() {
   const { user } = useAuthContext();
@@ -26,7 +26,7 @@ export default function MyProfile() {
       .finally(() => {
         setLoading(false);
       });
-  }, []);
+  }, [user._id]);
 
   return (
     <div className="outer-container">
@@ -49,12 +49,8 @@ export default function MyProfile() {
           <div className="profileDetails">
             <div className="profileColumn">
               <div className="profileInfo">
-                <p className="infoLabel">Bio:</p>
-                <p className="infoValue">{userProfile.bio}</p>
-              </div>
-              <div className="profileInfo">
-                <p className="infoLabel">Name:</p>
-                <p className="infoValue">{userProfile.name}</p>
+                <p className="infoLabel">Description:</p>
+                <p className="infoValue">{userProfile.description}</p>
               </div>
               <div className="profileInfo">
                 <p className="infoLabel">Email:</p>

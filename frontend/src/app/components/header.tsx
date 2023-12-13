@@ -13,7 +13,7 @@ export default function Header() {
   // Dummy user data, replace with your actual user data
   const user = {
     username: "JohnDoe",
-    photo: "./src/assets/cs319.png",
+    image: "./src/assets/cs319.png",
   };
 
   return (
@@ -24,7 +24,7 @@ export default function Header() {
       >
         <div className="header-profile">
           <img
-            src={user.photo}
+            src={user.image}
             className="header-profile-image"
             alt="Profile"
             title="Profile"

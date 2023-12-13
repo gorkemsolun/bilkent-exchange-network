@@ -21,7 +21,7 @@ const UserProfileSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-    bio: {
+    description: {
       type: String,
       default: "",
     },

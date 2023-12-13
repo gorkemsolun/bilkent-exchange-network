@@ -10,7 +10,7 @@ export const AuthContextProvider = ({ children }) => {
 
   //when the webpage is reloaded, try to check if the user was logged in using the local storage and update the auth context
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user") as string);
 
     if (user) {
       dispatch({ type: "LOGIN", payload: user });

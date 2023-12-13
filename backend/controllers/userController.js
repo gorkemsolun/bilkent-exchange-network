@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
-import { UserProfile } from "../models/userProfile.js"
+import { UserProfile } from "../models/userProfile.js";
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, "bununbirsecretolmasılazımnormalde", {
@@ -20,7 +20,6 @@ export const loginUser = async (req, res) => {
     const _id = user._id;
 
     res.status(200).json({ email, _id, token });
-
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -35,9 +34,9 @@ export const signupUser = async (req, res) => {
 
     //create a jwt
     const token = createToken(user._id);
-    const _id = user._id
+    const _id = user._id;
 
-    await UserProfile.createProfile(_id, name, email)
+    await UserProfile.createProfile(_id, name, email);
 
     res.status(200).json({ email, _id, token });
   } catch (error) {

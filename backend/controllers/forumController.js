@@ -1,4 +1,4 @@
-import { ForumPost, ForumEntry } from "../models/forumpost.js";
+import { ForumEntry, ForumPost } from "../models/forumpost.js";
 
 function fieldController(reqBody) {
   if (!reqBody.title || !reqBody.description || !reqBody.poster) {

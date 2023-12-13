@@ -1,6 +1,17 @@
 import nodemailer from "nodemailer";
 import { emailTokenDB } from "../models/emailToken.js";
 
+export const sendEmail = async (req, res) => {
+  const { name, email } = req.body;
+
+  try {
+    await sendVerificationMail(name, email);
+    res.status(200);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const createMailTransporter = () => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -31,4 +42,24 @@ export const sendVerificationMail = async (username, email) => {
       console.log("Verification mail sent");
     }
   });
+};
+
+export const createEmailToken = async (req, res) => {
+  try {
+    const token = await emailToken.createToken();
+    res.status(200).json({ token });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+export const getEmailToken = async (req, res) => {
+  const { emailToken } = req.body;
+  console.log(emailToken);
+  try {
+    const theToken = await emailTokenDB.findOne({ emailToken });
+    res.status(200).json({ theToken });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };

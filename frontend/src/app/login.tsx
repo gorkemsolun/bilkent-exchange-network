@@ -23,7 +23,6 @@ export default function Login() {
     >
       <div className="flex flex-col items-center justify-center">
         {/* (potential) BUG_1: FIX THIS PART. EVEN THOUGH OTHER RESOURCES ADJUSTS THEIR SIZE ACCORDING TO CLIENT BILKENT LOGO DOES NOT DO THAT! */}
-        {/*<img src="bilkent.png" width={"250"} height={"250"} />{" "}*/}
         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           Welcome to BEN!
         </h1>
@@ -34,7 +33,7 @@ export default function Login() {
       >
         <label className="font-semibold text-s mt-2">Email</label>
         <input
-          className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
+          className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
           type="text"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
@@ -42,7 +41,7 @@ export default function Login() {
         />
         <label className="font-semibold text-s mt-2">Password</label>
         <input
-          className="flex items-center h-12 px-4 w-64 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
+          className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
@@ -53,7 +52,10 @@ export default function Login() {
             Forgot Password
           </Link>
           <span className="mx-2 text-gray-300">/</span>
-          <Link className="text-blue-400 hover:text-blue-500" to="/verification">
+          <Link
+            className="text-blue-400 hover:text-blue-500"
+            to="/verification"
+          >
             Sign Up
           </Link>
         </div>

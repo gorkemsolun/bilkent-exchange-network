@@ -1,17 +1,14 @@
-import { useEffect, useState } from "react";
-import { ForumPost } from "../../data-types/posttypes";
-import { useParams } from "react-router-dom";
 import axios from "axios";
-import Loader from "../components/loader";
-import Header from "../components/header";
-import Navbar from "../components/navbar";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { ForumEntry } from "../../data-types/datatypes";
-import "../../App.css";
-import { useAuthContext } from "../authentication/authHelpers";
+import { ForumPost } from "../../data-types/posttypes";
+import Header from "../components/header";
+import Loader from "../components/loader";
+import Navbar from "../components/navbar";
 
 export default function ForumPostDetails() {
   const [post, setPost] = useState<ForumPost>({} as ForumPost);
-  const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
@@ -43,6 +40,7 @@ export default function ForumPostDetails() {
               <img
                 src="/src/assets/cs319.png"
                 className="forumpostdetails-profile-picture"
+                title="Profile Picture"
               />
               <div className="forumpostdetails-username">{"username"}</div>
               <div className="forumpostdetails-date">
@@ -67,6 +65,7 @@ export default function ForumPostDetails() {
                     <img
                       src="/src/assets/cs319.png"
                       className="forumpostdetails-profile-picture"
+                      title="Profile Picture"
                     />
                     <div className="forumpostdetails-username">{"doe123"}</div>
                     <div className="forumpostdetails-date">

@@ -17,6 +17,7 @@ export default function Signup() {
       if (emailToken) {
         try {
           const json = await getToken(emailToken);
+          console.log(json);
           if (json.error) {
             return;
           }
@@ -78,6 +79,7 @@ export default function Signup() {
           type="username"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
+          placeholder="Enter your username"
         />
         <label
           className="font-semibold text-s mt-2"
@@ -89,6 +91,8 @@ export default function Signup() {
           type="password"
           className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
           onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          placeholder="Enter your password"
         />
 
         <div className="flex mt-6 justify-center text-xs">
@@ -97,7 +101,10 @@ export default function Signup() {
           </Link>
         </div>
 
-        <button className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full">
+        <button
+          className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
+          type="button"
+        >
           Sign Up
         </button>
       </form>

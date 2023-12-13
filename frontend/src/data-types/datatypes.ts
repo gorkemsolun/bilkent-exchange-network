@@ -1,7 +1,9 @@
 export interface User {
-  name: string;
+  _id?: string;
+  createdAt?: Date;
+  username: string;
   bilkentId: string;
-  photo: string;
+  image: string;
   email: string;
   password: string;
 }
@@ -11,11 +13,10 @@ export interface UserProfile {
   userID: string;
   username: string;
   email: string;
-  name: string;
   image: string;
-  bio: string;
+  description: string;
   reputation: number;
-  ownPosts: [string];
+  ownedPosts: [string];
   savedPosts: [string];
   createdAt?: Date;
 }

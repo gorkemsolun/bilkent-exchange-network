@@ -37,6 +37,7 @@ export default function VerificationPage() {
         style={{ width: "23rem" }}
         onSubmit={handleSubmit}
         disabled={isVerifying}
+        placeholder="Enter your email address"
       >
         <label
           className="font-semibold text-s mt-2"
@@ -49,6 +50,7 @@ export default function VerificationPage() {
           type="username"
           onChange={(e) => setUsername(e.target.value)}
           value={username}
+          placeholder="Enter your username"
         />
 
         <label
@@ -62,6 +64,7 @@ export default function VerificationPage() {
           type="email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          placeholder="Enter your email address"
         />
 
         <div className="flex mt-6 justify-center text-xs">
@@ -73,6 +76,7 @@ export default function VerificationPage() {
         <button
           disabled={isVerifying}
           className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
+          type="button"
         >
           Send Verification Mail
         </button>

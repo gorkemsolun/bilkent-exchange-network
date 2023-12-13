@@ -19,8 +19,8 @@ function fieldTracker(reqBody, profile) {
     if (!reqBody.image) {
         reqBody.image = profile.image
     }
-    if (!reqBody.bio) {
-        reqBody.bio = profile.bio
+    if (!reqBody.description) {
+        reqBody.description = profile.description;
     }
   }
 

@@ -27,6 +27,8 @@ export const authReducer = (state, action) => {
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
 
+  console.log(context);
+
   if (!context) {
     throw Error("useAuthContext must be used inside an AuthContextProvider");
   }
@@ -36,7 +38,7 @@ export const useAuthContext = () => {
 
 export const useLogin = () => {
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { dispatch } = useAuthContext();
 
@@ -70,7 +72,7 @@ export const useLogin = () => {
 
 export const useSignup = () => {
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { dispatch } = useAuthContext();
 
@@ -147,7 +149,7 @@ export const useEmailToken = () => {
 
 export const useVerificationEmail = () => {
   const [verificationError, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sendEmail = async (name, email) => {
     setIsLoading(true);
