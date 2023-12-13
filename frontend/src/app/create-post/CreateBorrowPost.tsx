@@ -5,34 +5,49 @@ import { CreatePostProps } from "../../data-types/datatypes";
 import { BorrowPost } from "../../data-types/posttypes";
 import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
+import ErrorModal from "../components/ErrorModal";
 
 export default function CreateBorrowPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
-  const {user} = useAuthContext()
+  const { user } = useAuthContext();
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
+    // Check for errors here
+    {
+      // EXAMPLE CHECK: Check if any field is empty
+      if (!formData.get("title") || !formData.get("description")) {
+        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+        setLoading(false);
+        return;
+      }
+    }
+
     const post: BorrowPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       category: formData.get("category") as string,
-      poster: user._id, 
+      poster: user._id,
     };
 
     axios
       .post(urlsPost.borrow, post)
       .then((res) => {
+        console.log(res);
         // TODO SUCCESFULLY SENT
       })
       .catch((err) => {
-        console.log(err);
-        // TODO ERROR MODAL
+        //console.log(err);
+        setError("An error occurred while creating the post");
+      })
+      .finally(() => {
+        setLoading(false);
       });
-
-    setLoading(false);
     props.onClose();
   };
 
@@ -86,6 +101,14 @@ export default function CreateBorrowPost(props: CreatePostProps) {
             Create Post
           </button>
         </div>
+        {error && (
+          <ErrorModal
+            message={error}
+            onClose={() => {
+              setError(null);
+            }}
+          />
+        )}
       </form>
     </div>
   );
