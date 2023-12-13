@@ -43,27 +43,27 @@ function AppContent() {
           />
           <Route
             path="/secondhand"
-            element={user ? <SecondHand /> : <Navigate to="/login" />}
+            element={user ? <SecondHand /> : setTimeout(() => {<Navigate to="/login" />}, 100) }
           />
           <Route
             path="/lostfound"
-            element={user ? <LostFound /> : <Navigate to="/login" />}
+            element={user ? <LostFound /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
           />
           <Route
             path="/donate"
-            element={user ? <Donate /> : <Navigate to="/login" />}
+            element={user ? <Donate /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
           />
           <Route
             path="/borrow"
-            element={user ? <Borrow /> : <Navigate to="/login" />}
+            element={user ? <Borrow /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
           />
           <Route
             path="/sectionexchange"
-            element={user ? <SectionExchange /> : <Navigate to="/login" />}
+            element={user ? <SectionExchange /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
           />
           <Route
             path="/forum"
-            element={user ? <Forum /> : <Navigate to="/login" />}
+            element={user ? <Forum /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
           />
           <Route
             path="/login"
@@ -81,15 +81,15 @@ function AppContent() {
           />
           <Route
             path="/secondhandpost/:id"
-            element={<SecondHandPostDetails />}
+            element={ user ? <SecondHandPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
           />
-          <Route path="/lostfoundpost/:id" element={<LostFoundPostDetails />} />
-          <Route path="/donatepost/:id" element={<DonatePostDetails />} />
-          <Route path="/borrowpost/:id" element={<BorrowPostDetails />} />
-          <Route path="/forumpost/:id" element={<ForumPostDetails />} />
-          <Route path="/myprofile" element={<MyProfile />} />
-          <Route path="/profile/:id" element={<Profile />} />
-          <Route path="/myprofile/edit" element={<EditProfile />} />
+          <Route path="/lostfoundpost/:id" element={ user ? <LostFoundPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
+          <Route path="/donatepost/:id" element={ user ? <DonatePostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
+          <Route path="/borrowpost/:id" element={user ? <BorrowPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
+          <Route path="/forumpost/:id" element={user ? <ForumPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
+          <Route path="/myprofile" element={user ? <MyProfile /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
+          <Route path="/profile/:id" element={user ? <Profile /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
+          <Route path="/myprofile/edit" element={user ? <EditProfile />:  setTimeout(() => {<Navigate to="/login" />}, 100)} />
         </Routes>
       </BrowserRouter>
     </div>
