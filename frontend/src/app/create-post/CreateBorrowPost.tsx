@@ -43,7 +43,7 @@ export default function CreateBorrowPost(props: CreatePostProps) {
       })
       .catch((err) => {
         //console.log(err);
-        setError("An error occurred while creating the post");
+        setError(err);
       })
       .finally(() => {
         setLoading(false);

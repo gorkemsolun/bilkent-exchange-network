@@ -16,6 +16,7 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
       onClose();
     }, autoCloseDelay);
     return () => {
+      // If for any reason a close button is added, this part becomes necessary. Hence do not delete
       clearTimeout(timerId);
     };
   }, [onClose, autoCloseDelay]);

@@ -5,15 +5,34 @@ import { CreatePostProps } from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posttypes";
 import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
+import ErrorModal from "../components/ErrorModal";
 
 export default function CreateSectionExchangePost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
-  const {user} = useAuthContext()
+  const { user } = useAuthContext();
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+
+    // Check for errors here
+    {
+      // Check if any field is empty
+      if (
+        !formData.get("price") ||
+        !formData.get("offeredCourse") ||
+        !formData.get("offeredSection") ||
+        !formData.get("desiredCourse") ||
+        !formData.get("desiredSection")
+      ) {
+        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+        setLoading(false);
+        return;
+      }
+    }
 
     const post: SectionexchangePost = {
       price: formData.get("price") as unknown as number,
@@ -21,7 +40,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       offeredSection: formData.get("offeredSection") as string,
       desiredCourse: formData.get("desiredCourse") as string,
       desiredSection: formData.get("desiredSection") as string,
-      poster: user._id, 
+      poster: user._id,
     };
 
     axios
@@ -30,8 +49,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
         // TODO SUCCESFULLY SENT
       })
       .catch((err) => {
-        console.log(err);
-        // TODO ERROR MODAL
+        setError(err);
       });
 
     setLoading(false);
@@ -108,6 +126,14 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
             Create Post
           </button>
         </div>
+        {error && (
+          <ErrorModal
+            message={error}
+            onClose={() => {
+              setError(null);
+            }}
+          />
+        )}
       </form>
     </div>
   );

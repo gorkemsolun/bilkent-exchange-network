@@ -5,21 +5,37 @@ import { CreatePostProps } from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posttypes";
 import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
+import ErrorModal from "../components/ErrorModal";
 
 export default function CreateForumPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
-  const {user} = useAuthContext()
+  const [error, setError] = useState<string | null>(null);
+  const { user } = useAuthContext();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
+    // Check for errors here
+    {
+      // Check if any field is empty
+      if (
+        !formData.get("title") ||
+        !formData.get("description") ||
+        !formData.get("category")
+      ) {
+        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+        setLoading(false);
+        return;
+      }
+    }
+
     const post: ForumPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       category: formData.get("category") as string,
-      poster: user._id, 
+      poster: user._id,
     };
 
     axios
@@ -28,8 +44,7 @@ export default function CreateForumPost(props: CreatePostProps) {
         // TODO SUCCESFULLY SENT
       })
       .catch((err) => {
-        console.log(err);
-        // TODO ERROR MODAL
+        setError(err);
       });
 
     setLoading(false);
@@ -86,6 +101,14 @@ export default function CreateForumPost(props: CreatePostProps) {
             Create Post
           </button>
         </div>
+        {error && (
+          <ErrorModal
+            message={error}
+            onClose={() => {
+              setError(null);
+            }}
+          />
+        )}
       </form>
     </div>
   );

@@ -6,15 +6,34 @@ import { SecondhandPost } from "../../data-types/posttypes";
 import Loader from "../components/loader";
 import { getBase64 } from "../fetchPostHelpers";
 import { useAuthContext } from "../authentication/authHelpers";
+import ErrorModal from "../components/ErrorModal";
 
 export default function CreateSecondHandPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
-  const {user} = useAuthContext()
+  const { user } = useAuthContext();
+  const [error, setError] = useState<string | null>(null);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
+
+    // Check for errors here
+    {
+      // Check if any field is empty
+      if (
+        !formData.get("title") ||
+        !formData.get("description") ||
+        !formData.get("price") ||
+        !formData.get("image") ||
+        !formData.get("category")
+      ) {
+        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+        setLoading(false);
+        return;
+      }
+    }
 
     const post: SecondhandPost = {
       title: formData.get("title") as string,
@@ -22,7 +41,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       price: formData.get("price") as unknown as number,
       image: await getBase64(formData.get("image") as File),
       category: formData.get("category") as string,
-      poster: user._id, 
+      poster: user._id,
     };
 
     axios
@@ -31,8 +50,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
         // TODO SUCCESFULLY SENT
       })
       .catch((err) => {
-        console.log(err);
-        // TODO ERROR MODAL
+        setError(err);
       });
 
     setLoading(false);
@@ -110,6 +128,14 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
             Create Post
           </button>
         </div>
+        {error && (
+          <ErrorModal
+            message={error}
+            onClose={() => {
+              setError(null);
+            }}
+          />
+        )}
       </form>
     </div>
   );
