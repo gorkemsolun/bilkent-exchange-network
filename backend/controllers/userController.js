@@ -8,14 +8,12 @@ const createToken = (_id) => {
   });
 };
 
-//login user
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
     const user = await User.login(email, password);
 
-    //Create a jwt
     const token = createToken(user._id);
     const _id = user._id;
 
@@ -25,18 +23,16 @@ export const loginUser = async (req, res) => {
   }
 };
 
-//signup user
 export const signupUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
-    const user = await User.signup(name, email, password);
+    const user = await User.signup(username, email, password);
 
-    //create a jwt
     const token = createToken(user._id);
     const _id = user._id;
 
-    await UserProfile.createProfile(_id, name, email);
+    await UserProfile.createProfile(_id, username, email);
 
     res.status(200).json({ email, _id, token });
   } catch (error) {
@@ -44,7 +40,6 @@ export const signupUser = async (req, res) => {
   }
 };
 
-//verify
 export const verifyEmail = async (req, res) => {
   try {
     const emailToken = req.body.emailToken;
@@ -59,7 +54,6 @@ export const verifyEmail = async (req, res) => {
       user.emailToken = null;
       user.isVerified = true;
       await user.save();
-      //create a jwt
       const token = createToken(user._id);
 
       res.status(200).json({ user, token });

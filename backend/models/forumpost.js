@@ -32,7 +32,6 @@ const ForumPostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
     entries: {
       type: [ForumEntrySchema],
     },

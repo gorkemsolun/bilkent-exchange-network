@@ -5,7 +5,7 @@ import validator from "validator";
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    username: {
       type: String,
       required: true,
     },
@@ -28,6 +28,13 @@ const UserSchema = new mongoose.Schema(
     emailToken: {
       type: String,
     },
+    conversations: [
+      {
+        type: String,
+        ref: "Conversation",
+        userID: String,
+      },
+    ],
   },
   {
     timestamps: true,
@@ -35,8 +42,8 @@ const UserSchema = new mongoose.Schema(
 );
 
 //signup method
-UserSchema.statics.signup = async function (name, email, password) {
-  if (!email || !password || !name) {
+UserSchema.statics.signup = async function (username, email, password) {
+  if (!email || !password || !username) {
     throw Error("All fields must be filled");
   }
   if (!validator.isEmail(email)) {
@@ -56,7 +63,7 @@ UserSchema.statics.signup = async function (name, email, password) {
   const token = crypto.randomBytes(64).toString("hex");
 
   const user = await this.create({
-    name,
+    username,
     email,
     password: hash,
     image: "",
