@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { defaultFilterParams } from "../data-types/constants";
 import { FilterParams } from "../data-types/datatypes";
 import { BorrowPost } from "../data-types/posttypes";
@@ -10,7 +11,6 @@ import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton";
 import { prepareUrl } from "./fetchPostHelpers";
-import { Link } from "react-router-dom";
 
 export default function Borrow() {
   const [loading, setLoading] = useState(false);
@@ -19,7 +19,7 @@ export default function Borrow() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
-  
+
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
@@ -46,13 +46,24 @@ export default function Borrow() {
   }, [searchTerm, filterParams]);
 
   useEffect(() => {
-    
     if (sortType === "date-asc") {
-      setBorrowPosts([...borrowPosts].sort((a : BorrowPost, b : BorrowPost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+      setBorrowPosts(
+        [...borrowPosts].sort(
+          (a: BorrowPost, b: BorrowPost) =>
+            new Date(a.createdAt as Date).getTime() -
+            new Date(b.createdAt as Date).getTime()
+        )
+      );
     } else {
-      setBorrowPosts([...borrowPosts].sort((a : BorrowPost, b : BorrowPost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+      setBorrowPosts(
+        [...borrowPosts].sort(
+          (a: BorrowPost, b: BorrowPost) =>
+            new Date(b.createdAt as Date).getTime() -
+            new Date(a.createdAt as Date).getTime()
+        )
+      );
     }
-  }, [sortType]);
+  }, [sortType, borrowPosts]);
 
   return (
     <div className="outer-container">
@@ -62,7 +73,12 @@ export default function Borrow() {
         <Filters type="borrow" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="borrow" onSearch={handleSearch} sortType={sortType} setSortType={setSortType} />
+            <SearchBar
+              type="borrow"
+              onSearch={handleSearch}
+              sortType={sortType}
+              setSortType={setSortType}
+            />
             <CreatePostButton type="borrow" />
           </div>
           {loading ? (

@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { UserProfile } from "../data-types/datatypes.ts";
 import { useAuthContext } from "./authentication/authHelpers.js";
 import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
-import { Link } from "react-router-dom";
 
 export default function MyProfile() {
   const { user } = useAuthContext();
@@ -48,7 +48,11 @@ export default function MyProfile() {
             </div>
           </div>
           <Link to={"/myprofile/edit"}>
-            <img src="./src/assets/editicon.png" className="profileEditIcon" />
+            <img
+              src="./src/assets/editicon.png"
+              className="profileEditIcon"
+              title="Edit"
+            />
           </Link>
           <div className="profileDetails">
             <div className="profileColumn">

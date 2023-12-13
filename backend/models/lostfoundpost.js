@@ -19,7 +19,7 @@ const LostfoundPostSchema = new mongoose.Schema(
       required: true,
     },
     category: {
-      type: [String],
+      type: String,
       required: true,
     },
     status: {

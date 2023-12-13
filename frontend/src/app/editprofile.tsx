@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { UserProfile } from "../data-types/datatypes.ts";
 import { useAuthContext } from "./authentication/authHelpers.js";
 import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
 import { getBase64 } from "./fetchPostHelpers.ts";
-import { Navigate } from "react-router-dom";
 
 export default function EditProfile() {
   const { user } = useAuthContext();
@@ -24,9 +24,10 @@ export default function EditProfile() {
 
     userProfile.username = formData.get("username") as string;
     userProfile.description = formData.get("description") as string;
-    let image = await getBase64(formData.get("image") as File);
+    const image = await getBase64(formData.get("image") as File);
     //if no file is submitted then do not include image in the userProfile body
-    if (image !== "data:application/octet-stream;base64,") userProfile.image = image;
+    if (image !== "data:application/octet-stream;base64,")
+      userProfile.image = image;
     axios
       .put(`http://localhost:3000/profile/update-profile/`, userProfile)
       .then((res) => {
@@ -99,6 +100,7 @@ export default function EditProfile() {
                   accept="jpg, jpeg, png"
                   className="form-control"
                   style={{ marginLeft: "5vw" }}
+                  placeholder="Upload an image"
                 />
               </div>
               <div className="profileInfo">
@@ -110,6 +112,7 @@ export default function EditProfile() {
                   className="form-control"
                   style={{ marginLeft: "5vw" }}
                   defaultValue={userProfile.username}
+                  placeholder="Enter username"
                 />
               </div>
               <div className="profileInfo">
@@ -122,6 +125,7 @@ export default function EditProfile() {
                   className="form-control"
                   style={{ marginLeft: "5vw" }}
                   defaultValue={userProfile.description}
+                  placeholder="Enter description"
                 />
               </div>
             </div>

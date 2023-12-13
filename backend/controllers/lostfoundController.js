@@ -40,7 +40,7 @@ export const lostfoundPostGET = async (req, res) => {
     let status = req.params.status;
 
     if (!categories || !Array.isArray || categories[0] !== "All") {
-      query.categories = { $in: categories };
+      query.category = { $in: categories };
     }
     if (req.params.search !== "All") {
       query.title = { $regex: regexSearch };

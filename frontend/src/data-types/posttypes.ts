@@ -11,7 +11,7 @@ export interface LostFoundPost {
   _id?: string;
   title: string;
   description: string;
-  category: [string];
+  category: string;
   poster: string;
   image: string;
   status: string;
@@ -22,7 +22,7 @@ export interface BorrowPost {
   _id?: string;
   title: string;
   description: string;
-  category: [string];
+  category: string;
   poster: string;
   createdAt?: Date;
 }
@@ -31,7 +31,7 @@ export interface SecondhandPost {
   _id?: string;
   title: string;
   description: string;
-  category: [string];
+  category: string;
   poster: string;
   createdAt?: Date;
   image: string;
@@ -42,7 +42,7 @@ export interface DonatePost {
   _id?: string;
   title: string;
   description: string;
-  category: [string];
+  category: string;
   poster: string;
   createdAt?: Date;
   image: string;
@@ -64,7 +64,7 @@ export interface ForumPost {
   title: string;
   description: string;
   poster: string;
-  category: [string];
+  category: string;
   createdAt?: Date;
   entries: ForumEntry[];
 }

@@ -49,15 +49,35 @@ export default function Secondhand() {
 
   useEffect(() => {
     if (sortType === "price-asc") {
-      setSecondhandPosts([...secondhandPosts].sort((a : SecondhandPost, b : SecondhandPost) => a.price - b.price));
+      setSecondhandPosts(
+        [...secondhandPosts].sort(
+          (a: SecondhandPost, b: SecondhandPost) => a.price - b.price
+        )
+      );
     } else if (sortType === "price-desc") {
-      setSecondhandPosts([...secondhandPosts].sort((a : SecondhandPost, b : SecondhandPost) => b.price - a.price));
+      setSecondhandPosts(
+        [...secondhandPosts].sort(
+          (a: SecondhandPost, b: SecondhandPost) => b.price - a.price
+        )
+      );
     } else if (sortType === "date-asc") {
-      setSecondhandPosts([...secondhandPosts].sort((a : SecondhandPost, b : SecondhandPost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+      setSecondhandPosts(
+        [...secondhandPosts].sort(
+          (a: SecondhandPost, b: SecondhandPost) =>
+            new Date(a.createdAt as Date).getTime() -
+            new Date(b.createdAt as Date).getTime()
+        )
+      );
     } else {
-      setSecondhandPosts([...secondhandPosts].sort((a : SecondhandPost, b : SecondhandPost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+      setSecondhandPosts(
+        [...secondhandPosts].sort(
+          (a: SecondhandPost, b: SecondhandPost) =>
+            new Date(b.createdAt as Date).getTime() -
+            new Date(a.createdAt as Date).getTime()
+        )
+      );
     }
-  }, [sortType]);
+  }, [sortType, secondhandPosts]);
 
   return (
     <div className="outer-container">
@@ -67,7 +87,12 @@ export default function Secondhand() {
         <Filters type="secondhand" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="secondhand" onSearch={handleSearch} sortType={sortType} setSortType={setSortType} />
+            <SearchBar
+              type="secondhand"
+              onSearch={handleSearch}
+              sortType={sortType}
+              setSortType={setSortType}
+            />
             <CreatePostButton type="secondhand" />
           </div>
           {loading ? (

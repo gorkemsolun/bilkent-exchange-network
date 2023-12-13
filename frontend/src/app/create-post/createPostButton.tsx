@@ -6,7 +6,6 @@ import CreateForumPost from "./CreateForumPost";
 import CreateLostAndFoundPost from "./CreateLostAndFoundPost";
 import CreateSecondHandPost from "./CreateSecondHandPost";
 import CreateSectionExchangePost from "./CreateSectionExchangePost";
-import ErrorModal from "../components/ErrorModal";
 
 export default function CreatePostButton(props: CreatePostButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,7 +20,11 @@ export default function CreatePostButton(props: CreatePostButtonProps) {
 
   return (
     <div>
-      <button className="create-post-button" onClick={handleCreatePost}>
+      <button
+        className="create-post-button"
+        onClick={handleCreatePost}
+        type="button"
+      >
         Create Post
       </button>
       {isModalOpen && props.type == "secondhand" && (

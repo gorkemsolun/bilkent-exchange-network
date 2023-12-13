@@ -34,7 +34,7 @@ export default function CreateForumPost(props: CreatePostProps) {
     const post: ForumPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
-      category: [formData.get("category") as string],
+      category: formData.get("category") as string,
       poster: user._id,
     };
 

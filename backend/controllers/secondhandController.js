@@ -56,7 +56,7 @@ export const secondhandPostGET = async (req, res) => {
       dateMax = req.params.date.split("*")[1];
 
     if (!categories || !Array.isArray || categories[0] !== "All") {
-      query.categories = { $in: categories };
+      query.category = { $in: categories };
     }
     if (req.params.search !== "All") {
       query.title = { $regex: regexSearch };

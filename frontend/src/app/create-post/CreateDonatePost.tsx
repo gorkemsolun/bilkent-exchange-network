@@ -31,7 +31,7 @@ export default function CreateDonatePost(props: CreatePostProps) {
     const post: DonatePost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
-      category: [formData.get("category") as string],
+      category: formData.get("category") as string,
       image: await getBase64(formData.get("image") as File),
       poster: user._id,
     };

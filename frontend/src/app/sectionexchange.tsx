@@ -47,15 +47,35 @@ export default function SectionExchange() {
 
   useEffect(() => {
     if (sortType === "price-asc") {
-      setSectionexchangePosts([...sectionexchangePosts].sort((a : SectionexchangePost, b : SectionexchangePost) => a.price - b.price));
+      setSectionexchangePosts(
+        [...sectionexchangePosts].sort(
+          (a: SectionexchangePost, b: SectionexchangePost) => a.price - b.price
+        )
+      );
     } else if (sortType === "price-desc") {
-      setSectionexchangePosts([...sectionexchangePosts].sort((a : SectionexchangePost, b : SectionexchangePost) => b.price - a.price));
-    }else if (sortType === "date-asc") {
-      setSectionexchangePosts([...sectionexchangePosts].sort((a : SectionexchangePost, b : SectionexchangePost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+      setSectionexchangePosts(
+        [...sectionexchangePosts].sort(
+          (a: SectionexchangePost, b: SectionexchangePost) => b.price - a.price
+        )
+      );
+    } else if (sortType === "date-asc") {
+      setSectionexchangePosts(
+        [...sectionexchangePosts].sort(
+          (a: SectionexchangePost, b: SectionexchangePost) =>
+            new Date(a.createdAt as Date).getTime() -
+            new Date(b.createdAt as Date).getTime()
+        )
+      );
     } else {
-      setSectionexchangePosts([...sectionexchangePosts].sort((a : SectionexchangePost, b : SectionexchangePost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+      setSectionexchangePosts(
+        [...sectionexchangePosts].sort(
+          (a: SectionexchangePost, b: SectionexchangePost) =>
+            new Date(b.createdAt as Date).getTime() -
+            new Date(a.createdAt as Date).getTime()
+        )
+      );
     }
-  }, [sortType]);
+  }, [sortType, sectionexchangePosts]);
 
   return (
     <div className="outer-container">
@@ -65,7 +85,12 @@ export default function SectionExchange() {
         <Filters type="sectionexchange" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="sectionexchange" onSearch={handleSearch} sortType={sortType} setSortType={setSortType}/>
+            <SearchBar
+              type="sectionexchange"
+              onSearch={handleSearch}
+              sortType={sortType}
+              setSortType={setSortType}
+            />
             <CreatePostButton type="sectionexchange" />
           </div>
           <div className="container w-full">
