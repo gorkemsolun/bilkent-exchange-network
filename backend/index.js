@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { MONGO_URL, PORT } from "./config.js";
 import borrowRouter from "./routes/borrowRoute.js";
+import conversationRouter from "./routes/conversationRoute.js";
 import donateRouter from "./routes/donateRoute.js";
 import forumRouter from "./routes/forumRoute.js";
 import lostfoundRouter from "./routes/lostfoundRoute.js";
@@ -24,6 +25,7 @@ app.use("/sectionexchange", sectionexchangeRouter);
 app.use("/forum", forumRouter);
 app.use("/user", authRouter);
 app.use("/profile", profileRouter);
+app.use("/conversation", conversationRouter);
 
 mongoose
   .connect(MONGO_URL)
