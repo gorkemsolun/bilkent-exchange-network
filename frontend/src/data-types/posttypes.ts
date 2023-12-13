@@ -64,6 +64,6 @@ export interface ForumPost {
   title: string;
   description: string;
   poster: string;
-  createdAt?: string;
+  createdAt?: Date;
   entries: ForumEntry[];
 }

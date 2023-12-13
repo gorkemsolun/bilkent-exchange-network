@@ -3,9 +3,11 @@ import { useState } from "react";
 export default function SearchBar(props: {
   type: string;
   onSearch: (searchTerm: string) => void;
+  sortType: string; 
+  setSortType: React.Dispatch<React.SetStateAction<string>>; 
 }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortType, setSortType] = useState("");
+  
 
   const handleSearch = () => {
     // Perform search based on `searchTerm`
@@ -31,8 +33,8 @@ export default function SearchBar(props: {
       <div className="relative">
         <div className=" right-0 mt-2 p-2 border bg-white center m-2 rounded-full text-black">
           <select
-            value={sortType}
-            onChange={(e) => setSortType(e.target.value)}
+            value={props.sortType}
+            onChange={(e) => props.setSortType(e.target.value)}
             className="bg-white"
             title="Sort By"
           >
@@ -42,12 +44,12 @@ export default function SearchBar(props: {
 
             {props.type === "secondhand" && (
               <>
-                <option value="price">Price ↓</option>
-                <option value="price">Price ↑</option>
+                <option value="price-desc">Price ↓</option>
+                <option value="price-asc">Price ↑</option>
               </>
             )}
-            <option value="date">Date ↓</option>
-            <option value="date">Date ↑</option>
+            <option value="date-desc">Date ↓</option>
+            <option value="date-asc">Date ↑</option>
           </select>
         </div>
       </div>

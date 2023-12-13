@@ -18,6 +18,7 @@ export default function Secondhand() {
   const [secondhandPosts, setSecondhandPosts] = useState([]);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
+  const [sortType, setSortType] = useState("");
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -46,6 +47,18 @@ export default function Secondhand() {
       });
   }, [filterParams, searchTerm]);
 
+  useEffect(() => {
+    if (sortType === "price-asc") {
+      setSecondhandPosts([...secondhandPosts].sort((a : SecondhandPost, b : SecondhandPost) => a.price - b.price));
+    } else if (sortType === "price-desc") {
+      setSecondhandPosts([...secondhandPosts].sort((a : SecondhandPost, b : SecondhandPost) => b.price - a.price));
+    } else if (sortType === "date-asc") {
+      setSecondhandPosts([...secondhandPosts].sort((a : SecondhandPost, b : SecondhandPost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+    } else {
+      setSecondhandPosts([...secondhandPosts].sort((a : SecondhandPost, b : SecondhandPost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+    }
+  }, [sortType]);
+
   return (
     <div className="outer-container">
       <Header />
@@ -54,7 +67,7 @@ export default function Secondhand() {
         <Filters type="secondhand" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="secondhand" onSearch={handleSearch} />
+            <SearchBar type="secondhand" onSearch={handleSearch} sortType={sortType} setSortType={setSortType} />
             <CreatePostButton type="secondhand" />
           </div>
           {loading ? (

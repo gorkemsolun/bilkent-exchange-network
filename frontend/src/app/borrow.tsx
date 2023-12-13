@@ -18,7 +18,8 @@ export default function Borrow() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
-
+  const [sortType, setSortType] = useState("");
+  
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
@@ -44,6 +45,15 @@ export default function Borrow() {
       });
   }, [searchTerm, filterParams]);
 
+  useEffect(() => {
+    
+    if (sortType === "date-asc") {
+      setBorrowPosts([...borrowPosts].sort((a : BorrowPost, b : BorrowPost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+    } else {
+      setBorrowPosts([...borrowPosts].sort((a : BorrowPost, b : BorrowPost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+    }
+  }, [sortType]);
+
   return (
     <div className="outer-container">
       <Header />
@@ -52,7 +62,7 @@ export default function Borrow() {
         <Filters type="borrow" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="borrow" onSearch={handleSearch} />
+            <SearchBar type="borrow" onSearch={handleSearch} sortType={sortType} setSortType={setSortType} />
             <CreatePostButton type="borrow" />
           </div>
           {loading ? (

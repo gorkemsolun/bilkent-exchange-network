@@ -18,6 +18,7 @@ export default function Donate() {
   const [loading, setLoading] = useState(false);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
+  const [sortType, setSortType] = useState("");
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -46,6 +47,15 @@ export default function Donate() {
       });
   }, [searchTerm, filterParams]);
 
+  useEffect(() => {
+    
+    if (sortType === "date-asc") {
+      setDonatePosts([...donatePosts].sort((a : DonatePost, b : DonatePost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+    } else {
+      setDonatePosts([...donatePosts].sort((a : DonatePost, b : DonatePost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+    }
+  }, [sortType]);
+
   return (
     <div className="outer-container">
       <Header />
@@ -54,7 +64,7 @@ export default function Donate() {
         <Filters type="donate" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="donate" onSearch={handleSearch} />
+            <SearchBar type="donate" onSearch={handleSearch} sortType={sortType} setSortType={setSortType} />
             <CreatePostButton type="donate" />
           </div>
           {loading ? (

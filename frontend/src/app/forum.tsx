@@ -18,6 +18,7 @@ export default function Forum() {
   const [loading, setLoading] = useState(false);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
+  const [sortType, setSortType] = useState("");
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -41,6 +42,16 @@ export default function Forum() {
       });
   }, [searchTerm, filterParams]);
 
+  useEffect(() => {
+    
+    if (sortType === "date-asc") {
+      setForumPosts([...forumPosts].sort((a : ForumPost, b : ForumPost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+    } else {
+      setForumPosts([...forumPosts].sort((a : ForumPost, b : ForumPost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+    }
+  }, [sortType]);
+
+
   return (
     <div className="outer-container">
       <Header />
@@ -49,7 +60,7 @@ export default function Forum() {
         <Filters type="forum" passFilters={setFilterParams}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="forum" onSearch={handleSearch} />
+            <SearchBar type="forum" onSearch={handleSearch} sortType={sortType} setSortType={setSortType}/>
             <CreatePostButton type="forum" />
           </div>
           {loading ? (

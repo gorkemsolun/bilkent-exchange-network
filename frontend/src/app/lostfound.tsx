@@ -18,6 +18,7 @@ export default function LostFound() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
+  const [sortType, setSortType] = useState("");
 
   useEffect(() => {
     setLoading(true);
@@ -37,6 +38,16 @@ export default function LostFound() {
       });
   }, [searchTerm, filterParams]);
 
+  useEffect(() => {
+    
+    if (sortType === "date-asc") {
+      setLostFoundPosts([...lostFoundPosts].sort((a : LostFoundPost, b : LostFoundPost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+    } else {
+      setLostFoundPosts([...lostFoundPosts].sort((a : LostFoundPost, b : LostFoundPost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+    }
+  }, [sortType]);
+
+
   function passFilters(params: FilterParams) {
     setFilterParams(params);
   }
@@ -53,7 +64,7 @@ export default function LostFound() {
         <Filters type="lostfound" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="lostandfound" onSearch={handleSearch} />
+            <SearchBar type="lostandfound" onSearch={handleSearch} sortType={sortType} setSortType={setSortType} />
             <CreatePostButton type="lostandfound" />
           </div>
           {loading ? (
