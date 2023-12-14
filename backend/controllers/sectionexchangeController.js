@@ -83,7 +83,9 @@ export const sectionexchangePostGET = async (req, res) => {
       query.desiredSection = Number(req.params.desiredSection);
     }
 
-    const sectionexchangeposts = await SectionexchangePost.find(query);
+    const sectionexchangeposts = await SectionexchangePost.find(query)
+      .skip(req.params.page * req.params.limit)
+      .limit(req.params.limit);
 
     return res.status(200).json(sectionexchangeposts);
   } catch (err) {

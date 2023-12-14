@@ -14,7 +14,10 @@ const router = express.Router();
 */
 
 router.post("/borrowpost", borrowPostPOST);
-router.get("/borrowpost/c/:categories/d/:date/s/:search", borrowPostGET);
+router.get(
+  "/borrowpost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
+  borrowPostGET
+);
 router.get("/borrowpost/:id", borrowPostGETId);
 router.put("/borrowpost/:id", borrowPostPUT);
 router.delete("/borrowpost/:id", borrowPostDEL);

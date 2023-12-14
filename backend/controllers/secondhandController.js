@@ -88,7 +88,9 @@ export const secondhandPostGET = async (req, res) => {
       query.timestamp = { $lte: dateMax };
     }
 
-    const secondhandposts = await SecondhandPost.find(query);
+    const secondhandposts = await SecondhandPost.find(query)
+      .skip(req.params.page * req.params.limit)
+      .limit(req.params.limit);
 
     return res.status(200).json(secondhandposts);
   } catch (err) {

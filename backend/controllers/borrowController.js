@@ -62,7 +62,9 @@ export const borrowPostGET = async (req, res) => {
       query.timestamp = { $lte: dateMax };
     }
 
-    const borrowposts = await BorrowPost.find(query);
+    const borrowposts = await BorrowPost.find(query)
+      .skip(req.params.page * req.params.limit)
+      .limit(req.params.limit);
 
     return res.status(200).json(borrowposts);
   } catch (err) {

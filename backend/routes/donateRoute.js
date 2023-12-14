@@ -13,7 +13,10 @@ const router = express.Router();
   router.use(requireAuth)
 */
 router.post("/donatepost", donatePostPOST);
-router.get("/donatepost/c/:categories/d/:date/s/:search", donatePostGET);
+router.get(
+  "/donatepost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
+  donatePostGET
+);
 router.get("/donatepost/:id", donatePostGETId);
 router.put("/donatepost/:id", donatePostPUT);
 router.delete("/donatepost/:id", donatePostDEL);

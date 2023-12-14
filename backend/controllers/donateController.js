@@ -62,7 +62,9 @@ export const donatePostGET = async (req, res) => {
       query.timestamp = { $lte: dateMax };
     }
 
-    const donateposts = await DonatePost.find(query);
+    const donateposts = await DonatePost.find(query)
+      .skip(req.params.page * req.params.limit)
+      .limit(req.params.limit);
 
     return res.status(200).json(donateposts);
   } catch (err) {

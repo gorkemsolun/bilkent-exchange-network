@@ -4,7 +4,9 @@ import { FilterParams } from "../data-types/datatypes.ts";
 export function prepareUrl(
   searchTerm: string,
   type: string,
-  filterParams?: FilterParams
+  filterParams?: FilterParams,
+  page?: number,
+  limit?: number
 ) {
   let url: string = urlsGet[type as keyof typeof urlsGet];
   if (filterParams) {
@@ -62,6 +64,14 @@ export function prepareUrl(
     } else {
       url = url.replace(":date", "All");
     }
+  }
+
+  if (page && limit) {
+    url = url.replace(":page", String(page));
+    url = url.replace(":limit", String(limit));
+  } else {
+    url = url.replace(":page", "0");
+    url = url.replace(":limit", "10");
   }
 
   if (searchTerm) {
