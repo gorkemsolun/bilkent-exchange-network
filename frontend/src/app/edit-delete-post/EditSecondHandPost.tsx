@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { categories, urlsPost } from "../../data-types/constants";
+import { Navigate } from "react-router-dom";
+import { categories } from "../../data-types/constants";
 import { EditPostProps } from "../../data-types/datatypes";
 import { SecondhandPost } from "../../data-types/posttypes";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/loader";
-import { getBase64 } from "../fetchPostHelpers";
-import { Navigate } from "react-router-dom";
+import { resizeImageFile } from "../fetchPostHelpers";
 
 export default function EditSecondHandPost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);
@@ -61,7 +61,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
     }
 
     //if no file is submitted then do not include image in the userProfile body
-    let image = await getBase64(formData.get("image") as File);
+    let image = await resizeImageFile(formData.get("image") as File);
     if (image == "data:application/octet-stream;base64,") {
       image = post.image;
     }
@@ -116,6 +116,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
               name="title"
               className="form-control"
               defaultValue={post.title}
+              placeholder="Enter title"
             />
           </div>
           <div className="modal-form-group" style={{ textAlign: "left" }}>

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DeletePostModal from "./DeletePost";
 import { DeletePostButtonProps } from "../../data-types/datatypes";
+import DeletePostModal from "./DeletePost";
 
 export default function DeletePostButton(props: DeletePostButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);

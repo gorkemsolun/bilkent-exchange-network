@@ -31,7 +31,7 @@ export default function Secondhand() {
   useEffect(() => {
     setLoading(true);
 
-    const url = prepareUrl(searchTerm, "secondhand", filterParams);
+    const url = prepareUrl(searchTerm, "secondhand", filterParams, 0, 10);
     console.log(url);
 
     axios

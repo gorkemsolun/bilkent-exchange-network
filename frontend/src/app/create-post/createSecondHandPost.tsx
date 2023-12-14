@@ -6,7 +6,7 @@ import { SecondhandPost } from "../../data-types/posttypes";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/loader";
-import { getBase64 } from "../fetchPostHelpers";
+import { resizeImageFile } from "../fetchPostHelpers";
 
 export default function CreateSecondHandPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       price: formData.get("price") as unknown as number,
-      image: await getBase64(formData.get("image") as File),
+      image: await resizeImageFile(formData.get("image") as File),
       category: formData.get("category") as string,
       poster: user._id,
     };

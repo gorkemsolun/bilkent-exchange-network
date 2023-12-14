@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { categories, urlsPost } from "../../data-types/constants";
+import { Navigate } from "react-router-dom";
+import { categories } from "../../data-types/constants";
 import { EditPostProps } from "../../data-types/datatypes";
 import { LostFoundPost } from "../../data-types/posttypes";
-import Loader from "../components/loader";
-import { getBase64 } from "../fetchPostHelpers";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
-import { Navigate } from "react-router-dom";
+import Loader from "../components/loader";
+import { resizeImageFile } from "../fetchPostHelpers";
 
 export default function EditLostAndFoundPost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);
@@ -60,7 +60,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
     }
 
     //if no file is submitted then do not include image in the userProfile body
-    let image = await getBase64(formData.get("image") as File);
+    let image = await resizeImageFile(formData.get("image") as File);
     if (image == "data:application/octet-stream;base64,") {
       image = post.image;
     }

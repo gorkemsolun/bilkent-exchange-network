@@ -1,3 +1,4 @@
+import Resizer from "react-image-file-resizer";
 import { urlsGet } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 
@@ -83,7 +84,8 @@ export function prepareUrl(
   return url;
 }
 
-export async function getBase64(file: File) {
+/* Not used but may be used in the future
+export async function getBase64Image(file: File) {
   return new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -93,5 +95,23 @@ export async function getBase64(file: File) {
     reader.onerror = function (error) {
       reject(error);
     };
+  });
+}
+*/
+
+export async function resizeImageFile(file: File) {
+  return new Promise<string>((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      400,
+      400,
+      "JPEG",
+      100,
+      0,
+      (uri) => {
+        resolve(uri as string);
+      },
+      "base64"
+    );
   });
 }

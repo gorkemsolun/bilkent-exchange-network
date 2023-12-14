@@ -4,7 +4,7 @@ import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posttypes";
 import Loader from "../components/loader";
-import { getBase64 } from "../fetchPostHelpers";
+import { resizeImageFile } from "../fetchPostHelpers";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
 
@@ -32,7 +32,7 @@ export default function CreateDonatePost(props: CreatePostProps) {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       category: formData.get("category") as string,
-      image: await getBase64(formData.get("image") as File),
+      image: await resizeImageFile(formData.get("image") as File),
       poster: user._id,
     };
 

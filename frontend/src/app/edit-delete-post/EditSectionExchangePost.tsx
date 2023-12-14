@@ -1,12 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { urlsPost } from "../../data-types/constants";
+import { Navigate } from "react-router-dom";
 import { EditPostProps } from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posttypes";
-import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
-import { Navigate } from "react-router-dom";
+import Loader from "../components/loader";
 
 export default function EditSectionExchangePost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);

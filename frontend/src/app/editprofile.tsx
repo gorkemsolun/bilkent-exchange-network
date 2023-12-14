@@ -6,7 +6,7 @@ import { useAuthContext } from "./authentication/authHelpers.js";
 import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
-import { getBase64 } from "./fetchPostHelpers.ts";
+import { resizeImageFile } from "./fetchPostHelpers.ts";
 
 export default function EditProfile() {
   const { user } = useAuthContext();
@@ -24,7 +24,7 @@ export default function EditProfile() {
 
     userProfile.username = formData.get("username") as string;
     userProfile.description = formData.get("description") as string;
-    const image = await getBase64(formData.get("image") as File);
+    const image = await resizeImageFile(formData.get("image") as File);
     //if no file is submitted then do not include image in the userProfile body
     if (image !== "data:application/octet-stream;base64,")
       userProfile.image = image;
