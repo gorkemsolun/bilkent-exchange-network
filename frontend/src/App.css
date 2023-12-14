@@ -464,6 +464,24 @@ td {
   object-fit: contain;
 }
 
+.postdetails-edit-delete-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-bottom: 2vh;
+  justify-content: center;
+}
+
+.delete-post-modal-body {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  padding: 2vw;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
 .postdetails-user-info-container {
   flex-shrink: 0;
   height: fit-content;

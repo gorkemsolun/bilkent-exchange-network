@@ -58,7 +58,9 @@ export default function BorrowPostDetails() {
           <div className="postdetails-right-container">
             <div className="postdetails-user-info-container">
               <div className="postdetails-username">
-                <Link to={`/profile/` + poster?._id}>{poster?.username}</Link>
+                <Link to={`/profile/` + poster?.userID}>
+                  {poster?.username}
+                </Link>
               </div>
               <div className="postdetails-user-info">
                 <div className="postdetails-user-info-label"> Reputation:</div>

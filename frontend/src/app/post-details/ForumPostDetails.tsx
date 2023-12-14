@@ -56,7 +56,9 @@ export default function ForumPostDetails() {
                 title="Profile Picture"
               />
               <div className="forumpostdetails-username">
-                <Link to={`/profile/` + poster?._id}>{poster?.username}</Link>
+                <Link to={`/profile/` + poster?.userID}>
+                  {poster?.username}
+                </Link>
               </div>
               <div className="forumpostdetails-date">
                 {("" + post.createdAt).slice(11, 16) +

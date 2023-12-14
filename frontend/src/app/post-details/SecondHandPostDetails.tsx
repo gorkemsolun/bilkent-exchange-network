@@ -6,11 +6,15 @@ import Header from "../components/header";
 import Loader from "../components/loader";
 import Navbar from "../components/navbar";
 import { UserProfile } from "../../data-types/datatypes";
+import { useAuthContext } from "../authentication/authHelpers";
+import DeletePostButton from "../edit-delete-post/DeletePostButton";
+import EditPostButton from "../edit-delete-post/EditPostButton";
 
 export default function SecondHandPostDetails() {
   const [post, setPost] = useState<SecondhandPost>({} as SecondhandPost);
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuthContext();
   const { id } = useParams();
 
   useEffect(() => {
@@ -56,9 +60,17 @@ export default function SecondHandPostDetails() {
           </div>
 
           <div className="postdetails-right-container">
+            {post.poster == user._id && (
+              <div className="postdetails-edit-delete-container">
+                <EditPostButton postId={"" + post._id} type="secondhand" />
+                <DeletePostButton postId={"" + post._id} />
+              </div>
+            )}
             <div className="postdetails-user-info-container">
               <div className="postdetails-username">
-                <Link to={`/profile/` + poster?._id}>{poster?.username}</Link>
+                <Link to={`/profile/` + poster?.userID}>
+                  {poster?.username}
+                </Link>
               </div>
               <div className="postdetails-user-info">
                 <div className="postdetails-user-info-label"> Reputation:</div>

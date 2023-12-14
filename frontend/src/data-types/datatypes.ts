@@ -51,10 +51,29 @@ export interface FilterParams {
   offeredSection: number | undefined;
 }
 
+export interface CreatePostButtonProps {
+  type: string;
+}
+
 export interface CreatePostProps {
   onClose: () => void;
 }
 
-export interface CreatePostButtonProps {
+export interface DeletePostButtonProps {
+  postId: string;
+}
+
+export interface DeletePostProps {
+  onClose: () => void;
+  postId: string;
+}
+
+export interface EditPostButtonProps {
   type: string;
+  postId: string;
+}
+
+export interface EditPostProps {
+  onClose: () => void;
+  postId: string;
 }
