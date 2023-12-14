@@ -28,11 +28,20 @@ export const lostfoundPostPOST = async (req, res) => {
     const userId = lostfoundpost.poster;
     const profile = await UserProfile.findOne({ userID: userId });
 
+    const newPostObject = {
+      id: lostfoundpost._id,
+      typename: 'LostFound',
+      title: lostfoundpost.title,
+      offeredCourse: '', 
+      offeredSection: '', 
+      desiredCourse: '', 
+      desiredSection: '', 
+    };
+
     const profileId = profile._id;
-    const newPostId = lostfoundpost._id;
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { ownPosts: newPostId } }
+      { $push: { ownPosts: newPostObject } }
     );
 
     return res.status(201).send(lostfoundpost);

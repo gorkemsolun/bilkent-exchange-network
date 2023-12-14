@@ -28,11 +28,21 @@ export const secondhandPostPOST = async (req, res) => {
     const userId = secondhandpost.poster;
     const profile = await UserProfile.findOne({ userID: userId });
 
+    const newPostObject = {
+      id: secondhandpost._id,
+      typename: 'Secondhand',
+      title: secondhandpost.title,
+      offeredCourse: '', 
+      offeredSection: '', 
+      desiredCourse: '', 
+      desiredSection: '', 
+    };
+
     const profileId = profile._id;
-    const newPostId = secondhandpost._id;
+    
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { ownPosts: newPostId } }
+      { $push: { ownPosts: newPostObject } }
     );
 
     return res.status(201).send(secondhandpost);

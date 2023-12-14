@@ -27,10 +27,20 @@ export const forumPostPOST = async (req, res) => {
     const profile = await UserProfile.findOne({ userID: userId });
 
     const profileId = profile._id;
-    const newPostId = forumpost._id;
+    
+    const newPostObject = {
+      id: forumpost._id,
+      typename: 'Forum',
+      title: forumpost.title,
+      offeredCourse: '', 
+      offeredSection: '', 
+      desiredCourse: '', 
+      desiredSection: '', 
+    };
+    
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { ownPosts: newPostId } }
+      { $push: { ownPosts: newPostObject } }
     );
 
     return res.status(201).send(forumpost);

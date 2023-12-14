@@ -110,3 +110,14 @@ export const defaultFilterParams = {
   desiredSection: undefined,
   offeredSection: undefined,
 };
+
+export const defaultProfile = {
+  userID: "dummy",
+  username: "dum",
+  email: "dum@dum.com",
+  image: "",
+  description: "description",
+  reputation: 0,
+  ownPosts: [[]],
+  savedPosts: []
+}
