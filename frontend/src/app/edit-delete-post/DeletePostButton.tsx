@@ -23,7 +23,12 @@ export default function DeletePostButton(props: DeletePostButtonProps) {
         Delete
       </button>
       {isModalOpen && (
-        <DeletePostModal onClose={handleCloseModal} postId={props.postId} />
+        <DeletePostModal
+          onClose={handleCloseModal}
+          postId={props.postId}
+          profileId={props.profileId}
+          type={props.type}
+        />
       )}
     </div>
   );

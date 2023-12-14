@@ -76,6 +76,7 @@ export const deleteOwnPost = async (req, res) => {
     if (!req.body) {
       throw Error("hollow body");
     }
+    console.log("deleteOwnPost is running");
     const profileId = req.body._id;
     const toBeRemoved = req.body.toBeRemoved;
     await UserProfile.updateOne(

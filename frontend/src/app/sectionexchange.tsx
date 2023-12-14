@@ -46,19 +46,7 @@ export default function SectionExchange() {
   }, [searchTerm, filterParams]);
 
   useEffect(() => {
-    if (sortType === "price-asc") {
-      setSectionexchangePosts(
-        [...sectionexchangePosts].sort(
-          (a: SectionexchangePost, b: SectionexchangePost) => a.price - b.price
-        )
-      );
-    } else if (sortType === "price-desc") {
-      setSectionexchangePosts(
-        [...sectionexchangePosts].sort(
-          (a: SectionexchangePost, b: SectionexchangePost) => b.price - a.price
-        )
-      );
-    } else if (sortType === "date-asc") {
+    if (sortType === "date-asc") {
       setSectionexchangePosts(
         [...sectionexchangePosts].sort(
           (a: SectionexchangePost, b: SectionexchangePost) =>

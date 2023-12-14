@@ -469,7 +469,7 @@ td {
   flex-direction: row;
   width: 100%;
   margin-bottom: 2vh;
-  justify-content: center;
+  justify-content: end;
 }
 
 .delete-post-modal-body {

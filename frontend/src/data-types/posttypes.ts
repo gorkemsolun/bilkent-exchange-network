@@ -52,7 +52,6 @@ export interface SectionexchangePost {
   _id?: string;
   poster: string;
   createdAt?: Date;
-  price: number;
   offeredSection: string;
   desiredSection: string;
   offeredCourse: string;
@@ -64,7 +63,6 @@ export interface ForumPost {
   title: string;
   description: string;
   poster: string;
-  category: string;
   createdAt?: Date;
   entries: ForumEntry[];
 }

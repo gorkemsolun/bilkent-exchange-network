@@ -63,7 +63,11 @@ export default function SecondHandPostDetails() {
             {post.poster == user._id && (
               <div className="postdetails-edit-delete-container">
                 <EditPostButton postId={"" + post._id} type="secondhand" />
-                <DeletePostButton postId={"" + post._id} />
+                <DeletePostButton
+                  postId={"" + post._id}
+                  profileId={"" + poster?._id}
+                  type="secondhand"
+                />
               </div>
             )}
             <div className="postdetails-user-info-container">

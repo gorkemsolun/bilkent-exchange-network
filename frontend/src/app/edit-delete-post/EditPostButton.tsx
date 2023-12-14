@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { EditPostButtonProps } from "../../data-types/datatypes";
-/*import EditBorrowPost from "./EditBorrowPost";
+import EditBorrowPost from "./EditBorrowPost";
 import EditDonatePost from "./EditDonatePost";
 import EditForumPost from "./EditForumPost";
-import EditLostAndFoundPost from "./EditLostAndFoundPost";*/
+import EditLostAndFoundPost from "./EditLostAndFoundPost";
 import EditSecondHandPost from "./EditSecondHandPost";
-//import EditSectionExchangePost from "./EditSectionExchangePost";
+import EditSectionExchangePost from "./EditSectionExchangePost";
 
 export default function EditPostButton(props: EditPostButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,21 +26,27 @@ export default function EditPostButton(props: EditPostButtonProps) {
       {isModalOpen && props.type == "secondhand" && (
         <EditSecondHandPost onClose={handleCloseModal} postId={props.postId} />
       )}
-      {/*{isModalOpen && props.type == "lostandfound" && (
-        <EditLostAndFoundPost onClose={handleCloseModal} />
+      {isModalOpen && props.type == "lostandfound" && (
+        <EditLostAndFoundPost
+          onClose={handleCloseModal}
+          postId={props.postId}
+        />
       )}
       {isModalOpen && props.type == "donate" && (
-        <EditDonatePost onClose={handleCloseModal} />
+        <EditDonatePost onClose={handleCloseModal} postId={props.postId} />
       )}
       {isModalOpen && props.type == "borrow" && (
-        <EditBorrowPost onClose={handleCloseModal} />
+        <EditBorrowPost onClose={handleCloseModal} postId={props.postId} />
       )}
       {isModalOpen && props.type == "sectionexchange" && (
-        <EditSectionExchangePost onClose={handleCloseModal} />
+        <EditSectionExchangePost
+          onClose={handleCloseModal}
+          postId={props.postId}
+        />
       )}
       {isModalOpen && props.type == "forum" && (
-        <EditForumPost onClose={handleCloseModal} />
-      )}*/}
+        <EditForumPost onClose={handleCloseModal} postId={props.postId} />
+      )}
     </div>
   );
 }

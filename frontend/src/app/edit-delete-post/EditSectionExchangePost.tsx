@@ -1,16 +1,35 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { urlsPost } from "../../data-types/constants";
-import { CreatePostProps } from "../../data-types/datatypes";
+import { EditPostProps } from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posttypes";
 import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
+import { Navigate } from "react-router-dom";
 
-export default function CreateSectionExchangePost(props: CreatePostProps) {
+export default function EditSectionExchangePost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);
   const { user } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
+  const [post, setPost] = useState<SectionexchangePost>(
+    {} as SectionexchangePost
+  );
+  const [isEdited, setIsEdited] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3000/sectionexchange/sectionexchangepost/${props.postId}`
+      )
+      .then((res) => {
+        setPost(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  }, [props]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -33,7 +52,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       }
     }
 
-    const post: SectionexchangePost = {
+    const editedPost: SectionexchangePost = {
       offeredCourse: formData.get("offeredCourse") as string,
       offeredSection: formData.get("offeredSection") as string,
       desiredCourse: formData.get("desiredCourse") as string,
@@ -42,7 +61,10 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
     };
 
     axios
-      .post(urlsPost.sectionexchange, post)
+      .put(
+        `http://localhost:3000/sectionexchange/sectionexchangepost/${props.postId}`,
+        editedPost
+      )
       .then((res) => {
         // TODO SUCCESFULLY SENT
       })
@@ -51,8 +73,12 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       });
 
     setLoading(false);
-    props.onClose();
+    setIsEdited(true);
   };
+
+  if (isEdited) {
+    return <Navigate to="/sectionexchange" />;
+  }
 
   return (
     <div className="modal-overlay">
@@ -72,6 +98,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
                   id="offeredCourse"
                   name="offeredCourse"
                   className="form-control"
+                  defaultValue={post.offeredCourse}
                 />
               </div>
               <div>
@@ -81,6 +108,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
                   id="offeredSection"
                   name="offeredSection"
                   className="form-control"
+                  defaultValue={post.offeredSection}
                 />
               </div>
             </div>
@@ -94,6 +122,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
                   id="desiredCourse"
                   name="desiredCourse"
                   className="form-control"
+                  defaultValue={post.desiredCourse}
                 />
               </div>
               <div>
@@ -103,6 +132,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
                   id="desiredSection"
                   name="desiredSection"
                   className="form-control"
+                  defaultValue={post.desiredSection}
                 />
               </div>
             </div>
@@ -111,7 +141,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
 
         <div className="modal-form-group mt-4">
           <button type="submit" className="btn btn-primary">
-            Create Post
+            Edit Post
           </button>
         </div>
         {error && (

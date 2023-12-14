@@ -17,14 +17,9 @@ export default function CreateForumPost(props: CreatePostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    // Check for errors here
     {
       // Check if any field is empty
-      if (
-        !formData.get("title") ||
-        !formData.get("description") ||
-        !formData.get("category")
-      ) {
+      if (!formData.get("title") || !formData.get("description")) {
         setError("ALL INPUT FIELDS MUST BE SPECIFIED");
         setLoading(false);
         return;
@@ -34,8 +29,8 @@ export default function CreateForumPost(props: CreatePostProps) {
     const post: ForumPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
-      category: formData.get("category") as string,
       poster: user._id,
+      entries: [],
     };
 
     axios
@@ -83,17 +78,6 @@ export default function CreateForumPost(props: CreatePostProps) {
               style={{ height: "15vh" }}
             />
           </div>
-        </div>
-
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="category">Category</label>
-          <select id="category" name="category" className="form-control">
-            {categories.forum.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
         </div>
 
         <div className="modal-form-group mt-4">

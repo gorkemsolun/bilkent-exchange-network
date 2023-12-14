@@ -6,12 +6,16 @@ import Loader from "../components/loader";
 import Header from "../components/header";
 import Navbar from "../components/navbar";
 import { UserProfile } from "../../data-types/datatypes";
+import DeletePostButton from "../edit-delete-post/DeletePostButton";
+import EditPostButton from "../edit-delete-post/EditPostButton";
+import { useAuthContext } from "../authentication/authHelpers";
 
 export default function BorrowPostDetails() {
   const [post, setPost] = useState<BorrowPost>({} as BorrowPost);
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     setLoading(true);
@@ -56,6 +60,16 @@ export default function BorrowPostDetails() {
           </div>
 
           <div className="postdetails-right-container">
+            {post.poster == user._id && (
+              <div className="postdetails-edit-delete-container">
+                <EditPostButton postId={"" + post._id} type="borrow" />
+                <DeletePostButton
+                  postId={"" + post._id}
+                  profileId={"" + poster?._id}
+                  type="borrow"
+                />
+              </div>
+            )}
             <div className="postdetails-user-info-container">
               <div className="postdetails-username">
                 <Link to={`/profile/` + poster?.userID}>

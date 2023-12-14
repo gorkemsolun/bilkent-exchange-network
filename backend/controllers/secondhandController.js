@@ -1,4 +1,5 @@
 import { SecondhandPost } from "../models/secondhandpost.js";
+import { UserProfile } from "../models/userProfile.js";
 
 function fieldController(reqBody) {
   if (
@@ -22,6 +23,17 @@ export const secondhandPostPOST = async (req, res) => {
     const newSecondhandpost = req.body;
 
     const secondhandpost = await SecondhandPost.create(newSecondhandpost);
+
+    // Add post to the userProfile's ownposts
+    const userId = secondhandpost.poster;
+    const profile = await UserProfile.findOne({ userID: userId });
+
+    const profileId = profile._id;
+    const newPostId = secondhandpost._id;
+    await UserProfile.updateOne(
+      { _id: profileId },
+      { $push: { ownPosts: newPostId } }
+    );
 
     return res.status(201).send(secondhandpost);
   } catch (err) {

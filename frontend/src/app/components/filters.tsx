@@ -136,7 +136,7 @@ export default function Filters(props: FilterProps) {
             )
           )}
       </div>
-      {(props.type === "secondhand" || props.type === "sectionexchange") && (
+      {props.type === "secondhand" && (
         <div className="mb-3 flex flex-row second-hand-category">
           <div className="mb-1 mr-1 max-w-1/2">
             <label>Min Price</label>

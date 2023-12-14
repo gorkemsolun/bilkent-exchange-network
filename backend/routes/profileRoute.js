@@ -1,12 +1,12 @@
 import express from "express";
-import { 
-    getProfileByUsersID,
-    getProfileByUsername,
-    profileUpdate,
-    addOwnPost,
-    deleteOwnPost,
-    savePost,
-    unSavePost
+import {
+  getProfileByUsersID,
+  getProfileByUsername,
+  profileUpdate,
+  addOwnPost,
+  deleteOwnPost,
+  savePost,
+  unSavePost,
 } from "../controllers/profileController.js";
 
 const router = express.Router();
@@ -15,7 +15,7 @@ const router = express.Router();
   router.use(requireAuth)
 */
 router.get("/profile/:id", getProfileByUsersID);
-router.get("/profile-name", getProfileByUsername)
+router.get("/profile-name", getProfileByUsername);
 router.put("/update-profile", profileUpdate);
 router.put("/add-ownPost", addOwnPost);
 router.put("/delete-ownPost", deleteOwnPost);

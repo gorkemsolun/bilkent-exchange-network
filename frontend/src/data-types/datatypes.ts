@@ -61,11 +61,15 @@ export interface CreatePostProps {
 
 export interface DeletePostButtonProps {
   postId: string;
+  profileId: string;
+  type: string;
 }
 
 export interface DeletePostProps {
   onClose: () => void;
   postId: string;
+  profileId: string;
+  type: string;
 }
 
 export interface EditPostButtonProps {

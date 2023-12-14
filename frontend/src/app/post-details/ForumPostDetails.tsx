@@ -6,12 +6,16 @@ import { ForumPost } from "../../data-types/posttypes";
 import Header from "../components/header";
 import Loader from "../components/loader";
 import Navbar from "../components/navbar";
+import DeletePostButton from "../edit-delete-post/DeletePostButton";
+import EditPostButton from "../edit-delete-post/EditPostButton";
+import { useAuthContext } from "../authentication/authHelpers";
 
 export default function ForumPostDetails() {
   const [post, setPost] = useState<ForumPost>({} as ForumPost);
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     setLoading(true);
@@ -48,6 +52,16 @@ export default function ForumPostDetails() {
         <Loader />
       ) : (
         <div className="forumpostdetails-container">
+          {post.poster == user._id && (
+            <div className="postdetails-edit-delete-container">
+              <EditPostButton postId={"" + post._id} type="forum" />
+              <DeletePostButton
+                postId={"" + post._id}
+                profileId={"" + poster?._id}
+                type="forum"
+              />
+            </div>
+          )}
           <div className="forumpostdetails-first-entry-container">
             <div className="forumpostdetails-entry-top">
               <img

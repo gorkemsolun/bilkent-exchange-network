@@ -45,7 +45,6 @@ export default function EditSecondHandPost(props: EditPostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    // Check for errors here
     {
       // Check if any field is empty
       if (

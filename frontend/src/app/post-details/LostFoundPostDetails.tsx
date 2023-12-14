@@ -6,11 +6,15 @@ import Header from "../components/header";
 import Loader from "../components/loader";
 import Navbar from "../components/navbar";
 import { UserProfile } from "../../data-types/datatypes";
+import EditPostButton from "../edit-delete-post/EditPostButton";
+import DeletePostButton from "../edit-delete-post/DeletePostButton";
+import { useAuthContext } from "../authentication/authHelpers";
 
 export default function LostFoundPostDetails() {
   const [post, setPost] = useState<LostFoundPost>({} as LostFoundPost);
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuthContext();
   const { id } = useParams();
 
   useEffect(() => {
@@ -56,6 +60,16 @@ export default function LostFoundPostDetails() {
           </div>
 
           <div className="postdetails-right-container">
+            {post.poster == user._id && (
+              <div className="postdetails-edit-delete-container">
+                <EditPostButton postId={"" + post._id} type="lostandfound" />
+                <DeletePostButton
+                  postId={"" + post._id}
+                  profileId={"" + poster?._id}
+                  type="lostfound"
+                />
+              </div>
+            )}
             <div className="postdetails-user-info-container">
               <div className="postdetails-username">
                 <Link to={`/profile/` + poster?.userID}>

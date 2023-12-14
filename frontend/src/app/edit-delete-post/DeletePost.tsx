@@ -8,7 +8,28 @@ export default function DeletePost(props: DeletePostProps) {
 
   const handleDelete = async () => {
     axios
-      .delete(`http://localhost:3000/secondhand/secondhandpost/${props.postId}`)
+      .delete(
+        "http://localhost:3000/" +
+          props.type +
+          "/" +
+          props.type +
+          "post/" +
+          props.postId
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // Delete post from profile
+    const body = {
+      profileId: props.profileId,
+      toBeRemoved: props.postId,
+    };
+    axios
+      .put(`http://localhost:3000/profile/delete-ownPost`, body)
       .then((res) => {})
       .catch((err) => {
         console.log(err);
@@ -22,7 +43,7 @@ export default function DeletePost(props: DeletePostProps) {
   };
 
   if (isDeleted) {
-    return <Navigate to="/secondhand" />;
+    return <Navigate to="/myprofile" />;
   }
 
   return (
