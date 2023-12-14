@@ -9,6 +9,7 @@ import { UserProfile } from "../../data-types/datatypes";
 import EditPostButton from "../edit-delete-post/EditPostButton";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import { useAuthContext } from "../authentication/authHelpers";
+import ReportPostButton  from "../edit-delete-post/ReportPostButton";
 
 export default function LostFoundPostDetails() {
   const [post, setPost] = useState<LostFoundPost>({} as LostFoundPost);
@@ -67,6 +68,12 @@ export default function LostFoundPostDetails() {
                   postId={"" + post._id}
                   profileId={"" + poster?._id}
                   type="lostfound"
+                />
+                <ReportPostButton 
+                  postId={"" + post._id}
+                  profileId={"" + poster?._id}
+                  type="lostfound"
+                  reason= { "Enter your reason Reason" } 
                 />
               </div>
             )}

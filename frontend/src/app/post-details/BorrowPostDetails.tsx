@@ -8,6 +8,7 @@ import Navbar from "../components/navbar";
 import { UserProfile } from "../../data-types/datatypes";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import EditPostButton from "../edit-delete-post/EditPostButton";
+import ReportPostButton  from "../edit-delete-post/ReportPostButton";
 import { useAuthContext } from "../authentication/authHelpers";
 
 export default function BorrowPostDetails() {
@@ -67,6 +68,12 @@ export default function BorrowPostDetails() {
                   postId={"" + post._id}
                   profileId={"" + poster?._id}
                   type="borrow"
+                />
+                <ReportPostButton 
+                  postId={"" + post._id}
+                  profileId={"" + poster?._id}
+                  type="borrow"
+                  reason= { "Enter your reason Reason" } 
                 />
               </div>
             )}

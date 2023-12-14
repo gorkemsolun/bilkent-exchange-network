@@ -8,6 +8,7 @@ import Loader from "../components/loader";
 import { UserProfile } from "../../data-types/datatypes";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import EditPostButton from "../edit-delete-post/EditPostButton";
+import ReportPostButton  from "../edit-delete-post/ReportPostButton";
 import { useAuthContext } from "../authentication/authHelpers";
 
 export default function DonatePostDetails() {
@@ -67,6 +68,12 @@ export default function DonatePostDetails() {
                   postId={"" + post._id}
                   profileId={"" + poster?._id}
                   type="donate"
+                />
+                <ReportPostButton 
+                  postId={"" + post._id}
+                  profileId={"" + poster?._id}
+                  type="donate"
+                  reason= { "Enter your reason Reason" } 
                 />
               </div>
             )}

@@ -9,6 +9,7 @@ import { UserProfile } from "../../data-types/datatypes";
 import { useAuthContext } from "../authentication/authHelpers";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import EditPostButton from "../edit-delete-post/EditPostButton";
+import ReportPostButton  from "../edit-delete-post/ReportPostButton";
 
 export default function SecondHandPostDetails() {
   const [post, setPost] = useState<SecondhandPost>({} as SecondhandPost);
@@ -67,6 +68,12 @@ export default function SecondHandPostDetails() {
                   postId={"" + post._id}
                   profileId={"" + poster?._id}
                   type="secondhand"
+                />
+                <ReportPostButton 
+                  postId={"" + post._id}
+                  profileId={"" + poster?._id}
+                  type="secondhand"
+                  reason= { "Enter your reason Reason" } 
                 />
               </div>
             )}
