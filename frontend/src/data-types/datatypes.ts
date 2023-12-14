@@ -22,11 +22,11 @@ export interface UserProfile {
 }
 
 export interface ForumEntry {
+  [x: string]: any;
   _id: string;
   content: string;
   poster: string;
   createdAt: string;
-  voteScore: number;
 }
 
 export interface FilterProps {
@@ -80,4 +80,37 @@ export interface EditPostButtonProps {
 export interface EditPostProps {
   onClose: () => void;
   postId: string;
+}
+
+export interface CreateEntryButtonProps {
+  postId: string;
+}
+
+export interface CreateEntryProps {
+  onClose: () => void;
+  postId: string;
+}
+
+export interface DeleteEntryButtonProps {
+  postId: string;
+  entryId: string;
+}
+
+export interface DeleteEntryProps {
+  onClose: () => void;
+  postId: string;
+  entryId: string;
+}
+
+export interface EditEntryButtonProps {
+  postId: string;
+  entryId: string;
+  entryContent: string;
+}
+
+export interface EditEntryProps {
+  onClose: () => void;
+  postId: string;
+  entryId: string;
+  entryContent: string;
 }

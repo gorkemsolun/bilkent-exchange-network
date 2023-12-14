@@ -64,6 +64,69 @@ export const forumEntryPOST = async (req, res) => {
   }
 };
 
+export const forumEntryPUT = async (req, res) => {
+  try {
+    const { id: postId, entryId } = req.params;
+    const { content, poster } = req.body;
+
+    const forumpost = await ForumPost.findById(postId);
+
+    if (!forumpost) {
+      return res.status(404).send("ForumPost not found");
+    }
+
+    // Find the entry in the entries array
+    const entryToUpdate = forumpost.entries.id(entryId);
+
+    if (!entryToUpdate) {
+      return res.status(404).send("Entry not found");
+    }
+
+    // Update the entry fields
+    entryToUpdate.content = content || entryToUpdate.content;
+    entryToUpdate.poster = poster || entryToUpdate.poster;
+
+    await forumpost.save();
+
+    return res.status(200).send(entryToUpdate);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+};
+
+export const forumEntryDEL = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const entryId = req.params.entryId;
+
+    const forumpost = await ForumPost.findById(id);
+
+    if (!forumpost) {
+      return res.status(404).send("ForumPost not found");
+    }
+
+    // Find the index of the entry in the entries array
+    const entryIndex = forumpost.entries.findIndex(
+      (entry) => entry._id == entryId
+    );
+
+    if (entryIndex === -1) {
+      return res.status(404).send("Entry not found");
+    }
+
+    // Remove the entry from the entries array
+    forumpost.entries.splice(entryIndex, 1);
+
+    await forumpost.save();
+
+    return res.status(204).end();
+  } catch (err) {
+    console.error(err);
+    res.status(500).send(err);
+  }
+};
+
 export const forumPostGET = async (req, res) => {
   try {
     let query = {};

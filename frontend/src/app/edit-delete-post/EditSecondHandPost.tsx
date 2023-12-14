@@ -92,7 +92,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
   };
 
   if (isEdited) {
-    return <Navigate to="/secondhand" />;
+    window.location.reload();
   }
 
   return (

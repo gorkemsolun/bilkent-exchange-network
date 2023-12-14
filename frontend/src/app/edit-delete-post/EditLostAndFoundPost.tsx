@@ -91,7 +91,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
   };
 
   if (isEdited) {
-    return <Navigate to="/lostfound" />;
+    window.location.reload();
   }
 
   return (

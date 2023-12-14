@@ -79,7 +79,7 @@ export default function EditBorrowPost(props: EditPostProps) {
   };
 
   if (isEdited) {
-    return <Navigate to="/borrow" />;
+    window.location.reload();
   }
 
   return (

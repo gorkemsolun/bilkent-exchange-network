@@ -64,7 +64,7 @@ export default function EditForumPost(props: EditPostProps) {
   };
 
   if (isEdited) {
-    return <Navigate to="/forum" />;
+    window.location.reload();
   }
 
   return (

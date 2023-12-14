@@ -1,8 +1,8 @@
 import { useState } from "react";
-import DeletePost from "./DeletePost";
-import { DeletePostButtonProps } from "../../data-types/datatypes";
+import DeleteEntry from "./DeleteEntry";
+import { DeleteEntryButtonProps } from "../../data-types/datatypes";
 
-export default function DeletePostButton(props: DeletePostButtonProps) {
+export default function DeletePostButton(props: DeleteEntryButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function handleDeletePost(): void {
@@ -23,11 +23,10 @@ export default function DeletePostButton(props: DeletePostButtonProps) {
         Delete
       </button>
       {isModalOpen && (
-        <DeletePost
+        <DeleteEntry
           onClose={handleCloseModal}
           postId={props.postId}
-          profileId={props.profileId}
-          type={props.type}
+          entryId={props.entryId}
         />
       )}
     </div>

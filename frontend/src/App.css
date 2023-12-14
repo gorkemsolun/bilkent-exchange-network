@@ -621,9 +621,9 @@ td {
 .forumpostdetails-date {
   font-size: 16px;
   color: #888;
-  align-self: center;
   margin-left: auto;
-  margin-right: 2vw;
+  margin-right: 3px;
+  margin-bottom: 10px;
 }
 
 .forumpostdetails-title {
@@ -671,6 +671,19 @@ td {
   margin-top: 1vh;
   padding-left: 2vw;
   padding-right: 2vw;
+}
+
+.entry-edit-delete-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 2vh;
+  justify-content: end;
+}
+
+.entry-edit-delete-container button {
+  margin-left: 6px;
+  font-size: 13px;
+  text-align: center;
 }
 
 .outer-container {

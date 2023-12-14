@@ -11,6 +11,7 @@ export default function CreateBorrowPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
   const { user } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -48,8 +49,12 @@ export default function CreateBorrowPost(props: CreatePostProps) {
       .finally(() => {
         setLoading(false);
       });
-    props.onClose();
+    setIsSubmitted(true);
   };
+
+  if (isSubmitted) {
+    window.location.reload();
+  }
 
   return (
     <div className="modal-overlay">
