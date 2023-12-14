@@ -11,7 +11,7 @@ import { getBase64 } from "./fetchPostHelpers.ts";
 export default function EditProfile() {
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
-  const [gotProfile, setGotProfile] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile>(
     {} as UserProfile
   );
@@ -39,7 +39,7 @@ export default function EditProfile() {
       });
 
     setLoading(false);
-    setGotProfile(true);
+    setIsSubmitted(true);
   };
 
   // Reset the form to the original values
@@ -74,7 +74,7 @@ export default function EditProfile() {
       });
   }, [user._id]);
 
-  if (gotProfile) {
+  if (isSubmitted) {
     return <Navigate to="/myprofile" />;
   }
 

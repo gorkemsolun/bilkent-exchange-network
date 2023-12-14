@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { ForumEntry } from "../../data-types/datatypes";
+import { Link, useParams } from "react-router-dom";
+import { ForumEntry, UserProfile } from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posttypes";
 import Header from "../components/header";
 import Loader from "../components/loader";
@@ -9,6 +9,7 @@ import Navbar from "../components/navbar";
 
 export default function ForumPostDetails() {
   const [post, setPost] = useState<ForumPost>({} as ForumPost);
+  const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
@@ -27,6 +28,18 @@ export default function ForumPostDetails() {
       });
   }, [id]);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/profile/profile/${post.poster}`)
+      .then((res) => {
+        setPoster(res.data.profile);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  }, [post]);
+
   return (
     <div className="outer-container">
       <Header />
@@ -38,11 +51,13 @@ export default function ForumPostDetails() {
           <div className="forumpostdetails-first-entry-container">
             <div className="forumpostdetails-entry-top">
               <img
-                src="/src/assets/cs319.png"
+                src={poster?.image}
                 className="forumpostdetails-profile-picture"
                 title="Profile Picture"
               />
-              <div className="forumpostdetails-username">{"username"}</div>
+              <div className="forumpostdetails-username">
+                <Link to={`/profile/` + poster?._id}>{poster?.username}</Link>
+              </div>
               <div className="forumpostdetails-date">
                 {("" + post.createdAt).slice(11, 16) +
                   " " +

@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogout } from "../authentication/authHelpers";
+import { useAuthContext, useLogout } from "../authentication/authHelpers";
+import axios from "axios";
+import { UserProfile } from "../../data-types/datatypes";
 
 export default function Header() {
   const { logout } = useLogout();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const { user } = useAuthContext();
+  const [userProfile, setUserProfile] = useState({} as UserProfile);
 
   const handleClick = () => {
     logout();
   };
 
-  // Dummy user data, replace with your actual user data
-  const user = {
-    username: "JohnDoe",
-    image: "./src/assets/cs319.png",
-  };
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .then((res) => {
+        setUserProfile(res.data.profile);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  }, [userProfile]);
 
   return (
     <div className="header-outer">
@@ -24,12 +34,12 @@ export default function Header() {
       >
         <div className="header-profile">
           <img
-            src={user.image}
+            src={userProfile.image}
             className="header-profile-image"
             alt="Profile"
             title="Profile"
           />
-          <span>{user.username}</span>
+          <span>{userProfile.username}</span>
           {isDropdownOpen && (
             <div className="header-profile-dropdown">
               <Link to="/myprofile" className="header-profile-dropdown-link">

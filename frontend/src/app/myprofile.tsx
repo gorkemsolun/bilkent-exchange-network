@@ -20,6 +20,7 @@ export default function MyProfile() {
       .get(`http://localhost:3000/profile/profile/${user._id}`)
       .then((res) => {
         setUserProfile(res.data.profile);
+        console.log(`http://localhost:3000/profile/profile/${user._id}`);
       })
       .catch((err) => {
         console.log(err);

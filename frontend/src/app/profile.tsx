@@ -19,6 +19,7 @@ export default function Profile() {
       .get(`http://localhost:3000/profile/profile/${id}`)
       .then((res) => {
         setUserProfile(res.data.profile);
+        console.log(id);
       })
       .catch((err) => {
         console.log(err);
@@ -26,7 +27,7 @@ export default function Profile() {
       .finally(() => {
         setLoading(false);
       });
-  }, [userProfile, id]);
+  }, []);
 
   return (
     <div className="outer-container">
@@ -38,34 +39,33 @@ export default function Profile() {
         <div className="profileContainer">
           <div className="profileHeader">
             <img
-              src={userProfile.image}
+              src={userProfile?.image}
               className="profileImage"
               alt="Profile Image"
             />
             <div className="profileUserInfo">
-              <p className="profileUsername">@{userProfile.username}</p>
-              <h1>"{"This is someone else's profile"}</h1>
+              <p className="profileUsername">@{userProfile?.username}</p>
             </div>
           </div>
           <div className="profileDetails">
             <div className="profileColumn">
               <div className="profileInfo">
                 <p className="infoLabel">Description:</p>
-                <p className="infoValue">{userProfile.description}</p>
+                <p className="infoValue">{userProfile?.description}</p>
               </div>
               <div className="profileInfo">
                 <p className="infoLabel">Email:</p>
-                <p className="infoValue">{userProfile.email}</p>
+                <p className="infoValue">{userProfile?.email}</p>
               </div>
 
               <div className="profileInfo">
                 <p className="infoLabel">Reputation:</p>
-                <p className="infoValue">{userProfile.reputation}</p>
+                <p className="infoValue">{userProfile?.reputation}</p>
               </div>
               <div className="profileInfo">
                 <p className="infoLabel">Joined at:</p>
                 <p className="infoValue">
-                  {("" + userProfile.createdAt).slice(0, 10)}
+                  {("" + userProfile?.createdAt).slice(0, 10)}
                 </p>
               </div>
             </div>

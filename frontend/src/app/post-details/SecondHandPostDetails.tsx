@@ -5,10 +5,11 @@ import { SecondhandPost } from "../../data-types/posttypes";
 import Header from "../components/header";
 import Loader from "../components/loader";
 import Navbar from "../components/navbar";
+import { UserProfile } from "../../data-types/datatypes";
 
 export default function SecondHandPostDetails() {
-  // TODO: pull user info from backend and put it into the user-info container
   const [post, setPost] = useState<SecondhandPost>({} as SecondhandPost);
+  const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
 
@@ -26,6 +27,18 @@ export default function SecondHandPostDetails() {
         setLoading(false);
       });
   }, [id]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/profile/profile/${post.poster}`)
+      .then((res) => {
+        setPoster(res.data.profile);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {});
+  }, [post]);
 
   return (
     <div className="outer-container">
@@ -45,15 +58,21 @@ export default function SecondHandPostDetails() {
           <div className="postdetails-right-container">
             <div className="postdetails-user-info-container">
               <div className="postdetails-username">
-                <Link to={`/profile`}>{"johndoe"}</Link>
+                <Link to={`/profile/` + poster?._id}>{poster?.username}</Link>
               </div>
               <div className="postdetails-user-info">
                 <div className="postdetails-user-info-label"> Reputation:</div>
-                <div className="postdetails-user-info-value"> {"213"}</div>
+                <div className="postdetails-user-info-value">
+                  {" "}
+                  {poster?.reputation}
+                </div>
               </div>
               <div className="postdetails-user-info">
                 <div className="postdetails-user-info-label"> Joined At:</div>
-                <div className="postdetails-user-info-value">{"1.1.2012"}</div>
+                <div className="postdetails-user-info-value">
+                  {" "}
+                  {("" + poster?.createdAt).slice(0, 10)}
+                </div>
               </div>
             </div>
 
