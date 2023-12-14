@@ -3,9 +3,9 @@ import { useState } from "react";
 import { urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posttypes";
-import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
+import Loader from "../components/loader";
 
 export default function CreateForumPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);

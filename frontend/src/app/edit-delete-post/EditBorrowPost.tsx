@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { categories, urlsPost } from "../../data-types/constants";
+import { Navigate } from "react-router-dom";
+import { categories } from "../../data-types/constants";
 import { EditPostProps } from "../../data-types/datatypes";
 import { BorrowPost } from "../../data-types/posttypes";
-import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
-import { Navigate } from "react-router-dom";
+import Loader from "../components/loader";
 
 export default function EditBorrowPost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);
@@ -103,6 +103,7 @@ export default function EditBorrowPost(props: EditPostProps) {
               name="title"
               className="form-control"
               defaultValue={post.title}
+              placeholder="Enter title"
             />
           </div>
           <div className="modal-form-group" style={{ textAlign: "left" }}>

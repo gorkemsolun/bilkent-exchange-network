@@ -15,7 +15,7 @@ const router = express.Router();
 router.post("/secondhandpost", secondhandPostPOST);
 router.get("/secondhandpost/:id", secondhandPostGETId);
 router.get(
-  "/secondhandpost/c/:categories/p/:price/d/:date/s/:search",
+  "/secondhandpost/pg/:page/lm/:limit/c/:categories/p/:price/d/:date/s/:search",
   secondhandPostGET
 );
 router.put("/secondhandpost/:id", secondhandPostPUT);

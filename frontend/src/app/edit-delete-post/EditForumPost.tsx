@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { EditPostProps } from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posttypes";
-import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
-import { Navigate } from "react-router-dom";
+import Loader from "../components/loader";
 
 export default function EditForumPost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);

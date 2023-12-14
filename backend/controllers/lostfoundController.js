@@ -70,7 +70,9 @@ export const lostfoundPostGET = async (req, res) => {
       query.status = status;
     }
 
-    const lostfoundposts = await LostfoundPost.find(query);
+    const lostfoundposts = await LostfoundPost.find(query)
+      .skip(req.params.page * req.params.limit)
+      .limit(req.params.limit);
 
     return res.status(200).json(lostfoundposts);
   } catch (err) {

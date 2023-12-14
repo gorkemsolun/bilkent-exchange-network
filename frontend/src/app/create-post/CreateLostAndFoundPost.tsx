@@ -3,10 +3,10 @@ import { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { LostFoundPost } from "../../data-types/posttypes";
-import Loader from "../components/loader";
-import { getBase64 } from "../fetchPostHelpers";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
+import Loader from "../components/loader";
+import { resizeImageFile } from "../fetchPostHelpers";
 
 export default function CreateLostAndFoundPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ export default function CreateLostAndFoundPost(props: CreatePostProps) {
     const post: LostFoundPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
-      image: await getBase64(formData.get("image") as File),
+      image: await resizeImageFile(formData.get("image") as File),
       category: formData.get("category") as string,
       status: formData.get("status") as string,
       poster: user._id,

@@ -1,10 +1,13 @@
+import Resizer from "react-image-file-resizer";
 import { urlsGet } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 
 export function prepareUrl(
   searchTerm: string,
   type: string,
-  filterParams?: FilterParams
+  filterParams?: FilterParams,
+  page?: number,
+  limit?: number
 ) {
   let url: string = urlsGet[type as keyof typeof urlsGet];
   if (filterParams) {
@@ -64,6 +67,14 @@ export function prepareUrl(
     }
   }
 
+  if (page && limit) {
+    url = url.replace(":page", String(page));
+    url = url.replace(":limit", String(limit));
+  } else {
+    url = url.replace(":page", "0");
+    url = url.replace(":limit", "10");
+  }
+
   if (searchTerm) {
     url = url.replace(":search", searchTerm);
   } else {
@@ -73,7 +84,8 @@ export function prepareUrl(
   return url;
 }
 
-export async function getBase64(file: File) {
+/* Not used but may be used in the future
+export async function getBase64Image(file: File) {
   return new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -83,5 +95,23 @@ export async function getBase64(file: File) {
     reader.onerror = function (error) {
       reject(error);
     };
+  });
+}
+*/
+
+export async function resizeImageFile(file: File) {
+  return new Promise<string>((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      400,
+      400,
+      "JPEG",
+      100,
+      0,
+      (uri) => {
+        resolve(uri as string);
+      },
+      "base64"
+    );
   });
 }

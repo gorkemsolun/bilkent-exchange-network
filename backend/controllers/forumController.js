@@ -149,7 +149,9 @@ export const forumPostGET = async (req, res) => {
       query.timestamp = { $lte: dateMax };
     }
 
-    const forumposts = await ForumPost.find(query);
+    const forumposts = await ForumPost.find(query)
+      .skip(req.params.page * req.params.limit)
+      .limit(req.params.limit);
 
     return res.status(200).json(forumposts);
   } catch (err) {

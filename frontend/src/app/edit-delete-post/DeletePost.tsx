@@ -1,7 +1,7 @@
 import axios from "axios";
-import { DeletePostProps } from "../../data-types/datatypes";
-import { Navigate } from "react-router-dom";
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
+import { DeletePostProps } from "../../data-types/datatypes";
 
 export default function DeletePost(props: DeletePostProps) {
   const [isDeleted, setIsDeleted] = useState(false);
