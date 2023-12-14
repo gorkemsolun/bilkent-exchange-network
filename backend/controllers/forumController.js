@@ -1,4 +1,5 @@
 import { ForumEntry, ForumPost } from "../models/forumpost.js";
+import { UserProfile } from "../models/userProfile.js";
 
 function fieldController(reqBody) {
   if (
@@ -20,6 +21,17 @@ export const forumPostPOST = async (req, res) => {
     const newForumpost = req.body;
 
     const forumpost = await ForumPost.create(newForumpost);
+
+    // Add post to the userProfile's ownposts
+    const userId = forumpost.poster;
+    const profile = await UserProfile.findOne({ userID: userId });
+
+    const profileId = profile._id;
+    const newPostId = forumpost._id;
+    await UserProfile.updateOne(
+      { _id: profileId },
+      { $push: { ownPosts: newPostId } }
+    );
 
     return res.status(201).send(forumpost);
   } catch (err) {

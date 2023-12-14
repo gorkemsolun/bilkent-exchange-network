@@ -1,4 +1,5 @@
 import { BorrowPost } from "../models/borrowpost.js";
+import { UserProfile } from "../models/userProfile.js";
 
 function fieldController(reqBody) {
   if (
@@ -20,6 +21,17 @@ export const borrowPostPOST = async (req, res) => {
     const newBorrowpost = req.body;
 
     const borrowpost = await BorrowPost.create(newBorrowpost);
+
+    // Add post to the userProfile's ownposts
+    const userId = borrowpost.poster;
+    const profile = await UserProfile.findOne({ userID: userId });
+
+    const profileId = profile._id;
+    const newPostId = borrowpost._id;
+    await UserProfile.updateOne(
+      { _id: profileId },
+      { $push: { ownPosts: newPostId } }
+    );
 
     return res.status(201).send(borrowpost);
   } catch (err) {

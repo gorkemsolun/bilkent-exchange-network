@@ -1,4 +1,5 @@
 import { LostfoundPost } from "../models/lostfoundpost.js";
+import { UserProfile } from "../models/userProfile.js";
 
 function fieldController(reqBody) {
   if (
@@ -22,6 +23,17 @@ export const lostfoundPostPOST = async (req, res) => {
     const newLostfoundpost = req.body;
 
     const lostfoundpost = await LostfoundPost.create(newLostfoundpost);
+
+    // Add post to the userProfile's ownposts
+    const userId = lostfoundpost.poster;
+    const profile = await UserProfile.findOne({ userID: userId });
+
+    const profileId = profile._id;
+    const newPostId = lostfoundpost._id;
+    await UserProfile.updateOne(
+      { _id: profileId },
+      { $push: { ownPosts: newPostId } }
+    );
 
     return res.status(201).send(lostfoundpost);
   } catch (err) {

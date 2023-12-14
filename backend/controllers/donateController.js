@@ -1,4 +1,5 @@
 import { DonatePost } from "../models/donatepost.js";
+import { UserProfile } from "../models/userProfile.js";
 
 function fieldController(reqBody) {
   if (
@@ -20,6 +21,17 @@ export const donatePostPOST = async (req, res) => {
 
     const newDonatepost = req.body;
     const donatepost = await DonatePost.create(newDonatepost);
+
+    // Add post to the userProfile's ownposts
+    const userId = donatepost.poster;
+    const profile = await UserProfile.findOne({ userID: userId });
+
+    const profileId = profile._id;
+    const newPostId = donatepost._id;
+    await UserProfile.updateOne(
+      { _id: profileId },
+      { $push: { ownPosts: newPostId } }
+    );
 
     return res.status(201).send(donatepost);
   } catch (err) {

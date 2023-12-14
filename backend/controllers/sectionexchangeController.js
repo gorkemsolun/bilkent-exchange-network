@@ -1,4 +1,5 @@
 import { SectionexchangePost } from "../models/sectionexchangepost.js";
+import { UserProfile } from "../models/userProfile.js";
 
 function fieldController(reqBody) {
   if (
@@ -23,6 +24,17 @@ export const sectionexchangePostPOST = async (req, res) => {
 
     const sectionexchangepost = await SectionexchangePost.create(
       newSectionexchangepost
+    );
+
+    // Add post to the userProfile's ownposts
+    const userId = sectionexchangepost.poster;
+    const profile = await UserProfile.findOne({ userID: userId });
+
+    const profileId = profile._id;
+    const newPostId = sectionexchangepost._id;
+    await UserProfile.updateOne(
+      { _id: profileId },
+      { $push: { ownPosts: newPostId } }
     );
 
     return res.status(201).send(sectionexchangepost);
