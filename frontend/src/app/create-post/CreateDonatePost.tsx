@@ -3,16 +3,12 @@ import { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posttypes";
-<<<<<<< HEAD
-import { useAuthContext } from "../authentication/authHelpers";
-=======
 import Loader from "../components/loader";
 import { resizeImageFile } from "../fetchPostHelpers";
 import {
   useAuthContext,
   useProfileContext,
 } from "../authentication/authHelpers";
->>>>>>> 6147682 (optimization)
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/loader";
 import { resizeImageFile } from "../fetchPostHelpers";

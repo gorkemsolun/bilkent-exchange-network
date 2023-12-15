@@ -210,13 +210,7 @@ export const forumPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("ForumPost not found");
     }
-<<<<<<< HEAD
-
-    deleteOwnedPosts(result.poster, req.params.id);
-
-=======
     await deleteOwnedPosts(result.poster, req.params.id)
->>>>>>> 6147682 (optimization)
     return res.status(204).send("ForumPost deleted");
   } catch (err) {
     console.log(err);

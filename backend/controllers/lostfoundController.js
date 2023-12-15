@@ -136,13 +136,7 @@ export const lostfoundPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("LostfoundPost not found");
     }
-<<<<<<< HEAD
-
-    deleteOwnedPosts(result.poster, req.params.id);
-
-=======
     await deleteOwnedPosts(result.poster, req.params.id)
->>>>>>> 6147682 (optimization)
     return res.status(204).send("LostfoundPost deleted");
   } catch (err) {
     console.log(err);

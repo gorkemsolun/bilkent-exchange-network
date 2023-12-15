@@ -111,18 +111,7 @@ export const donatePostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("DonatePost not found");
     }
-<<<<<<< HEAD
-    
-    updateOwnedPosts(
-      req.body.title,
-      result.title,
-      result.poster,
-      result._id,
-      "Donate"
-    );
-=======
     await updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Donate");
->>>>>>> 6147682 (optimization)
 
     return res.status(204).send("DonatePost updated");
   } catch (err) {
@@ -138,11 +127,7 @@ export const donatePostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("DonatePost not found");
     }
-<<<<<<< HEAD
-    deleteOwnedPosts(result.poster, req.params.id);
-=======
     await deleteOwnedPosts(result.poster, req.params.id)
->>>>>>> 6147682 (optimization)
 
     return res.status(204).send("DonatePost deleted");
   } catch (err) {

@@ -1,11 +1,8 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
-<<<<<<< HEAD
-=======
 import { ProfileContext } from "../ProfileContext";
 import axios from 'axios';
->>>>>>> 6147682 (optimization)
 
 export const useProfileContext = () => {
   const context = useContext(ProfileContext);

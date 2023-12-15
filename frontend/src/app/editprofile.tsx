@@ -14,15 +14,9 @@ export default function EditProfile() {
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-<<<<<<< HEAD
   const [userProfile, setUserProfile] =
     useState<UserProfile>(defaultUserProfile);
-=======
-  const [userProfile, setUserProfile] = useState<UserProfile>(
-    {} as UserProfile
-  );
   const {profileDispatch} = useProfileContext();
->>>>>>> 6147682 (optimization)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);

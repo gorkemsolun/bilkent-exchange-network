@@ -1,13 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
-=======
 import { useAuthContext, useLogout, useProfileContext } from "../authentication/authHelpers";
-import axios from "axios";
->>>>>>> 6147682 (optimization)
 import { UserProfile } from "../../data-types/datatypes";
-import { useAuthContext, useLogout } from "../authentication/authHelpers";
 
 interface HeaderProps {
   onMessengerClick?: () => void;
