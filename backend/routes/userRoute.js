@@ -4,7 +4,7 @@ import {
   getEmailToken,
   sendEmail,
 } from "../controllers/emailController.js";
-import { loginUser, signupUser } from "../controllers/userController.js";
+import { loginUser, signupUser, deleteUser} from "../controllers/userController.js";
 //controller functions
 
 const authRouter = express.Router();
@@ -23,5 +23,8 @@ authRouter.post("/emailToken", createEmailToken);
 
 //get email token
 authRouter.post("/getEmailToken", getEmailToken);
+
+// delete route
+authRouter.delete("/delete/:userId" , deleteUser);
 
 export default authRouter;

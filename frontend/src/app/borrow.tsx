@@ -14,7 +14,7 @@ import { prepareUrl } from "./fetchPostHelpers";
 
 import Counter from "./components/counter.tsx";
 // import MessengerWindow from "./app/messageWindow";
-import Messenger from "./message";
+import Messenger from "./messageWindow.tsx";
 
 export default function Borrow() {
   const [loading, setLoading] = useState(false);
