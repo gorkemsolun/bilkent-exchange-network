@@ -7,7 +7,7 @@ function fieldController(reqBody) {
     !reqBody.title ||
     !reqBody.description ||
     !reqBody.poster ||
-    !reqBody.categories
+    !reqBody.category
   ) {
     return false;
   }

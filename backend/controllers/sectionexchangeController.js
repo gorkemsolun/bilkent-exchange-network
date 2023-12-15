@@ -1,9 +1,9 @@
 import { SectionexchangePost } from "../models/sectionexchangepost.js";
 import { UserProfile } from "../models/userProfile.js";
 import { deleteOwnedPosts, updateOwnedSecExPost } from "./profileController.js";
+
 function fieldController(reqBody) {
   if (
-    !reqBody.price ||
     !reqBody.poster ||
     !reqBody.offeredSection ||
     !reqBody.desiredSection ||
@@ -12,11 +12,12 @@ function fieldController(reqBody) {
   ) {
     return false;
   }
+  return true;
 }
 
 export const sectionexchangePostPOST = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for sectionexchangepost");
     }
 
@@ -80,18 +81,20 @@ export const sectionexchangePostGET = async (req, res) => {
     } else if (dateMax !== "All" && dateMax) {
       query.timestamp = { $lte: dateMax };
     }
-    if (req.params.offeredCourse !== "undefined") {
+    if (req.params.offeredCourse !== "All") {
       query.offeredCourse = req.params.offeredCourse;
     }
     if (req.params.offeredSection !== "undefined") {
       query.offeredSection = Number(req.params.offeredSection);
     }
-    if (req.params.desiredCourse !== "undefined") {
+    if (req.params.desiredCourse !== "All") {
       query.desiredCourse = req.params.desiredCourse;
     }
     if (req.params.desiredSection !== "undefined") {
       query.desiredSection = Number(req.params.desiredSection);
     }
+
+    console.log(req);
 
     const sectionexchangeposts = await SectionexchangePost.find(query)
       .skip(req.params.page * req.params.limit)
@@ -123,7 +126,7 @@ export const sectionexchangePostGETId = async (req, res) => {
 
 export const sectionexchangePostPUT = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for sectionexchangepost");
     }
 

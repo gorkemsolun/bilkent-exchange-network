@@ -3,10 +3,10 @@ import { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posttypes";
-import Loader from "../components/loader";
-import { resizeImageFile } from "../fetchPostHelpers";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
+import Loader from "../components/loader";
+import { resizeImageFile } from "../fetchPostHelpers";
 
 export default function CreateDonatePost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
@@ -20,14 +20,10 @@ export default function CreateDonatePost(props: CreatePostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    // Check for errors here
-    {
-      // Check if any field is empty
-      if (!formData.get("title") || !formData.get("description")) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (!formData.get("title") || !formData.get("description")) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const post: DonatePost = {

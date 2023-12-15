@@ -9,7 +9,7 @@ function fieldController(reqBody) {
     !reqBody.price ||
     !reqBody.image ||
     !reqBody.poster ||
-    !reqBody.categories
+    !reqBody.category
   ) {
     return false;
   }
