@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { ProfileContext } from "../ProfileContext";
-import axios from 'axios';
+
 
 export const useProfileContext = () => {
   const context = useContext(ProfileContext);

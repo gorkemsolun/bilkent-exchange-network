@@ -10,8 +10,7 @@ import {
   useProfileContext,
 } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
-import Loader from "../components/loader";
-import { resizeImageFile } from "../fetchPostHelpers";
+
 
 export default function CreateDonatePost (props: CreatePostProps) {
   const [loading, setLoading] = useState(false);

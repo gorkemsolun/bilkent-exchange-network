@@ -9,7 +9,7 @@ import {
   useProfileContext,
 } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
-import Loader from "../components/loader";
+
 
 export default function CreateBorrowPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
