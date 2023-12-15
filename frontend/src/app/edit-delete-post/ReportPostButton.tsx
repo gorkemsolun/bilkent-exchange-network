@@ -16,7 +16,7 @@ export default function ReportPostButton(props: ReportPostButtonProps) {
   return (
     <div>
       <button
-        className="btn btn-danger ml-2"
+        className="btn btn-dark ml-2"
         onClick={handleReportPost}
         type="button"
       >
@@ -28,8 +28,6 @@ export default function ReportPostButton(props: ReportPostButtonProps) {
           postId={props.postId}
           profileId={props.profileId}
           type={props.type}
-          reason={"Reason "}
-          // onReasonChange={"Reason"}
         />
       )}
     </div>

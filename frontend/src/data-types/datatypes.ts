@@ -73,17 +73,13 @@ export interface DeletePostProps {
 }
 
 export interface ReportPostButtonProps {
-  onReasonChange: (reason: string) => void
   postId: string;
   profileId: string;
   type: string;
-  reason : string; 
 }
 
 export interface ReportPostProps extends ReportPostButtonProps {
   onClose: () => void;
-  onReasonChange: (reason: string) => void
-  reason: string;
 }
 
 

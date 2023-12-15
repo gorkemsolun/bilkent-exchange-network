@@ -11,7 +11,7 @@ import EditPostButton from "../edit-delete-post/EditPostButton";
 import { useAuthContext } from "../authentication/authHelpers";
 import CreateEntryButton from "../entry/CreateEntryButton";
 import DeleteEntryButton from "../entry/DeleteEntryButton";
-import ReportPostButton  from "../edit-delete-post/ReportPostButton";
+import ReportPostButton from "../edit-delete-post/ReportPostButton";
 import EditEntryButton from "../entry/EditEntryButton";
 
 export default function ForumPostDetails() {
@@ -88,7 +88,8 @@ export default function ForumPostDetails() {
       ) : (
         <div className="forumpostdetails-container">
           <div className="postdetails-edit-delete-container">
-            {post.poster == user._id && (
+            {/* Users cannot edit/delete others' posts and cannot report their own posts*/}
+            {post.poster == user._id ? (
               <>
                 <EditPostButton postId={"" + post._id} type="forum" />
                 <DeletePostButton
@@ -96,13 +97,13 @@ export default function ForumPostDetails() {
                   profileId={"" + poster?._id}
                   type="forum"
                 />
-                <ReportPostButton 
-                  postId={"" + post._id}
-                  profileId={"" + poster?._id}
-                  type="forum"
-                  reason= { "Enter your reason Reason" } 
-                />
               </>
+            ) : (
+              <ReportPostButton
+                postId={"" + post._id}
+                profileId={"" + poster?._id}
+                type="forum"
+              />
             )}
             <CreateEntryButton postId={"" + post._id} />
           </div>
@@ -156,9 +157,6 @@ export default function ForumPostDetails() {
                         entry.createdAt.slice(0, 10)}
                     </div>
                     <div className="entry-edit-delete-container">
-                        
-
-
                       <EditEntryButton
                         postId={"" + post._id}
                         entryId={entry._id}

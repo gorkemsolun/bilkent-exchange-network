@@ -9,7 +9,7 @@ import { UserProfile } from "../../data-types/datatypes";
 import EditPostButton from "../edit-delete-post/EditPostButton";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import { useAuthContext } from "../authentication/authHelpers";
-import ReportPostButton  from "../edit-delete-post/ReportPostButton";
+import ReportPostButton from "../edit-delete-post/ReportPostButton";
 
 export default function LostFoundPostDetails() {
   const [post, setPost] = useState<LostFoundPost>({} as LostFoundPost);
@@ -61,22 +61,24 @@ export default function LostFoundPostDetails() {
           </div>
 
           <div className="postdetails-right-container">
-            {post.poster == user._id && (
-              <div className="postdetails-edit-delete-container">
-                <EditPostButton postId={"" + post._id} type="lostandfound" />
-                <DeletePostButton
+            <div className="postdetails-edit-delete-container">
+              {post.poster == user._id ? (
+                <>
+                  <EditPostButton postId={"" + post._id} type="lostfound" />
+                  <DeletePostButton
+                    postId={"" + post._id}
+                    profileId={"" + poster?._id}
+                    type="lostfound"
+                  />
+                </>
+              ) : (
+                <ReportPostButton
                   postId={"" + post._id}
                   profileId={"" + poster?._id}
                   type="lostfound"
                 />
-                <ReportPostButton 
-                  postId={"" + post._id}
-                  profileId={"" + poster?._id}
-                  type="lostfound"
-                  reason= { "Enter your reason Reason" } 
-                />
-              </div>
-            )}
+              )}
+            </div>
             <div className="postdetails-user-info-container">
               <div className="postdetails-username">
                 <Link to={`/profile/` + poster?.userID}>
