@@ -7,7 +7,29 @@ export interface User {
   email: string;
   password: string;
 }
+export interface OwnPost {
+  id: string;
+  typename: string;
+  title: string;
+  offeredCourse: string;
+  offeredSection: string;
+  desiredCourse: string;
+  desiredSection: string;
+}
 
+export interface UserProfile {
+  _id?: string;
+  userID: string;
+  username: string;
+  email: string;
+  image: string;
+  description: string;
+  reputation: number;
+  ownPosts: OwnPost[]; // Array of objects matching OwnPost schema
+  savedPosts: string[];
+  createdAt?: Date;
+}
+/*
 export interface UserProfile {
   _id?: string;
   userID: string;
@@ -20,7 +42,7 @@ export interface UserProfile {
   savedPosts: [string];
   createdAt?: Date;
 }
-
+*/
 export interface ForumEntry {
   [x: string]: any;
   _id: string;

@@ -1,5 +1,6 @@
 import { DonatePost } from "../models/donatepost.js";
 import { UserProfile } from "../models/userProfile.js";
+import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -109,6 +110,7 @@ export const donatePostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("DonatePost not found");
     }
+    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Donate");
 
     return res.status(204).send("DonatePost updated");
   } catch (err) {
@@ -124,7 +126,8 @@ export const donatePostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("DonatePost not found");
     }
-
+    deleteOwnedPosts(result.poster, req.params.id)
+    
     return res.status(204).send("DonatePost deleted");
   } catch (err) {
     console.log(err);

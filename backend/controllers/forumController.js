@@ -1,5 +1,6 @@
 import { ForumEntry, ForumPost } from "../models/forumpost.js";
 import { UserProfile } from "../models/userProfile.js";
+import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -197,6 +198,8 @@ export const forumPostPUT = async (req, res) => {
       return res.status(404).send("ForumPost not found");
     }
 
+    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Forum");
+
     return res.status(204).send("ForumPost updated");
   } catch (err) {
     console.log(err);
@@ -211,7 +214,7 @@ export const forumPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("ForumPost not found");
     }
-
+    deleteOwnedPosts(result.poster, req.params.id)
     return res.status(204).send("ForumPost deleted");
   } catch (err) {
     console.log(err);

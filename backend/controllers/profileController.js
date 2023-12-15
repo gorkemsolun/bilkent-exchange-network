@@ -128,3 +128,54 @@ export const unSavePost = async (req, res) => {
     return res.status(500).send(err);
   }
 };
+
+export const updateOwnedPosts = async (reqBodyTitle, resultTitle, resultPoster, resultId, type) => {
+  if ( reqBodyTitle && resultTitle !== reqBodyTitle) {
+    const userId = resultPoster;
+    const profile = await UserProfile.findOne({ userID: userId });
+
+    const profileId = profile._id;
+    const newPostObject = {
+    id: resultId,
+    typename: type,
+    title: reqBodyTitle,
+  };
+  await UserProfile.updateOne(
+    { _id: profileId, 'ownPosts.id': resultId },
+    { $set: { 'ownPosts.$': newPostObject } }
+    )
+  }
+}
+
+//used when a post is deleted
+export const deleteOwnedPosts = async (resultPoster, reqParamsId) => {
+    const userId = resultPoster;
+    const profile = await UserProfile.findOne({ userID: userId });
+
+    await UserProfile.updateOne(
+      { _id: profile._id },
+      { $pull: { ownPosts: { id: reqParamsId } } })
+}
+
+export const updateOwnedSecExPost = async (reqBody, resultId, resultPoster) => {
+  if ( reqBody ) {
+    const userId = resultPoster;
+    const profile = await UserProfile.findOne({ userID: userId });
+
+
+    const profileId = profile._id;
+    const newPostObject = {
+    id: resultId,
+    typename: "SectionExchange",
+    title: reqBody.title,
+    offeredCourse: reqBody.offeredCourse, 
+    offeredSection: reqBody.offeredSection, 
+    desiredCourse: reqBody.desiredCourse, 
+    desiredSection: reqBody.desiredSection, 
+  };
+  await UserProfile.updateOne(
+    { _id: profileId, 'ownPosts.id': resultId },
+    { $set: { 'ownPosts.$': newPostObject } },
+    )
+  }
+}
