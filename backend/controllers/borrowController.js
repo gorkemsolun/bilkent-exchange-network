@@ -1,5 +1,6 @@
 import { BorrowPost } from "../models/borrowpost.js";
 import { UserProfile } from "../models/userProfile.js";
+import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -103,10 +104,11 @@ export const borrowPostPUT = async (req, res) => {
     }
 
     const result = await BorrowPost.findByIdAndUpdate(req.params.id, req.body);
-
+    
     if (!result) {
       return res.status(404).send("BorrowPost not found");
     }
+    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Borrow");
 
     return res.status(204).send("BorrowPost updated");
   } catch (err) {
@@ -122,6 +124,8 @@ export const borrowPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("BorrowPost not found");
     }
+
+    deleteOwnedPosts(result.poster, req.params.id)
 
     return res.status(204).send("BorrowPost deleted");
   } catch (err) {

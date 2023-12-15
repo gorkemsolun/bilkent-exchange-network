@@ -1,5 +1,6 @@
 import { LostfoundPost } from "../models/lostfoundpost.js";
 import { UserProfile } from "../models/userProfile.js";
+import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -119,7 +120,7 @@ export const lostfoundPostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("LostfoundPost not found");
     }
-
+    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Lostfound");
     return res.status(204).send("LostfoundPost updated");
   } catch (err) {
     console.log(err);
@@ -134,7 +135,7 @@ export const lostfoundPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("LostfoundPost not found");
     }
-
+    deleteOwnedPosts(result.poster, req.params.id)
     return res.status(204).send("LostfoundPost deleted");
   } catch (err) {
     console.log(err);

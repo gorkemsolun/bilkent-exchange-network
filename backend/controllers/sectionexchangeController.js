@@ -1,6 +1,6 @@
 import { SectionexchangePost } from "../models/sectionexchangepost.js";
 import { UserProfile } from "../models/userProfile.js";
-
+import { updateOwnedSecExPost, deleteOwnedPosts } from "./profileController.js";
 function fieldController(reqBody) {
   if (
     !reqBody.price ||
@@ -130,12 +130,15 @@ export const sectionexchangePostPUT = async (req, res) => {
 
     const result = await SectionexchangePost.findByIdAndUpdate(
       req.params.id,
-      req.body
+      req.body,
+      {new : true}
     );
 
     if (!result) {
       return res.status(404).send("SectionexchangePost not found");
     }
+   
+    updateOwnedSecExPost(req.body, result._id, result.poster)
 
     return res.status(204).send("SectionexchangePost updated");
   } catch (err) {
@@ -151,7 +154,7 @@ export const sectionexchangePostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("SectionexchangePost not found");
     }
-
+    deleteOwnedPosts(result.poster, req.params.id)
     return res.status(204).send("SectionexchangePost deleted");
   } catch (err) {
     console.log(err);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { UserProfile } from "../data-types/datatypes.ts";
+import { OwnPost, UserProfile } from "../data-types/datatypes.ts";
 import { useAuthContext, useLogout, deleteUser} from "./authentication/authHelpers.js";
 import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
@@ -14,8 +14,6 @@ export default function MyProfile() {
   const [userProfile, setUserProfile] = useState<UserProfile>(
     {} as UserProfile
   );
-  // to display own posts
-  const [ownPosts, setOwnFoundPosts] = useState([]);
 
     // Remove account from database
     const handleRemove = async () => {
@@ -41,10 +39,7 @@ export default function MyProfile() {
       })
       .finally(() => {
         setLoading(false);
-      })
-      .then(() => {
-        setOwnFoundPosts(ownPosts);
-      })
+      });
   }, [user._id]);
 
   return (
@@ -105,13 +100,28 @@ export default function MyProfile() {
             </div>
           </div>
           <div className="profilePosts">
-          <p className="statLabel">Posts</p>
-          {ownPosts.map((post) => (
-                    <div className="col-12 mb-4" key={post._id}>
+            <p className="statLabel">Posts</p>
+            <div className="justify-center">
+              <div className="container">
+                <div className="row">
+                  { userProfile.ownPosts ? userProfile.ownPosts.map((post: OwnPost) => (
+                    <div className="col-12 mb-4" key={post.id}>
                       <Link
-                        to={`/forumpost/${post._id}`}
+                        to={
+                          post.typename === "Forum"
+                            ? `/forumpost/${post.id}`
+                            : post.typename  === "Secondhand"
+                            ? `/secondhandpost/${post.id}`
+                            : post.typename  === "SectionExchange"
+                            ? `/sectionexchange/${post.id}`
+                            : post.typename === "Donate"
+                            ? `/donatepost/${post.id}`
+                            : post.typename  === "Borrow"
+                            ? `/borrowpost/${post.id}`
+                            : `/lostfoundpost/${post.id}`
+                        }
                         className="col-12 cursor-pointer"
-                        key={post._id}
+                        key={post.id}
                       >
                         <div className="card w-full">
                           <div className="card-body">
@@ -123,25 +133,28 @@ export default function MyProfile() {
                                 textAlign: "left",
                               }}
                             >
-                              {post.title.length < 50
-                                ? post.title
-                                : post.title.slice(0, 50) + "..."}
+                              {post.typename +":       "}
+                              {post.title}
+                                   
                             </h2>
                             <div
                               className="description-container"
                               style={{ height: "10%", textAlign: "left" }}
                             >
-                              <p className="card-text">
-                                {post.description.length < 315
-                                  ? post.description
-                                  : post.description.slice(0, 315) + "..."}
-                              </p>
+                              {post.typename === "SectionExchange" ? (
+                                <p className="card-text">
+                                 offered Course: {post.offeredCourse ? post.offeredCourse: null}, offered Section: {post.offeredSection ? post.offeredSection: null}, desired Course: {post.desiredCourse ? post.desiredCourse: null}, desired section: {post.desiredSection ? post.desiredSection: null}
+                                </p>
+                              ) : null}
                             </div>
                           </div>
                         </div>
                       </Link>
                     </div>
-                  ))}
+                  )): null}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
