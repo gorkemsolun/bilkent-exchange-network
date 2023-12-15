@@ -1,21 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { defaultUserProfile } from "../data-types/constants.ts";
 import { UserProfile } from "../data-types/datatypes.ts";
 import { useAuthContext } from "./authentication/authHelpers.js";
 import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
 import { resizeImageFile } from "./fetchPostHelpers.ts";
-import {defa}
 
 export default function EditProfile() {
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [userProfile, setUserProfile] = useState<UserProfile>(
-    defaultUserProfile
-  );
+  const [userProfile, setUserProfile] =
+    useState<UserProfile>(defaultUserProfile);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
