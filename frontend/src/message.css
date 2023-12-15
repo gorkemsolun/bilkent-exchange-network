@@ -1,0 +1,87 @@
+.messengerContainer {
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .welcomeText {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  
+  .chatsContainer {
+    display: flex;
+    justify-content: space-between;
+    height: 80vh;
+  }
+  
+  .chatList {
+    width: 30%;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .chatListHeader {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .chatItem {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .chatItem:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .selectedChat {
+    background-color: #e0e0e0;
+  }
+  
+  .selectedChatHeader {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .chatMessagesContainer {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    height: 70%;
+    overflow-y: auto;
+  }
+  
+  .message {
+    margin-bottom: 10px;
+  }
+  
+  .inputContainer {
+    margin-top: 20px;
+    display: flex;
+  }
+  
+  .messageInput {
+    flex: 1;
+    margin-right: 10px;
+    padding: 5px;
+  }
+  
+  .sendButton {
+    padding: 5px 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .sendButton:hover {
+    background-color: #45a049;
+  }
+  

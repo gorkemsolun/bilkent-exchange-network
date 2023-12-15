@@ -70,7 +70,7 @@ export default function Header() {
         </Link>
       </div>
       <div className="header-message-link">
-        <Link to="/login" className="header-message-link">
+        <Link to="/message" className="header-message-link">
           Message
         </Link>
       </div>
