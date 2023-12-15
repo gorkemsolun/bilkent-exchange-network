@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 import Counter from "./components/counter.tsx";
 // import MessengerWindow from "./app/messageWindow";
-import Messenger from "./message";
+import Messenger from "./messenger.tsx";
 
 export default function Forum() {
   const [forumPosts, setForumPosts] = useState<ForumPost[]>([]);
@@ -52,14 +52,24 @@ export default function Forum() {
   }, [searchTerm, filterParams]);
 
   useEffect(() => {
-    
     if (sortType === "date-asc") {
-      setForumPosts([...forumPosts].sort((a : ForumPost, b : ForumPost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+      setForumPosts(
+        [...forumPosts].sort(
+          (a: ForumPost, b: ForumPost) =>
+            new Date(a.createdAt as Date).getTime() -
+            new Date(b.createdAt as Date).getTime()
+        )
+      );
     } else {
-      setForumPosts([...forumPosts].sort((a : ForumPost, b : ForumPost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+      setForumPosts(
+        [...forumPosts].sort(
+          (a: ForumPost, b: ForumPost) =>
+            new Date(b.createdAt as Date).getTime() -
+            new Date(a.createdAt as Date).getTime()
+        )
+      );
     }
   }, [sortType]);
-
 
   return (
     <div className="outer-container">
@@ -69,7 +79,12 @@ export default function Forum() {
         <Filters type="forum" passFilters={setFilterParams}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="forum" onSearch={handleSearch} sortType={sortType} setSortType={setSortType}/>
+            <SearchBar
+              type="forum"
+              onSearch={handleSearch}
+              sortType={sortType}
+              setSortType={setSortType}
+            />
             <CreatePostButton type="forum" />
           </div>
           {loading ? (

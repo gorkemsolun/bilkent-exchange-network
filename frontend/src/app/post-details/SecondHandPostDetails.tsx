@@ -9,7 +9,7 @@ import { UserProfile } from "../../data-types/datatypes";
 import { useAuthContext } from "../authentication/authHelpers";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import EditPostButton from "../edit-delete-post/EditPostButton";
-import ReportPostButton  from "../edit-delete-post/ReportPostButton";
+import ReportPostButton from "../edit-delete-post/ReportPostButton";
 
 export default function SecondHandPostDetails() {
   const [post, setPost] = useState<SecondhandPost>({} as SecondhandPost);
@@ -61,22 +61,24 @@ export default function SecondHandPostDetails() {
           </div>
 
           <div className="postdetails-right-container">
-            {post.poster == user._id && (
-              <div className="postdetails-edit-delete-container">
-                <EditPostButton postId={"" + post._id} type="secondhand" />
-                <DeletePostButton
+            <div className="postdetails-edit-delete-container">
+              {post.poster == user._id ? (
+                <>
+                  <EditPostButton postId={"" + post._id} type="secondhand" />
+                  <DeletePostButton
+                    postId={"" + post._id}
+                    profileId={"" + poster?._id}
+                    type="secondhand"
+                  />
+                </>
+              ) : (
+                <ReportPostButton
                   postId={"" + post._id}
                   profileId={"" + poster?._id}
                   type="secondhand"
                 />
-                <ReportPostButton 
-                  postId={"" + post._id}
-                  profileId={"" + poster?._id}
-                  type="secondhand"
-                  reason= { "Enter your reason Reason" } 
-                />
-              </div>
-            )}
+              )}
+            </div>
             <div className="postdetails-user-info-container">
               <div className="postdetails-username">
                 <Link to={`/profile/` + poster?.userID}>

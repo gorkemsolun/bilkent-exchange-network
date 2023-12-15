@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import '../message.css'; // Link to your CSS file
-import MessengerPage from "./message.tsx"
+import React, { useState } from "react";
+import "../message.css"; // Link to your CSS file
+import MessengerPage from "./messenger.tsx";
 const MessengerWindow = () => {
   const [isWindowOpen, setIsWindowOpen] = useState(false);
 
@@ -23,5 +23,3 @@ const MessengerWindow = () => {
 };
 
 export default MessengerWindow;
-
-
