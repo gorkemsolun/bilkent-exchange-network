@@ -11,7 +11,6 @@ import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton";
 import { prepareUrl } from "./fetchPostHelpers";
-import Messenger from "./messageWindow.tsx";
 
 export default function Borrow() {
   const [loading, setLoading] = useState(false);

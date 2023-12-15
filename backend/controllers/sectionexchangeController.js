@@ -1,9 +1,9 @@
 import { SectionexchangePost } from "../models/sectionexchangepost.js";
 import { UserProfile } from "../models/userProfile.js";
 import { deleteOwnedPosts, updateOwnedSecExPost } from "./profileController.js";
+
 function fieldController(reqBody) {
   if (
-    !reqBody.price ||
     !reqBody.poster ||
     !reqBody.offeredSection ||
     !reqBody.desiredSection ||
@@ -12,11 +12,12 @@ function fieldController(reqBody) {
   ) {
     return false;
   }
+  return true;
 }
 
 export const sectionexchangePostPOST = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for sectionexchangepost");
     }
 
@@ -123,7 +124,7 @@ export const sectionexchangePostGETId = async (req, res) => {
 
 export const sectionexchangePostPUT = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for sectionexchangepost");
     }
 

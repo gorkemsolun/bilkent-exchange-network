@@ -1,5 +1,5 @@
 import Resizer from "react-image-file-resizer";
-import { urlsGet } from "../data-types/constants.ts";
+import { defaultImage, urlsGet } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 
 export function prepareUrl(
@@ -102,6 +102,9 @@ export async function getBase64Image(file: File) {
 */
 
 export async function resizeImageFile(file: File) {
+  if (!file || !file.type.includes("image")) {
+    return defaultImage;
+  }
   return new Promise<string>((resolve) => {
     Resizer.imageFileResizer(
       file,

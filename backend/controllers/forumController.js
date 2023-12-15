@@ -3,12 +3,7 @@ import { UserProfile } from "../models/userProfile.js";
 import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
-  if (
-    !reqBody.title ||
-    !reqBody.description ||
-    !reqBody.poster ||
-    !reqBody.categories
-  ) {
+  if (!reqBody.title || !reqBody.description || !reqBody.poster) {
     return false;
   }
   return true;

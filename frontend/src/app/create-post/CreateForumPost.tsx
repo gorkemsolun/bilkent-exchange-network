@@ -19,13 +19,10 @@ export default function CreateForumPost(props: CreatePostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    {
-      // Check if any field is empty
-      if (!formData.get("title") || !formData.get("description")) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (!formData.get("title") || !formData.get("description")) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const post: ForumPost = {
