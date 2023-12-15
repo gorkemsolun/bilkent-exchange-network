@@ -1,112 +1,166 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import ChatItem from "./chatItem.tsx"; // Import the ChatItem component
 import "../message.css"; // Link to your CSS file
+import { useAuthContext } from "./authentication/authHelpers.ts";
+import Loader from "./components/loader.tsx";
+import { Conversation, Message } from "../data-types/datatypes.ts";
 
 interface MessengerProps {
   onMessageLinkClick?: () => void;
 }
 
 const MessengerPage = (props: MessengerProps) => {
-  const [user, setUser] = useState("John Doe");
-  const [selectedChat, setSelectedChat] = useState(null);
-  const [newMessage, setNewMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const { user } = useAuthContext();
+  const [conversations, setConversations] = useState([]);
+  const [selectedConversation, setSelectedConversation] = useState(
+    {} as Conversation
+  );
+  const [isInConversation, setIsInCoversation] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+
+    axios
+      .get("http://localhost:3000/conversation/conversation/userID/" + user._id)
+      .then((res) => {
+        console.log(res.data);
+        setConversations(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [props]);
 
   const handleSendMessage = () => {
-    if (newMessage.trim() !== "") {
-      const newMessageObj = {
-        content: newMessage,
-        sender: user,
-        timestamp: new Date().toLocaleTimeString(),
-      };
-
-      setMessages([...messages, newMessageObj]);
-      setNewMessage("");
-    }
+    // send message to server
   };
 
-  const handleSelectChat = async (chatTitle) => {
-    setSelectedChat(chatTitle);
-
-    try {
-      // Fetch chat messages for the selected chat
-      const response = await axios.get(`/messages/${chatTitle}`);
-      const chatMessages = response.data.messages; // Adjust based on your API response structure
-
-      setMessages(chatMessages);
-    } catch (error) {
-      console.error("Error fetching chat messages:", error);
-    }
-  };
-
-  const handleClose = () => {
+  const handleCloseMessenger = () => {
     if (props.onMessageLinkClick) {
       props.onMessageLinkClick();
     }
   };
 
+  function getUsernameOfConversation(conversation: Conversation) {
+    let url = "http://localhost:3000/profile/profile/";
+    if (conversation.userIDs[0] === user._id) {
+      url += conversation.userIDs[1];
+    } else {
+      url += conversation.userIDs[0];
+    }
+
+    axios
+      .get(url)
+      .then((res) => {
+        return res.data.profile.username;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function getLastMessageOfConversation(messages: Message[]) {
+    if (messages.length === 0) {
+      return "";
+    }
+    return messages[messages.length - 1].message;
+  }
+
   return (
-    <div className="messengerContainer">
-      <div className="messengerCloseButton" onClick={handleClose}>
+    <div className="messenger-container">
+      <div className="messenger-close-button" onClick={handleCloseMessenger}>
         {"❯"}
       </div>
-      <div className="welcomeText">
-        <h1>Messages</h1>
-      </div>
 
-      <div className="chatsContainer">
-        <div className="chatList">
-          <h2 className="chatListHeader">My Chats</h2>
-          {/* Use the ChatItem component for each chat in the list */}
-          <ChatItem
-            chatTitle="Chat 1"
-            onSelectChat={handleSelectChat}
-            isActive={selectedChat === "Chat 1"}
-          />
-          <ChatItem
-            chatTitle="Chat 2"
-            onSelectChat={handleSelectChat}
-            isActive={selectedChat === "Chat 2"}
-          />
-          <ChatItem
-            chatTitle="Chat 3"
-            onSelectChat={handleSelectChat}
-            isActive={selectedChat === "Chat 3"}
-          />
+      {!isInConversation ? (
+        <div className="messenger-menu-container">
+          <div className="messenger-menu-top-text">Conversations</div>
+          <div className="messenger-menu">
+            {conversations.map((conversation: Conversation) => (
+              <div
+                className="messenger-menu-item"
+                onClick={() => {
+                  setSelectedConversation(conversation);
+                  setIsInCoversation(true);
+                }}
+              >
+                <div className="messenger-menu-item-top-half">
+                  <label className="messenger-menu-item-username">
+                    {"" + getUsernameOfConversation(conversation)}
+                  </label>
+                  <label className="messenger-menu-item-date">
+                    {"" +
+                      conversation.updatedAt?.toString().slice(11, 16) +
+                      " " +
+                      conversation.updatedAt?.toString().slice(0, 10)}
+                  </label>
+                </div>
+                <div className="messenger-menu-item-bottom-half">
+                  <label className="messenger-menu-item-last-message">
+                    {getLastMessageOfConversation(conversation.messages)
+                      .length > 40
+                      ? getLastMessageOfConversation(
+                          conversation.messages
+                        ).slice(0, 40) + "..."
+                      : getLastMessageOfConversation(conversation.messages)}
+                  </label>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
+      ) : (
+        <div className="messenger-conversation-container">
+          <div
+            className="messenger-conversation-back-button"
+            onClick={() => {
+              setIsInCoversation(false);
+              setSelectedConversation({} as Conversation);
+            }}
+          >
+            {"❮ Back"}
+          </div>
 
-        <div className="chatBox">
-          <div className="selectedChat">
-            <h2 className="selectedChatHeader">
-              {selectedChat
-                ? `Selected Chat: ${selectedChat}`
-                : "No Chat Selected"}
-            </h2>
-            <div className="chatMessagesContainer">
-              {messages.map((message, index) => (
-                <div key={index} className="message">
-                  <strong>{message.sender}</strong> ({message.timestamp}):{" "}
-                  {message.content}
+          <div className="messenger-conversation">
+            <label className="messenger-conversation-username">
+              {"" + getUsernameOfConversation(selectedConversation)}
+            </label>
+
+            <div className="messenger-conversation-messages">
+              {selectedConversation.messages.map((message: Message) => (
+                <div
+                  key={message._id}
+                  className="messenger-conversation-message"
+                >
+                  <label className="messenger-conversation-message-sender">
+                    {"sender"}
+                  </label>
+                  <p className="messenger-conversation-message-content">
+                    {message.message}
+                  </p>
                 </div>
               ))}
             </div>
 
-            <div className="inputContainer">
-              <input
-                type="text"
+            <div className="messenger-conversation-input-container">
+              <textarea
+                className="messenger-conversation-input"
                 placeholder="Type your message..."
-                className="messageInput"
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
               />
-              <button className="sendButton" onClick={handleSendMessage}>
+              <button
+                className="messenger-conversation-send-button"
+                onClick={handleSendMessage}
+              >
                 Send
               </button>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

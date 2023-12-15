@@ -696,7 +696,7 @@ td {
   position: fixed;
   top: 0;
   right: 0;
-  width: 30vw;
+  width: 28vw;
   height: 95vh;
   z-index: 1000; /* Set a higher z-index than other elements */
   display: flex;
@@ -706,15 +706,176 @@ td {
   border-radius: 20px;
   border: #007bff 2px solid;
   margin-top: 3px;
+  transition: transform 0.5s ease; /* Adjust the duration and timing function as needed */
 }
 
-.messengerCloseButton {
+.messenger-box.closed {
+  transform: translateX(100%); /* Move to the right to close */
+}
+
+.messenger-close-button {
   height: fit-content;
   width: fit-content;
   margin-right: auto;
   font-size: 30px;
-  margin-top: -2vh;
   font-weight: bolder;
+  margin-left: 1vw;
+}
+
+.messenger-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.messenger-menu-top-text {
+  font-size: 30px;
+  font-weight: bolder;
+  text-align: left;
+}
+
+.messenger-menu-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  margin-left: 1vw;
+}
+
+.messenger-menu {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: fit-content;
+  text-align: left;
+}
+
+.messenger-menu-item {
+  width: 100%;
+  height: fit-content;
+  text-align: left;
+  border: #007bff 2px solid;
+  border-radius: 15px;
+  margin-top: 2vh;
+  padding-left: 5px;
+  padding-bottom: 1px;
+}
+
+.messenger-menu-item-top-half {
+  display: flex;
+  flex-direction: row;
+}
+
+.messenger-menu-item-username {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.messenger-menu-item-date {
+  margin-left: auto;
+  margin-right: 1vw;
+}
+
+.messenger-conversation-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  margin-left: 1vw;
+}
+
+.messenger-conversation-back-button {
+  text-align: left;
+  border: #000000 2px solid;
+  border-radius: 10px;
+  width: fit-content;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.messenger-conversation {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 70%;
+  text-align: left;
+  margin-top: 2vh;
+}
+
+.messenger-conversation-username {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.messenger-conversation-messages {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 70vh;
+  text-align: left;
+  margin-top: 2vh;
+  overflow: auto;
+  border: black 2px solid;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.messenger-conversation-message {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: fit-content;
+  text-align: left;
+  border: black 1px solid;
+  border-radius: 20px;
+  padding-left: 8px;
+  padding-top: 2px;
+}
+
+.messenger-conversation-message-sender {
+  font-size: 15px;
+  font-weight: bolder;
+  margin-bottom: -5px;
+}
+
+.messenger-conversation-message-content {
+  line-height: 115%;
+  margin-bottom: 4px;
+}
+
+.messenger-conversation-input-container {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  height: fit-content;
+  margin-top: 8px;
+}
+
+.messenger-conversation-input {
+  width: 78%;
+  height: 6vh;
+  border: #007bff 1px solid;
+  border-radius: 20px;
+  padding-top: 6px;
+  padding-left: 8px;
+}
+
+.messenger-conversation-send-button {
+  width: 22%;
+  height: 6vh;
+  border: #007bff 1px solid;
+  border-radius: 20px;
+  padding: 6px;
+  background-color: rgb(8, 139, 8);
+  color: white;
+  margin-left: 2px;
 }
 
 .header-dmbox-image {

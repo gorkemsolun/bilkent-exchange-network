@@ -155,8 +155,7 @@ export default function LostFound() {
           )}
         </div>
         <div
-          className="messenger-box"
-          style={{ display: isCounterVisible ? "block" : "none" }}
+          className={`messenger-box ${isCounterVisible ? "open" : "closed"}`}
         >
           <Messenger onMessageLinkClick={handleToggleCounter} />
         </div>

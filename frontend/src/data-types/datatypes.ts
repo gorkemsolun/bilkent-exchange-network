@@ -43,6 +43,22 @@ export interface UserProfile {
   createdAt?: Date;
 }
 */
+
+export interface Conversation {
+  _id?: string;
+  userIDs: [String];
+  messages: [];
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface Message {
+  _id?: string;
+  userID: string;
+  message: string;
+  createdAt?: Date;
+}
+
 export interface ForumEntry {
   [x: string]: any;
   _id: string;
