@@ -134,7 +134,6 @@ export default function Borrow() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Messenger />}</div>
       </div>
     </div>
   );
