@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.post("/conversation", conversationPOST);
 router.get("/conversation/userID/:id", conversationGETByUserID);
-router.put("/conversation/convetsationID/:id", conversationPUTUpdate);
-router.get("/conversation/convetsationID/:id", conversationGETByID);
+router.put("/conversation/conversationID/:id", conversationPUTUpdate);
+router.get("/conversation/conversationID/:id", conversationGETByID);
 
 export default router;

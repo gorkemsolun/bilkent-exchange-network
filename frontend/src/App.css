@@ -797,6 +797,7 @@ td {
   padding-bottom: 2px;
   padding-left: 5px;
   padding-right: 5px;
+  background-color: #aaa;
 }
 
 .messenger-conversation {
@@ -818,7 +819,7 @@ td {
   display: flex;
   flex-direction: column;
   width: 90%;
-  height: 70vh;
+  height: 85vh;
   text-align: left;
   margin-top: 2vh;
   overflow: auto;
@@ -832,11 +833,19 @@ td {
   flex-direction: column;
   width: 80%;
   height: fit-content;
-  text-align: left;
   border: black 1px solid;
   border-radius: 20px;
   padding-left: 8px;
   padding-top: 2px;
+  margin-top: 1vh;
+}
+
+.messenger-conversation-message.incoming {
+  text-align: left;
+}
+
+.messenger-conversation-message.outgoing {
+  margin-left: auto;
 }
 
 .messenger-conversation-message-sender {
@@ -865,6 +874,7 @@ td {
   border-radius: 20px;
   padding-top: 6px;
   padding-left: 8px;
+  color: white;
 }
 
 .messenger-conversation-send-button {

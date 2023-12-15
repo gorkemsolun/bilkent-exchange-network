@@ -46,10 +46,11 @@ export interface UserProfile {
 
 export interface Conversation {
   _id?: string;
-  userIDs: [String];
-  messages: [];
+  userIDs: string[];
+  messages: Message[];
   createdAt?: Date;
   updatedAt?: Date;
+  username: string; // username of the other user
 }
 
 export interface Message {
