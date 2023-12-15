@@ -2,17 +2,29 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserProfile } from "../data-types/datatypes.ts";
-import { useAuthContext } from "./authentication/authHelpers.js";
+import { useAuthContext, useLogout, deleteUser} from "./authentication/authHelpers.js";
 import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
 
 export default function MyProfile() {
+  const { logout } = useLogout();
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile>(
     {} as UserProfile
   );
+
+    // Remove account from database
+    const handleRemove = async () => {
+      await deleteUser(user._id); 
+      handleLogOut(); 
+    };
+
+    // before remove, account is loged out
+    const handleLogOut = () => {
+      logout();
+    };
 
   useEffect(() => {
     setLoading(true);
@@ -54,6 +66,15 @@ export default function MyProfile() {
               className="profileEditIcon"
               title="Edit"
             />
+          </Link>
+          <Link to={"/login"}>
+          <button
+              type="button"
+              className="btn btn-danger"
+              onClick={handleRemove}
+            >
+              Remove Account 
+          </button>
           </Link>
           <div className="profileDetails">
             <div className="profileColumn">

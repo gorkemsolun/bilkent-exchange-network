@@ -24,7 +24,7 @@ export default function Forum() {
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
   const [isCounterVisible, setCounterVisible] = useState(true);
-
+  
   const handleToggleCounter = () => {
     setCounterVisible(!isCounterVisible);
   };
@@ -134,6 +134,7 @@ export default function Forum() {
             </div>
           )}
         </div>
+        <div>{isCounterVisible && <Messenger/>}</div>
       </div>
     </div>
   );
