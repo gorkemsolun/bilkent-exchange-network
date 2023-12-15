@@ -1,10 +1,20 @@
-import React from 'react';
+import React from "react";
 
-const ChatItem = ({ chatTitle, onSelectChat, isActive }) => {
+interface ChatItemProps {
+  chatTitle: string;
+  onSelectChat: (chatTitle: string) => void;
+  isActive: boolean;
+}
+
+const ChatItem: React.FC<ChatItemProps> = ({ chatTitle, onSelectChat, isActive }) => {
+  const handleChatClick = () => {
+    onSelectChat(chatTitle);
+  };
+
   return (
     <div
-      className={`chatItem ${isActive ? 'active' : ''}`}
-      onClick={() => onSelectChat(chatTitle)}
+      className={`chatItem ${isActive ? "activeChat" : ""}`}
+      onClick={handleChatClick}
     >
       {chatTitle}
     </div>
