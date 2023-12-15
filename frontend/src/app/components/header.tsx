@@ -3,13 +3,12 @@ import { Link } from "react-router-dom";
 import { useAuthContext, useLogout } from "../authentication/authHelpers";
 import axios from "axios";
 import { UserProfile } from "../../data-types/datatypes";
-import { Button } from "../../bootstrap";
 
 interface HeaderProps {
   onMessageLinkClick?: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ onMessageLinkClick }) => {
+export default function Header(props: HeaderProps) {
   const { logout } = useLogout();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const { user } = useAuthContext();
@@ -75,12 +74,12 @@ const Header: React.FC<HeaderProps> = ({ onMessageLinkClick }) => {
         </Link>
       </div>
       <div className="header-message-link">
-        <button className="btn btn-primary" onClick={onMessageLinkClick}>
-          Message
-        </button>
+        <img
+          src="./src/assets/dmbox.png"
+          className="header-dmbox-image"
+          onClick={props.onMessageLinkClick}
+        />
       </div>
     </div>
   );
-};
-
-export default Header;
+}

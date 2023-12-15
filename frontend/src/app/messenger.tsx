@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import axios from "axios";
-import ChatItem from './chatItem.tsx'; // Import the ChatItem component
-import '../message.css'; // Link to your CSS file
+import ChatItem from "./chatItem.tsx"; // Import the ChatItem component
+import "../message.css"; // Link to your CSS file
 
-const MessengerPage = () => {
-  const [user, setUser] = useState('John Doe');
+interface MessengerProps {
+  onMessageLinkClick?: () => void;
+}
+
+const MessengerPage = (props: MessengerProps) => {
+  const [user, setUser] = useState("John Doe");
   const [selectedChat, setSelectedChat] = useState(null);
-  const [newMessage, setNewMessage] = useState('');
+  const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  
+
   const handleSendMessage = () => {
-    if (newMessage.trim() !== '') {
+    if (newMessage.trim() !== "") {
       const newMessageObj = {
         content: newMessage,
         sender: user,
@@ -18,7 +22,7 @@ const MessengerPage = () => {
       };
 
       setMessages([...messages, newMessageObj]);
-      setNewMessage('');
+      setNewMessage("");
     }
   };
 
@@ -32,17 +36,24 @@ const MessengerPage = () => {
 
       setMessages(chatMessages);
     } catch (error) {
-      console.error('Error fetching chat messages:', error);
+      console.error("Error fetching chat messages:", error);
+    }
+  };
+
+  const handleClose = () => {
+    if (props.onMessageLinkClick) {
+      props.onMessageLinkClick();
     }
   };
 
   return (
     <div className="messengerContainer">
-      {user && (
-        <div className="welcomeText">
-          <h1>Welcome, {user}!</h1>
-        </div>
-      )}
+      <div className="messengerCloseButton" onClick={handleClose}>
+        {"❯"}
+      </div>
+      <div className="welcomeText">
+        <h1>Messages</h1>
+      </div>
 
       <div className="chatsContainer">
         <div className="chatList">
@@ -67,11 +78,16 @@ const MessengerPage = () => {
 
         <div className="chatBox">
           <div className="selectedChat">
-            <h2 className="selectedChatHeader">{selectedChat ? `Selected Chat: ${selectedChat}` : 'No Chat Selected'}</h2>
+            <h2 className="selectedChatHeader">
+              {selectedChat
+                ? `Selected Chat: ${selectedChat}`
+                : "No Chat Selected"}
+            </h2>
             <div className="chatMessagesContainer">
               {messages.map((message, index) => (
                 <div key={index} className="message">
-                  <strong>{message.sender}</strong> ({message.timestamp}): {message.content}
+                  <strong>{message.sender}</strong> ({message.timestamp}):{" "}
+                  {message.content}
                 </div>
               ))}
             </div>

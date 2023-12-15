@@ -13,7 +13,7 @@ import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import { prepareUrl } from "./fetchPostHelpers.ts";
 import Counter from "./components/counter.tsx";
 // import MessengerWindow from "./app/messageWindow";
-import Messenger from "./message";
+import Messenger from "./messenger.tsx";
 export default function Secondhand() {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -154,7 +154,7 @@ export default function Secondhand() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Messenger/>}</div>
+        <div>{isCounterVisible && <Messenger />}</div>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ import { prepareUrl } from "./fetchPostHelpers.ts";
 
 import Counter from "./components/counter.tsx";
 // import MessengerWindow from "./app/messageWindow";
-import Messenger from "./message";
+import Messenger from "./messenger.tsx";
 
 export default function SectionExchange() {
   const [sectionexchangePosts, setSectionexchangePosts] = useState([]);
@@ -160,8 +160,7 @@ export default function SectionExchange() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Messenger/>}
-        </div>
+        <div>{isCounterVisible && <Messenger />}</div>
       </div>
     </div>
   );

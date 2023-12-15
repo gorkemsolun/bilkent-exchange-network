@@ -14,7 +14,7 @@ import { prepareUrl } from "./fetchPostHelpers.ts";
 
 import Counter from "./components/counter.tsx";
 // import MessengerWindow from "./app/messageWindow";
-import Messenger from "./message";
+import Messenger from "./messenger.tsx";
 
 export default function LostFound() {
   const [loading, setLoading] = useState(false);
@@ -34,6 +34,7 @@ export default function LostFound() {
     setLoading(true);
     const url = prepareUrl(searchTerm, "lostfound", filterParams);
     console.log(url);
+    setCounterVisible(false);
 
     axios
       .get(url)
@@ -153,7 +154,12 @@ export default function LostFound() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Messenger/>}</div>
+        <div
+          className="messenger-box"
+          style={{ display: isCounterVisible ? "block" : "none" }}
+        >
+          <Messenger onMessageLinkClick={handleToggleCounter} />
+        </div>
       </div>
     </div>
   );
