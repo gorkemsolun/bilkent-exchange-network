@@ -32,18 +32,14 @@ export default function DeletePost(props: DeletePostProps) {
         console.log(err);
       });
 
-    await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
-      .then((res) => {
-        localStorage.setItem("profile", JSON.stringify(res.data.profile));
-        profileDispatch({ type: "UPDATE", payload: res.data.profile });
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        //
-      });
+    let profile = JSON.parse(localStorage.getItem("profile") as string);
+    let index;
+
+    if (profile)
+      index = profile.ownPosts.findIndex((post) => post.id === props.postId);
+    if (index) profile.ownPosts.splice(index, 1);
+    localStorage.setItem("profile", JSON.stringify(profile));
+    profileDispatch({ type: "UPDATE", payload: profile });
     setLoading(false);
     setIsDeleted(true);
   };
