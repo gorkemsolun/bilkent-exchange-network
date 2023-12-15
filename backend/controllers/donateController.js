@@ -27,10 +27,20 @@ export const donatePostPOST = async (req, res) => {
     const profile = await UserProfile.findOne({ userID: userId });
 
     const profileId = profile._id;
-    const newPostId = donatepost._id;
+
+    const newPostObject = {
+      id: donatepost._id,
+      typename: 'Donate',
+      title: donatepost.title,
+      offeredCourse: '', 
+      offeredSection: '', 
+      desiredCourse: '', 
+      desiredSection: '', 
+    };
+
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { ownPosts: newPostId } }
+      { $push: { ownPosts: newPostObject } }
     );
 
     return res.status(201).send(donatepost);
