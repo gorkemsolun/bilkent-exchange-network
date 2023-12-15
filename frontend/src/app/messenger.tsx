@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
-import ChatItem from "./chatItem.tsx"; // Import the ChatItem component
+import ChatItem from "./chatItem"; // Import the ChatItem component
 import "../message.css"; // Link to your CSS file
+
+interface Message {
+  content: string;
+  sender: string;
+  timestamp: string;
+}
 
 interface MessengerProps {
   onMessageLinkClick?: () => void;
 }
 
-const MessengerPage = (props: MessengerProps) => {
+const MessengerPage: React.FC<MessengerProps> = (props: MessengerProps) => {
   const [user, setUser] = useState("John Doe");
-  const [selectedChat, setSelectedChat] = useState(null);
-  const [newMessage, setNewMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [selectedChat, setSelectedChat] = useState<string | null>(null);
+  const [newMessage, setNewMessage] = useState<string>("");
+  const [messages, setMessages] = useState<Message[]>([]);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (newMessage.trim() !== "") {
       const newMessageObj = {
         content: newMessage,
@@ -23,10 +29,17 @@ const MessengerPage = (props: MessengerProps) => {
 
       setMessages([...messages, newMessageObj]);
       setNewMessage("");
+
+      // Assuming you have an API endpoint to send messages
+      try {
+        await axios.post(`/messages/${selectedChat}`, newMessageObj);
+      } catch (error) {
+        console.error("Error sending message:", error);
+      }
     }
   };
 
-  const handleSelectChat = async (chatTitle) => {
+  const handleSelectChat = async (chatTitle: string) => {
     setSelectedChat(chatTitle);
 
     try {

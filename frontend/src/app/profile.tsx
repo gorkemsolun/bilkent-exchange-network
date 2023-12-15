@@ -72,6 +72,10 @@ export default function Profile() {
           </div>
           <div className="profilePosts">
             <p className="statLabel">Posts</p>
+
+
+
+            
           </div>
         </div>
       )}
