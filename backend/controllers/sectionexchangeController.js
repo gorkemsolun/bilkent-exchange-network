@@ -81,18 +81,20 @@ export const sectionexchangePostGET = async (req, res) => {
     } else if (dateMax !== "All" && dateMax) {
       query.timestamp = { $lte: dateMax };
     }
-    if (req.params.offeredCourse !== "undefined") {
+    if (req.params.offeredCourse !== "All") {
       query.offeredCourse = req.params.offeredCourse;
     }
     if (req.params.offeredSection !== "undefined") {
       query.offeredSection = Number(req.params.offeredSection);
     }
-    if (req.params.desiredCourse !== "undefined") {
+    if (req.params.desiredCourse !== "All") {
       query.desiredCourse = req.params.desiredCourse;
     }
     if (req.params.desiredSection !== "undefined") {
       query.desiredSection = Number(req.params.desiredSection);
     }
+
+    console.log(req);
 
     const sectionexchangeposts = await SectionexchangePost.find(query)
       .skip(req.params.page * req.params.limit)
