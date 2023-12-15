@@ -30,7 +30,19 @@ export interface UserProfile {
   createdAt?: Date;
 }
 
+export interface ContextUser {
+  email: string;
+  token: string;
+  _id: string;
+}
+
+export interface State {
+  type: string;
+  payload: ContextUser;
+}
+
 /*
+This is the old version of UserProfile. It is not used anymore.
 export interface UserProfile {
   _id?: string;
   userID: string;
@@ -68,11 +80,6 @@ export interface ForumEntry {
   createdAt?: string;
 }
 
-export interface FilterProps {
-  type: string;
-  passFilters: (params: FilterParams) => void;
-}
-
 export interface FilterParams {
   categories: string[];
   prices: {
@@ -90,88 +97,4 @@ export interface FilterParams {
   offeredSection: number | undefined;
   page: number;
   limit: number;
-}
-
-export interface CreatePostButtonProps {
-  type: string;
-}
-
-export interface CreatePostProps {
-  onClose: () => void;
-}
-
-export interface DeletePostButtonProps {
-  postId: string;
-  profileId: string;
-  type: string;
-}
-
-export interface DeletePostProps {
-  onClose: () => void;
-  postId: string;
-  profileId: string;
-  type: string;
-}
-
-export interface ReportPostButtonProps {
-  postId: string;
-  profileId: string;
-  type: string;
-}
-
-export interface ReportPostProps extends ReportPostButtonProps {
-  onClose: () => void;
-}
-
-export interface EditPostButtonProps {
-  type: string;
-  postId: string;
-}
-
-export interface EditPostProps {
-  onClose: () => void;
-  postId: string;
-}
-
-export interface CreateEntryButtonProps {
-  postId: string;
-}
-
-export interface CreateEntryProps {
-  onClose: () => void;
-  postId: string;
-}
-
-export interface DeleteEntryButtonProps {
-  postId: string;
-  entryId: string;
-}
-
-export interface DeleteEntryProps {
-  onClose: () => void;
-  postId: string;
-  entryId: string;
-}
-
-export interface EditEntryButtonProps {
-  postId: string;
-  entryId: string;
-  entryContent: string;
-}
-
-export interface EditEntryProps {
-  onClose: () => void;
-  postId: string;
-  entryId: string;
-  entryContent: string;
-}
-
-export interface MessengerProps {
-  onMessageLinkClick?: () => void;
-}
-
-export interface ChatMessageProps {
-  chatTitle: string;
-  onSelectChat: (chatTitle: string) => void;
-  isActive: boolean;
 }

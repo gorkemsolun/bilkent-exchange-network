@@ -1,8 +1,11 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuthContext, useLogout, useProfileContext } from "../authentication/authHelpers";
 import { UserProfile } from "../../data-types/datatypes";
+import {
+  useAuthContext,
+  useLogout,
+  useProfileContext,
+} from "../authentication/AuthHelpers";
 
 interface HeaderProps {
   onMessengerClick?: () => void;
@@ -13,14 +16,14 @@ export default function Header(props: HeaderProps) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const { user } = useAuthContext();
   const [userProfile, setUserProfile] = useState({} as UserProfile);
-  const {profile} = useProfileContext()
+  const { profile } = useProfileContext();
 
   const handleClick = () => {
     logout();
   };
 
   useEffect(() => {
-    setUserProfile(profile)
+    setUserProfile(profile);
   }, []);
 
   return (

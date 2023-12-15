@@ -1,9 +1,14 @@
 import { createContext, useEffect, useReducer } from "react";
-import { authReducer } from "./authHelpers";
+import { defaultUser } from "../../data-types/constants";
+import { authReducer } from "./AuthHelpers";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(defaultUser);
 
-export const AuthContextProvider = ({ children }) => {
+export const AuthContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [state, dispatch] = useReducer(authReducer, {
     user: null,
   });

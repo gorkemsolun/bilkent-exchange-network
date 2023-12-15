@@ -1,26 +1,26 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AuthContextProvider } from "./app/authentication/AuthContext";
+import { useAuthContext } from "./app/authentication/AuthHelpers";
+import Login from "./app/authentication/Login";
+import Signup from "./app/authentication/Signup";
 import VerificationPage from "./app/authentication/Verification";
-import { useAuthContext, useProfileContext } from "./app/authentication/authHelpers";
-import Signup from "./app/authentication/signup";
-import Borrow from "./app/borrow";
-import Donate from "./app/donate";
-import Forum from "./app/forum";
-import Login from "./app/login";
-import LostFound from "./app/lostfound";
-import MyProfile from "./app/myprofile";
-import Profile from "./app/profile";
-import SecondHand from "./app/secondhand";
-import SectionExchange from "./app/sectionexchange";
+import Borrow from "./app/borrow/Borrow";
+import BorrowPostDetails from "./app/borrow/BorrowPostDetails";
+import Donate from "./app/donate/Donate";
+import DonatePostDetails from "./app/donate/DonatePostDetails";
+import Forum from "./app/forum/Forum";
+import ForumPostDetails from "./app/forum/ForumPostDetails";
+import LostFoundPostDetails from "./app/lostfound/LostfoundPostDetails";
+import LostFound from "./app/lostfound/Lostfound";
+import EditProfile from "./app/profile/EditProfile";
+import MyProfile from "./app/profile/MyProfile";
+import Profile from "./app/profile/Profile";
+import { ProfileContextProvider } from "./app/profile/ProfileContext";
+import SecondHandPostDetails from "./app/secondhand/SecondhandPostDetails";
+import SecondHand from "./app/secondhand/Secondhand";
+import SectionExchange from "./app/sectionexchange/Sectionexchange";
 import "./bootstrap.css";
-import LostFoundPostDetails from "./app/post-details/LostFoundPostDetails";
-import SecondHandPostDetails from "./app/post-details/SecondHandPostDetails";
-import DonatePostDetails from "./app/post-details/DonatePostDetails";
-import ForumPostDetails from "./app/post-details/ForumPostDetails";
-import BorrowPostDetails from "./app/post-details/BorrowPostDetails";
-import EditProfile from "./app/editprofile";
-import { ProfileContextProvider } from "./app/ProfileContext";
 
 export default function App() {
   return (
@@ -46,27 +46,75 @@ function AppContent() {
           />
           <Route
             path="/secondhand"
-            element={user ? <SecondHand /> : setTimeout(() => {<Navigate to="/login" />}, 100) }
+            element={
+              user ? (
+                <SecondHand />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
           />
           <Route
             path="/lostfound"
-            element={user ? <LostFound /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
+            element={
+              user ? (
+                <LostFound />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
           />
           <Route
             path="/donate"
-            element={user ? <Donate /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
+            element={
+              user ? (
+                <Donate />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
           />
           <Route
             path="/borrow"
-            element={user ? <Borrow /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
+            element={
+              user ? (
+                <Borrow />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
           />
           <Route
             path="/sectionexchange"
-            element={user ? <SectionExchange /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
+            element={
+              user ? (
+                <SectionExchange />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
           />
           <Route
             path="/forum"
-            element={user ? <Forum /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
+            element={
+              user ? (
+                <Forum />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
           />
           <Route
             path="/login"
@@ -82,18 +130,103 @@ function AppContent() {
               !user ? <VerificationPage /> : <Navigate to="/secondhand" />
             }
           />
-          
+
           <Route
             path="/secondhandpost/:id"
-            element={ user ? <SecondHandPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}
+            element={
+              user ? (
+                <SecondHandPostDetails />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
           />
-          <Route path="/lostfoundpost/:id" element={ user ? <LostFoundPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
-          <Route path="/donatepost/:id" element={ user ? <DonatePostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
-          <Route path="/borrowpost/:id" element={user ? <BorrowPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
-          <Route path="/forumpost/:id" element={user ? <ForumPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
-          <Route path="/myprofile" element={user ? <MyProfile /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
-          <Route path="/profile/:id" element={user ? <Profile /> :  setTimeout(() => {<Navigate to="/login" />}, 100)} />
-          <Route path="/myprofile/edit" element={user ? <EditProfile />:  setTimeout(() => {<Navigate to="/login" />}, 100)} />
+          <Route
+            path="/lostfoundpost/:id"
+            element={
+              user ? (
+                <LostFoundPostDetails />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
+          />
+          <Route
+            path="/donatepost/:id"
+            element={
+              user ? (
+                <DonatePostDetails />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
+          />
+          <Route
+            path="/borrowpost/:id"
+            element={
+              user ? (
+                <BorrowPostDetails />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
+          />
+          <Route
+            path="/forumpost/:id"
+            element={
+              user ? (
+                <ForumPostDetails />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
+          />
+          <Route
+            path="/myprofile"
+            element={
+              user ? (
+                <MyProfile />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
+          />
+          <Route
+            path="/profile/:id"
+            element={
+              user ? (
+                <Profile />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
+          />
+          <Route
+            path="/myprofile/edit"
+            element={
+              user ? (
+                <EditProfile />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

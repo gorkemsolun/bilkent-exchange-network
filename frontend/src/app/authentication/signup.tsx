@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { useEmailToken, useSignup } from "./authHelpers";
+import { useEmailToken, useSignup } from "./AuthHelpers";
 
 export default function Signup() {
   const [password, setPassword] = useState("");
@@ -36,10 +36,6 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (verified) {
-      console.log("inside");
-      console.log("username", username);
-      console.log("email", email);
-      console.log("password", password);
       await signUpRequest(username, email, password);
     }
   };

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useVerificationEmail } from "./authHelpers";
+import { useVerificationEmail } from "./AuthHelpers";
 
 export default function VerificationPage() {
   const [email, setEmail] = useState("");

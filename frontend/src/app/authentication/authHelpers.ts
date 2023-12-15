@@ -1,21 +1,19 @@
 import axios from "axios";
 import { useContext, useState } from "react";
+import { ProfileContext } from "../profile/ProfileContext";
 import { AuthContext } from "./AuthContext";
-import { ProfileContext } from "../ProfileContext";
-
 
 export const useProfileContext = () => {
   const context = useContext(ProfileContext);
 
-  //console.log(context);
-
   if (!context) {
-    throw Error("useProfileContext must be used inside an ProfileContextProvider");
+    throw Error(
+      "useProfileContext must be used inside an ProfileContextProvider"
+    );
   }
 
   return context;
-}
-
+};
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
@@ -30,6 +28,8 @@ export const useLogout = () => {
 };
 
 export const authReducer = (state, action) => {
+  console.log(action);
+  console.log(state);
   switch (action.type) {
     case "LOGIN":
       return { user: action.payload };
@@ -43,8 +43,6 @@ export const authReducer = (state, action) => {
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
 
-  //console.log(context);
-
   if (!context) {
     throw Error("useAuthContext must be used inside an AuthContextProvider");
   }
@@ -57,9 +55,9 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { dispatch } = useAuthContext();
-  const {profileDispatch} = useProfileContext();
+  const { profileDispatch } = useProfileContext();
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string) => {
     setIsLoading(true);
     setError(null);
 
@@ -77,18 +75,18 @@ export const useLogin = () => {
     } else {
       //save the user to local storage
       localStorage.setItem("user", JSON.stringify(json));
-      
-     await axios
-      .get(`http://localhost:3000/profile/profile/${json._id}`)
-      .then((res) => {
-        localStorage.setItem("profile", JSON.stringify(res.data.profile))
-        const resBody = res.data.profile
-        profileDispatch({type: "UPDATE", payload: resBody})
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      
+
+      await axios
+        .get(`http://localhost:3000/profile/profile/${json._id}`)
+        .then((res) => {
+          localStorage.setItem("profile", JSON.stringify(res.data.profile));
+          const resBody = res.data.profile;
+          profileDispatch({ type: "UPDATE", payload: resBody });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
       //update auth context
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
@@ -103,8 +101,12 @@ export const useSignup = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { dispatch } = useAuthContext();
-  const {profileDispatch} = useProfileContext();
-  const signUpRequest = async (name, email, password) => {
+  const { profileDispatch } = useProfileContext();
+  const signUpRequest = async (
+    name: string,
+    email: string,
+    password: string
+  ) => {
     setIsLoading(true);
     setError(null);
 
@@ -121,22 +123,21 @@ export const useSignup = () => {
       setError(json.error);
     } else {
       //save the user to local storage
-      
+
       await axios
-      .get(`http://localhost:3000/profile/profile/${json._id}`)
-      .then((res) => {
-        localStorage.setItem("profile", JSON.stringify(res.data.profile))
-        const resBody = res.data.profile
-        profileDispatch({type: "UPDATE", payload: resBody})
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      
+        .get(`http://localhost:3000/profile/profile/${json._id}`)
+        .then((res) => {
+          localStorage.setItem("profile", JSON.stringify(res.data.profile));
+          const resBody = res.data.profile;
+          profileDispatch({ type: "UPDATE", payload: resBody });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
       localStorage.setItem("user", JSON.stringify(json));
 
       dispatch({ type: "LOGIN", payload: json });
-
 
       setIsLoading(false);
     }
@@ -164,7 +165,7 @@ export const useEmailToken = () => {
     return json;
   };
 
-  const getToken = async (emailToken) => {
+  const getToken = async (emailToken: string) => {
     setError(null);
 
     const res = await fetch("http://localhost:3000/user/getEmailToken", {
@@ -188,7 +189,7 @@ export const useVerificationEmail = () => {
   const [verificationError, setError] = useState(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const sendEmail = async (name, email) => {
+  const sendEmail = async (name: string, email: string) => {
     setIsLoading(true);
     setError(null);
 
@@ -213,7 +214,7 @@ export const useVerificationEmail = () => {
 };
 
 // Define a function to delete the user
-export const deleteUser = async (userId) => {
+export const deleteUser = async (userId: string) => {
   try {
     // Send a request to your server to delete the user
     const response = await axios.delete(
