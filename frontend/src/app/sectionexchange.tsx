@@ -10,7 +10,10 @@ import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import { prepareUrl } from "./fetchPostHelpers.ts";
+
 import Counter from "./components/counter.tsx";
+// import MessengerWindow from "./app/messageWindow";
+import Messenger from "./message";
 
 export default function SectionExchange() {
   const [sectionexchangePosts, setSectionexchangePosts] = useState([]);
@@ -157,7 +160,8 @@ export default function SectionExchange() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Counter></Counter>}</div>
+        <div>{isCounterVisible && <Messenger/>}
+        </div>
       </div>
     </div>
   );

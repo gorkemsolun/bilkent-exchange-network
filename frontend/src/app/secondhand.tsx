@@ -11,7 +11,9 @@ import Navbar from "./components/navbar.tsx";
 import SearchBar from "./components/searchbar.tsx";
 import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import { prepareUrl } from "./fetchPostHelpers.ts";
-
+import Counter from "./components/counter.tsx";
+// import MessengerWindow from "./app/messageWindow";
+import Messenger from "./message";
 export default function Secondhand() {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,6 +21,12 @@ export default function Secondhand() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
+
+  const [isCounterVisible, setCounterVisible] = useState(true);
+
+  const handleToggleCounter = () => {
+    setCounterVisible(!isCounterVisible);
+  };
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -82,7 +90,7 @@ export default function Secondhand() {
 
   return (
     <div className="outer-container">
-      <Header />
+      <Header onMessageLinkClick={handleToggleCounter} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="secondhand" passFilters={passFilters}></Filters>
@@ -146,6 +154,7 @@ export default function Secondhand() {
             </div>
           )}
         </div>
+        <div>{isCounterVisible && <Messenger/>}</div>
       </div>
     </div>
   );

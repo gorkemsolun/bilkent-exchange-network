@@ -11,6 +11,7 @@ import EditPostButton from "../edit-delete-post/EditPostButton";
 import { useAuthContext } from "../authentication/authHelpers";
 import CreateEntryButton from "../entry/CreateEntryButton";
 import DeleteEntryButton from "../entry/DeleteEntryButton";
+import ReportPostButton  from "../edit-delete-post/ReportPostButton";
 import EditEntryButton from "../entry/EditEntryButton";
 
 export default function ForumPostDetails() {
@@ -95,6 +96,12 @@ export default function ForumPostDetails() {
                   profileId={"" + poster?._id}
                   type="forum"
                 />
+                <ReportPostButton 
+                  postId={"" + post._id}
+                  profileId={"" + poster?._id}
+                  type="forum"
+                  reason= { "Enter your reason Reason" } 
+                />
               </>
             )}
             <CreateEntryButton postId={"" + post._id} />
@@ -149,6 +156,9 @@ export default function ForumPostDetails() {
                         entry.createdAt.slice(0, 10)}
                     </div>
                     <div className="entry-edit-delete-container">
+                        
+
+
                       <EditEntryButton
                         postId={"" + post._id}
                         entryId={entry._id}

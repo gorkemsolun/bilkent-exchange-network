@@ -12,6 +12,10 @@ import CreatePostButton from "./create-post/CreatePostButton";
 import { prepareUrl } from "./fetchPostHelpers";
 import { Link } from "react-router-dom";
 
+import Counter from "./components/counter.tsx";
+// import MessengerWindow from "./app/messageWindow";
+import Messenger from "./message";
+
 export default function Forum() {
   const [forumPosts, setForumPosts] = useState<ForumPost[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,6 +23,11 @@ export default function Forum() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
+  const [isCounterVisible, setCounterVisible] = useState(true);
+
+  const handleToggleCounter = () => {
+    setCounterVisible(!isCounterVisible);
+  };
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -54,7 +63,7 @@ export default function Forum() {
 
   return (
     <div className="outer-container">
-      <Header />
+      <Header onMessageLinkClick={handleToggleCounter} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="forum" passFilters={setFilterParams}></Filters>
