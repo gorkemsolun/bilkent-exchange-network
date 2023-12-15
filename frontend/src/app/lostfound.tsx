@@ -12,6 +12,10 @@ import SearchBar from "./components/searchbar.tsx";
 import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import { prepareUrl } from "./fetchPostHelpers.ts";
 
+import Counter from "./components/counter.tsx";
+// import MessengerWindow from "./app/messageWindow";
+import Messenger from "./message";
+
 export default function LostFound() {
   const [loading, setLoading] = useState(false);
   const [lostFoundPosts, setLostFoundPosts] = useState([]);
@@ -19,6 +23,12 @@ export default function LostFound() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
+
+  const [isCounterVisible, setCounterVisible] = useState(true);
+
+  const handleToggleCounter = () => {
+    setCounterVisible(!isCounterVisible);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -69,7 +79,7 @@ export default function LostFound() {
 
   return (
     <div className="outer-container">
-      <Header />
+      <Header onMessageLinkClick={handleToggleCounter} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="lostfound" passFilters={passFilters}></Filters>
@@ -143,6 +153,7 @@ export default function LostFound() {
             </div>
           )}
         </div>
+        <div>{isCounterVisible && <Messenger/>}</div>
       </div>
     </div>
   );

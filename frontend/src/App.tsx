@@ -20,8 +20,6 @@ import DonatePostDetails from "./app/post-details/DonatePostDetails";
 import ForumPostDetails from "./app/post-details/ForumPostDetails";
 import BorrowPostDetails from "./app/post-details/BorrowPostDetails";
 import EditProfile from "./app/editprofile";
-// import MessengerWindow from "./app/messageWindow";
-import Messenger from "./app/message";
 
 export default function App() {
   return (
@@ -81,12 +79,7 @@ function AppContent() {
               !user ? <VerificationPage /> : <Navigate to="/secondhand" />
             }
           />
-          <Route
-            path="/message"
-            element={
-              user ? <Messenger /> : <Navigate to="/message" />
-            }
-          />
+          
           <Route
             path="/secondhandpost/:id"
             element={ user ? <SecondHandPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}

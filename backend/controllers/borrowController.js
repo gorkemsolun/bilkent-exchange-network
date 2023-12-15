@@ -27,10 +27,18 @@ export const borrowPostPOST = async (req, res) => {
     const profile = await UserProfile.findOne({ userID: userId });
 
     const profileId = profile._id;
-    const newPostId = borrowpost._id;
+    const newPostObject = {
+      id: borrowpost._id,
+      typename: 'Borrow',
+      title: borrowpost.title,
+      offeredCourse: '', 
+      offeredSection: '', 
+      desiredCourse: '', 
+      desiredSection: '', 
+    };
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { ownPosts: newPostId } }
+      { $push: { ownPosts: newPostObject } }
     );
 
     return res.status(201).send(borrowpost);

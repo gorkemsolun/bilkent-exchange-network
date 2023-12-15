@@ -16,7 +16,7 @@ export interface UserProfile {
   image: string;
   description: string;
   reputation: number;
-  ownedPosts: [string];
+  ownPosts: [[string]];
   savedPosts: [string];
   createdAt?: Date;
 }

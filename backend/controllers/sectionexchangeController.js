@@ -31,10 +31,21 @@ export const sectionexchangePostPOST = async (req, res) => {
     const profile = await UserProfile.findOne({ userID: userId });
 
     const profileId = profile._id;
-    const newPostId = sectionexchangepost._id;
+    
+    const newPostObject = {
+      id: sectionexchangepost._id,
+      typename: 'SectionExchange',
+      title: sectionexchangepost.title,
+      offeredCourse: sectionexchangepost.offeredCourse, 
+      offeredSection: sectionexchangepost.offeredSection, 
+      desiredCourse: sectionexchangepost.desiredCourse, 
+      desiredSection: sectionexchangepost.desiredSection, 
+    };
+    
+    
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { ownPosts: newPostId } }
+      { $push: { ownPosts: newPostObject } }
     );
 
     return res.status(201).send(sectionexchangepost);
