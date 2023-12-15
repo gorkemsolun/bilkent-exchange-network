@@ -11,6 +11,7 @@ import Navbar from "./components/navbar.tsx";
 import SearchBar from "./components/searchbar.tsx";
 import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import { prepareUrl } from "./fetchPostHelpers.ts";
+import Messenger from "./messenger.tsx";
 
 export default function Donate() {
   const [donatePosts, setDonatePosts] = useState([]);
@@ -19,6 +20,11 @@ export default function Donate() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
+  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+
+  const handleMessengerClick = () => {
+    setIsMessengerVisible(!isMessengerVisible);
+  };
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -70,7 +76,7 @@ export default function Donate() {
 
   return (
     <div className="outer-container">
-      <Header />
+      <Header onMessengerClick={handleMessengerClick} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="donate" passFilters={passFilters}></Filters>
@@ -132,6 +138,11 @@ export default function Donate() {
               </div>
             </div>
           )}
+        </div>
+        <div
+          className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
+        >
+          <Messenger onClick={handleMessengerClick} />
         </div>
       </div>
     </div>

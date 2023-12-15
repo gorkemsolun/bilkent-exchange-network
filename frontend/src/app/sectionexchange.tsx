@@ -11,6 +11,7 @@ import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import { prepareUrl } from "./fetchPostHelpers.ts";
 import Messenger from "./messenger.tsx";
+import { useAuthContext } from "./authentication/authHelpers.ts";
 
 export default function SectionExchange() {
   const [sectionexchangePosts, setSectionexchangePosts] = useState([]);
@@ -19,10 +20,27 @@ export default function SectionExchange() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
-  const [isCounterVisible, setCounterVisible] = useState(true);
+  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+  const { user } = useAuthContext();
 
-  const handleToggleCounter = () => {
-    setCounterVisible(!isCounterVisible);
+  const handleMessengerClick = () => {
+    setIsMessengerVisible(!isMessengerVisible);
+  };
+
+  const handleDMBoxClick = (otherUserID: string) => {
+    setIsMessengerVisible(true);
+
+    const conversation = {
+      userIDs: [user._id, otherUserID],
+      messages: [],
+    };
+
+    axios
+      .post("http://localhost:3000/conversation/conversation/", conversation)
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -74,7 +92,7 @@ export default function SectionExchange() {
 
   return (
     <div className="outer-container">
-      <Header onMessageLinkClick={handleToggleCounter} />
+      <Header onMessengerClick={handleMessengerClick} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="sectionexchange" passFilters={passFilters}></Filters>
@@ -142,7 +160,7 @@ export default function SectionExchange() {
                               src="./src/assets/dmbox.png"
                               alt="DM Box"
                               title="Send DM"
-                              onClick={() => {}}
+                              onClick={(e) => handleDMBoxClick(post.poster)}
                             />
                           </div>
                         </div>
@@ -157,7 +175,11 @@ export default function SectionExchange() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Messenger />}</div>
+        <div
+          className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
+        >
+          <Messenger onClick={handleMessengerClick} />
+        </div>
       </div>
     </div>
   );

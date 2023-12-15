@@ -11,6 +11,7 @@ import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton";
 import { prepareUrl } from "./fetchPostHelpers";
+import Messenger from "./messenger";
 
 export default function Borrow() {
   const [loading, setLoading] = useState(false);
@@ -19,10 +20,10 @@ export default function Borrow() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
-  const [isCounterVisible, setCounterVisible] = useState(true);
+  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
 
-  const handleToggleCounter = () => {
-    setCounterVisible(!isCounterVisible);
+  const handleMessengerClick = () => {
+    setIsMessengerVisible(!isMessengerVisible);
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -73,7 +74,7 @@ export default function Borrow() {
 
   return (
     <div className="outer-container">
-      <Header onMessageLinkClick={handleToggleCounter} />
+      <Header onMessengerClick={handleMessengerClick} />
       <Navbar />
       <div className="flex flex-row  grow">
         <Filters type="borrow" passFilters={passFilters}></Filters>
@@ -133,6 +134,11 @@ export default function Borrow() {
               </div>
             </div>
           )}
+        </div>
+        <div
+          className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
+        >
+          <Messenger onClick={handleMessengerClick} />
         </div>
       </div>
     </div>

@@ -5,6 +5,8 @@ import { UserProfile } from "../data-types/datatypes.ts";
 import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
+import Messenger from "./messenger.tsx";
+import { useAuthContext } from "./authentication/authHelpers.ts";
 
 export default function Profile() {
   const { id } = useParams();
@@ -12,6 +14,27 @@ export default function Profile() {
   const [userProfile, setUserProfile] = useState<UserProfile>(
     {} as UserProfile
   );
+  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+  const { user } = useAuthContext();
+
+  const handleMessengerClick = () => {
+    setIsMessengerVisible(!isMessengerVisible);
+  };
+
+  const handleDMBoxClick = () => {
+    setIsMessengerVisible(true);
+
+    const conversation = {
+      userIDs: [user._id, userProfile._id],
+      messages: [],
+    };
+    axios
+      .post("http://localhost:3000/conversation/conversation/", conversation)
+      .then((res) => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -31,12 +54,21 @@ export default function Profile() {
 
   return (
     <div className="outer-container">
-      <Header />
+      <Header onMessengerClick={handleMessengerClick} />
       <Navbar />
       {loading ? (
         <Loader />
       ) : (
         <div className="profileContainer">
+          <div className="profileDMBoxContainer">
+            <img
+              className="img-fluid mx-auto d-block max-w-4vw max-h-4vh"
+              src="./src/assets/dmbox.png"
+              alt="DM Box"
+              title="Send DM"
+              onClick={handleDMBoxClick}
+            />
+          </div>
           <div className="profileHeader">
             <img
               src={userProfile?.image}
@@ -72,13 +104,14 @@ export default function Profile() {
           </div>
           <div className="profilePosts">
             <p className="statLabel">Posts</p>
-
-
-
-            
           </div>
         </div>
       )}
+      <div
+        className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
+      >
+        <Messenger onClick={handleMessengerClick} />
+      </div>
     </div>
   );
 }

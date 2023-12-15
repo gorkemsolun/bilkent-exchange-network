@@ -20,18 +20,16 @@ export default function LostFound() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
+  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
 
-  const [isCounterVisible, setCounterVisible] = useState(true);
-
-  const handleToggleCounter = () => {
-    setCounterVisible(!isCounterVisible);
+  const handleMessengerClick = () => {
+    setIsMessengerVisible(!isMessengerVisible);
   };
 
   useEffect(() => {
     setLoading(true);
     const url = prepareUrl(searchTerm, "lostfound", filterParams);
     console.log(url);
-    setCounterVisible(false);
 
     axios
       .get(url)
@@ -77,7 +75,7 @@ export default function LostFound() {
 
   return (
     <div className="outer-container">
-      <Header onMessageLinkClick={handleToggleCounter} />
+      <Header onMessengerClick={handleMessengerClick} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="lostfound" passFilters={passFilters}></Filters>
@@ -152,9 +150,9 @@ export default function LostFound() {
           )}
         </div>
         <div
-          className={`messenger-box ${isCounterVisible ? "open" : "closed"}`}
+          className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
         >
-          <Messenger onMessageLinkClick={handleToggleCounter} />
+          <Messenger onClick={handleMessengerClick} />
         </div>
       </div>
     </div>

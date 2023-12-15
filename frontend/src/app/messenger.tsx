@@ -5,7 +5,7 @@ import { useAuthContext } from "./authentication/authHelpers.ts";
 import { Conversation, Message } from "../data-types/datatypes.ts";
 
 interface MessengerProps {
-  onMessageLinkClick?: () => void;
+  onClick?: () => void;
 }
 
 const MessengerPage = (props: MessengerProps) => {
@@ -15,7 +15,6 @@ const MessengerPage = (props: MessengerProps) => {
     {} as Conversation
   );
   const [isInConversation, setIsInCoversation] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [messageInput, setMessageInput] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -23,8 +22,6 @@ const MessengerPage = (props: MessengerProps) => {
   };
 
   useEffect(() => {
-    setLoading(true);
-
     axios
       .get("http://localhost:3000/conversation/conversation/userID/" + user._id)
       .then((res) => {
@@ -70,9 +67,6 @@ const MessengerPage = (props: MessengerProps) => {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
       });
   }, [props]);
 
@@ -100,17 +94,13 @@ const MessengerPage = (props: MessengerProps) => {
         setMessageInput("");
       })
       .catch((err) => {
-        console.log(
-          "http://localhost:3000/conversation/conversationID/" +
-            selectedConversation._id
-        );
-        console.error("Error sending message:", err);
+        console.log(err);
       });
   };
 
   const handleCloseMessenger = () => {
-    if (props.onMessageLinkClick) {
-      props.onMessageLinkClick();
+    if (props.onClick) {
+      props.onClick();
     }
   };
 

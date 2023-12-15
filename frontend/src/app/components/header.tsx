@@ -5,7 +5,7 @@ import { UserProfile } from "../../data-types/datatypes";
 import { useAuthContext, useLogout } from "../authentication/authHelpers";
 
 interface HeaderProps {
-  onMessageLinkClick?: () => void;
+  onMessengerClick?: () => void;
 }
 
 export default function Header(props: HeaderProps) {
@@ -77,7 +77,7 @@ export default function Header(props: HeaderProps) {
         <img
           src="./src/assets/dmbox.png"
           className="header-dmbox-image"
-          onClick={props.onMessageLinkClick}
+          onClick={props.onMessengerClick}
           alt="DMs"
         />
       </div>

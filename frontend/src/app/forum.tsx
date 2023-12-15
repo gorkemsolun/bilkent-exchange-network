@@ -20,10 +20,10 @@ export default function Forum() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
-  const [isCounterVisible, setCounterVisible] = useState(true);
+  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
 
-  const handleToggleCounter = () => {
-    setCounterVisible(!isCounterVisible);
+  const handleMessengerClick = () => {
+    setIsMessengerVisible(!isMessengerVisible);
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -70,7 +70,7 @@ export default function Forum() {
 
   return (
     <div className="outer-container">
-      <Header onMessageLinkClick={handleToggleCounter} />
+      <Header onMessengerClick={handleMessengerClick} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="forum" passFilters={setFilterParams}></Filters>
@@ -131,7 +131,11 @@ export default function Forum() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Messenger />}</div>
+        <div
+          className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
+        >
+          <Messenger onClick={handleMessengerClick} />
+        </div>
       </div>
     </div>
   );

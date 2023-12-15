@@ -20,10 +20,10 @@ export default function Secondhand() {
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
 
-  const [isCounterVisible, setCounterVisible] = useState(true);
+  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
 
-  const handleToggleCounter = () => {
-    setCounterVisible(!isCounterVisible);
+  const handleMessengerClick = () => {
+    setIsMessengerVisible(!isMessengerVisible);
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -88,7 +88,7 @@ export default function Secondhand() {
 
   return (
     <div className="outer-container">
-      <Header onMessageLinkClick={handleToggleCounter} />
+      <Header onMessengerClick={handleMessengerClick} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="secondhand" passFilters={passFilters}></Filters>
@@ -152,7 +152,11 @@ export default function Secondhand() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Messenger />}</div>
+        <div
+          className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
+        >
+          <Messenger onClick={handleMessengerClick} />
+        </div>
       </div>
     </div>
   );
