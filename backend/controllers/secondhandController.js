@@ -1,6 +1,6 @@
 import { SecondhandPost } from "../models/secondhandpost.js";
 import { UserProfile } from "../models/userProfile.js";
-import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
+import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -13,11 +13,12 @@ function fieldController(reqBody) {
   ) {
     return false;
   }
+  return true;
 }
 
 export const secondhandPostPOST = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for secondhandpost");
     }
 
@@ -31,16 +32,16 @@ export const secondhandPostPOST = async (req, res) => {
 
     const newPostObject = {
       id: secondhandpost._id,
-      typename: 'Secondhand',
+      typename: "Secondhand",
       title: secondhandpost.title,
-      offeredCourse: '', 
-      offeredSection: '', 
-      desiredCourse: '', 
-      desiredSection: '', 
+      offeredCourse: "",
+      offeredSection: "",
+      desiredCourse: "",
+      desiredSection: "",
     };
 
     const profileId = profile._id;
-    
+
     await UserProfile.updateOne(
       { _id: profileId },
       { $push: { ownPosts: newPostObject } }
@@ -112,7 +113,7 @@ export const secondhandPostGET = async (req, res) => {
 
 export const secondhandPostPUT = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for secondhandpost");
     }
 
@@ -124,7 +125,15 @@ export const secondhandPostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("SecondhandPost not found");
     }
-    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Secondhand");
+
+    updateOwnedPosts(
+      req.body.title,
+      result.title,
+      result.poster,
+      result._id,
+      "Secondhand"
+    );
+
     return res.status(204).send("SecondhandPost updated");
   } catch (err) {
     console.log(err);
@@ -139,7 +148,9 @@ export const secondhandPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("SecondhandPost not found");
     }
-    deleteOwnedPosts(result.poster, req.params.id)
+
+    deleteOwnedPosts(result.poster, req.params.id);
+
     return res.status(204).send("SecondhandPost deleted");
   } catch (err) {
     console.log(err);

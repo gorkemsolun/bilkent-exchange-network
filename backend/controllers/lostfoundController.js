@@ -1,6 +1,6 @@
 import { LostfoundPost } from "../models/lostfoundpost.js";
 import { UserProfile } from "../models/userProfile.js";
-import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
+import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -13,11 +13,12 @@ function fieldController(reqBody) {
   ) {
     return false;
   }
+  return true;
 }
 
 export const lostfoundPostPOST = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       res.status(400).send("Missing fields for lostfoundpost");
     }
 
@@ -31,12 +32,12 @@ export const lostfoundPostPOST = async (req, res) => {
 
     const newPostObject = {
       id: lostfoundpost._id,
-      typename: 'LostFound',
+      typename: "LostFound",
       title: lostfoundpost.title,
-      offeredCourse: '', 
-      offeredSection: '', 
-      desiredCourse: '', 
-      desiredSection: '', 
+      offeredCourse: "",
+      offeredSection: "",
+      desiredCourse: "",
+      desiredSection: "",
     };
 
     const profileId = profile._id;
@@ -108,7 +109,7 @@ export const lostfoundPostGETId = async (req, res) => {
 
 export const lostfoundPostPUT = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       res.status(400).send("Missing fields for lostfoundpost");
     }
 
@@ -120,7 +121,15 @@ export const lostfoundPostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("LostfoundPost not found");
     }
-    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Lostfound");
+
+    updateOwnedPosts(
+      req.body.title,
+      result.title,
+      result.poster,
+      result._id,
+      "Lostfound"
+    );
+
     return res.status(204).send("LostfoundPost updated");
   } catch (err) {
     console.log(err);
@@ -135,7 +144,9 @@ export const lostfoundPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("LostfoundPost not found");
     }
-    deleteOwnedPosts(result.poster, req.params.id)
+
+    deleteOwnedPosts(result.poster, req.params.id);
+
     return res.status(204).send("LostfoundPost deleted");
   } catch (err) {
     console.log(err);

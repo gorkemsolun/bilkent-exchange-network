@@ -1,7 +1,6 @@
 import axios from "axios";
-import { DeleteEntryProps } from "../../data-types/datatypes";
-import { Navigate } from "react-router-dom";
 import { useState } from "react";
+import { DeleteEntryProps } from "../../data-types/datatypes";
 
 export default function DeleteEntry(props: DeleteEntryProps) {
   const [isDeleted, setIsDeleted] = useState(false);

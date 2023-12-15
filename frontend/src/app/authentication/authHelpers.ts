@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
-import axios from 'axios';
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
@@ -180,12 +180,13 @@ export const useVerificationEmail = () => {
 export const deleteUser = async (userId) => {
   try {
     // Send a request to your server to delete the user
-    const response = await axios.delete(`http://localhost:3000/user/delete/${userId}`);
-    
+    const response = await axios.delete(
+      `http://localhost:3000/user/delete/${userId}`
+    );
+
     // Handle the response as needed
     console.log(response.data); // Log the response if necessary
   } catch (error) {
-    console.error('Error deleting user:', error);
+    console.error("Error deleting user:", error);
   }
 };
-

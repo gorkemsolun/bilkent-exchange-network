@@ -11,9 +11,6 @@ import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton";
 import { prepareUrl } from "./fetchPostHelpers";
-
-import Counter from "./components/counter.tsx";
-// import MessengerWindow from "./app/messageWindow";
 import Messenger from "./messageWindow.tsx";
 
 export default function Borrow() {
@@ -21,7 +18,7 @@ export default function Borrow() {
   const [borrowPosts, setBorrowPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterParams, setFilterParams] =
-  useState<FilterParams>(defaultFilterParams);
+    useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
   const [isCounterVisible, setCounterVisible] = useState(true);
 
@@ -138,7 +135,7 @@ export default function Borrow() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Messenger/>}</div>
+        <div>{isCounterVisible && <Messenger />}</div>
       </div>
     </div>
   );

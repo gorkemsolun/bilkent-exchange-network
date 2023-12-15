@@ -113,13 +113,13 @@ export const defaultFilterParams = {
   limit: 10,
 };
 
-export const defaultProfile = {
-  userID: "dummy",
-  username: "dum",
-  email: "dum@dum.com",
+export const defaultUserProfile = {
+  userID: "",
+  username: "",
+  email: "",
   image: "",
-  description: "description",
+  description: "",
   reputation: 0,
-  ownPosts: [[]],
-  savedPosts: []
-}
+  ownPosts: [],
+  savedPosts: [],
+};

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { defaultFilterParams } from "../data-types/constants";
 import { FilterParams } from "../data-types/datatypes";
 import { ForumPost } from "../data-types/posttypes";
@@ -10,10 +11,6 @@ import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton";
 import { prepareUrl } from "./fetchPostHelpers";
-import { Link } from "react-router-dom";
-
-import Counter from "./components/counter.tsx";
-// import MessengerWindow from "./app/messageWindow";
 import Messenger from "./messenger.tsx";
 
 export default function Forum() {
@@ -24,7 +21,7 @@ export default function Forum() {
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
   const [isCounterVisible, setCounterVisible] = useState(true);
-  
+
   const handleToggleCounter = () => {
     setCounterVisible(!isCounterVisible);
   };
@@ -134,7 +131,7 @@ export default function Forum() {
             </div>
           )}
         </div>
-        <div>{isCounterVisible && <Messenger/>}</div>
+        <div>{isCounterVisible && <Messenger />}</div>
       </div>
     </div>
   );

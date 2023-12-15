@@ -20,12 +20,15 @@ const createMailTransporter = () => {
       pass: "ciym glmn kdpi mbfp",
     },
   });
+
   return transporter;
 };
 
 export const sendVerificationMail = async (username, email) => {
   const token = await emailTokenDB.createToken();
+
   console.log(token.emailToken);
+
   const transporter = createMailTransporter();
 
   const MailOptions = {
@@ -35,6 +38,7 @@ export const sendVerificationMail = async (username, email) => {
     html: `<p> Hi ${username}, please verify your email by clicking this link </p> 
                 <a href = 'http://localhost:5000/signup?emailToken=${token.emailToken}&email=${email}'>Verify Your Email</a> `,
   };
+
   transporter.sendMail(MailOptions, (error, info) => {
     if (error) {
       console.log(error);
@@ -47,6 +51,7 @@ export const sendVerificationMail = async (username, email) => {
 export const createEmailToken = async (req, res) => {
   try {
     const token = await emailToken.createToken();
+
     res.status(200).json({ token });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -55,7 +60,9 @@ export const createEmailToken = async (req, res) => {
 
 export const getEmailToken = async (req, res) => {
   const { emailToken } = req.body;
+
   console.log(emailToken);
+  
   try {
     const theToken = await emailTokenDB.findOne({ emailToken });
     res.status(200).json({ theToken });

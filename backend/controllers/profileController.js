@@ -17,6 +17,7 @@ export const getProfileByUsername = async (req, res) => {
   try {
     let query = {};
     let regexSearch = new RegExp(req.params.search, "i");
+
     if (req.params.search !== "All") {
       query.username = { $regex: regexSearch };
     }
@@ -39,6 +40,7 @@ export const getProfileByUsername = async (req, res) => {
 export const profileUpdate = async (req, res) => {
   try {
     const profile = await UserProfile.find({ userID: req.body.userID });
+
     if (!profile) {
       return res.status(404).send("Profile not found");
     }
@@ -55,10 +57,12 @@ export const profileUpdate = async (req, res) => {
 export const addOwnPost = async (req, res) => {
   try {
     if (!req.body) {
-      throw Error("hollow body");
+      throw Error("Request body is empty");
     }
+
     const profileId = req.body._id;
     const newPost = req.body.newPost;
+
     await UserProfile.updateOne(
       { _id: profileId },
       { $push: { ownPosts: newPost } }
@@ -74,11 +78,12 @@ export const addOwnPost = async (req, res) => {
 export const deleteOwnPost = async (req, res) => {
   try {
     if (!req.body) {
-      throw Error("hollow body");
+      throw Error("Request body is empty");
     }
-    console.log("deleteOwnPost is running");
+
     const profileId = req.body._id;
     const toBeRemoved = req.body.toBeRemoved;
+
     await UserProfile.updateOne(
       { _id: profileId },
       { $pull: { ownPosts: toBeRemoved } }
@@ -94,10 +99,12 @@ export const deleteOwnPost = async (req, res) => {
 export const savePost = async (req, res) => {
   try {
     if (!req.body) {
-      throw Error("hollow body");
+      throw Error("Request body is empty");
     }
+
     const profileId = req.body._id;
     const newPost = req.body.newPost;
+
     await UserProfile.updateOne(
       { _id: profileId },
       { $push: { savedPosts: newPost } }
@@ -113,10 +120,12 @@ export const savePost = async (req, res) => {
 export const unSavePost = async (req, res) => {
   try {
     if (!req.body) {
-      throw Error("hollow body");
+      throw Error("Request body is empty");
     }
+
     const profileId = req.body._id;
     const toBeRemoved = req.body.toBeRemoved;
+
     await UserProfile.updateOne(
       { _id: profileId },
       { $pull: { savedPosts: toBeRemoved } }
@@ -129,53 +138,61 @@ export const unSavePost = async (req, res) => {
   }
 };
 
-export const updateOwnedPosts = async (reqBodyTitle, resultTitle, resultPoster, resultId, type) => {
-  if ( reqBodyTitle && resultTitle !== reqBodyTitle) {
+export const updateOwnedPosts = async (
+  reqBodyTitle,
+  resultTitle,
+  resultPoster,
+  resultId,
+  type
+) => {
+  if (reqBodyTitle && resultTitle !== reqBodyTitle) {
     const userId = resultPoster;
     const profile = await UserProfile.findOne({ userID: userId });
 
     const profileId = profile._id;
     const newPostObject = {
-    id: resultId,
-    typename: type,
-    title: reqBodyTitle,
-  };
-  await UserProfile.updateOne(
-    { _id: profileId, 'ownPosts.id': resultId },
-    { $set: { 'ownPosts.$': newPostObject } }
-    )
+      id: resultId,
+      typename: type,
+      title: reqBodyTitle,
+    };
+
+    await UserProfile.updateOne(
+      { _id: profileId, "ownPosts.id": resultId },
+      { $set: { "ownPosts.$": newPostObject } }
+    );
   }
-}
+};
 
 //used when a post is deleted
 export const deleteOwnedPosts = async (resultPoster, reqParamsId) => {
-    const userId = resultPoster;
-    const profile = await UserProfile.findOne({ userID: userId });
+  const userId = resultPoster;
+  const profile = await UserProfile.findOne({ userID: userId });
 
-    await UserProfile.updateOne(
-      { _id: profile._id },
-      { $pull: { ownPosts: { id: reqParamsId } } })
-}
+  await UserProfile.updateOne(
+    { _id: profile._id },
+    { $pull: { ownPosts: { id: reqParamsId } } }
+  );
+};
 
 export const updateOwnedSecExPost = async (reqBody, resultId, resultPoster) => {
-  if ( reqBody ) {
+  if (reqBody) {
     const userId = resultPoster;
     const profile = await UserProfile.findOne({ userID: userId });
-
 
     const profileId = profile._id;
     const newPostObject = {
-    id: resultId,
-    typename: "SectionExchange",
-    title: reqBody.title,
-    offeredCourse: reqBody.offeredCourse, 
-    offeredSection: reqBody.offeredSection, 
-    desiredCourse: reqBody.desiredCourse, 
-    desiredSection: reqBody.desiredSection, 
-  };
-  await UserProfile.updateOne(
-    { _id: profileId, 'ownPosts.id': resultId },
-    { $set: { 'ownPosts.$': newPostObject } },
-    )
+      id: resultId,
+      typename: "SectionExchange",
+      title: reqBody.title,
+      offeredCourse: reqBody.offeredCourse,
+      offeredSection: reqBody.offeredSection,
+      desiredCourse: reqBody.desiredCourse,
+      desiredSection: reqBody.desiredSection,
+    };
+
+    await UserProfile.updateOne(
+      { _id: profileId, "ownPosts.id": resultId },
+      { $set: { "ownPosts.$": newPostObject } }
+    );
   }
-}
+};

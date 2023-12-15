@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 const OwnPostSchema = new mongoose.Schema({
   id: String,
   typename: String,

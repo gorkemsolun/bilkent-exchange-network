@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
 import { CreateEntryProps, ForumEntry } from "../../data-types/datatypes";
-import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
+import Loader from "../components/loader";
 
 export default function CreateEntry(props: CreateEntryProps) {
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,9 @@ export default function CreateEntry(props: CreateEntryProps) {
 
     axios
       .post(`http://localhost:3000/forum/forumpost/${props.postId}`, post)
-      .then((res) => {})
+      .then((res) => {
+        // TODO SUCCESFULLY SENT
+      })
       .catch((err) => {
         setError(err);
       });
