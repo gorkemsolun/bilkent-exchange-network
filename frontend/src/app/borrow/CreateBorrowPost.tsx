@@ -36,11 +36,13 @@ export default function CreateBorrowPost(props: CreatePostProps) {
       poster: user._id,
     };
 
+    let postId;
     await axios
       .post(urlsPost.borrow, post)
       .then((res) => {
         console.log(res);
         // TODO SUCCESFULLY SENT
+        postId = res.data._id
       })
       .catch((err) => {
         //console.log(err);
@@ -50,19 +52,20 @@ export default function CreateBorrowPost(props: CreatePostProps) {
         //setLoading(false);
       });
 
-    await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
-      .then((res) => {
-        profileDispatch({ type: "UPDATE", payload: res.data.profile });
-        localStorage.setItem("profile", JSON.stringify(res.data.profile));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setLoading(false);
-        setIsSubmitted(true);
-      });
+      const addToProfile = {
+        id: postId,
+        typename: "Borrow",
+        title: post.title
+      }
+
+      let profile = JSON.parse(localStorage.getItem("profile") as string);
+   
+      if(profile) profile.ownPosts.push(addToProfile)
+      
+      localStorage.setItem("profile", JSON.stringify(profile))
+      profileDispatch({ type: "UPDATE", payload: profile });
+      setLoading(false);
+      setIsSubmitted(true);
   };
 
   if (isSubmitted) {

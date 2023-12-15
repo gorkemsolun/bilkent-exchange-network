@@ -45,27 +45,30 @@ export default function CreateLostAndFoundPost(props: CreatePostProps) {
       poster: user._id,
     };
 
+    let postId;
     await axios
       .post(urlsPost.lostfound, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
+        postId = res.data._id
       })
       .catch((err) => {
         setError(err);
         setError("Could not create post");
       });
-    await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
-      .then((res) => {
-        profileDispatch({ type: "UPDATE", payload: res.data.profile });
-        localStorage.setItem("profile", JSON.stringify(res.data.profile));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        //
-      });
+   
+      const addToProfile = {
+        id: postId,
+        typename: "LostFound",
+        title: post.title
+      }
+
+      let profile = JSON.parse(localStorage.getItem("profile") as string);
+   
+      if(profile) profile.ownPosts.push(addToProfile)
+      
+      localStorage.setItem("profile", JSON.stringify(profile))
+      profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
     setIsSubmitted(true);

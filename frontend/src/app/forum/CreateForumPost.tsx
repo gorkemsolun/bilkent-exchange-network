@@ -40,11 +40,7 @@ export default function CreateForumPost(props: CreatePostProps) {
     await axios
       .post(urlsPost.forum, post)
       .then((res) => {
-        // TODO SUCCESFULLY SENT
-        //postId = res.data.forumpost._id
         postId = res.data._id
-        //console.log(res.data)
-        //console.log(res.data.forumpost._id)
       })
       .catch((err) => {
         setError(err);
