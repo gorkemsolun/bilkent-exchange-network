@@ -1,17 +1,17 @@
 import axios from "axios";
 import { useState } from "react";
-import { urlsPost } from "../../data-types/constants";
-import { CreatePostProps } from "../../data-types/datatypes";
-import { ForumPost } from "../../data-types/posttypes";
+import { EditEntryProps } from "../../data-types/datatypes";
+import { ForumEntry } from "../../data-types/datatypes";
+import Loader from "../components/loader";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
-import Loader from "../components/loader";
+import { Navigate } from "react-router-dom";
 
-export default function CreateForumPost(props: CreatePostProps) {
+export default function EditEntry(props: EditEntryProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthContext();
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -21,34 +21,36 @@ export default function CreateForumPost(props: CreatePostProps) {
 
     {
       // Check if any field is empty
-      if (!formData.get("title") || !formData.get("description")) {
+      if (!formData.get("content")) {
         setError("ALL INPUT FIELDS MUST BE SPECIFIED");
         setLoading(false);
         return;
       }
     }
 
-    const post: ForumPost = {
-      title: formData.get("title") as string,
-      description: formData.get("description") as string,
+    const editedEntry: ForumEntry = {
+      content: formData.get("content") as string,
       poster: user._id,
-      entries: [],
     };
 
     axios
-      .post(urlsPost.forum, post)
-      .then((res) => {
-        // TODO SUCCESFULLY SENT
-      })
+      .put(
+        "http://localhost:3000/forum/forumpost/" +
+          props.postId +
+          "/" +
+          props.entryId,
+        editedEntry
+      )
+      .then((res) => {})
       .catch((err) => {
         setError(err);
       });
 
     setLoading(false);
-    setIsSubmitted(true);
+    setIsEdited(true);
   };
 
-  if (isSubmitted) {
+  if (isEdited) {
     window.location.reload();
   }
 
@@ -65,30 +67,21 @@ export default function CreateForumPost(props: CreatePostProps) {
         </span>
 
         <div>
-          <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
-            <label htmlFor="name">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="form-control"
-              placeholder="Enter title"
-            />
-          </div>
           <div className="modal-form-group" style={{ textAlign: "left" }}>
-            <label htmlFor="description">Description:</label>
+            <label htmlFor="content">Message</label>
             <textarea
-              id="description"
-              name="description"
+              id="content"
+              name="content"
               className="form-control"
               style={{ height: "15vh" }}
+              defaultValue={props.entryContent}
             />
           </div>
         </div>
 
         <div className="modal-form-group mt-4">
           <button type="submit" className="btn btn-primary">
-            Create Post
+            Edit
           </button>
         </div>
         {error && (

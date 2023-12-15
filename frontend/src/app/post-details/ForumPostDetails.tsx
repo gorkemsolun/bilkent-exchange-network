@@ -9,11 +9,18 @@ import Navbar from "../components/navbar";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import EditPostButton from "../edit-delete-post/EditPostButton";
 import { useAuthContext } from "../authentication/authHelpers";
+import CreateEntryButton from "../entry/CreateEntryButton";
+import DeleteEntryButton from "../entry/DeleteEntryButton";
+import ReportPostButton from "../edit-delete-post/ReportPostButton";
+import EditEntryButton from "../entry/EditEntryButton";
 
 export default function ForumPostDetails() {
   const [post, setPost] = useState<ForumPost>({} as ForumPost);
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
+  const [entriesWithUserInfo, setEntriesWithUserInfo] = useState<ForumEntry[]>(
+    []
+  );
   const { id } = useParams();
   const { user } = useAuthContext();
 
@@ -44,6 +51,34 @@ export default function ForumPostDetails() {
       .finally(() => {});
   }, [post]);
 
+  useEffect(() => {
+    const fetchUserInfo = async (userId: string) => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/profile/profile/${userId}`
+        );
+        return response.data.profile;
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+        return null;
+      }
+    };
+
+    const fetchEntriesWithUserInfo = async () => {
+      if (post.entries) {
+        const entriesPromises = post.entries.map(async (entry: ForumEntry) => {
+          const userInfo = await fetchUserInfo(entry.poster);
+          return { ...entry, userInfo };
+        });
+
+        const entriesWithUserInfo = await Promise.all(entriesPromises);
+        setEntriesWithUserInfo(entriesWithUserInfo);
+      }
+    };
+
+    fetchEntriesWithUserInfo();
+  }, [post.entries]);
+
   return (
     <div className="outer-container">
       <Header />
@@ -52,16 +87,26 @@ export default function ForumPostDetails() {
         <Loader />
       ) : (
         <div className="forumpostdetails-container">
-          {post.poster == user._id && (
-            <div className="postdetails-edit-delete-container">
-              <EditPostButton postId={"" + post._id} type="forum" />
-              <DeletePostButton
+          <div className="postdetails-edit-delete-container">
+            {/* Users cannot edit/delete others' posts and cannot report their own posts*/}
+            {post.poster == user._id ? (
+              <>
+                <EditPostButton postId={"" + post._id} type="forum" />
+                <DeletePostButton
+                  postId={"" + post._id}
+                  profileId={"" + poster?._id}
+                  type="forum"
+                />
+              </>
+            ) : (
+              <ReportPostButton
                 postId={"" + post._id}
                 profileId={"" + poster?._id}
                 type="forum"
               />
-            </div>
-          )}
+            )}
+            <CreateEntryButton postId={"" + post._id} />
+          </div>
           <div className="forumpostdetails-first-entry-container">
             <div className="forumpostdetails-entry-top">
               <img
@@ -89,20 +134,38 @@ export default function ForumPostDetails() {
           </div>
 
           <div className="forumpostdetails-entries-container">
-            {post.entries &&
-              post.entries.map((entry: ForumEntry) => (
-                <div className="forumpostdetails-entry-container">
+            {entriesWithUserInfo &&
+              entriesWithUserInfo.map((entry: ForumEntry) => (
+                <div
+                  className="forumpostdetails-entry-container"
+                  key={entry._id}
+                >
                   <div className="forumpostdetails-entry-top">
                     <img
-                      src="/src/assets/cs319.png"
+                      src={entry.userInfo?.image || "/src/assets/cs319.png"}
                       className="forumpostdetails-profile-picture"
-                      title="Profile Picture"
+                      alt="Profile Picture"
                     />
-                    <div className="forumpostdetails-username">{"doe123"}</div>
+                    <div className="forumpostdetails-username">
+                      <Link to={`/profile/${entry.userInfo?.userID || ""}`}>
+                        {entry.userInfo?.username || "Unknown User"}
+                      </Link>
+                    </div>
                     <div className="forumpostdetails-date">
                       {entry.createdAt.slice(11, 16) +
                         " " +
                         entry.createdAt.slice(0, 10)}
+                    </div>
+                    <div className="entry-edit-delete-container">
+                      <EditEntryButton
+                        postId={"" + post._id}
+                        entryId={entry._id}
+                        entryContent={entry.content}
+                      />
+                      <DeleteEntryButton
+                        postId={"" + post._id}
+                        entryId={entry._id}
+                      />
                     </div>
                   </div>
 

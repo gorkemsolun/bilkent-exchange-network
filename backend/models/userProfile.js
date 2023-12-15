@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+
+const OwnPostSchema = new mongoose.Schema({
+  id: String,
+  typename: String,
+  title: String,
+  offeredCourse: String,
+  offeredSection: String,
+  desiredCourse: String,
+  desiredSection: String,
+});
+
 const UserProfileSchema = new mongoose.Schema(
   {
     userID: {
@@ -26,13 +37,12 @@ const UserProfileSchema = new mongoose.Schema(
       type: Number,
     },
     ownPosts: {
-      // for this user's posts
-      type: [String],
+      type: [OwnPostSchema],
       default: [],
     },
     savedPosts: {
       // for posts saved by this user
-      type: [String],
+      type: [[String]],
       default: [],
     },
   },

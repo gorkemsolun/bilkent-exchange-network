@@ -1,5 +1,6 @@
 import { DonatePost } from "../models/donatepost.js";
 import { UserProfile } from "../models/userProfile.js";
+import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -27,10 +28,20 @@ export const donatePostPOST = async (req, res) => {
     const profile = await UserProfile.findOne({ userID: userId });
 
     const profileId = profile._id;
-    const newPostId = donatepost._id;
+
+    const newPostObject = {
+      id: donatepost._id,
+      typename: 'Donate',
+      title: donatepost.title,
+      offeredCourse: '', 
+      offeredSection: '', 
+      desiredCourse: '', 
+      desiredSection: '', 
+    };
+
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { ownPosts: newPostId } }
+      { $push: { ownPosts: newPostObject } }
     );
 
     return res.status(201).send(donatepost);
@@ -99,6 +110,7 @@ export const donatePostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("DonatePost not found");
     }
+    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Donate");
 
     return res.status(204).send("DonatePost updated");
   } catch (err) {
@@ -114,7 +126,8 @@ export const donatePostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("DonatePost not found");
     }
-
+    deleteOwnedPosts(result.poster, req.params.id)
+    
     return res.status(204).send("DonatePost deleted");
   } catch (err) {
     console.log(err);

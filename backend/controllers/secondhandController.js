@@ -1,5 +1,6 @@
 import { SecondhandPost } from "../models/secondhandpost.js";
 import { UserProfile } from "../models/userProfile.js";
+import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -28,11 +29,21 @@ export const secondhandPostPOST = async (req, res) => {
     const userId = secondhandpost.poster;
     const profile = await UserProfile.findOne({ userID: userId });
 
+    const newPostObject = {
+      id: secondhandpost._id,
+      typename: 'Secondhand',
+      title: secondhandpost.title,
+      offeredCourse: '', 
+      offeredSection: '', 
+      desiredCourse: '', 
+      desiredSection: '', 
+    };
+
     const profileId = profile._id;
-    const newPostId = secondhandpost._id;
+    
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { ownPosts: newPostId } }
+      { $push: { ownPosts: newPostObject } }
     );
 
     return res.status(201).send(secondhandpost);
@@ -113,7 +124,7 @@ export const secondhandPostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("SecondhandPost not found");
     }
-
+    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Secondhand");
     return res.status(204).send("SecondhandPost updated");
   } catch (err) {
     console.log(err);
@@ -128,7 +139,7 @@ export const secondhandPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("SecondhandPost not found");
     }
-
+    deleteOwnedPosts(result.poster, req.params.id)
     return res.status(204).send("SecondhandPost deleted");
   } catch (err) {
     console.log(err);

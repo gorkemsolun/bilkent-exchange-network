@@ -76,7 +76,7 @@ export default function EditSectionExchangePost(props: EditPostProps) {
   };
 
   if (isEdited) {
-    return <Navigate to="/sectionexchange" />;
+    window.location.reload();
   }
 
   return (

@@ -12,6 +12,8 @@ export default function CreateDonatePost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthContext();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -46,8 +48,12 @@ export default function CreateDonatePost(props: CreatePostProps) {
       });
 
     setLoading(false);
-    props.onClose();
+    setIsSubmitted(true);
   };
+
+  if (isSubmitted) {
+    window.location.reload();
+  }
 
   return (
     <div className="modal-overlay">

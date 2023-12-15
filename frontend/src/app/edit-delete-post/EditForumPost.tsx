@@ -33,14 +33,11 @@ export default function EditForumPost(props: EditPostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    // Check for errors here
-    {
-      // Check if any field is empty
-      if (!formData.get("title") || !formData.get("description")) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    // Check if any field is empty
+    if (!formData.get("title") || !formData.get("description")) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const editedPost: ForumPost = {
@@ -64,7 +61,7 @@ export default function EditForumPost(props: EditPostProps) {
   };
 
   if (isEdited) {
-    return <Navigate to="/forum" />;
+    window.location.reload();
   }
 
   return (

@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import axios from 'axios';
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
@@ -27,7 +28,7 @@ export const authReducer = (state, action) => {
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
 
-  console.log(context);
+  //console.log(context);
 
   if (!context) {
     throw Error("useAuthContext must be used inside an AuthContextProvider");
@@ -174,3 +175,17 @@ export const useVerificationEmail = () => {
 
   return { sendEmail, isLoading, verificationError };
 };
+
+// Define a function to delete the user
+export const deleteUser = async (userId) => {
+  try {
+    // Send a request to your server to delete the user
+    const response = await axios.delete(`http://localhost:3000/user/delete/${userId}`);
+    
+    // Handle the response as needed
+    console.log(response.data); // Log the response if necessary
+  } catch (error) {
+    console.error('Error deleting user:', error);
+  }
+};
+

@@ -8,6 +8,7 @@ import Loader from "../components/loader";
 import { UserProfile } from "../../data-types/datatypes";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import EditPostButton from "../edit-delete-post/EditPostButton";
+import ReportPostButton from "../edit-delete-post/ReportPostButton";
 import { useAuthContext } from "../authentication/authHelpers";
 
 export default function DonatePostDetails() {
@@ -60,16 +61,24 @@ export default function DonatePostDetails() {
           </div>
 
           <div className="postdetails-right-container">
-            {post.poster == user._id && (
-              <div className="postdetails-edit-delete-container">
-                <EditPostButton postId={"" + post._id} type="donate" />
-                <DeletePostButton
+            <div className="postdetails-edit-delete-container">
+              {post.poster == user._id ? (
+                <>
+                  <EditPostButton postId={"" + post._id} type="donate" />
+                  <DeletePostButton
+                    postId={"" + post._id}
+                    profileId={"" + poster?._id}
+                    type="donate"
+                  />
+                </>
+              ) : (
+                <ReportPostButton
                   postId={"" + post._id}
                   profileId={"" + poster?._id}
                   type="donate"
                 />
-              </div>
-            )}
+              )}
+            </div>
             <div className="postdetails-user-info-container">
               <div className="postdetails-username">
                 <Link to={`/profile/` + poster?.userID}>

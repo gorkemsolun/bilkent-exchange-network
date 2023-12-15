@@ -12,6 +12,10 @@ import CreatePostButton from "./create-post/CreatePostButton";
 import { prepareUrl } from "./fetchPostHelpers";
 import { Link } from "react-router-dom";
 
+import Counter from "./components/counter.tsx";
+// import MessengerWindow from "./app/messageWindow";
+import Messenger from "./messenger.tsx";
+
 export default function Forum() {
   const [forumPosts, setForumPosts] = useState<ForumPost[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -19,6 +23,11 @@ export default function Forum() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
+  const [isCounterVisible, setCounterVisible] = useState(true);
+  
+  const handleToggleCounter = () => {
+    setCounterVisible(!isCounterVisible);
+  };
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -43,24 +52,39 @@ export default function Forum() {
   }, [searchTerm, filterParams]);
 
   useEffect(() => {
-    
     if (sortType === "date-asc") {
-      setForumPosts([...forumPosts].sort((a : ForumPost, b : ForumPost) => new Date(a.createdAt as Date).getTime() - new Date(b.createdAt as Date).getTime() ));
+      setForumPosts(
+        [...forumPosts].sort(
+          (a: ForumPost, b: ForumPost) =>
+            new Date(a.createdAt as Date).getTime() -
+            new Date(b.createdAt as Date).getTime()
+        )
+      );
     } else {
-      setForumPosts([...forumPosts].sort((a : ForumPost, b : ForumPost) => new Date(b.createdAt as Date).getTime() - new Date(a.createdAt as Date).getTime() ));
+      setForumPosts(
+        [...forumPosts].sort(
+          (a: ForumPost, b: ForumPost) =>
+            new Date(b.createdAt as Date).getTime() -
+            new Date(a.createdAt as Date).getTime()
+        )
+      );
     }
   }, [sortType]);
 
-
   return (
     <div className="outer-container">
-      <Header />
+      <Header onMessageLinkClick={handleToggleCounter} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="forum" passFilters={setFilterParams}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
-            <SearchBar type="forum" onSearch={handleSearch} sortType={sortType} setSortType={setSortType}/>
+            <SearchBar
+              type="forum"
+              onSearch={handleSearch}
+              sortType={sortType}
+              setSortType={setSortType}
+            />
             <CreatePostButton type="forum" />
           </div>
           {loading ? (
@@ -110,6 +134,7 @@ export default function Forum() {
             </div>
           )}
         </div>
+        <div>{isCounterVisible && <Messenger/>}</div>
       </div>
     </div>
   );

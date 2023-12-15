@@ -84,7 +84,7 @@ export default function EditDonatePost(props: EditPostProps) {
   };
 
   if (isEdited) {
-    return <Navigate to="/donate" />;
+    window.location.reload();
   }
 
   return (

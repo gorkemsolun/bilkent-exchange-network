@@ -40,6 +40,25 @@ export const signupUser = async (req, res) => {
   }
 };
 
+// Delete user
+export const deleteUser = async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    // Perform the deletion in MongoDB
+    const deletedUser = await User.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Respond with a success message or other relevant data
+    res.json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
 export const verifyEmail = async (req, res) => {
   try {
     const emailToken = req.body.emailToken;

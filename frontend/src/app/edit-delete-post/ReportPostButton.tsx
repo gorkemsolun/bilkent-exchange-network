@@ -1,12 +1,11 @@
 import { useState } from "react";
-import DeletePost from "./DeletePost";
-import { DeletePostButtonProps } from "../../data-types/datatypes";
-import DeletePostModal from "./DeletePost";
+import ReportPost from "./ReportPost";
+import { ReportPostButtonProps } from "../../data-types/datatypes";
 
-export default function DeletePostButton(props: DeletePostButtonProps) {
+export default function ReportPostButton(props: ReportPostButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function handleDeletePost(): void {
+  function handleReportPost(): void {
     setIsModalOpen(true);
   }
 
@@ -17,14 +16,14 @@ export default function DeletePostButton(props: DeletePostButtonProps) {
   return (
     <div>
       <button
-        className="btn btn-danger ml-2"
-        onClick={handleDeletePost}
+        className="btn btn-dark ml-2"
+        onClick={handleReportPost}
         type="button"
       >
-        Delete
+        Report
       </button>
       {isModalOpen && (
-        <DeletePost
+        <ReportPost
           onClose={handleCloseModal}
           postId={props.postId}
           profileId={props.profileId}

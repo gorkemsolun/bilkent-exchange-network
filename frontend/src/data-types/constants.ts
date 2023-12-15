@@ -112,3 +112,14 @@ export const defaultFilterParams = {
   page: 1,
   limit: 10,
 };
+
+export const defaultProfile = {
+  userID: "dummy",
+  username: "dum",
+  email: "dum@dum.com",
+  image: "",
+  description: "description",
+  reputation: 0,
+  ownPosts: [[]],
+  savedPosts: []
+}

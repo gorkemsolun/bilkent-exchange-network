@@ -79,6 +79,7 @@ function AppContent() {
               !user ? <VerificationPage /> : <Navigate to="/secondhand" />
             }
           />
+          
           <Route
             path="/secondhandpost/:id"
             element={ user ? <SecondHandPostDetails /> :  setTimeout(() => {<Navigate to="/login" />}, 100)}

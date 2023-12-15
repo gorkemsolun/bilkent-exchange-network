@@ -12,6 +12,10 @@ import SearchBar from "./components/searchbar.tsx";
 import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import { prepareUrl } from "./fetchPostHelpers.ts";
 
+import Counter from "./components/counter.tsx";
+// import MessengerWindow from "./app/messageWindow";
+import Messenger from "./messenger.tsx";
+
 export default function LostFound() {
   const [loading, setLoading] = useState(false);
   const [lostFoundPosts, setLostFoundPosts] = useState([]);
@@ -20,10 +24,17 @@ export default function LostFound() {
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
 
+  const [isCounterVisible, setCounterVisible] = useState(true);
+
+  const handleToggleCounter = () => {
+    setCounterVisible(!isCounterVisible);
+  };
+
   useEffect(() => {
     setLoading(true);
     const url = prepareUrl(searchTerm, "lostfound", filterParams);
     console.log(url);
+    setCounterVisible(false);
 
     axios
       .get(url)
@@ -69,7 +80,7 @@ export default function LostFound() {
 
   return (
     <div className="outer-container">
-      <Header />
+      <Header onMessageLinkClick={handleToggleCounter} />
       <Navbar />
       <div className="flex flex-row grow">
         <Filters type="lostfound" passFilters={passFilters}></Filters>
@@ -142,6 +153,11 @@ export default function LostFound() {
               </div>
             </div>
           )}
+        </div>
+        <div
+          className={`messenger-box ${isCounterVisible ? "open" : "closed"}`}
+        >
+          <Messenger onMessageLinkClick={handleToggleCounter} />
         </div>
       </div>
     </div>

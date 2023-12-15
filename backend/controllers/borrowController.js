@@ -1,5 +1,6 @@
 import { BorrowPost } from "../models/borrowpost.js";
 import { UserProfile } from "../models/userProfile.js";
+import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -27,10 +28,18 @@ export const borrowPostPOST = async (req, res) => {
     const profile = await UserProfile.findOne({ userID: userId });
 
     const profileId = profile._id;
-    const newPostId = borrowpost._id;
+    const newPostObject = {
+      id: borrowpost._id,
+      typename: 'Borrow',
+      title: borrowpost.title,
+      offeredCourse: '', 
+      offeredSection: '', 
+      desiredCourse: '', 
+      desiredSection: '', 
+    };
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { ownPosts: newPostId } }
+      { $push: { ownPosts: newPostObject } }
     );
 
     return res.status(201).send(borrowpost);
@@ -95,10 +104,11 @@ export const borrowPostPUT = async (req, res) => {
     }
 
     const result = await BorrowPost.findByIdAndUpdate(req.params.id, req.body);
-
+    
     if (!result) {
       return res.status(404).send("BorrowPost not found");
     }
+    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Borrow");
 
     return res.status(204).send("BorrowPost updated");
   } catch (err) {
@@ -114,6 +124,8 @@ export const borrowPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("BorrowPost not found");
     }
+
+    deleteOwnedPosts(result.poster, req.params.id)
 
     return res.status(204).send("BorrowPost deleted");
   } catch (err) {

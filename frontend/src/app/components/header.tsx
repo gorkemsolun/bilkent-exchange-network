@@ -4,7 +4,11 @@ import { useAuthContext, useLogout } from "../authentication/authHelpers";
 import axios from "axios";
 import { UserProfile } from "../../data-types/datatypes";
 
-export default function Header() {
+interface HeaderProps {
+  onMessageLinkClick?: () => void;
+}
+
+export default function Header(props: HeaderProps) {
   const { logout } = useLogout();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const { user } = useAuthContext();
@@ -70,9 +74,11 @@ export default function Header() {
         </Link>
       </div>
       <div className="header-message-link">
-        <Link to="/login" className="header-message-link">
-          Message
-        </Link>
+        <img
+          src="./src/assets/dmbox.png"
+          className="header-dmbox-image"
+          onClick={props.onMessageLinkClick}
+        />
       </div>
     </div>
   );
