@@ -1,11 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
-import { EditEntryProps } from "../../data-types/datatypes";
-import { ForumEntry } from "../../data-types/datatypes";
-import Loader from "../components/loader";
+import { EditEntryProps, ForumEntry } from "../../data-types/datatypes";
 import { useAuthContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
-import { Navigate } from "react-router-dom";
+import Loader from "../components/loader";
 
 export default function EditEntry(props: EditEntryProps) {
   const [loading, setLoading] = useState(false);

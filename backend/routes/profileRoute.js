@@ -1,10 +1,10 @@
 import express from "express";
 import {
-  getProfileByUsersID,
-  getProfileByUsername,
-  profileUpdate,
   addOwnPost,
   deleteOwnPost,
+  getProfileByUsername,
+  getProfileByUsersID,
+  profileUpdate,
   savePost,
   unSavePost,
 } from "../controllers/profileController.js";

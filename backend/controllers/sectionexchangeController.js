@@ -1,6 +1,6 @@
 import { SectionexchangePost } from "../models/sectionexchangepost.js";
 import { UserProfile } from "../models/userProfile.js";
-import { updateOwnedSecExPost, deleteOwnedPosts } from "./profileController.js";
+import { deleteOwnedPosts, updateOwnedSecExPost } from "./profileController.js";
 function fieldController(reqBody) {
   if (
     !reqBody.price ||
@@ -31,18 +31,17 @@ export const sectionexchangePostPOST = async (req, res) => {
     const profile = await UserProfile.findOne({ userID: userId });
 
     const profileId = profile._id;
-    
+
     const newPostObject = {
       id: sectionexchangepost._id,
-      typename: 'SectionExchange',
+      typename: "SectionExchange",
       title: sectionexchangepost.title,
-      offeredCourse: sectionexchangepost.offeredCourse, 
-      offeredSection: sectionexchangepost.offeredSection, 
-      desiredCourse: sectionexchangepost.desiredCourse, 
-      desiredSection: sectionexchangepost.desiredSection, 
+      offeredCourse: sectionexchangepost.offeredCourse,
+      offeredSection: sectionexchangepost.offeredSection,
+      desiredCourse: sectionexchangepost.desiredCourse,
+      desiredSection: sectionexchangepost.desiredSection,
     };
-    
-    
+
     await UserProfile.updateOne(
       { _id: profileId },
       { $push: { ownPosts: newPostObject } }
@@ -131,14 +130,14 @@ export const sectionexchangePostPUT = async (req, res) => {
     const result = await SectionexchangePost.findByIdAndUpdate(
       req.params.id,
       req.body,
-      {new : true}
+      { new: true }
     );
 
     if (!result) {
       return res.status(404).send("SectionexchangePost not found");
     }
-   
-    updateOwnedSecExPost(req.body, result._id, result.poster)
+
+    updateOwnedSecExPost(req.body, result._id, result.poster);
 
     return res.status(204).send("SectionexchangePost updated");
   } catch (err) {
@@ -154,7 +153,9 @@ export const sectionexchangePostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("SectionexchangePost not found");
     }
-    deleteOwnedPosts(result.poster, req.params.id)
+
+    deleteOwnedPosts(result.poster, req.params.id);
+
     return res.status(204).send("SectionexchangePost deleted");
   } catch (err) {
     console.log(err);

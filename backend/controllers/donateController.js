@@ -1,6 +1,6 @@
 import { DonatePost } from "../models/donatepost.js";
 import { UserProfile } from "../models/userProfile.js";
-import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
+import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -12,11 +12,12 @@ function fieldController(reqBody) {
   ) {
     return false;
   }
+  return true;
 }
 
 export const donatePostPOST = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for donatepost");
     }
 
@@ -31,12 +32,12 @@ export const donatePostPOST = async (req, res) => {
 
     const newPostObject = {
       id: donatepost._id,
-      typename: 'Donate',
+      typename: "Donate",
       title: donatepost.title,
-      offeredCourse: '', 
-      offeredSection: '', 
-      desiredCourse: '', 
-      desiredSection: '', 
+      offeredCourse: "",
+      offeredSection: "",
+      desiredCourse: "",
+      desiredSection: "",
     };
 
     await UserProfile.updateOne(
@@ -110,7 +111,14 @@ export const donatePostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("DonatePost not found");
     }
-    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Donate");
+    
+    updateOwnedPosts(
+      req.body.title,
+      result.title,
+      result.poster,
+      result._id,
+      "Donate"
+    );
 
     return res.status(204).send("DonatePost updated");
   } catch (err) {
@@ -126,8 +134,8 @@ export const donatePostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("DonatePost not found");
     }
-    deleteOwnedPosts(result.poster, req.params.id)
-    
+    deleteOwnedPosts(result.poster, req.params.id);
+
     return res.status(204).send("DonatePost deleted");
   } catch (err) {
     console.log(err);

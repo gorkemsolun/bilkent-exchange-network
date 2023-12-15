@@ -1,6 +1,6 @@
 import { BorrowPost } from "../models/borrowpost.js";
 import { UserProfile } from "../models/userProfile.js";
-import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
+import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -11,11 +11,12 @@ function fieldController(reqBody) {
   ) {
     return false;
   }
+  return true;
 }
 
 export const borrowPostPOST = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for borrowpost");
     }
 
@@ -30,13 +31,14 @@ export const borrowPostPOST = async (req, res) => {
     const profileId = profile._id;
     const newPostObject = {
       id: borrowpost._id,
-      typename: 'Borrow',
+      typename: "Borrow",
       title: borrowpost.title,
-      offeredCourse: '', 
-      offeredSection: '', 
-      desiredCourse: '', 
-      desiredSection: '', 
+      offeredCourse: "",
+      offeredSection: "",
+      desiredCourse: "",
+      desiredSection: "",
     };
+
     await UserProfile.updateOne(
       { _id: profileId },
       { $push: { ownPosts: newPostObject } }
@@ -99,16 +101,23 @@ export const borrowPostGETId = async (req, res) => {
 
 export const borrowPostPUT = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for borrowpost");
     }
 
     const result = await BorrowPost.findByIdAndUpdate(req.params.id, req.body);
-    
+
     if (!result) {
       return res.status(404).send("BorrowPost not found");
     }
-    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Borrow");
+
+    updateOwnedPosts(
+      req.body.title,
+      result.title,
+      result.poster,
+      result._id,
+      "Borrow"
+    );
 
     return res.status(204).send("BorrowPost updated");
   } catch (err) {
@@ -125,7 +134,7 @@ export const borrowPostDEL = async (req, res) => {
       return res.status(404).send("BorrowPost not found");
     }
 
-    deleteOwnedPosts(result.poster, req.params.id)
+    deleteOwnedPosts(result.poster, req.params.id);
 
     return res.status(204).send("BorrowPost deleted");
   } catch (err) {

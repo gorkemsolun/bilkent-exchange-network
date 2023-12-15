@@ -114,12 +114,12 @@ export const defaultFilterParams = {
 };
 
 export const defaultProfile = {
-  userID: "dummy",
-  username: "dum",
-  email: "dum@dum.com",
+  userID: "",
+  username: "",
+  email: "",
   image: "",
-  description: "description",
+  description: "",
   reputation: 0,
   ownPosts: [[]],
-  savedPosts: []
-}
+  savedPosts: [],
+};

@@ -6,7 +6,7 @@ export default function VerificationPage() {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const { sendEmail } = useVerificationEmail();
-  const [isVerifying, setIsVerifying] = useState(false);
+  const [isVerifying, setIsVerifying] = useState<boolean>(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +36,6 @@ export default function VerificationPage() {
         className="flex flex-col bg-white rounded shadow-lg p-12 mt-12 opacity-90"
         style={{ width: "23rem" }}
         onSubmit={handleSubmit}
-        disabled={isVerifying}
         placeholder="Enter your email address"
       >
         <label

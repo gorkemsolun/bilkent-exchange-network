@@ -1,6 +1,6 @@
 import { ForumEntry, ForumPost } from "../models/forumpost.js";
 import { UserProfile } from "../models/userProfile.js";
-import { updateOwnedPosts, deleteOwnedPosts } from "./profileController.js";
+import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
 function fieldController(reqBody) {
   if (
@@ -11,11 +11,12 @@ function fieldController(reqBody) {
   ) {
     return false;
   }
+  return true;
 }
 
 export const forumPostPOST = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for forumpost");
     }
 
@@ -28,17 +29,17 @@ export const forumPostPOST = async (req, res) => {
     const profile = await UserProfile.findOne({ userID: userId });
 
     const profileId = profile._id;
-    
+
     const newPostObject = {
       id: forumpost._id,
-      typename: 'Forum',
+      typename: "Forum",
       title: forumpost.title,
-      offeredCourse: '', 
-      offeredSection: '', 
-      desiredCourse: '', 
-      desiredSection: '', 
+      offeredCourse: "",
+      offeredSection: "",
+      desiredCourse: "",
+      desiredSection: "",
     };
-    
+
     await UserProfile.updateOne(
       { _id: profileId },
       { $push: { ownPosts: newPostObject } }
@@ -188,7 +189,7 @@ export const forumPostGETId = async (req, res) => {
 
 export const forumPostPUT = async (req, res) => {
   try {
-    if (fieldController(req.body)) {
+    if (!fieldController(req.body)) {
       return res.status(400).send("Missing fields for forumpost");
     }
 
@@ -198,7 +199,13 @@ export const forumPostPUT = async (req, res) => {
       return res.status(404).send("ForumPost not found");
     }
 
-    updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Forum");
+    updateOwnedPosts(
+      req.body.title,
+      result.title,
+      result.poster,
+      result._id,
+      "Forum"
+    );
 
     return res.status(204).send("ForumPost updated");
   } catch (err) {
@@ -214,7 +221,9 @@ export const forumPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("ForumPost not found");
     }
-    deleteOwnedPosts(result.poster, req.params.id)
+
+    deleteOwnedPosts(result.poster, req.params.id);
+
     return res.status(204).send("ForumPost deleted");
   } catch (err) {
     console.log(err);

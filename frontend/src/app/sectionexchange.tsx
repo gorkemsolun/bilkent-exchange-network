@@ -10,9 +10,6 @@ import Navbar from "./components/navbar";
 import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton.tsx";
 import { prepareUrl } from "./fetchPostHelpers.ts";
-
-import Counter from "./components/counter.tsx";
-// import MessengerWindow from "./app/messageWindow";
 import Messenger from "./messenger.tsx";
 
 export default function SectionExchange() {

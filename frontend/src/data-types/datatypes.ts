@@ -25,10 +25,11 @@ export interface UserProfile {
   image: string;
   description: string;
   reputation: number;
-  ownPosts: OwnPost[]; // Array of objects matching OwnPost schema
+  ownPosts: OwnPost[];
   savedPosts: string[];
   createdAt?: Date;
 }
+
 /*
 export interface UserProfile {
   _id?: string;
@@ -46,7 +47,7 @@ export interface UserProfile {
 
 export interface Conversation {
   _id?: string;
-  userIDs: [String];
+  userIDs: [];
   messages: [];
   createdAt?: Date;
   updatedAt?: Date;
@@ -60,11 +61,10 @@ export interface Message {
 }
 
 export interface ForumEntry {
-  [x: string]: any;
-  _id: string;
+  _id?: string;
   content: string;
   poster: string;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface FilterProps {
@@ -122,7 +122,6 @@ export interface ReportPostProps extends ReportPostButtonProps {
   onClose: () => void;
 }
 
-
 export interface EditPostButtonProps {
   type: string;
   postId: string;
@@ -132,8 +131,6 @@ export interface EditPostProps {
   onClose: () => void;
   postId: string;
 }
-
-
 
 export interface CreateEntryButtonProps {
   postId: string;
@@ -166,4 +163,14 @@ export interface EditEntryProps {
   postId: string;
   entryId: string;
   entryContent: string;
+}
+
+export interface MessengerProps {
+  onMessageLinkClick?: () => void;
+}
+
+export interface ChatMessageProps {
+  chatTitle: string;
+  onSelectChat: (chatTitle: string) => void;
+  isActive: boolean;
 }
