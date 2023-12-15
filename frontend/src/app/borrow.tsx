@@ -12,13 +12,22 @@ import SearchBar from "./components/searchbar";
 import CreatePostButton from "./create-post/CreatePostButton";
 import { prepareUrl } from "./fetchPostHelpers";
 
+import Counter from "./components/counter.tsx";
+// import MessengerWindow from "./app/messageWindow";
+import Messenger from "./message";
+
 export default function Borrow() {
   const [loading, setLoading] = useState(false);
   const [borrowPosts, setBorrowPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterParams, setFilterParams] =
-    useState<FilterParams>(defaultFilterParams);
+  useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
+  const [isCounterVisible, setCounterVisible] = useState(true);
+
+  const handleToggleCounter = () => {
+    setCounterVisible(!isCounterVisible);
+  };
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -68,7 +77,7 @@ export default function Borrow() {
 
   return (
     <div className="outer-container">
-      <Header />
+      <Header onMessageLinkClick={handleToggleCounter} />
       <Navbar />
       <div className="flex flex-row  grow">
         <Filters type="borrow" passFilters={passFilters}></Filters>
@@ -129,6 +138,7 @@ export default function Borrow() {
             </div>
           )}
         </div>
+        <div>{isCounterVisible && <Messenger/>}</div>
       </div>
     </div>
   );
