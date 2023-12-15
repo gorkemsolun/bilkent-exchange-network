@@ -34,12 +34,12 @@ export default function Header() {
       >
         <div className="header-profile">
           <img
-            src={userProfile.image}
+            src={userProfile?.image}
             className="header-profile-image"
             alt="Profile"
             title="Profile"
           />
-          <span>{userProfile.username}</span>
+          <span>{userProfile?.username}</span>
           {isDropdownOpen && (
             <div className="header-profile-dropdown">
               <Link to="/myprofile" className="header-profile-dropdown-link">

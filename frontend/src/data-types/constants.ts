@@ -109,4 +109,6 @@ export const defaultFilterParams = {
   offeredCourse: "All",
   desiredSection: undefined,
   offeredSection: undefined,
+  page: 1,
+  limit: 10,
 };

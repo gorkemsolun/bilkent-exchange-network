@@ -18,20 +18,16 @@ export default function CreateLostAndFoundPost(props: CreatePostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    // Check for errors here
-    {
-      // Check if any field is empty
-      if (
-        !formData.get("title") ||
-        !formData.get("description") ||
-        !formData.get("image") ||
-        !formData.get("category") ||
-        !formData.get("status")
-      ) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (
+      !formData.get("title") ||
+      !formData.get("description") ||
+      !formData.get("image") ||
+      !formData.get("category") ||
+      !formData.get("status")
+    ) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const post: LostFoundPost = {
@@ -50,6 +46,7 @@ export default function CreateLostAndFoundPost(props: CreatePostProps) {
       })
       .catch((err) => {
         setError(err);
+        setError("Could not create post");
       });
 
     setLoading(false);

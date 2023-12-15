@@ -3,6 +3,8 @@ import { categories, courses } from "../../data-types/constants";
 import { FilterProps } from "../../data-types/datatypes";
 
 export default function Filters(props: FilterProps) {
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(10);
   const [minPrice, setMinPrice] = useState<number | undefined>();
   const [maxPrice, setMaxPrice] = useState<number | undefined>();
   const [minDate, setMinDate] = useState<Date>();
@@ -28,6 +30,22 @@ export default function Filters(props: FilterProps) {
     }
   };
 
+  const handlePageChange = (page: number) => {
+    if (page > 0) {
+      setPage(page);
+    } else {
+      setPage(1);
+    }
+  };
+
+  const handlePostPerPageChange = (postsPerPage: number) => {
+    if (postsPerPage > 0) {
+      setLimit(postsPerPage);
+    } else {
+      setLimit(10);
+    }
+  };
+
   const onFilterClicked = () => {
     props.passFilters({
       categories: checkedCategories,
@@ -44,6 +62,8 @@ export default function Filters(props: FilterProps) {
       offeredCourse: offeredCourse,
       desiredSection: desiredSection,
       offeredSection: offeredSection,
+      page: page,
+      limit: limit,
     });
   };
 
@@ -276,6 +296,30 @@ export default function Filters(props: FilterProps) {
             onChange={(e) => setMaxDate(new Date(e.target.value))}
             className="border p-2 rounded-md bg-white max-w-1/4 w-1"
             placeholder="Latest Date"
+          />
+        </div>
+      </div>
+
+      <div className="mb-3 flex flex-row second-hand-category">
+        <div className="mb-1 mr-1 max-w-1/2">
+          <label>Page Number</label>
+          <input
+            type="number"
+            value={page}
+            onChange={(e) => handlePageChange(Number(e.target.value))}
+            className="border p-2 rounded-md bg-white w-full"
+            placeholder="Min Price"
+          />
+        </div>
+
+        <div className="mb-1 max-w-1/2">
+          <label>Posts per Page</label>
+          <input
+            type="number"
+            value={limit}
+            onChange={(e) => handlePostPerPageChange(Number(e.target.value))}
+            className="border p-2 rounded-md bg-white w-full"
+            placeholder="Max Price"
           />
         </div>
       </div>

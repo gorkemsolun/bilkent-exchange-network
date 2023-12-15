@@ -18,19 +18,15 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    // Check for errors here
-    {
-      // Check if any field is empty
-      if (
-        !formData.get("offeredCourse") ||
-        !formData.get("offeredSection") ||
-        !formData.get("desiredCourse") ||
-        !formData.get("desiredSection")
-      ) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (
+      !formData.get("offeredCourse") ||
+      !formData.get("offeredSection") ||
+      !formData.get("desiredCourse") ||
+      !formData.get("desiredSection")
+    ) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const post: SectionexchangePost = {
@@ -48,6 +44,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       })
       .catch((err) => {
         setError(err);
+        setError("Could not create post");
       });
 
     setLoading(false);

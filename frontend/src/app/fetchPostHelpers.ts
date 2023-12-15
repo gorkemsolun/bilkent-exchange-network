@@ -5,9 +5,7 @@ import { FilterParams } from "../data-types/datatypes.ts";
 export function prepareUrl(
   searchTerm: string,
   type: string,
-  filterParams?: FilterParams,
-  page?: number,
-  limit?: number
+  filterParams?: FilterParams
 ) {
   let url: string = urlsGet[type as keyof typeof urlsGet];
   if (filterParams) {
@@ -67,12 +65,16 @@ export function prepareUrl(
     }
   }
 
-  if (page && limit) {
-    url = url.replace(":page", String(page));
-    url = url.replace(":limit", String(limit));
+  if (filterParams && filterParams.limit) {
+    url = url.replace(":limit", String(filterParams.limit));
+  } else {
+    url = url.replace(":limit", "10");
+  }
+
+  if (filterParams && filterParams.page) {
+    url = url.replace(":page", String(filterParams.page - 1));
   } else {
     url = url.replace(":page", "0");
-    url = url.replace(":limit", "10");
   }
 
   if (searchTerm) {

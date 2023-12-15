@@ -49,6 +49,8 @@ export interface FilterParams {
   offeredCourse: string;
   desiredSection: number | undefined;
   offeredSection: number | undefined;
+  page: number;
+  limit: number;
 }
 
 export interface CreatePostButtonProps {

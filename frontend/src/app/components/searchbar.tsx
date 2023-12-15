@@ -3,14 +3,12 @@ import { useState } from "react";
 export default function SearchBar(props: {
   type: string;
   onSearch: (searchTerm: string) => void;
-  sortType: string; 
-  setSortType: React.Dispatch<React.SetStateAction<string>>; 
+  sortType: string;
+  setSortType: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [searchTerm, setSearchTerm] = useState("");
-  
 
   const handleSearch = () => {
-    // Perform search based on `searchTerm`
     props.onSearch(searchTerm);
   };
 
