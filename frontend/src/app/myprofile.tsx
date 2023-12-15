@@ -14,6 +14,8 @@ export default function MyProfile() {
   const [userProfile, setUserProfile] = useState<UserProfile>(
     {} as UserProfile
   );
+  // to display own posts
+  const [ownPosts, setOwnFoundPosts] = useState([]);
 
     // Remove account from database
     const handleRemove = async () => {
@@ -39,7 +41,10 @@ export default function MyProfile() {
       })
       .finally(() => {
         setLoading(false);
-      });
+      })
+      .then(() => {
+        setOwnFoundPosts(ownPosts);
+      })
   }, [user._id]);
 
   return (
@@ -100,7 +105,43 @@ export default function MyProfile() {
             </div>
           </div>
           <div className="profilePosts">
-            <p className="statLabel">Posts</p>
+          <p className="statLabel">Posts</p>
+          {ownPosts.map((post) => (
+                    <div className="col-12 mb-4" key={post._id}>
+                      <Link
+                        to={`/forumpost/${post._id}`}
+                        className="col-12 cursor-pointer"
+                        key={post._id}
+                      >
+                        <div className="card w-full">
+                          <div className="card-body">
+                            <h2
+                              className="card-title"
+                              style={{
+                                fontSize: "1.5rem",
+                                fontWeight: "bold",
+                                textAlign: "left",
+                              }}
+                            >
+                              {post.title.length < 50
+                                ? post.title
+                                : post.title.slice(0, 50) + "..."}
+                            </h2>
+                            <div
+                              className="description-container"
+                              style={{ height: "10%", textAlign: "left" }}
+                            >
+                              <p className="card-text">
+                                {post.description.length < 315
+                                  ? post.description
+                                  : post.description.slice(0, 315) + "..."}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
           </div>
         </div>
       )}
