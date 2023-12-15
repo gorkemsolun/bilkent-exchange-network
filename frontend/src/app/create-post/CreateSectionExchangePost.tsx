@@ -3,7 +3,10 @@ import { useState } from "react";
 import { urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posttypes";
-import { useAuthContext } from "../authentication/authHelpers";
+import {
+  useAuthContext,
+  useProfileContext,
+} from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/loader";
 
@@ -12,8 +15,9 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
   const { user } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { profileDispatch } = useProfileContext();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
 
@@ -38,7 +42,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       poster: user._id,
     };
 
-    axios
+    await axios
       .post(urlsPost.sectionexchange, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
@@ -46,6 +50,19 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       .catch((err) => {
         setError(err);
         setError("Could not create post");
+      });
+
+    await axios
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .then((res) => {
+        profileDispatch({ type: "UPDATE", payload: res.data.profile });
+        localStorage.setItem("profile", JSON.stringify(res.data.profile));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        //
       });
 
     setLoading(false);

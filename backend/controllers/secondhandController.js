@@ -125,6 +125,7 @@ export const secondhandPostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("SecondhandPost not found");
     }
+<<<<<<< HEAD
 
     updateOwnedPosts(
       req.body.title,
@@ -134,6 +135,9 @@ export const secondhandPostPUT = async (req, res) => {
       "Secondhand"
     );
 
+=======
+    await updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Secondhand");
+>>>>>>> 6147682 (optimization)
     return res.status(204).send("SecondhandPost updated");
   } catch (err) {
     console.log(err);
@@ -148,9 +152,13 @@ export const secondhandPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("SecondhandPost not found");
     }
+<<<<<<< HEAD
 
     deleteOwnedPosts(result.poster, req.params.id);
 
+=======
+    await deleteOwnedPosts(result.poster, req.params.id)
+>>>>>>> 6147682 (optimization)
     return res.status(204).send("SecondhandPost deleted");
   } catch (err) {
     console.log(err);

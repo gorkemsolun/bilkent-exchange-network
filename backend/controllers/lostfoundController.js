@@ -121,15 +121,7 @@ export const lostfoundPostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("LostfoundPost not found");
     }
-
-    updateOwnedPosts(
-      req.body.title,
-      result.title,
-      result.poster,
-      result._id,
-      "Lostfound"
-    );
-
+    await updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Lostfound");
     return res.status(204).send("LostfoundPost updated");
   } catch (err) {
     console.log(err);
@@ -144,9 +136,13 @@ export const lostfoundPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("LostfoundPost not found");
     }
+<<<<<<< HEAD
 
     deleteOwnedPosts(result.poster, req.params.id);
 
+=======
+    await deleteOwnedPosts(result.poster, req.params.id)
+>>>>>>> 6147682 (optimization)
     return res.status(204).send("LostfoundPost deleted");
   } catch (err) {
     console.log(err);

@@ -3,17 +3,27 @@ import { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posttypes";
+<<<<<<< HEAD
 import { useAuthContext } from "../authentication/authHelpers";
+=======
+import Loader from "../components/loader";
+import { resizeImageFile } from "../fetchPostHelpers";
+import {
+  useAuthContext,
+  useProfileContext,
+} from "../authentication/authHelpers";
+>>>>>>> 6147682 (optimization)
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/loader";
 import { resizeImageFile } from "../fetchPostHelpers";
 
-export default function CreateDonatePost(props: CreatePostProps) {
+export default function CreateDonatePost (props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
-
+  const { profileDispatch } = useProfileContext();
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -34,7 +44,7 @@ export default function CreateDonatePost(props: CreatePostProps) {
       poster: user._id,
     };
 
-    axios
+    await axios
       .post(urlsPost.donate, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
@@ -43,8 +53,20 @@ export default function CreateDonatePost(props: CreatePostProps) {
         setError(err);
       });
 
-    setLoading(false);
-    setIsSubmitted(true);
+    await axios
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .then((res) => {
+        profileDispatch({ type: "UPDATE", payload: res.data.profile });
+        localStorage.setItem("profile", JSON.stringify(res.data.profile));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+        setIsSubmitted(true);
+      });
+
   };
 
   if (isSubmitted) {

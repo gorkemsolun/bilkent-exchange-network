@@ -8,7 +8,7 @@ import Navbar from "../components/navbar";
 import { UserProfile } from "../../data-types/datatypes";
 import EditPostButton from "../edit-delete-post/EditPostButton";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
-import { useAuthContext } from "../authentication/authHelpers";
+import { useAuthContext, useProfileContext } from "../authentication/authHelpers";
 import ReportPostButton from "../edit-delete-post/ReportPostButton";
 
 export default function LostFoundPostDetails() {
@@ -17,6 +17,7 @@ export default function LostFoundPostDetails() {
   const [loading, setLoading] = useState(false);
   const { user } = useAuthContext();
   const { id } = useParams();
+  const {profile} = useProfileContext();
 
   useEffect(() => {
     setLoading(true);
@@ -34,7 +35,10 @@ export default function LostFoundPostDetails() {
   }, [id]);
 
   useEffect(() => {
-    axios
+    if(post.poster === profile.userID) {
+      setPoster(profile)
+    } else {
+      axios
       .get(`http://localhost:3000/profile/profile/${post.poster}`)
       .then((res) => {
         setPoster(res.data.profile);
@@ -43,6 +47,7 @@ export default function LostFoundPostDetails() {
         console.log(err);
       })
       .finally(() => {});
+    }
   }, [post]);
 
   return (

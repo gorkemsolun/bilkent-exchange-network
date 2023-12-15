@@ -8,18 +8,26 @@ import Header from "./components/header.tsx";
 import Loader from "./components/loader.tsx";
 import Navbar from "./components/navbar.tsx";
 import { resizeImageFile } from "./fetchPostHelpers.ts";
+import { useProfileContext } from "./authentication/authHelpers.js";
 
 export default function EditProfile() {
   const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+<<<<<<< HEAD
   const [userProfile, setUserProfile] =
     useState<UserProfile>(defaultUserProfile);
+=======
+  const [userProfile, setUserProfile] = useState<UserProfile>(
+    {} as UserProfile
+  );
+  const {profileDispatch} = useProfileContext();
+>>>>>>> 6147682 (optimization)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
-
+   
     const formData = new FormData(event.currentTarget);
 
     userProfile.username = formData.get("username") as string;
@@ -37,7 +45,8 @@ export default function EditProfile() {
       .catch((err) => {
         console.log(err);
       });
-
+    profileDispatch({type: "UPDATE", payload: userProfile});
+    localStorage.setItem("profile", JSON.stringify(userProfile))
     setLoading(false);
     setIsSubmitted(true);
   };

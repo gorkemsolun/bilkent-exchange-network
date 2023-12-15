@@ -2,12 +2,21 @@ import axios from "axios";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { DeletePostProps } from "../../data-types/datatypes";
+import {
+  useAuthContext,
+  useProfileContext,
+} from "../authentication/authHelpers";
+import Loader from "../components/loader";
 
 export default function DeletePost(props: DeletePostProps) {
   const [isDeleted, setIsDeleted] = useState(false);
+  const { user } = useAuthContext();
+  const { profileDispatch } = useProfileContext();
+  const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
-    axios
+    setLoading(true)
+    await axios
       .delete(
         "http://localhost:3000/" +
           props.type +
@@ -23,18 +32,19 @@ export default function DeletePost(props: DeletePostProps) {
         console.log(err);
       });
 
-    // Delete post from profile
-    const body = {
-      profileId: props.profileId,
-      toBeRemoved: props.postId,
-    };
-    axios
-      .put(`http://localhost:3000/profile/delete-ownPost`, body)
-      .then((res) => {})
+    await axios
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .then((res) => {
+        localStorage.setItem("profile", JSON.stringify(res.data.profile));
+        profileDispatch({ type: "UPDATE", payload: res.data.profile });
+      })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        //
       });
-
+      setLoading(false)
     setIsDeleted(true);
   };
 
@@ -48,6 +58,7 @@ export default function DeletePost(props: DeletePostProps) {
 
   return (
     <div className="modal-overlay">
+      {loading && <Loader />}
       <div className="delete-post-modal-body">
         <label>Are you sure you want to delete this post?</label>
         <div className="editProfileButtonContainer">

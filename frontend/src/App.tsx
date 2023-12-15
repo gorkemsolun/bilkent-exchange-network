@@ -2,7 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { AuthContextProvider } from "./app/authentication/AuthContext";
 import VerificationPage from "./app/authentication/Verification";
-import { useAuthContext } from "./app/authentication/authHelpers";
+import { useAuthContext, useProfileContext } from "./app/authentication/authHelpers";
 import Signup from "./app/authentication/signup";
 import Borrow from "./app/borrow";
 import Donate from "./app/donate";
@@ -20,12 +20,15 @@ import DonatePostDetails from "./app/post-details/DonatePostDetails";
 import ForumPostDetails from "./app/post-details/ForumPostDetails";
 import BorrowPostDetails from "./app/post-details/BorrowPostDetails";
 import EditProfile from "./app/editprofile";
+import { ProfileContextProvider } from "./app/ProfileContext";
 
 export default function App() {
   return (
     <div>
       <AuthContextProvider>
-        <AppContent />
+        <ProfileContextProvider>
+          <AppContent />
+        </ProfileContextProvider>
       </AuthContextProvider>
     </div>
   );

@@ -1,6 +1,24 @@
 import axios from "axios";
 import { useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
+<<<<<<< HEAD
+=======
+import { ProfileContext } from "../ProfileContext";
+import axios from 'axios';
+>>>>>>> 6147682 (optimization)
+
+export const useProfileContext = () => {
+  const context = useContext(ProfileContext);
+
+  //console.log(context);
+
+  if (!context) {
+    throw Error("useProfileContext must be used inside an ProfileContextProvider");
+  }
+
+  return context;
+}
+
 
 export const useLogout = () => {
   const { dispatch } = useAuthContext();
@@ -42,6 +60,7 @@ export const useLogin = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { dispatch } = useAuthContext();
+  const {profileDispatch} = useProfileContext();
 
   const login = async (email, password) => {
     setIsLoading(true);
@@ -61,7 +80,18 @@ export const useLogin = () => {
     } else {
       //save the user to local storage
       localStorage.setItem("user", JSON.stringify(json));
-
+      
+     await axios
+      .get(`http://localhost:3000/profile/profile/${json._id}`)
+      .then((res) => {
+        localStorage.setItem("profile", JSON.stringify(res.data.profile))
+        const resBody = res.data.profile
+        profileDispatch({type: "UPDATE", payload: resBody})
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      
       //update auth context
       dispatch({ type: "LOGIN", payload: json });
       setIsLoading(false);
@@ -76,7 +106,7 @@ export const useSignup = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { dispatch } = useAuthContext();
-
+  const {profileDispatch} = useProfileContext();
   const signUpRequest = async (name, email, password) => {
     setIsLoading(true);
     setError(null);
@@ -94,14 +124,23 @@ export const useSignup = () => {
       setError(json.error);
     } else {
       //save the user to local storage
+      
+      await axios
+      .get(`http://localhost:3000/profile/profile/${json._id}`)
+      .then((res) => {
+        localStorage.setItem("profile", JSON.stringify(res.data.profile))
+        const resBody = res.data.profile
+        profileDispatch({type: "UPDATE", payload: resBody})
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      
       localStorage.setItem("user", JSON.stringify(json));
 
-      /*
-       * Update the auth context.
-       * TODO: might need some change when email verification is added
-       * maybe it should update auth context after we verify the user.
-       */
       dispatch({ type: "LOGIN", payload: json });
+
+
       setIsLoading(false);
     }
   };

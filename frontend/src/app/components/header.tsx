@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
+=======
+import { useAuthContext, useLogout, useProfileContext } from "../authentication/authHelpers";
+import axios from "axios";
+>>>>>>> 6147682 (optimization)
 import { UserProfile } from "../../data-types/datatypes";
 import { useAuthContext, useLogout } from "../authentication/authHelpers";
 
@@ -13,22 +18,15 @@ export default function Header(props: HeaderProps) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const { user } = useAuthContext();
   const [userProfile, setUserProfile] = useState({} as UserProfile);
+  const {profile} = useProfileContext()
 
   const handleClick = () => {
     logout();
   };
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
-      .then((res) => {
-        setUserProfile(res.data.profile);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {});
-  }, [userProfile]);
+    setUserProfile(profile)
+  }, []);
 
   return (
     <div className="header-outer">

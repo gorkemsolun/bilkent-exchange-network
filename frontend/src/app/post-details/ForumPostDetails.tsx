@@ -8,7 +8,7 @@ import Loader from "../components/loader";
 import Navbar from "../components/navbar";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import EditPostButton from "../edit-delete-post/EditPostButton";
-import { useAuthContext } from "../authentication/authHelpers";
+import { useAuthContext, useProfileContext } from "../authentication/authHelpers";
 import CreateEntryButton from "../entry/CreateEntryButton";
 import DeleteEntryButton from "../entry/DeleteEntryButton";
 import ReportPostButton from "../edit-delete-post/ReportPostButton";
@@ -23,6 +23,7 @@ export default function ForumPostDetails() {
   );
   const { id } = useParams();
   const { user } = useAuthContext();
+  const {profile} = useProfileContext()
 
   useEffect(() => {
     setLoading(true);
@@ -40,7 +41,10 @@ export default function ForumPostDetails() {
   }, [id]);
 
   useEffect(() => {
-    axios
+    if(post.poster === profile.userID) {
+      setPoster(profile)
+    } else {
+      axios
       .get(`http://localhost:3000/profile/profile/${post.poster}`)
       .then((res) => {
         setPoster(res.data.profile);
@@ -49,6 +53,7 @@ export default function ForumPostDetails() {
         console.log(err);
       })
       .finally(() => {});
+    }
   }, [post]);
 
   useEffect(() => {

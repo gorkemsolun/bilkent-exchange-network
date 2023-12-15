@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { SecondhandPost } from "../../data-types/posttypes";
-import { useAuthContext } from "../authentication/authHelpers";
+import { useAuthContext, useProfileContext } from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/loader";
 import { resizeImageFile } from "../fetchPostHelpers";
@@ -13,6 +13,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
   const { user } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const {profileDispatch} = useProfileContext();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -45,7 +46,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       poster: user._id,
     };
 
-    axios
+    await axios
       .post(urlsPost.secondhand, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
@@ -53,7 +54,18 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       .catch((err) => {
         setError(err);
       });
-
+    await axios
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .then((res) => {
+        profileDispatch({ type: "UPDATE", payload: res.data.profile });
+        localStorage.setItem("profile", JSON.stringify(res.data.profile));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        //
+      });
     setLoading(false);
     setIsSubmitted(true);
   };

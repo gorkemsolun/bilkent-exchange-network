@@ -9,7 +9,7 @@ import { UserProfile } from "../../data-types/datatypes";
 import DeletePostButton from "../edit-delete-post/DeletePostButton";
 import EditPostButton from "../edit-delete-post/EditPostButton";
 import ReportPostButton from "../edit-delete-post/ReportPostButton";
-import { useAuthContext } from "../authentication/authHelpers";
+import { useAuthContext, useProfileContext } from "../authentication/authHelpers";
 
 export default function DonatePostDetails() {
   const [post, setPost] = useState<DonatePost>({} as DonatePost);
@@ -17,6 +17,7 @@ export default function DonatePostDetails() {
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const { user } = useAuthContext();
+  const {profile} = useProfileContext();
 
   useEffect(() => {
     setLoading(true);
@@ -34,7 +35,10 @@ export default function DonatePostDetails() {
   }, [id]);
 
   useEffect(() => {
-    axios
+    if(post.poster === profile.userID) {
+      setPoster(profile)
+    } else {
+      axios
       .get(`http://localhost:3000/profile/profile/${post.poster}`)
       .then((res) => {
         setPoster(res.data.profile);
@@ -43,6 +47,8 @@ export default function DonatePostDetails() {
         console.log(err);
       })
       .finally(() => {});
+    }
+    
   }, [post]);
 
   return (

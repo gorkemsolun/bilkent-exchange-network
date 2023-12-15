@@ -3,7 +3,15 @@ import { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { BorrowPost } from "../../data-types/posttypes";
+<<<<<<< HEAD
 import { useAuthContext } from "../authentication/authHelpers";
+=======
+import Loader from "../components/loader";
+import {
+  useAuthContext,
+  useProfileContext,
+} from "../authentication/authHelpers";
+>>>>>>> 6147682 (optimization)
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/loader";
 
@@ -12,8 +20,9 @@ export default function CreateBorrowPost(props: CreatePostProps) {
   const { user } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { profileDispatch } = useProfileContext();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
 
@@ -32,7 +41,7 @@ export default function CreateBorrowPost(props: CreatePostProps) {
       poster: user._id,
     };
 
-    axios
+    await axios
       .post(urlsPost.borrow, post)
       .then((res) => {
         console.log(res);
@@ -43,9 +52,25 @@ export default function CreateBorrowPost(props: CreatePostProps) {
         setError(err);
       })
       .finally(() => {
-        setLoading(false);
+        //setLoading(false);
       });
-    setIsSubmitted(true);
+
+    await axios
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .then((res) => {
+        console.log(res.data.profile)
+        profileDispatch({ type: "UPDATE", payload: res.data.profile });
+        localStorage.setItem("profile", JSON.stringify(res.data.profile));
+       
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+        setIsSubmitted(true);
+      });
+
   };
 
   if (isSubmitted) {

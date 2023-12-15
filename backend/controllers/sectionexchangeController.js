@@ -139,8 +139,13 @@ export const sectionexchangePostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("SectionexchangePost not found");
     }
+<<<<<<< HEAD
 
     updateOwnedSecExPost(req.body, result._id, result.poster);
+=======
+   
+    await updateOwnedSecExPost(req.body, result._id, result.poster)
+>>>>>>> 6147682 (optimization)
 
     return res.status(204).send("SectionexchangePost updated");
   } catch (err) {
@@ -156,9 +161,13 @@ export const sectionexchangePostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("SectionexchangePost not found");
     }
+<<<<<<< HEAD
 
     deleteOwnedPosts(result.poster, req.params.id);
 
+=======
+    await deleteOwnedPosts(result.poster, req.params.id)
+>>>>>>> 6147682 (optimization)
     return res.status(204).send("SectionexchangePost deleted");
   } catch (err) {
     console.log(err);

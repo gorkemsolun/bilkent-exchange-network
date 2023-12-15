@@ -50,8 +50,12 @@ export const sendVerificationMail = async (username, email) => {
 
 export const createEmailToken = async (req, res) => {
   try {
+<<<<<<< HEAD
     const token = await emailToken.createToken();
 
+=======
+    const token = await emailTokenDB.createToken();
+>>>>>>> 6147682 (optimization)
     res.status(200).json({ token });
   } catch (error) {
     res.status(400).json({ error: error.message });

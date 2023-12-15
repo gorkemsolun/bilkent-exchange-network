@@ -3,7 +3,10 @@ import { useState } from "react";
 import { urlsPost } from "../../data-types/constants";
 import { CreatePostProps } from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posttypes";
-import { useAuthContext } from "../authentication/authHelpers";
+import {
+  useAuthContext,
+  useProfileContext,
+} from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/loader";
 
@@ -12,8 +15,9 @@ export default function CreateForumPost(props: CreatePostProps) {
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuthContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const { profileDispatch } = useProfileContext();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
 
@@ -32,7 +36,7 @@ export default function CreateForumPost(props: CreatePostProps) {
       entries: [],
     };
 
-    axios
+    await axios
       .post(urlsPost.forum, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
@@ -41,8 +45,23 @@ export default function CreateForumPost(props: CreatePostProps) {
         setError(err);
       });
 
-    setLoading(false);
-    setIsSubmitted(true);
+    await axios
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .then((res) => {
+        localStorage.setItem("profile", JSON.stringify(res.data.profile));
+        console.log(res.data.profile)
+        profileDispatch({ type: "UPDATE", payload: res.data.profile });
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+        setIsSubmitted(true);
+      });
+
+    
   };
 
   if (isSubmitted) {

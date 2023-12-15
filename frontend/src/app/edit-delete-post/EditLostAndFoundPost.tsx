@@ -4,7 +4,10 @@ import { Navigate } from "react-router-dom";
 import { categories } from "../../data-types/constants";
 import { EditPostProps } from "../../data-types/datatypes";
 import { LostFoundPost } from "../../data-types/posttypes";
-import { useAuthContext } from "../authentication/authHelpers";
+import {
+  useAuthContext,
+  useProfileContext,
+} from "../authentication/authHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/loader";
 import { resizeImageFile } from "../fetchPostHelpers";
@@ -16,6 +19,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
   const [post, setPost] = useState<LostFoundPost>({} as LostFoundPost);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isEdited, setIsEdited] = useState(false);
+  const { profileDispatch } = useProfileContext();
 
   // this is required to show the category of post. dont delete.
   const handleCategoryChange = async (
@@ -74,7 +78,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
       poster: user._id,
     };
 
-    axios
+    await axios
       .put(
         `http://localhost:3000/lostfound/lostfoundpost/${props.postId}`,
         editedPost
@@ -84,6 +88,20 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
       })
       .catch((err) => {
         setError(err);
+      });
+
+    await axios
+      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .then((res) => {
+        localStorage.setItem("profile", JSON.stringify(res.data.profile));
+        console.log(res.data.profile);
+        profileDispatch({ type: "UPDATE", payload: res.data.profile });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        //
       });
 
     setLoading(false);
