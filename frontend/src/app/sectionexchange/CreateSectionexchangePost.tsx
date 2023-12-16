@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { urlsGet } from "../../data-types/constants";
+import { sectionexchangeUrl } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
@@ -49,7 +49,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
 
     let postId;
     await axios
-      .post(urlsPost.sectionexchange, post)
+      .post(sectionexchangeUrl, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
         postId = res.data._id;
