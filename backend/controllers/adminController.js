@@ -12,12 +12,19 @@ export const getReportedPosts = async (req, res) => {
   }
 };
 
-export const reportPost = async (req, res) => { 
-  var { postId, reason, userId , type} = req.body;
-  
+export const reportPost = async (req, res) => {
+  console.log(req.body);
+  var { postId, reason, userId, type, title } = req.body;
+
   try {
     // Save the report information to the database using the Report model
-    const newReport = await Report.create({ postId, reason, userId, type}); 
+    const newReport = await Report.create({
+      postId,
+      reason,
+      userId,
+      type,
+      title,
+    });
     // Send a response indicating successful report
     return res.status(201).send(newReport);
   } catch (error) {

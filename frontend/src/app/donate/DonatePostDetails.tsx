@@ -140,6 +140,7 @@ export default function DonatePostDetails() {
                   postId={"" + post._id}
                   profileId={"" + poster?._id}
                   type="donate"
+                  title={post.title}
                 />
               )}
             </div>

@@ -140,6 +140,7 @@ export default function LostFoundPostDetails() {
                   postId={"" + post._id}
                   profileId={"" + poster}
                   type="lostfound"
+                  title={post.title}
                 />
               )}
             </div>

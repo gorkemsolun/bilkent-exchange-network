@@ -116,6 +116,7 @@ export default function ForumPostDetails() {
                 postId={"" + post._id}
                 profileId={"" + poster?._id}
                 type="forum"
+                title={post.title}
               />
             )}
             <CreateEntryButton postId={"" + post._id} />
