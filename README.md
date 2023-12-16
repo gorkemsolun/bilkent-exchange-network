@@ -27,15 +27,17 @@
 
 ## SETUP INSTRUCTIONS
 
-1. Open cmd
-   > Open the Start menu or press the Windows key + R. Type cmd or cmd.exe in the Run command box. Press Enter. <br>
+1. Open cmd <br>
+
+> Open the Start menu or press the Windows key + R. Type cmd or cmd.exe in the Run command box. Press Enter. <br>
+
 2. Using `cd` command, navigate to through a desired directory. <br>
 3. Using the command `git clone https://github.com/gorkemsolun/bilkent-exchange-network.git`, install the required files. <br>
-4. Open up VS code. <br>
-5. From the file bar, open the downloaded folder. <br>
-6. Once you opened the folder, open up the VS code's built in terminal using `ctrl + "` hotkey. <br>
-   > ❗❗❗ Terminals must have been opened on the same root. It should end with `...\bilkent-exchange-network`. Or if you have cloned the directory with a different name, then that name should be present.
-7. Type the following commands in order: <br>
+4. Once the installation is complete, change your directory to `...\bilkent-exchange-network` using `cd` command <br>
+
+> ❗❗❗ Terminal must have been opened on the specified root which should end with `...\bilkent-exchange-network`. Or if you have cloned the directory with a different name, then that name should be present `...\[the-custom-name-you-used]`. <br>
+
+5. Type the following commands in order: <br>
 
 ```
 cd frontend
@@ -45,22 +47,26 @@ cd backend
 npm install
 ```
 
-> After completing this step, you will have successfully configured the dependencies, paving the way for the next phase: running the project. Please be aware that you will need to open two separate terminals. <br>
+> After completing this step, you will have successfully configured the dependencies, paving the way for the next phase: running the project. <br>
 
-> ❗❗❗ Both of the terminals must have been opened on the same root. Both of them should end with `...\bilkent-exchange-network`. Or if you have cloned the directory with a different name, then that name should be present. 8. From one of the terminals type:
+> Please be aware that you will need to open two separate terminals. <br>
+
+> ❗❗❗ Both of the terminals must have been opened on the same root. Both of them should end with `...\bilkent-exchange-network`. Or if you have cloned the directory with a different name, then that name should be present, then that name should be present `...\[the-custom-name-you-used]`. <br> 
+
+6. From one of the terminals type: <br>
 
 ```
 cd frontend
 npm run dev
 ```
 
-9. And from the other terminal type:
+7. And from the other terminal type:
 
 ```
 cd backend
 npm run dev
 ```
 
-10. Open up your desired browser and type `http://localhost:5000` to address bar. <br>
-11. Either log in to the system with credentials provided in the directory, or create yourself an account. <br>
-12. Enjoy and BEN-d the rules of social network. <br>
+8. Open up your desired browser and type `http://localhost:5000` to address bar. <br>
+9. Either log in to the system with credentials provided in the directory, or create yourself an account. <br>
+10. Enjoy and BEN-d the rules of social network. <br>
