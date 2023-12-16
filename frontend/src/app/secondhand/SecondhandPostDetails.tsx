@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { UserProfile } from "../../data-types/datatypes";
+import {
+  ProfileContextType,
+  UserContextType,
+  UserProfile,
+} from "../../data-types/datatypes";
 import { SecondhandPost } from "../../data-types/posts";
 import {
   useAuthContext,
@@ -17,10 +21,11 @@ import ReportPostButton from "../components/ReportPostButton";
 export default function SecondHandPostDetails() {
   const [post, setPost] = useState<SecondhandPost>({} as SecondhandPost);
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
-  const [loading, setLoading] = useState(false);
-  const { user } = useAuthContext();
+  const [loading, setLoading] = useState<boolean>(false);
   const { id } = useParams();
-  const { profile } = useProfileContext();
+  const user = (useAuthContext() as unknown as UserContextType).user;
+  const profile = (useProfileContext() as unknown as ProfileContextType)
+    .profile;
 
   useEffect(() => {
     setLoading(true);
@@ -38,7 +43,7 @@ export default function SecondHandPostDetails() {
   }, [id]);
 
   useEffect(() => {
-    if (post.poster === profile.userID) {
+    if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
       axios
@@ -70,19 +75,19 @@ export default function SecondHandPostDetails() {
 
           <div className="postdetails-right-container">
             <div className="postdetails-edit-delete-container">
-              {post.poster == user._id ? (
+              {post.poster == user?._id ? (
                 <>
                   <EditPostButton postId={"" + post._id} type="secondhand" />
                   <DeletePostButton
-                    postId={"" + post._id}
-                    profileId={"" + poster?._id}
+                    postId={String(post._id)}
+                    profileId={String(poster?._id)}
                     type="secondhand"
                   />
                 </>
               ) : (
                 <ReportPostButton
-                  postId={"" + post._id}
-                  profileId={"" + poster?._id}
+                  postId={String(post._id)}
+                  profileId={String(poster?._id)}
                   type="secondhand"
                 />
               )}
@@ -104,7 +109,7 @@ export default function SecondHandPostDetails() {
                 <div className="postdetails-user-info-label"> Joined At:</div>
                 <div className="postdetails-user-info-value">
                   {" "}
-                  {("" + poster?.createdAt).slice(0, 10)}
+                  {String(poster?.createdAt).slice(0, 10)}
                 </div>
               </div>
             </div>
@@ -126,7 +131,7 @@ export default function SecondHandPostDetails() {
               <div className="postdetails-details-info">
                 <div className="postdetails-details-info-label">Date:</div>
                 <div className="postdetails-details-info-value">
-                  {("" + post.createdAt).slice(0, 10)}
+                  {String(post.createdAt).slice(0, 10)}
                 </div>
               </div>
             </div>

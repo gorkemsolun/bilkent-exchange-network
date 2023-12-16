@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { defaultFilterParams } from "../../data-types/constants.ts";
-import { FilterParams } from "../../data-types/datatypes.ts";
+import { FilterParams, UserContextType } from "../../data-types/datatypes.ts";
 import { SectionexchangePost } from "../../data-types/posts.ts";
 import { prepareUrl } from "../PostHelpers.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
@@ -14,14 +14,16 @@ import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
 
 export default function SectionExchange() {
-  const [sectionexchangePosts, setSectionexchangePosts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [sectionexchangePosts, setSectionexchangePosts] = useState<
+    SectionexchangePost[]
+  >([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
-  const [sortType, setSortType] = useState("");
-  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
-  const { user } = useAuthContext();
+  const [sortType, setSortType] = useState<string>("");
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -31,13 +33,15 @@ export default function SectionExchange() {
     setIsMessengerVisible(true);
 
     const conversation = {
-      userIDs: [user._id, otherUserID],
+      userIDs: [user?._id, otherUserID],
       messages: [],
     };
 
     axios
       .post("http://localhost:3000/conversation/conversation/", conversation)
-      .then((res) => {})
+      .then((res) => {
+        // SUCCESFULLY CREATED CONVERSATION
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -159,7 +163,7 @@ export default function SectionExchange() {
                               src="./src/assets/dmbox.png"
                               alt="DM Box"
                               title="Send DM"
-                              onClick={(e) => handleDMBoxClick(post.poster)}
+                              onClick={() => handleDMBoxClick(post.poster)}
                             />
                           </div>
                         </div>

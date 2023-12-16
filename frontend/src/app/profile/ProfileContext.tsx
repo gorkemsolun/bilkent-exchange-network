@@ -1,8 +1,9 @@
 import { createContext, useEffect, useReducer } from "react";
+import { ProfileAction, ProfileState } from "../../data-types/datatypes";
 
-export const ProfileContext = createContext();
+export const ProfileContext = createContext({});
 
-const profileReducer = (state, action) => {
+const profileReducer = (state: ProfileState, action: ProfileAction) => {
   switch (action.type) {
     case "UPDATE":
       return { profile: action.payload };
@@ -13,13 +14,16 @@ const profileReducer = (state, action) => {
   }
 };
 
-export const ProfileContextProvider = ({ children }) => {
+export const ProfileContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [state, profileDispatch] = useReducer(profileReducer, {
     profile: null,
   });
 
   //when the webpage is reloaded
-
   useEffect(() => {
     const profile = JSON.parse(localStorage.getItem("profile") as string);
 

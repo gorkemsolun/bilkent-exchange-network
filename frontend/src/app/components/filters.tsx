@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { categories, courses } from "../../data-types/constants";
-import { FilterProps } from "../../data-types/datatypes";
+import { FilterProps } from "../../data-types/props";
 
 export default function Filters(props: FilterProps) {
   const [page, setPage] = useState<number>(1);

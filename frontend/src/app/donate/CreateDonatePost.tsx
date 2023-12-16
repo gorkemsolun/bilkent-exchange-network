@@ -1,8 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { categories, urlsPost } from "../../data-types/constants";
-import { CreatePostProps } from "../../data-types/datatypes";
+import {
+  ProfileContextType,
+  UserContextType,
+} from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posts";
+import { CreatePostProps } from "../../data-types/props";
 import { resizeImageFile } from "../PostHelpers";
 import {
   useAuthContext,
@@ -14,9 +18,10 @@ import Loader from "../components/Loader";
 export default function CreateDonatePost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuthContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { profileDispatch } = useProfileContext();
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -35,7 +40,7 @@ export default function CreateDonatePost(props: CreatePostProps) {
       description: formData.get("description") as string,
       category: formData.get("category") as string,
       image: await resizeImageFile(formData.get("image") as File),
-      poster: user._id,
+      poster: user?._id as string,
     };
 
     await axios
@@ -48,7 +53,7 @@ export default function CreateDonatePost(props: CreatePostProps) {
       });
 
     await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .get(`http://localhost:3000/profile/profile/${user?._id}`)
       .then((res) => {
         profileDispatch({ type: "UPDATE", payload: res.data.profile });
         localStorage.setItem("profile", JSON.stringify(res.data.profile));

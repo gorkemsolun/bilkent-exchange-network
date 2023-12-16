@@ -1,8 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { urlsPost } from "../../data-types/constants";
-import { CreatePostProps } from "../../data-types/datatypes";
+import {
+  ProfileContextType,
+  UserContextType,
+} from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posts";
+import { CreatePostProps } from "../../data-types/props";
 import {
   useAuthContext,
   useProfileContext,
@@ -11,11 +15,12 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 
 export default function CreateForumPost(props: CreatePostProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuthContext();
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const { profileDispatch } = useProfileContext();
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -32,7 +37,7 @@ export default function CreateForumPost(props: CreatePostProps) {
     const post: ForumPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
-      poster: user._id,
+      poster: user?._id as string,
       entries: [],
     };
 
@@ -46,7 +51,7 @@ export default function CreateForumPost(props: CreatePostProps) {
       });
 
     await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .get(`http://localhost:3000/profile/profile/${user?._id}`)
       .then((res) => {
         localStorage.setItem("profile", JSON.stringify(res.data.profile));
         profileDispatch({ type: "UPDATE", payload: res.data.profile });

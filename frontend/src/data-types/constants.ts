@@ -114,6 +114,7 @@ export const defaultFilterParams = {
 };
 
 export const defaultUserProfile = {
+  _id: "",
   userID: "",
   username: "",
   email: "",
@@ -122,12 +123,7 @@ export const defaultUserProfile = {
   reputation: 0,
   ownPosts: [],
   savedPosts: [],
-};
-
-export const defaultUser = {
-  email: "",
-  token: "",
-  _id: "",
+  createdAt: new Date(),
 };
 
 export const defaultImage =

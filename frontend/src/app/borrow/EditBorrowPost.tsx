@@ -1,8 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { categories } from "../../data-types/constants";
-import { EditPostProps } from "../../data-types/datatypes";
+import {
+  ProfileContextType,
+  UserContextType,
+} from "../../data-types/datatypes";
 import { BorrowPost } from "../../data-types/posts";
+import { EditPostProps } from "../../data-types/props";
 import {
   useAuthContext,
   useProfileContext,
@@ -12,14 +16,15 @@ import Loader from "../components/Loader";
 
 export default function EditBorrowPost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);
-  const { user } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
   const [post, setPost] = useState<BorrowPost>({} as BorrowPost);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isEdited, setIsEdited] = useState(false);
-  const { profileDispatch } = useProfileContext();
+  const user = (useAuthContext() as unknown as UserContextType).user;
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
 
-  // this is required to show the category of post. dont delete.
+  // this is required to show the category of post
   const handleCategoryChange = async (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -37,7 +42,6 @@ export default function EditBorrowPost(props: EditPostProps) {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {});
   }, [props]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -46,20 +50,17 @@ export default function EditBorrowPost(props: EditPostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    {
-      // EXAMPLE CHECK: Check if any field is empty
-      if (!formData.get("title") || !formData.get("description")) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (!formData.get("title") || !formData.get("description")) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const editedPost: BorrowPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       category: selectedCategory as string,
-      poster: user._id,
+      poster: user?._id as string,
     };
 
     await axios
@@ -77,7 +78,7 @@ export default function EditBorrowPost(props: EditPostProps) {
       .finally(() => {});
 
     await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .get(`http://localhost:3000/profile/profile/${user?._id}`)
       .then((res) => {
         localStorage.setItem("profile", JSON.stringify(res.data.profile));
         profileDispatch({ type: "UPDATE", payload: res.data.profile });

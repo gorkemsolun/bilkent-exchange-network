@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EditPostButtonProps } from "../../data-types/datatypes";
+import { EditPostButtonProps } from "../../data-types/props";
 import EditBorrowPost from "../borrow/EditBorrowPost";
 import EditDonatePost from "../donate/EditDonatePost";
 import EditSectionExchangePost from "../sectionexchange/EditSectionexchangePost";

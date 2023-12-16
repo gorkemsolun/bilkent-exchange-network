@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { urlsPost } from "../../data-types/constants";
+import {
+  ProfileContextType,
+  UserContextType,
+} from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posts";
 import { CreatePostProps } from "../../data-types/props";
 import {
@@ -12,10 +16,11 @@ import Loader from "../components/Loader";
 
 export default function CreateSectionExchangePost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
-  const { user } = useAuthContext();
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { profileDispatch } = useProfileContext();
+  const user = (useAuthContext() as unknown as UserContextType).user;
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -39,7 +44,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       offeredSection: formData.get("offeredSection") as string,
       desiredCourse: formData.get("desiredCourse") as string,
       desiredSection: formData.get("desiredSection") as string,
-      poster: user._id,
+      poster: user?._id as string,
     };
 
     await axios
@@ -53,7 +58,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       });
 
     await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .get(`http://localhost:3000/profile/profile/${user?._id}`)
       .then((res) => {
         profileDispatch({ type: "UPDATE", payload: res.data.profile });
         localStorage.setItem("profile", JSON.stringify(res.data.profile));

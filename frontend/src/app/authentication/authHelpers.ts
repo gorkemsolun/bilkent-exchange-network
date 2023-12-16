@@ -1,5 +1,11 @@
 import axios from "axios";
 import { useContext, useState } from "react";
+import {
+  ProfileContextType,
+  UserAction,
+  UserContextType,
+  UserState,
+} from "../../data-types/datatypes";
 import { ProfileContext } from "../profile/ProfileContext";
 import { AuthContext } from "./AuthContext";
 
@@ -16,20 +22,20 @@ export const useProfileContext = () => {
 };
 
 export const useLogout = () => {
-  const { dispatch } = useAuthContext();
+  const dispatch = (useAuthContext() as unknown as UserContextType).dispatch;
+
   const logout = () => {
     //remove user from storage
     localStorage.removeItem("user");
 
     // update auth context with logout
-    dispatch({ type: "LOGOUT" });
+    dispatch({ type: "LOGOUT", payload: null });
   };
+
   return { logout };
 };
 
-export const authReducer = (state, action) => {
-  console.log(action);
-  console.log(state);
+export const authReducer = (state: UserState, action: UserAction) => {
   switch (action.type) {
     case "LOGIN":
       return { user: action.payload };
@@ -54,8 +60,10 @@ export const useLogin = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { dispatch } = useAuthContext();
-  const { profileDispatch } = useProfileContext();
+  const dispatch = (useAuthContext() as unknown as UserContextType).dispatch;
+
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
@@ -100,8 +108,11 @@ export const useSignup = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { dispatch } = useAuthContext();
-  const { profileDispatch } = useProfileContext();
+  const dispatch = (useAuthContext() as unknown as UserContextType).dispatch;
+
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
+
   const signUpRequest = async (
     name: string,
     email: string,
@@ -123,7 +134,6 @@ export const useSignup = () => {
       setError(json.error);
     } else {
       //save the user to local storage
-
       await axios
         .get(`http://localhost:3000/profile/profile/${json._id}`)
         .then((res) => {

@@ -11,16 +11,17 @@ import Donate from "./app/donate/Donate";
 import DonatePostDetails from "./app/donate/DonatePostDetails";
 import Forum from "./app/forum/Forum";
 import ForumPostDetails from "./app/forum/ForumPostDetails";
-import LostFoundPostDetails from "./app/lostfound/LostfoundPostDetails";
 import LostFound from "./app/lostfound/Lostfound";
+import LostFoundPostDetails from "./app/lostfound/LostfoundPostDetails";
 import EditProfile from "./app/profile/EditProfile";
 import MyProfile from "./app/profile/MyProfile";
 import Profile from "./app/profile/Profile";
 import { ProfileContextProvider } from "./app/profile/ProfileContext";
-import SecondHandPostDetails from "./app/secondhand/SecondhandPostDetails";
 import SecondHand from "./app/secondhand/Secondhand";
+import SecondHandPostDetails from "./app/secondhand/SecondhandPostDetails";
 import SectionExchange from "./app/sectionexchange/Sectionexchange";
 import "./bootstrap.css";
+import { UserContextType } from "./data-types/datatypes";
 
 export default function App() {
   return (
@@ -35,7 +36,8 @@ export default function App() {
 }
 
 function AppContent() {
-  const { user } = useAuthContext();
+  const user = (useAuthContext() as unknown as UserContextType).user;
+
   return (
     <div>
       <BrowserRouter>

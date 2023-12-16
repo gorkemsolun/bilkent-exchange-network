@@ -1,20 +1,20 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Conversation, Message } from "../../data-types/datatypes.ts";
+import {
+  Conversation,
+  Message,
+  UserContextType,
+} from "../../data-types/datatypes.ts";
+import { MessengerProps } from "../../data-types/props.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
 
-interface MessengerProps {
-  onClick?: () => void;
-}
-
 const MessengerPage = (props: MessengerProps) => {
-  const { user } = useAuthContext();
-  const [conversations, setConversations] = useState([] as Conversation[]);
-  const [selectedConversation, setSelectedConversation] = useState(
-    {} as Conversation
-  );
-  const [isInConversation, setIsInCoversation] = useState(false);
-  const [messageInput, setMessageInput] = useState("");
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation>({} as Conversation);
+  const [isInConversation, setIsInCoversation] = useState<boolean>(false);
+  const [messageInput, setMessageInput] = useState<string>("");
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessageInput(e.target.value);
@@ -22,7 +22,9 @@ const MessengerPage = (props: MessengerProps) => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/conversation/conversation/userID/" + user._id)
+      .get(
+        "http://localhost:3000/conversation/conversation/userID/" + user?._id
+      )
       .then((res) => {
         const conversationsWithUsernames = res.data.map(
           (conversation: Conversation) => {
@@ -38,7 +40,7 @@ const MessengerPage = (props: MessengerProps) => {
         conversationsWithUsernames.forEach((conversation: Conversation) => {
           let url = "http://localhost:3000/profile/profile/";
           const otherUserID =
-            conversation.userIDs[0] === user._id
+            conversation.userIDs[0] === user?._id
               ? conversation.userIDs[1]
               : conversation.userIDs[0];
 
@@ -67,11 +69,12 @@ const MessengerPage = (props: MessengerProps) => {
       .catch((err) => {
         console.log(err);
       });
+    // props is not a dependency, This should be checked
   }, [props]);
 
   const handleSendMessage = () => {
     const newMessage: Message = {
-      userID: user._id,
+      userID: user?._id as string,
       message: messageInput,
       createdAt: new Date(),
     };
@@ -91,6 +94,7 @@ const MessengerPage = (props: MessengerProps) => {
       )
       .then((res) => {
         setMessageInput("");
+        // sent
       })
       .catch((err) => {
         console.log(err);
@@ -177,11 +181,11 @@ const MessengerPage = (props: MessengerProps) => {
                 <div
                   key={message._id}
                   className={`messenger-conversation-message ${
-                    message.userID === user._id ? "outgoing" : "incoming"
+                    message.userID === user?._id ? "outgoing" : "incoming"
                   }`}
                 >
                   <label className="messenger-conversation-message-sender">
-                    {message.userID === user._id
+                    {message.userID === user?._id
                       ? "You"
                       : selectedConversation.username}
                   </label>

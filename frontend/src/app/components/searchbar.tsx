@@ -18,7 +18,7 @@ export default function SearchBar(props: {
         type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        onKeyPress={(e) => {
+        onKeyDown={(e) => {
           if (e.key === "Enter") {
             handleSearch();
           }
@@ -26,8 +26,6 @@ export default function SearchBar(props: {
         placeholder="Search..."
         className="border p-2 search-bar rounded-full m-2 bg-white"
       />
-
-      {/* Sort Dropdown */}
       <div className="relative">
         <div className=" right-0 mt-2 p-2 border bg-white center m-2 rounded-full text-black">
           <select

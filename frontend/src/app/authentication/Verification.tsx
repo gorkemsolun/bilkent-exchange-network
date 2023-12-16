@@ -8,7 +8,7 @@ export default function VerificationPage() {
   const { sendEmail } = useVerificationEmail();
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsVerifying(true);
     await sendEmail(username, email);

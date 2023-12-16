@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EditEntryButtonProps } from "../../../data-types/datatypes";
+import { EditEntryButtonProps } from "../../../data-types/props";
 import EditEntry from "./EditEntry";
 
 export default function EditEntryButton(props: EditEntryButtonProps) {

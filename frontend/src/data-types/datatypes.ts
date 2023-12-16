@@ -30,15 +30,38 @@ export interface UserProfile {
   createdAt?: Date;
 }
 
-export interface ContextUser {
+export interface ProfileContextType {
+  profile: UserProfile | null;
+  profileDispatch: React.Dispatch<ProfileAction>;
+}
+
+export interface ProfileAction {
+  type: string;
+  payload: UserProfile | null;
+}
+
+export interface ProfileState {
+  profile: UserProfile | null;
+}
+
+export interface UserContextType {
+  user: UserContext | null;
+  dispatch: React.Dispatch<UserAction>;
+}
+
+export interface UserContext {
   email: string;
   token: string;
   _id: string;
 }
 
-export interface State {
+export interface UserState {
+  user: UserContext | null;
+}
+
+export interface UserAction {
   type: string;
-  payload: ContextUser;
+  payload: UserContext | null;
 }
 
 /*

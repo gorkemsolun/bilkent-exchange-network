@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { OwnPost, UserProfile } from "../../data-types/datatypes.ts";
+import { defaultUserProfile } from "../../data-types/constants.ts";
+import {
+  OwnPost,
+  ProfileContextType,
+  UserContextType,
+  UserProfile,
+} from "../../data-types/datatypes.ts";
 import {
   deleteUser,
   useAuthContext,
@@ -12,17 +18,18 @@ import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 
 export default function MyProfile() {
-  const { logout } = useLogout();
-  const { user } = useAuthContext();
-  const { profile } = useProfileContext();
-  const [loading, setLoading] = useState(false);
-  const [userProfile, setUserProfile] = useState<UserProfile>(
-    {} as UserProfile
+  const [loading, setLoading] = useState<boolean>(false);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(
+    defaultUserProfile
   );
+  const profile = (useProfileContext() as unknown as ProfileContextType)
+    .profile;
+  const user = (useAuthContext() as unknown as UserContextType).user;
+  const { logout } = useLogout();
 
   // Remove account from database
   const handleRemove = async () => {
-    await deleteUser(user._id);
+    await deleteUser(user?._id as string);
     handleLogOut();
   };
 
@@ -35,6 +42,7 @@ export default function MyProfile() {
     setLoading(true);
     setUserProfile(profile);
     setLoading(false);
+    // Is there any reason to not to have a dependency? Because it wont work without it
   }, []);
 
   return (
@@ -47,12 +55,12 @@ export default function MyProfile() {
         <div className="profileContainer">
           <div className="profileHeader">
             <img
-              src={userProfile.image}
+              src={userProfile?.image}
               className="profileImage"
               alt="Profile Image"
             />
             <div className="profileUserInfo">
-              <p className="profileUsername">@{userProfile.username}</p>
+              <p className="profileUsername">@{userProfile?.username}</p>
             </div>
           </div>
           <Link to={"/myprofile/edit"}>
@@ -75,21 +83,21 @@ export default function MyProfile() {
             <div className="profileColumn">
               <div className="profileInfo">
                 <p className="infoLabel">Description:</p>
-                <p className="infoValue">{userProfile.description}</p>
+                <p className="infoValue">{userProfile?.description}</p>
               </div>
               <div className="profileInfo">
                 <p className="infoLabel">Email:</p>
-                <p className="infoValue">{userProfile.email}</p>
+                <p className="infoValue">{userProfile?.email}</p>
               </div>
 
               <div className="profileInfo">
                 <p className="infoLabel">Reputation:</p>
-                <p className="infoValue">{userProfile.reputation}</p>
+                <p className="infoValue">{userProfile?.reputation}</p>
               </div>
               <div className="profileInfo">
                 <p className="infoLabel">Joined at:</p>
                 <p className="infoValue">
-                  {("" + userProfile.createdAt).slice(0, 10)}
+                  {String(userProfile?.createdAt).slice(0, 10)}
                 </p>
               </div>
             </div>
@@ -99,7 +107,7 @@ export default function MyProfile() {
             <div className="justify-center">
               <div className="container">
                 <div className="row">
-                  {userProfile.ownPosts
+                  {userProfile?.ownPosts
                     ? userProfile.ownPosts.map((post: OwnPost) => (
                         <div className="col-12 mb-4" key={post.id}>
                           <Link

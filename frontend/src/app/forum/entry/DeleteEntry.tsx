@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { DeleteEntryProps } from "../../../data-types/datatypes";
+import { DeleteEntryProps } from "../../../data-types/props";
 
 export default function DeleteEntry(props: DeleteEntryProps) {
   const [isDeleted, setIsDeleted] = useState(false);

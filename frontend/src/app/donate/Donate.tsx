@@ -14,13 +14,13 @@ import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
 
 export default function Donate() {
-  const [donatePosts, setDonatePosts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [donatePosts, setDonatePosts] = useState<DonatePost[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
-  const [sortType, setSortType] = useState("");
-  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+  const [sortType, setSortType] = useState<string>("");
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -38,7 +38,6 @@ export default function Donate() {
     setLoading(true);
 
     const url = prepareUrl(searchTerm, "donate", filterParams);
-    console.log(url);
 
     axios
       .get(url)

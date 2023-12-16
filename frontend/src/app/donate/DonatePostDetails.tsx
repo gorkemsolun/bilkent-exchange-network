@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { UserProfile } from "../../data-types/datatypes";
+import {
+  ProfileContextType,
+  UserContextType,
+  UserProfile,
+} from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posts";
 import {
   useAuthContext,
@@ -19,8 +23,9 @@ export default function DonatePostDetails() {
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
-  const { user } = useAuthContext();
-  const { profile } = useProfileContext();
+  const user = (useAuthContext() as unknown as UserContextType).user;
+  const profile = (useProfileContext() as unknown as ProfileContextType)
+    .profile;
 
   useEffect(() => {
     setLoading(true);
@@ -38,7 +43,7 @@ export default function DonatePostDetails() {
   }, [id]);
 
   useEffect(() => {
-    if (post.poster === profile.userID) {
+    if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
       axios
@@ -70,7 +75,7 @@ export default function DonatePostDetails() {
 
           <div className="postdetails-right-container">
             <div className="postdetails-edit-delete-container">
-              {post.poster == user._id ? (
+              {post.poster == user?._id ? (
                 <>
                   <EditPostButton postId={"" + post._id} type="donate" />
                   <DeletePostButton

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
 import axios from "axios";
-import { ReportPostProps } from "../../data-types/datatypes";
+import React, { useState } from "react";
+import { ReportPostProps } from "../../data-types/props";
 import ErrorModal from "./ErrorModal";
 
 export default function ReportPost(props: ReportPostProps) {
@@ -26,6 +26,7 @@ export default function ReportPost(props: ReportPostProps) {
       })
       .then((res) => {
         alert("Post reported successfully!");
+        // TODO SUCCESFULLY SENT
       })
       .catch((err) => {
         setError(err);

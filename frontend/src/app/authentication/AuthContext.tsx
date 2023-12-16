@@ -1,8 +1,7 @@
 import { createContext, useEffect, useReducer } from "react";
-import { defaultUser } from "../../data-types/constants";
 import { authReducer } from "./AuthHelpers";
 
-export const AuthContext = createContext(defaultUser);
+export const AuthContext = createContext({});
 
 export const AuthContextProvider = ({
   children,
@@ -21,8 +20,6 @@ export const AuthContextProvider = ({
       dispatch({ type: "LOGIN", payload: user });
     }
   }, []);
-
-  console.log("AuthContext state: ", state);
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch }}>

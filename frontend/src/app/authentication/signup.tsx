@@ -5,11 +5,11 @@ import { useEmailToken, useSignup } from "./AuthHelpers";
 export default function Signup() {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const { signUpRequest } = useSignup();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [verified, setVerified] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams(); // This should be fixed
   const emailToken = searchParams.get("emailToken");
   const email = searchParams.get("email");
-  const [verified, setVerified] = useState(false);
+  const { signUpRequest } = useSignup();
   const { getToken } = useEmailToken();
 
   useEffect(() => {
@@ -17,12 +17,12 @@ export default function Signup() {
       if (emailToken) {
         try {
           const json = await getToken(emailToken);
-          console.log(json);
+
           if (json.error) {
             return;
           }
-          localStorage.setItem("verified", "true");
 
+          localStorage.setItem("verified", "true");
           setVerified(true);
         } catch (error) {
           console.log(error);
@@ -33,10 +33,10 @@ export default function Signup() {
     fetchData();
   }, [emailToken, getToken]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (verified) {
-      await signUpRequest(username, email, password);
+      await signUpRequest(username, email as string, password);
     }
   };
 

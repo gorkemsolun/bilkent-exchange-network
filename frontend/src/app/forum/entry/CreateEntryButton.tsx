@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CreateEntryButtonProps } from "../../../data-types/datatypes";
+import { CreateEntryButtonProps } from "../../../data-types/props";
 import CreateEntry from "./CreateEntry";
 
 export default function CreateEntryButton(props: CreateEntryButtonProps) {

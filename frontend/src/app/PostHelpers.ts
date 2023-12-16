@@ -101,8 +101,15 @@ export async function getBase64Image(file: File) {
 }
 */
 
+export function isFileImage(file: File) {
+  if (file && file.type.includes("image")) {
+    return true;
+  }
+  return false;
+}
+
 export async function resizeImageFile(file: File) {
-  if (!file || !file.type.includes("image")) {
+  if (isFileImage(file) === false) {
     return defaultImage;
   }
   return new Promise<string>((resolve) => {

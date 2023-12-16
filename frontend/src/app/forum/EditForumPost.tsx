@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { EditPostProps } from "../../data-types/datatypes";
+import {
+  ProfileContextType,
+  UserContextType,
+} from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posts";
+import { EditPostProps } from "../../data-types/props";
 import {
   useAuthContext,
   useProfileContext,
@@ -12,11 +16,11 @@ import Loader from "../components/Loader";
 export default function EditForumPost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuthContext();
-
   const [post, setPost] = useState<ForumPost>({} as ForumPost);
   const [isEdited, setIsEdited] = useState(false);
-  const { profileDispatch } = useProfileContext();
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   useEffect(() => {
     axios
@@ -46,7 +50,7 @@ export default function EditForumPost(props: EditPostProps) {
     const editedPost: ForumPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
-      poster: user._id,
+      poster: user?._id as string,
       entries: post.entries,
     };
 
@@ -60,7 +64,7 @@ export default function EditForumPost(props: EditPostProps) {
       });
 
     await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .get(`http://localhost:3000/profile/profile/${user?._id}`)
       .then((res) => {
         localStorage.setItem("profile", JSON.stringify(res.data.profile));
         profileDispatch({ type: "UPDATE", payload: res.data.profile });
@@ -98,6 +102,7 @@ export default function EditForumPost(props: EditPostProps) {
               name="title"
               className="form-control"
               defaultValue={post.title}
+              placeholder="Enter title"
             />
           </div>
           <div className="modal-form-group" style={{ textAlign: "left" }}>

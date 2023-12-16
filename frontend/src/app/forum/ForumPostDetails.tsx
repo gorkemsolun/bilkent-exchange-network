@@ -1,7 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ForumEntry, UserProfile } from "../../data-types/datatypes";
+import {
+  ForumEntry,
+  ProfileContextType,
+  UserContextType,
+  UserProfile,
+} from "../../data-types/datatypes";
 import { ForumPost } from "../../data-types/posts";
 import {
   useAuthContext,
@@ -25,8 +30,9 @@ export default function ForumPostDetails() {
     []
   );
   const { id } = useParams();
-  const { user } = useAuthContext();
-  const { profile } = useProfileContext();
+  const user = (useAuthContext() as unknown as UserContextType).user;
+  const profile = (useProfileContext() as unknown as ProfileContextType)
+    .profile;
 
   useEffect(() => {
     setLoading(true);
@@ -44,7 +50,7 @@ export default function ForumPostDetails() {
   }, [id]);
 
   useEffect(() => {
-    if (post.poster === profile.userID) {
+    if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
       axios
@@ -97,7 +103,7 @@ export default function ForumPostDetails() {
         <div className="forumpostdetails-container">
           <div className="postdetails-edit-delete-container">
             {/* Users cannot edit/delete others' posts and cannot report their own posts*/}
-            {post.poster == user._id ? (
+            {post.poster == user?._id ? (
               <>
                 <EditPostButton postId={"" + post._id} type="forum" />
                 <DeletePostButton
@@ -167,12 +173,12 @@ export default function ForumPostDetails() {
                     <div className="entry-edit-delete-container">
                       <EditEntryButton
                         postId={"" + post._id}
-                        entryId={entry._id}
+                        entryId={entry._id as string}
                         entryContent={entry.content}
                       />
                       <DeleteEntryButton
                         postId={"" + post._id}
-                        entryId={entry._id}
+                        entryId={entry._id as string}
                       />
                     </div>
                   </div>

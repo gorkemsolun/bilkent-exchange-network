@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DeleteEntryButtonProps } from "../../../data-types/datatypes";
+import { DeleteEntryButtonProps } from "../../../data-types/props";
 import DeleteEntry from "./DeleteEntry";
 
 export default function DeletePostButton(props: DeleteEntryButtonProps) {

@@ -80,11 +80,16 @@ export interface EditEntryProps {
 }
 
 export interface MessengerProps {
-  onMessageLinkClick?: () => void;
+  onMessageLinkClick?: () => void; //  WHICH ONE IS USED??
+  onClick?: () => void;
 }
 
 export interface ChatMessageProps {
   chatTitle: string;
   onSelectChat: (chatTitle: string) => void;
   isActive: boolean;
+}
+
+export interface HeaderProps {
+  onMessengerClick?: () => void;
 }

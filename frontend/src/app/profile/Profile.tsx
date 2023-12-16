@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { UserProfile } from "../../data-types/datatypes.ts";
+import { defaultUserProfile } from "../../data-types/constants.ts";
+import { UserContextType, UserProfile } from "../../data-types/datatypes.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
@@ -9,13 +10,12 @@ import Navbar from "../components/Navbar.tsx";
 import Messenger from "../message/Messenger.tsx";
 
 export default function Profile() {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [userProfile, setUserProfile] =
+    useState<UserProfile>(defaultUserProfile);
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
+  const user = (useAuthContext() as unknown as UserContextType).user;
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
-  const [userProfile, setUserProfile] = useState<UserProfile>(
-    {} as UserProfile
-  );
-  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
-  const { user } = useAuthContext();
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -25,12 +25,14 @@ export default function Profile() {
     setIsMessengerVisible(true);
 
     const conversation = {
-      userIDs: [user._id, userProfile._id],
+      userIDs: [user?._id, userProfile._id],
       messages: [],
     };
     axios
       .post("http://localhost:3000/conversation/conversation/", conversation)
-      .then((res) => {})
+      .then((res) => {
+        // SUCCESFULLY SENT
+      })
       .catch((err) => {
         console.log(err);
       });

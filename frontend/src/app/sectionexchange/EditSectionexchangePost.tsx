@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { EditPostProps } from "../../data-types/datatypes";
+import {
+  ProfileContextType,
+  UserContextType,
+} from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posts";
+import { EditPostProps } from "../../data-types/props";
 import {
   useAuthContext,
   useProfileContext,
@@ -10,14 +14,15 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 
 export default function EditSectionExchangePost(props: EditPostProps) {
-  const [loading, setLoading] = useState(false);
-  const { user } = useAuthContext();
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [post, setPost] = useState<SectionexchangePost>(
     {} as SectionexchangePost
   );
-  const [isEdited, setIsEdited] = useState(false);
-  const { profileDispatch } = useProfileContext();
+  const [isEdited, setIsEdited] = useState<boolean>(false);
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   useEffect(() => {
     axios
@@ -39,19 +44,15 @@ export default function EditSectionExchangePost(props: EditPostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    // Check for errors here
-    {
-      // Check if any field is empty
-      if (
-        !formData.get("offeredCourse") ||
-        !formData.get("offeredSection") ||
-        !formData.get("desiredCourse") ||
-        !formData.get("desiredSection")
-      ) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (
+      !formData.get("offeredCourse") ||
+      !formData.get("offeredSection") ||
+      !formData.get("desiredCourse") ||
+      !formData.get("desiredSection")
+    ) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const editedPost: SectionexchangePost = {
@@ -59,7 +60,7 @@ export default function EditSectionExchangePost(props: EditPostProps) {
       offeredSection: formData.get("offeredSection") as string,
       desiredCourse: formData.get("desiredCourse") as string,
       desiredSection: formData.get("desiredSection") as string,
-      poster: user._id,
+      poster: user?._id as string,
     };
 
     await axios
@@ -74,7 +75,7 @@ export default function EditSectionExchangePost(props: EditPostProps) {
         setError(err);
       });
     await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .get(`http://localhost:3000/profile/profile/${user?._id}`)
       .then((res) => {
         localStorage.setItem("profile", JSON.stringify(res.data.profile));
         profileDispatch({ type: "UPDATE", payload: res.data.profile });

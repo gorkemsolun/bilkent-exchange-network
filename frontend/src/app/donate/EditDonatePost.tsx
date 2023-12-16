@@ -1,9 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { categories } from "../../data-types/constants";
-import { EditPostProps } from "../../data-types/datatypes";
+import {
+  ProfileContextType,
+  UserContextType,
+} from "../../data-types/datatypes";
 import { DonatePost } from "../../data-types/posts";
-import { resizeImageFile } from "../PostHelpers";
+import { EditPostProps } from "../../data-types/props";
+import { isFileImage, resizeImageFile } from "../PostHelpers";
 import {
   useAuthContext,
   useProfileContext,
@@ -14,11 +18,12 @@ import Loader from "../components/Loader";
 export default function EditDonatePost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuthContext();
   const [post, setPost] = useState<DonatePost>({} as DonatePost);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [isEdited, setIsEdited] = useState(false);
-  const { profileDispatch } = useProfileContext();
+  const user = (useAuthContext() as unknown as UserContextType).user;
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
 
   // this is required to show the category of post. dont delete.
   const handleCategoryChange = async (
@@ -47,28 +52,20 @@ export default function EditDonatePost(props: EditPostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    // Check for errors here
-    {
-      // Check if any field is empty
-      if (!formData.get("title") || !formData.get("description")) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
-    }
-
-    //if no file is submitted then do not include image in the userProfile body
-    let image = await resizeImageFile(formData.get("image") as File);
-    if (image == "data:application/octet-stream;base64,") {
-      image = post.image;
+    if (!formData.get("title") || !formData.get("description")) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const editedPost: DonatePost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
       category: selectedCategory as string,
-      image: image,
-      poster: user._id,
+      image: isFileImage(formData.get("image") as File) //if no file is submitted then do not include image in the userProfile body
+        ? await resizeImageFile(formData.get("image") as File)
+        : post.image,
+      poster: user?._id as string,
     };
 
     await axios
@@ -76,13 +73,15 @@ export default function EditDonatePost(props: EditPostProps) {
         `http://localhost:3000/donate/donatepost/${props.postId}`,
         editedPost
       )
-      .then((res) => {})
+      .then((res) => {
+        // TODO SUCCESFULLY SENT
+      })
       .catch((err) => {
         setError(err);
       });
 
     await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .get(`http://localhost:3000/profile/profile/${user?._id}`)
       .then((res) => {
         localStorage.setItem("profile", JSON.stringify(res.data.profile));
         profileDispatch({ type: "UPDATE", payload: res.data.profile });

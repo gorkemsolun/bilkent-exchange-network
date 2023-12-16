@@ -2,8 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { defaultUserProfile } from "../../data-types/constants.ts";
-import { UserProfile } from "../../data-types/datatypes.ts";
-import { resizeImageFile } from "../PostHelpers.ts";
+import {
+  ProfileContextType,
+  UserContextType,
+  UserProfile,
+} from "../../data-types/datatypes.ts";
+import { isFileImage, resizeImageFile } from "../PostHelpers.ts";
 import {
   useAuthContext,
   useProfileContext,
@@ -13,12 +17,13 @@ import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 
 export default function EditProfile() {
-  const { user } = useAuthContext();
   const [loading, setLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [userProfile, setUserProfile] =
     useState<UserProfile>(defaultUserProfile);
-  const { profileDispatch } = useProfileContext();
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -28,17 +33,30 @@ export default function EditProfile() {
 
     userProfile.username = formData.get("username") as string;
     userProfile.description = formData.get("description") as string;
-    const image = await resizeImageFile(formData.get("image") as File);
-    //if no file is submitted then do not include image in the userProfile body
-    if (image !== "data:application/octet-stream;base64,")
-      userProfile.image = image;
+    if (isFileImage(formData.get("image") as File)) {
+      userProfile.image = await resizeImageFile(formData.get("image") as File);
+    } else {
+      //if no file is submitted then do not include image in the userProfile body
+    }
+
     axios
       .put(`http://localhost:3000/profile/update-profile/`, userProfile)
-      .then((res) => {})
+      .then((res) => {
+        // TODO Show a success message
+      })
       .catch((err) => {
         console.log(err);
       });
-    profileDispatch({ type: "UPDATE", payload: userProfile });
+
+    profileDispatch({
+      type: "UPDATE",
+      payload: {
+        email: userProfile.email,
+        _id: userProfile.userID,
+        token: user?.token as string,
+      },
+    });
+
     localStorage.setItem("profile", JSON.stringify(userProfile));
     setLoading(false);
     setIsSubmitted(true);
@@ -64,7 +82,7 @@ export default function EditProfile() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .get(`http://localhost:3000/profile/profile/${user?._id}`)
       .then((res) => {
         setUserProfile(res.data.profile);
       })
@@ -74,7 +92,7 @@ export default function EditProfile() {
       .finally(() => {
         setLoading(false);
       });
-  }, [user._id]);
+  }, [user?._id]);
 
   if (isSubmitted) {
     return <Navigate to="/myprofile" />;

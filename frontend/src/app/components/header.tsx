@@ -1,22 +1,18 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { UserProfile } from "../../data-types/datatypes";
-import {
-  useAuthContext,
-  useLogout,
-  useProfileContext,
-} from "../authentication/AuthHelpers";
-
-interface HeaderProps {
-  onMessengerClick?: () => void;
-}
+import { defaultUserProfile } from "../../data-types/constants";
+import { ProfileContextType, UserProfile } from "../../data-types/datatypes";
+import { HeaderProps } from "../../data-types/props";
+import { useLogout, useProfileContext } from "../authentication/AuthHelpers";
 
 export default function Header(props: HeaderProps) {
   const { logout } = useLogout();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const { user } = useAuthContext();
-  const [userProfile, setUserProfile] = useState({} as UserProfile);
-  const { profile } = useProfileContext();
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(
+    defaultUserProfile
+  );
+  const profile = (useProfileContext() as unknown as ProfileContextType)
+    .profile;
 
   const handleClick = () => {
     logout();

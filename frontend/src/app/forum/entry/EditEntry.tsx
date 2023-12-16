@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
-import { EditEntryProps, ForumEntry } from "../../../data-types/datatypes";
+import { AuthContextType, ForumEntry } from "../../../data-types/datatypes";
+import { EditEntryProps } from "../../../data-types/props";
 import { useAuthContext } from "../../authentication/AuthHelpers";
 import ErrorModal from "../../components/ErrorModal";
 import Loader from "../../components/Loader";
@@ -8,8 +9,8 @@ import Loader from "../../components/Loader";
 export default function EditEntry(props: EditEntryProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuthContext();
   const [isEdited, setIsEdited] = useState(false);
+  const user = (useAuthContext() as unknown as AuthContextType).user;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -28,7 +29,7 @@ export default function EditEntry(props: EditEntryProps) {
 
     const editedEntry: ForumEntry = {
       content: formData.get("content") as string,
-      poster: user._id,
+      poster: user?._id as string,
     };
 
     axios
@@ -39,7 +40,9 @@ export default function EditEntry(props: EditEntryProps) {
           props.entryId,
         editedEntry
       )
-      .then((res) => {})
+      .then((res) => {
+        // TODO SUCCESFULLY SENT
+      })
       .catch((err) => {
         setError(err);
       });

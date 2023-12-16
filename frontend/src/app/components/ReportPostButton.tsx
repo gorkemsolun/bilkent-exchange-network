@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { ReportPostButtonProps } from "../../data-types/props";
 import ReportPost from "./ReportPost";
-import { ReportPostButtonProps } from "../../data-types/datatypes";
 
 export default function ReportPostButton(props: ReportPostButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);

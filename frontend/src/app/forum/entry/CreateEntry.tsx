@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
-import { CreateEntryProps, ForumEntry } from "../../../data-types/datatypes";
+import { ForumEntry, UserContextType } from "../../../data-types/datatypes";
+import { CreateEntryProps } from "../../../data-types/props";
 import { useAuthContext } from "../../authentication/AuthHelpers";
 import ErrorModal from "../../components/ErrorModal";
 import Loader from "../../components/Loader";
@@ -8,8 +9,8 @@ import Loader from "../../components/Loader";
 export default function CreateEntry(props: CreateEntryProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { user } = useAuthContext();
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -17,18 +18,15 @@ export default function CreateEntry(props: CreateEntryProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    {
-      // Check if any field is empty
-      if (!formData.get("content")) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (!formData.get("content")) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const post: ForumEntry = {
       content: formData.get("content") as string,
-      poster: user._id,
+      poster: user?._id as string,
     };
 
     axios

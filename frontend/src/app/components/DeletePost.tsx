@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { DeletePostProps } from "../../data-types/datatypes";
+import {
+  ProfileContextType,
+  UserContextType,
+} from "../../data-types/datatypes";
+import { DeletePostProps } from "../../data-types/props";
 import {
   useAuthContext,
   useProfileContext,
@@ -10,9 +14,11 @@ import Loader from "./Loader";
 
 export default function DeletePost(props: DeletePostProps) {
   const [isDeleted, setIsDeleted] = useState(false);
-  const { user } = useAuthContext();
-  const { profileDispatch } = useProfileContext();
   const [loading, setLoading] = useState(false);
+  const user = (useAuthContext() as unknown as UserContextType).user;
+
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
 
   const handleDelete = async () => {
     setLoading(true);
@@ -33,7 +39,7 @@ export default function DeletePost(props: DeletePostProps) {
       });
 
     await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
+      .get(`http://localhost:3000/profile/profile/${user?._id}`)
       .then((res) => {
         localStorage.setItem("profile", JSON.stringify(res.data.profile));
         profileDispatch({ type: "UPDATE", payload: res.data.profile });
