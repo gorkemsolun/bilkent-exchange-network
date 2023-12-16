@@ -31,13 +31,13 @@ One of the interesting features of the app is including a forum in which people 
 > Open the Start menu or press the Windows key + R. Type cmd or cmd.exe in the Run command box. Press Enter. <br>
 2. Using `cd` command, navigate to through a desired directory. <br>
 3. Using the command `git clone https://github.com/gorkemsolun/bilkent-exchange-network.git`, install the required files. <br>
-![](readme-res/tutorial1) <br>
+![](readme-res/tutorial1.png) <br>
 4. Open up VS code. <br>
-![](readme-res/tutorial2) <br>
+![](readme-res/tutorial2.png) <br>
 5. From the file bar, open the downloaded folder. <br>
-![](readme-res/tutorial3) <br>
+![](readme-res/tutorial3.png) <br>
 6. Once you opened the folder, open up the VS code's built in terminal using `ctrl + "` hotkey. <br>
-![](readme-res/tutorial4) <br>
+![](readme-res/tutorial4.png) <br>
 7. Type the following commands in order: <br>
 ```
 cd frontend
