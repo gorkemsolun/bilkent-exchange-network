@@ -14,7 +14,7 @@ const router = express.Router();
 */
 router.post("/lostfoundpost", lostfoundPostPOST);
 router.get(
-  "/lostfoundpost/pg/:page/lm/:limit/c/:categories/s/:status/d/:date/s/:search",
+  "/lostfoundpost/so/:sort/pg/:page/lm/:limit/c/:categories/s/:status/d/:date/s/:search",
   lostfoundPostGET
 );
 router.get("/lostfoundpost/:id", lostfoundPostGETId);

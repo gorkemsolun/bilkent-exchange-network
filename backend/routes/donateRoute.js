@@ -14,7 +14,7 @@ const router = express.Router();
 */
 router.post("/donatepost", donatePostPOST);
 router.get(
-  "/donatepost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
+  "/donatepost/so/:sort/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
   donatePostGET
 );
 router.get("/donatepost/:id", donatePostGETId);

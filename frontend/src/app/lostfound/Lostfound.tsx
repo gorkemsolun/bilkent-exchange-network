@@ -14,21 +14,35 @@ import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
 
 export default function LostFound() {
-  const [loading, setLoading] = useState(false);
-  const [lostFoundPosts, setLostFoundPosts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [lostFoundPosts, setLostFoundPosts] = useState<LostFoundPost[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
-  const [sortType, setSortType] = useState("");
-  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+  const [sortType, setSortType] = useState<string>("");
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  function passFilters(params: FilterParams) {
+    setFilterParams(params);
+  }
+
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
+
+  function handleSortTypeChange(sortType: string) {
+    setSortType(sortType);
+  }
+
   useEffect(() => {
     setLoading(true);
-    const url = prepareUrl(searchTerm, "lostfound", filterParams);
+    const url = prepareUrl(sortType, searchTerm, "lostfound", filterParams);
+
+    console.log(url);
 
     axios
       .get(url)
@@ -41,36 +55,7 @@ export default function LostFound() {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm, filterParams]);
-
-  useEffect(() => {
-    if (sortType === "date-asc") {
-      setLostFoundPosts(
-        [...lostFoundPosts].sort(
-          (a: LostFoundPost, b: LostFoundPost) =>
-            new Date(a.createdAt as Date).getTime() -
-            new Date(b.createdAt as Date).getTime()
-        )
-      );
-    } else {
-      setLostFoundPosts(
-        [...lostFoundPosts].sort(
-          (a: LostFoundPost, b: LostFoundPost) =>
-            new Date(b.createdAt as Date).getTime() -
-            new Date(a.createdAt as Date).getTime()
-        )
-      );
-    }
-    // do not add lostFoundPosts to the dependency array
-  }, [sortType]);
-
-  function passFilters(params: FilterParams) {
-    setFilterParams(params);
-  }
-
-  const handleSearch = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-  };
+  }, [searchTerm, filterParams, sortType]);
 
   return (
     <div className="outer-container">
@@ -84,7 +69,7 @@ export default function LostFound() {
               type="lostandfound"
               onSearch={handleSearch}
               sortType={sortType}
-              setSortType={setSortType}
+              setSortType={handleSortTypeChange}
             />
             <CreatePostButton type="lostandfound" />
           </div>

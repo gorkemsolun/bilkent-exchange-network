@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post("/borrowpost", borrowPostPOST);
 router.get(
-  "/borrowpost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
+  "/borrowpost/so/:sort/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
   borrowPostGET
 );
 router.get("/borrowpost/:id", borrowPostGETId);

@@ -14,13 +14,13 @@ import SearchBar from "../components/Searchbar";
 import Messenger from "../message/Messenger";
 
 export default function Borrow() {
-  const [loading, setLoading] = useState(false);
-  const [borrowPosts, setBorrowPosts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [borrowPosts, setBorrowPosts] = useState<BorrowPost[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
-  const [sortType, setSortType] = useState("");
-  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+  const [sortType, setSortType] = useState<string>("");
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -34,9 +34,13 @@ export default function Borrow() {
     setFilterParams(params);
   }
 
+  function handleSortTypeChange(sortType: string) {
+    setSortType(sortType);
+  }
+
   useEffect(() => {
     setLoading(true);
-    const url = prepareUrl(searchTerm, "borrow", filterParams);
+    const url = prepareUrl(sortType, searchTerm, "borrow", filterParams);
 
     axios
       .get(url)
@@ -49,28 +53,7 @@ export default function Borrow() {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm, filterParams]);
-
-  useEffect(() => {
-    if (sortType === "date-asc") {
-      setBorrowPosts(
-        [...borrowPosts].sort(
-          (a: BorrowPost, b: BorrowPost) =>
-            new Date(a.createdAt as Date).getTime() -
-            new Date(b.createdAt as Date).getTime()
-        )
-      );
-    } else {
-      setBorrowPosts(
-        [...borrowPosts].sort(
-          (a: BorrowPost, b: BorrowPost) =>
-            new Date(b.createdAt as Date).getTime() -
-            new Date(a.createdAt as Date).getTime()
-        )
-      );
-    }
-    // do not add borrowPosts to the dependency array
-  }, [sortType]);
+  }, [searchTerm, filterParams, sortType]);
 
   return (
     <div className="outer-container">
@@ -84,7 +67,7 @@ export default function Borrow() {
               type="borrow"
               onSearch={handleSearch}
               sortType={sortType}
-              setSortType={setSortType}
+              setSortType={handleSortTypeChange}
             />
             <CreatePostButton type="borrow" />
           </div>

@@ -54,10 +54,12 @@ export const borrowPostPOST = async (req, res) => {
 export const borrowPostGET = async (req, res) => {
   try {
     let query = {};
+    let sort = {};
     let categories = req.params.categories.split(",");
     let regexSearch = new RegExp(req.params.search, "i");
     let dateMin = req.params.date.split("*")[0],
       dateMax = req.params.date.split("*")[1];
+    let sortType = req.params.sort;
 
     if (!categories || !Array.isArray || categories[0] !== "All") {
       query.category = { $in: categories };
@@ -66,14 +68,22 @@ export const borrowPostGET = async (req, res) => {
       query.title = { $regex: regexSearch };
     }
     if (dateMin && dateMin !== "All" && dateMax !== "All" && dateMax) {
-      query.timestamp = { $gte: dateMin, $lte: dateMax };
+      query.createdAt = { $gte: dateMin, $lte: dateMax };
     } else if (dateMin !== "All" && dateMin) {
-      query.timestamp = { $gte: dateMin };
+      query.createdAt = { $gte: dateMin };
     } else if (dateMax !== "All" && dateMax) {
-      query.timestamp = { $lte: dateMax };
+      query.createdAt = { $lte: dateMax };
+    }
+    if (sortType && sortType !== "All") {
+      if (sortType === "date-desc") {
+        sort.createdAt = -1;
+      } else if (sortType === "date-asc") {
+        sort.createdAt = 1;
+      }
     }
 
     const borrowposts = await BorrowPost.find(query)
+      .sort(sort)
       .skip(req.params.page * req.params.limit)
       .limit(req.params.limit);
 
@@ -110,7 +120,13 @@ export const borrowPostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("BorrowPost not found");
     }
-    await updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Borrow");
+    await updateOwnedPosts(
+      req.body.title,
+      result.title,
+      result.poster,
+      result._id,
+      "Borrow"
+    );
 
     return res.status(204).send("BorrowPost updated");
   } catch (err) {
@@ -127,7 +143,7 @@ export const borrowPostDEL = async (req, res) => {
       return res.status(404).send("BorrowPost not found");
     }
 
-    await deleteOwnedPosts(result.poster, req.params.id)
+    await deleteOwnedPosts(result.poster, req.params.id);
 
     return res.status(204).send("BorrowPost deleted");
   } catch (err) {

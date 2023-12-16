@@ -72,17 +72,17 @@ export const courses = [
 
 export const urlsGet = {
   secondhand:
-    "http://localhost:3000/secondhand/secondhandpost/pg/:page/lm/:limit/c/:categories/p/:price/d/:date/s/:search",
+    "http://localhost:3000/secondhand/secondhandpost/so/:sort/pg/:page/lm/:limit/c/:categories/p/:price/d/:date/s/:search",
   lostfound:
-    "http://localhost:3000/lostfound/lostfoundpost/pg/:page/lm/:limit/c/:categories/s/:status/d/:date/s/:search",
+    "http://localhost:3000/lostfound/lostfoundpost/so/:sort/pg/:page/lm/:limit/c/:categories/s/:status/d/:date/s/:search",
   donate:
-    "http://localhost:3000/donate/donatepost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
+    "http://localhost:3000/donate/donatepost/so/:sort/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
   borrow:
-    "http://localhost:3000/borrow/borrowpost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
+    "http://localhost:3000/borrow/borrowpost/so/:sort/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
   sectionexchange:
-    "http://localhost:3000/sectionexchange/sectionexchangepost/pg/:page/lm/:limit/p/:price/d/:date/s/:search/o/:offeredCourse/:offeredSection/d/:desiredCourse/:desiredSection",
+    "http://localhost:3000/sectionexchange/sectionexchangepost/so/:sort/pg/:page/lm/:limit/p/:price/d/:date/s/:search/o/:offeredCourse/:offeredSection/d/:desiredCourse/:desiredSection",
   forum:
-    "http://localhost:3000/forum/forumpost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
+    "http://localhost:3000/forum/forumpost/so/:sort/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
 };
 
 export const secondhandUrl = "http://localhost:3000/secondhand/secondhandpost";
@@ -93,6 +93,8 @@ export const sectionexchangeUrl =
   "http://localhost:3000/sectionexchange/sectionexchangepost";
 export const forumUrl = "http://localhost:3000/forum/forumpost";
 export const profileUrl = "http://localhost:3000/profile/profile";
+export const conversationUrl =
+  "http://localhost:3000/conversation/conversation";
 
 export const defaultFilterParams = {
   categories: [],
@@ -124,6 +126,15 @@ export const defaultUserProfile = {
   ownPosts: [],
   savedPosts: [],
   createdAt: new Date(),
+};
+
+export const defaultConversation = {
+  _id: "",
+  userIDs: [],
+  messages: [],
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  username: "",
 };
 
 export const defaultImage =

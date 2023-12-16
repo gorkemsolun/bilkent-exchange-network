@@ -137,10 +137,12 @@ export const forumEntryDEL = async (req, res) => {
 export const forumPostGET = async (req, res) => {
   try {
     let query = {};
+    let sort = {};
     let regexSearch = new RegExp(req.params.search, "i");
     let categories = req.params.categories.split(",");
     let dateMin = req.params.date.split("*")[0],
       dateMax = req.params.date.split("*")[1];
+    let sortType = req.params.sort;
 
     if (!categories || !Array.isArray || categories[0] !== "All") {
       query.category = { $in: categories };
@@ -149,14 +151,22 @@ export const forumPostGET = async (req, res) => {
       query.title = { $regex: regexSearch };
     }
     if (dateMin && dateMin !== "All" && dateMax !== "All" && dateMax) {
-      query.timestamp = { $gte: dateMin, $lte: dateMax };
+      query.createdAt = { $gte: dateMin, $lte: dateMax };
     } else if (dateMin !== "All" && dateMin) {
-      query.timestamp = { $gte: dateMin };
+      query.createdAt = { $gte: dateMin };
     } else if (dateMax !== "All" && dateMax) {
-      query.timestamp = { $lte: dateMax };
+      query.createdAt = { $lte: dateMax };
+    }
+    if (sortType && sortType !== "All") {
+      if (sortType === "date-desc") {
+        sort.createdAt = -1;
+      } else if (sortType === "date-asc") {
+        sort.createdAt = 1;
+      }
     }
 
     const forumposts = await ForumPost.find(query)
+      .sort(sort)
       .skip(req.params.page * req.params.limit)
       .limit(req.params.limit);
 
@@ -194,7 +204,13 @@ export const forumPostPUT = async (req, res) => {
       return res.status(404).send("ForumPost not found");
     }
 
-    await updateOwnedPosts(req.body.title, result.title, result.poster, result._id, "Forum");
+    await updateOwnedPosts(
+      req.body.title,
+      result.title,
+      result.poster,
+      result._id,
+      "Forum"
+    );
 
     return res.status(204).send("ForumPost updated");
   } catch (err) {
@@ -210,7 +226,7 @@ export const forumPostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("ForumPost not found");
     }
-    await deleteOwnedPosts(result.poster, req.params.id)
+    await deleteOwnedPosts(result.poster, req.params.id);
     return res.status(204).send("ForumPost deleted");
   } catch (err) {
     console.log(err);

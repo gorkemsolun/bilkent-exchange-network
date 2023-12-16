@@ -14,7 +14,7 @@ const router = express.Router();
 */
 router.post("/sectionexchangepost", sectionexchangePostPOST);
 router.get(
-  "/sectionexchangepost/pg/:page/lm/:limit/p/:price/d/:date/s/:search/o/:offeredCourse/:offeredSection/d/:desiredCourse/:desiredSection",
+  "/sectionexchangepost/so/:sort/pg/:page/lm/:limit/p/:price/d/:date/s/:search/o/:offeredCourse/:offeredSection/d/:desiredCourse/:desiredSection",
   sectionexchangePostGET
 );
 router.get("/sectionexchangepost/:id", sectionexchangePostGETId);

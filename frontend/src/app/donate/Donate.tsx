@@ -34,10 +34,14 @@ export default function Donate() {
     setFilterParams(params);
   }
 
+  function handleSortTypeChange(sortType: string) {
+    setSortType(sortType);
+  }
+
   useEffect(() => {
     setLoading(true);
 
-    const url = prepareUrl(searchTerm, "donate", filterParams);
+    const url = prepareUrl(sortType, searchTerm, "donate", filterParams);
 
     axios
       .get(url)
@@ -50,28 +54,7 @@ export default function Donate() {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm, filterParams]);
-
-  useEffect(() => {
-    if (sortType === "date-asc") {
-      setDonatePosts(
-        [...donatePosts].sort(
-          (a: DonatePost, b: DonatePost) =>
-            new Date(a.createdAt as Date).getTime() -
-            new Date(b.createdAt as Date).getTime()
-        )
-      );
-    } else {
-      setDonatePosts(
-        [...donatePosts].sort(
-          (a: DonatePost, b: DonatePost) =>
-            new Date(b.createdAt as Date).getTime() -
-            new Date(a.createdAt as Date).getTime()
-        )
-      );
-    }
-    // do not add donatePosts to the dependency array
-  }, [sortType]);
+  }, [searchTerm, filterParams, sortType]);
 
   return (
     <div className="outer-container">
@@ -85,7 +68,7 @@ export default function Donate() {
               type="donate"
               onSearch={handleSearch}
               sortType={sortType}
-              setSortType={setSortType}
+              setSortType={handleSortTypeChange}
             />
             <CreatePostButton type="donate" />
           </div>

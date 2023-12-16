@@ -7,8 +7,8 @@ export default function Filters(props: FilterProps) {
   const [limit, setLimit] = useState<number>(10);
   const [minPrice, setMinPrice] = useState<number | undefined>();
   const [maxPrice, setMaxPrice] = useState<number | undefined>();
-  const [minDate, setMinDate] = useState<Date>();
-  const [maxDate, setMaxDate] = useState<Date>();
+  const [minDate, setMinDate] = useState<string>("");
+  const [maxDate, setMaxDate] = useState<string>("");
   const [desiredCourse, setDesiredCourse] = useState<string>("All");
   const [offeredCourse, setOfferedCourse] = useState<string>("All");
   const [desiredSection, setDesiredSection] = useState<number | undefined>(
@@ -47,6 +47,7 @@ export default function Filters(props: FilterProps) {
   };
 
   const onFilterClicked = () => {
+    console.log(minDate, maxDate);
     props.passFilters({
       categories: checkedCategories,
       prices: {
@@ -91,8 +92,8 @@ export default function Filters(props: FilterProps) {
     setCheckedCategories([]);
     setMinPrice(undefined);
     setMaxPrice(undefined);
-    setMinDate(undefined);
-    setMaxDate(undefined);
+    setMinDate("");
+    setMaxDate("");
     setCheckedStatus("All");
     setDesiredCourse("All");
     setOfferedCourse("All");
@@ -282,9 +283,9 @@ export default function Filters(props: FilterProps) {
           <label>Earliest Date</label>
           <input
             type="date"
-            value={minDate?.toString()}
-            onChange={(e) => setMinDate(new Date(e.target.value))}
-            className="border p-2 rounded-md bg-white w-1"
+            value={minDate}
+            onChange={(e) => setMinDate(e.target.value)}
+            className="border p-2 rounded-md w-1"
             placeholder="Earliest Date"
           />
         </div>
@@ -292,9 +293,9 @@ export default function Filters(props: FilterProps) {
           <label>Latest Date</label>
           <input
             type="date"
-            value={maxDate?.toString()}
-            onChange={(e) => setMaxDate(new Date(e.target.value))}
-            className="border p-2 rounded-md bg-white max-w-1/4 w-1"
+            value={maxDate}
+            onChange={(e) => setMaxDate(e.target.value)}
+            className="border p-2 rounded-md max-w-1/4 w-1"
             placeholder="Latest Date"
           />
         </div>
