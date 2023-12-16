@@ -44,7 +44,7 @@ td {
   object-fit: contain;
   margin-left: 0.25rem;
 
-  background-color: #D7FEFF;
+  background-color: #d7feff;
   border-radius: 0.25rem;
   padding: 0.25rem;
   max-width: 150px;
@@ -66,7 +66,7 @@ td {
   padding: 0.5rem;
   border-radius: 0.25rem;
   width: 100%;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-lostfound-wrapper {
@@ -134,14 +134,14 @@ td {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-date-input-latest {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-date-input-earliest-wrapper {
@@ -190,14 +190,14 @@ td {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-post-per-input {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-reset-filter-button-wrapper {
@@ -1242,15 +1242,12 @@ td {
   margin-bottom: 2vh;
 }
 
-.dark-mode-toggle {
-  background-color: #333333;
-  color: #ffffff;
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
+.post-image {
+  width: 28vw;
+  height: 36vh;
 }
 
-.dark-mode-toggle:hover {
-  background-color: #555555;
+.post-image {
+  width: 28vw;
+  height: 36vh;
 }

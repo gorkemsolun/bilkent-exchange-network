@@ -61,6 +61,12 @@ export default function Login() {
           className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full mt-1"
           type="password"
           onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault(); // Prevent the default behavior of adding a new line
+              handleLogin(e as any);
+            }
+          }}
           placeholder="Password"
         />
 
