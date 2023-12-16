@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { defaultUserProfile, profileUrl } from "../../data-types/constants.ts";
 import {
   Conversation,
   UserContextType,
   UserProfile,
+  OwnPost
 } from "../../data-types/datatypes.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
 import Header from "../components/Header.tsx";
@@ -135,6 +136,78 @@ export default function Profile() {
           </div>
           <div className="profilePosts">
             <p className="statLabel">Posts</p>
+            <div className="justify-center">
+              <div className="container">
+                <div className="row">
+                  {userProfile?.ownPosts
+                    ? userProfile.ownPosts.map((post: OwnPost) => (
+                        <div className="col-12 mb-4" key={post.id}>
+                          <Link
+                            to={
+                              post.typename === "Forum"
+                                ? `/forumpost/${post.id}`
+                                : post.typename === "Secondhand"
+                                ? `/secondhandpost/${post.id}`
+                                : post.typename === "SectionExchange"
+                                ? `/sectionexchange/${post.id}`
+                                : post.typename === "Donate"
+                                ? `/donatepost/${post.id}`
+                                : post.typename === "Borrow"
+                                ? `/borrowpost/${post.id}`
+                                : `/lostfoundpost/${post.id}`
+                            }
+                            className="col-12 cursor-pointer"
+                            key={post.id}
+                          >
+                            <div className="card w-full" key={post.id}>
+                              <div className="card-body" key={post.id}>
+                                <h2
+                                  className="card-title"
+                                  style={{
+                                    fontSize: "1.5rem",
+                                    fontWeight: "bold",
+                                    textAlign: "left",
+                                  }}
+                                  key={post.id}
+                                >
+                                  {post.typename + ":       "}
+                                  {post.title}
+                                </h2>
+                                <div
+                                  className="description-container"
+                                  key={post.id}
+                                  style={{ height: "10%", textAlign: "left" }}
+                                >
+                                  {post.typename === "SectionExchange" ? (
+                                    <p className="card-text" key={post.id}>
+                                      offered Course:{" "}
+                                      {post.offeredCourse
+                                        ? post.offeredCourse
+                                        : null}
+                                      , offered Section:{" "}
+                                      {post.offeredSection
+                                        ? post.offeredSection
+                                        : null}
+                                      , desired Course:{" "}
+                                      {post.desiredCourse
+                                        ? post.desiredCourse
+                                        : null}
+                                      , desired section:{" "}
+                                      {post.desiredSection
+                                        ? post.desiredSection
+                                        : null}
+                                    </p>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      ))
+                    : null}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
