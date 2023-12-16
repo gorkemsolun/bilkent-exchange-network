@@ -493,9 +493,19 @@ td {
   width: 100%;
 }
 
-.postdetails-username {
+.postdetails-username-dmbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   font-size: x-large;
   margin-bottom: 10px;
+}
+
+.postdetails-dmbox-container {
+  height: 30px;
+  width: 30px;
+  margin-left: 8px;
 }
 
 .postdetails-user-info {

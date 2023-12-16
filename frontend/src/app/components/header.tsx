@@ -74,7 +74,7 @@ export default function Header(props: HeaderProps) {
       </div>
       <div className="header-message-link">
         <img
-          src="./src/assets/dmbox.png"
+          src="/src/assets/dmbox.png"
           className="header-dmbox-image"
           onClick={props.onMessengerClick}
           alt="DMs"
@@ -83,4 +83,3 @@ export default function Header(props: HeaderProps) {
     </div>
   );
 }
-

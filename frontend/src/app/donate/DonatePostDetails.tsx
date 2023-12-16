@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { donateUrl, profileUrl } from "../../data-types/constants";
 import {
+  Conversation,
   ProfileContextType,
   UserContextType,
   UserProfile,
@@ -18,6 +19,7 @@ import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 import ReportPostButton from "../components/ReportPostButton";
+import Messenger from "../message/Messenger";
 
 export default function DonatePostDetails() {
   const [post, setPost] = useState<DonatePost>({} as DonatePost);
@@ -27,6 +29,54 @@ export default function DonatePostDetails() {
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation>({} as Conversation);
+
+  const handleMessengerClick = () => {
+    setIsMessengerVisible(!isMessengerVisible);
+  };
+
+  const handleDMBoxClick = () => {
+    // Check if there is an existing conversation with that user, if there isn't create one
+    axios
+      .get(
+        "http://localhost:3000/conversation/conversation/userID/" + user?._id
+      )
+      .then((res) => {
+        const conversation = res.data.find((conv: Conversation) => {
+          return (
+            conv.userIDs.includes("" + user?._id) &&
+            conv.userIDs.includes("" + poster.userID)
+          );
+        });
+
+        if (conversation) {
+          conversation.username = poster?.username;
+          setSelectedConversation(conversation);
+        } else {
+          const newConversation: Conversation = {
+            userIDs: ["" + user?._id, "" + poster?.userID],
+            messages: [],
+            username: poster?.username,
+          };
+          setSelectedConversation(newConversation);
+
+          axios
+            .post(
+              "http://localhost:3000/conversation/conversation/",
+              newConversation
+            )
+            .then((res) => {
+              // SUCCESFULLY CREATED CONVERSATION
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      });
+    setIsMessengerVisible(true);
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -61,7 +111,7 @@ export default function DonatePostDetails() {
 
   return (
     <div className="outer-container">
-      <Header />
+      <Header onMessengerClick={handleMessengerClick} />
       <Navbar />
       {loading ? (
         <Loader />
@@ -94,10 +144,19 @@ export default function DonatePostDetails() {
               )}
             </div>
             <div className="postdetails-user-info-container">
-              <div className="postdetails-username">
+              <div className="postdetails-username-dmbox">
                 <Link to={`/profile/` + poster?.userID}>
                   {poster?.username}
                 </Link>
+                <div className="postdetails-dmbox-container">
+                  <img
+                    className="img-fluid mx-auto d-block max-w-4vw max-h-4vh"
+                    src="/src/assets/dmbox.png"
+                    alt="DM Box"
+                    title="Send DM"
+                    onClick={handleDMBoxClick}
+                  />
+                </div>
               </div>
               <div className="postdetails-user-info">
                 <div className="postdetails-user-info-label"> Reputation:</div>
@@ -136,6 +195,14 @@ export default function DonatePostDetails() {
           </div>
         </div>
       )}
+      <div
+        className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
+      >
+        <Messenger
+          onClick={handleMessengerClick}
+          selectedConversation={selectedConversation}
+        />
+      </div>
     </div>
   );
 }

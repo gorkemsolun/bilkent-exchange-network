@@ -78,7 +78,7 @@ const MessengerPage = (props: MessengerProps) => {
         console.log(err);
       });
     // props is not a dependency, This should be checked
-  }, [props]);
+  }, []);
 
   const handleSendMessage = () => {
     const newMessage: Message = {
