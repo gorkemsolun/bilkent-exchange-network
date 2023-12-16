@@ -11,7 +11,7 @@ import profileRouter from "./routes/profileRoute.js";
 import secondhandRouter from "./routes/secondhandRoute.js";
 import sectionexchangeRouter from "./routes/sectionexchangeRoute.js";
 import authRouter from "./routes/userRoute.js";
-
+import adminRouter from "./routes/adminRoute.js"; 
 const app = express();
 
 app.use(express.json({ limit: "50mb" }));
@@ -26,6 +26,7 @@ app.use("/forum", forumRouter);
 app.use("/user", authRouter);
 app.use("/profile", profileRouter);
 app.use("/conversation", conversationRouter);
+app.use("/adminPage",adminRouter ); 
 
 mongoose
   .connect(MONGO_URL)
