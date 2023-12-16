@@ -46,6 +46,57 @@ export default function LostFound() {
     setSortType(sortType);
   }
 
+  const handleSaveButton = (post: LostFoundPost) => {
+    // Post is saved, unsave
+    if (
+      profile.savedPosts.some(
+        (savedPost: SavedPost) => savedPost.id === post._id
+      )
+    ) {
+      const body = {
+        profileID: profile?._id,
+        savedPost: post,
+      };
+
+      axios
+        .put("http://localhost:3000/profile/unsavepost", body)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      profile.savedPosts = profile.savedPosts.filter(
+        (savedPost: SavedPost) => savedPost.id !== post._id
+      );
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
+      console.log(profile);
+    } else {
+      // Post is unsaved, save
+      const body = {
+        profileID: profile?._id,
+        savedPost: post,
+      };
+
+      axios
+        .put("http://localhost:3000/profile/savepost", body)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      const savedPost: SavedPost = {
+        id: "" + post._id,
+        typename: "Secondhand,",
+        title: post.title,
+      };
+
+      profile.savedPosts.push(savedPost);
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     const url = prepareUrl(sortType, searchTerm, "lostfound", filterParams);
@@ -85,14 +136,6 @@ export default function LostFound() {
     }
     // do not add lostFoundPosts to the dependency array
   }, [sortType]);
-
-  function passFilters(params: FilterParams) {
-    setFilterParams(params);
-  }
-
-  const handleSearch = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-  };
 
   return (
     <div className="outer-container">

@@ -63,7 +63,7 @@ export default function Forum() {
       });
   }, [searchTerm, filterParams, sortType]);
 
-  const handleSaveButton = (post: BorrowPost) => {
+  const handleSaveButton = (post: ForumPost) => {
     // Post is saved, unsave
     if (
       profile.savedPosts.some(
