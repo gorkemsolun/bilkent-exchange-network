@@ -67,17 +67,6 @@ export default function EditForumPost(props: EditPostProps) {
       localStorage.setItem("profile", JSON.stringify(profile))
       profileDispatch({ type: "UPDATE", payload: profile });
 
-    /*  
-    await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
-      .then((res) => {
-        localStorage.setItem("profile", JSON.stringify(res.data.profile));
-        profileDispatch({ type: "UPDATE", payload: res.data.profile });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      */
     setLoading(false);
     setIsEdited(true);
   };

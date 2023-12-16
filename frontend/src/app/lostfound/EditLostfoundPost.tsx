@@ -88,15 +88,14 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
         setError(err);
       });
 
-    await axios
-      .get(`http://localhost:3000/profile/profile/${user._id}`)
-      .then((res) => {
-        localStorage.setItem("profile", JSON.stringify(res.data.profile));
-        profileDispatch({ type: "UPDATE", payload: res.data.profile });
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+      let profile = JSON.parse(localStorage.getItem("profile") as string);
+      let index;
+      
+      
+      if(profile) index = profile.ownPosts.findIndex(post => post.id === props.postId)
+      if (index) profile.ownPosts[index].title = editedPost.title;
+      localStorage.setItem("profile", JSON.stringify(profile))
+      profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
     setIsEdited(true);
