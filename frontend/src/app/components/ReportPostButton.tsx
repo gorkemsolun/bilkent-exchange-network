@@ -28,6 +28,7 @@ export default function ReportPostButton(props: ReportPostButtonProps) {
           profileId={props.profileId}
           type={props.type}
           onClose={handleCloseModal}
+          title={props.title}
         />
       )}
     </div>

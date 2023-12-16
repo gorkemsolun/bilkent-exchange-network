@@ -28,11 +28,12 @@ export default function ReportPost(props: ReportPostProps) {
     const reason = formData.get("reason") as string;
     try {
       // Send the report to the server
-       await axios.post("http://localhost:3000/admin/reportedposts", {
+      await axios.post("http://localhost:3000/admin/reportedposts", {
         postId: props.postId,
         reason: reason,
-        userId : props.profileId,
+        userId: props.profileId,
         type: props.type,
+        title: props.title,
       });
 
       alert("Post reported successfully!");

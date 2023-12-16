@@ -30,6 +30,7 @@ export interface ReportPostButtonProps {
   postId: string;
   profileId: string;
   type: string;
+  title: string;
 }
 
 export interface ReportPostProps extends ReportPostButtonProps {

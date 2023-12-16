@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
-import AdminPage from "./app/admin/Admin";
 import { AuthContextProvider } from "./app/authentication/AuthContext";
 import { useAuthContext } from "./app/authentication/AuthHelpers";
 import Login from "./app/authentication/Login";
@@ -25,6 +24,7 @@ import SectionExchange from "./app/sectionexchange/Sectionexchange";
 import "./bootstrap.css";
 import { UserContextType } from "./data-types/datatypes";
 import SavedPosts from "./app/savedposts/SavedPosts";
+import AdminPage from "./app/admin/admin";
 
 export default function App() {
   return (
@@ -141,7 +141,15 @@ function AppContent() {
           />
           <Route
             path="/admin"
-            element={!user ? <AdminPage /> : <Navigate to="/forum" />}
+            element={
+              user ? (
+                <AdminPage />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
           />
           <Route
             path="/secondhandpost/:id"

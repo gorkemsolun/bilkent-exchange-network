@@ -140,6 +140,7 @@ export default function SecondHandPostDetails() {
                   postId={String(post._id)}
                   profileId={String(poster?._id)}
                   type="secondhand"
+                  title={post.title}
                 />
               )}
             </div>
