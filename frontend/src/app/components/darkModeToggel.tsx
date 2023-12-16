@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 export const DarkModeToggle: React.FC = () => {
+  
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   useEffect(() => {
@@ -11,6 +12,7 @@ export const DarkModeToggle: React.FC = () => {
 
   const handleToggle = () => {
     // Toggle the dark mode state
+    console.log("darkmode")
     setIsDarkMode((prevMode) => !prevMode);
   };
 
