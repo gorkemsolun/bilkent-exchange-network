@@ -1,12 +1,12 @@
+import axios from "axios";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ProfileContextType, SavedPost } from "../../data-types/datatypes";
-import { useState } from "react";
-import Header from "../components/Header";
-import Navbar from "../components/Navbar";
-import Loader from "../components/Loader";
 import { useProfileContext } from "../authentication/AuthHelpers";
+import Header from "../components/Header";
+import Loader from "../components/Loader";
+import Navbar from "../components/Navbar";
 import Messenger from "../message/Messenger";
-import axios from "axios";
 
 export default function SavedPosts() {
   const profile = JSON.parse(localStorage.getItem("profile") as string);
@@ -33,7 +33,6 @@ export default function SavedPosts() {
 
       axios
         .put("http://localhost:3000/profile/unsavepost", body)
-        .then((res) => {})
         .catch((err) => {
           console.log(err);
         });
@@ -51,16 +50,13 @@ export default function SavedPosts() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/savepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put("http://localhost:3000/profile/savepost", body).catch((err) => {
+        console.log(err);
+      });
 
       const savedPost: SavedPost = {
         id: "" + post.id,
-        typename: "Secondhand,",
+        typename: "Secondhand",
         title: post.title,
       };
 
@@ -98,6 +94,8 @@ export default function SavedPosts() {
                                   onClick={() => {
                                     handleSaveButton(post);
                                   }}
+                                  placeholder="Saved"
+                                  title="Unsave Post"
                                 ></img>
                               ) : (
                                 <img
@@ -106,6 +104,8 @@ export default function SavedPosts() {
                                   onClick={() => {
                                     handleSaveButton(post);
                                   }}
+                                  placeholder="Not Saved"
+                                  title="Save Post"
                                 ></img>
                               )}
                             </div>
@@ -130,8 +130,7 @@ export default function SavedPosts() {
                                 textAlign: "left",
                               }}
                             >
-                              {post.typename + ":       "}
-                              {post.title}
+                              {post.typename + ": " + post.title}
                             </Link>
                             <div
                               className="description-container"
