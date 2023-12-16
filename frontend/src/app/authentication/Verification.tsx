@@ -9,6 +9,7 @@ const url = bg.getRandomImageUrl();
 
 export default function VerificationPage() {
   const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const { sendEmail } = useVerificationEmail();
 
