@@ -1,5 +1,7 @@
 # BILKENT EXCHANCE NETWORK (BEN)
 
+![](readme-res/logo.png) <br>
+
 ## TEAM MEMBERS
 
 [Cahit Ediz Civan](https://github.com/Edizc) <br>
@@ -26,17 +28,17 @@ One of the interesting features of the app is including a forum in which people 
 ## SETUP INSTRUCTIONS
 
 1. Open cmd
-> Open the Start menu or press the Windows key + R. Type cmd or cmd.exe in the Run command box. Press Enter.
-2. Using `cd` command, navigate to through a desired directory.
-3. Using the command `git clone https://github.com/gorkemsolun/bilkent-exchange-network.git`, install the required files.
-![](https://myoctocat.com/assets/images/base-octocat.svg)
-4. Open up VS code.
-![](https://myoctocat.com/assets/images/base-octocat.svg)
-5. From the file bar, open the downloaded folder.
-![](https://myoctocat.com/assets/images/base-octocat.svg)
-6. Once you opened the folder, open up the VS code's built in terminal using `ctrl + "` hotkey.
-![](https://myoctocat.com/assets/images/base-octocat.svg)
-7. Type the following commands in order:
+> Open the Start menu or press the Windows key + R. Type cmd or cmd.exe in the Run command box. Press Enter. <br>
+2. Using `cd` command, navigate to through a desired directory. <br>
+3. Using the command `git clone https://github.com/gorkemsolun/bilkent-exchange-network.git`, install the required files. <br>
+![](readme-res/tutorial1) <br>
+4. Open up VS code. <br>
+![](readme-res/tutorial2) <br>
+5. From the file bar, open the downloaded folder. <br>
+![](readme-res/tutorial3) <br>
+6. Once you opened the folder, open up the VS code's built in terminal using `ctrl + "` hotkey. <br>
+![](readme-res/tutorial4) <br>
+7. Type the following commands in order: <br>
 ```
 cd frontend
 npm install
@@ -49,6 +51,6 @@ cd..
 cd frontend
 npm run dev
 ```
-8. Open up your desired browser and type `http://localhost:5000` to address bar.
-9. Either log in to the system with credentials provided in the directory, or create yourself an account.
-10. Enjoy and BEN-d the rules of social network.
+8. Open up your desired browser and type `http://localhost:5000` to address bar. <br>
+9. Either log in to the system with credentials provided in the directory, or create yourself an account. <br>
+10. Enjoy and BEN-d the rules of social network. <br>
