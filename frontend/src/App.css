@@ -404,6 +404,7 @@ td {
 }
 
 .header-title-link {
+  textdecoration: "none";
   display: flex;
   align-items: center;
   color: #fff;
@@ -414,6 +415,7 @@ td {
   width: 50px;
   height: 50px;
   object-fit: contain;
+  margin-right: 10px;
 }
 
 .header-message-link {
@@ -708,19 +710,19 @@ td {
   right: 0;
   width: 28vw;
   height: 95vh;
-  z-index: 1000; /* Set a higher z-index than other elements */
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(200, 200, 200, 0.9); /* Semi-transparent background */
+  background: rgba(200, 200, 200, 0.9);
   border-radius: 20px;
   border: #007bff 2px solid;
   margin-top: 3px;
-  transition: transform 0.5s ease; /* Adjust the duration and timing function as needed */
+  transition: transform 0.5s ease;
 }
 
 .messenger-box.closed {
-  transform: translateX(100%); /* Move to the right to close */
+  transform: translateX(100%);
 }
 
 .messenger-close-button {
@@ -919,6 +921,73 @@ td {
   margin-left: auto;
   width: 40px;
   height: 40px;
+}
+
+.forgot-password-body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.forgot-password-h2 {
+  color: #333;
+}
+
+.forgot-password-form {
+  margin-top: 20px;
+}
+
+.forgot-password-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+.forgot-password-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.forgot-password-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.forgot-password-button:hover {
+  background-color: #0056b3;
+}
+
+.forgot-password-p {
+  margin-top: 16px;
+  color: #555;
+}
+
+.reset-password-container {
+  max-width: 400px;
+}
+
+.forgot-password-button {
+  color: #007bff;
+  text-decoration: none;
 }
 
 .post-save-container {

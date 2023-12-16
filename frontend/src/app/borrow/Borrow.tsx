@@ -19,13 +19,13 @@ import Messenger from "../message/Messenger";
 import { useProfileContext } from "../authentication/AuthHelpers";
 
 export default function Borrow() {
-  const [loading, setLoading] = useState(false);
-  const [borrowPosts, setBorrowPosts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [borrowPosts, setBorrowPosts] = useState<BorrowPost[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
-  const [sortType, setSortType] = useState("");
-  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+  const [sortType, setSortType] = useState<string>("");
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
   const profile = JSON.parse(localStorage.getItem("profile") as string);
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -42,9 +42,13 @@ export default function Borrow() {
     setFilterParams(params);
   }
 
+  function handleSortTypeChange(sortType: string) {
+    setSortType(sortType);
+  }
+
   useEffect(() => {
     setLoading(true);
-    const url = prepareUrl(searchTerm, "borrow", filterParams);
+    const url = prepareUrl(sortType, searchTerm, "borrow", filterParams);
 
     axios
       .get(url)
@@ -80,57 +84,6 @@ export default function Borrow() {
     // do not add borrowPosts to the dependency array
   }, [sortType]);
 
-  const handleSaveButton = (post: BorrowPost) => {
-    // Post is saved, unsave
-    if (
-      profile.savedPosts.some(
-        (savedPost: SavedPost) => savedPost.id === post._id
-      )
-    ) {
-      const body = {
-        profileID: profile?._id,
-        savedPost: post,
-      };
-
-      axios
-        .put("http://localhost:3000/profile/unsavepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
-
-      profile.savedPosts = profile.savedPosts.filter(
-        (savedPost: SavedPost) => savedPost.id !== post._id
-      );
-      localStorage.setItem("profile", JSON.stringify(profile));
-      profileDispatch({ type: "UPDATE", payload: profile });
-      console.log(profile);
-    } else {
-      // Post is unsaved, save
-      const body = {
-        profileID: profile?._id,
-        savedPost: post,
-      };
-
-      axios
-        .put("http://localhost:3000/profile/savepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
-
-      const savedPost: SavedPost = {
-        id: "" + post._id,
-        typename: "Secondhand,",
-        title: post.title,
-      };
-
-      profile.savedPosts.push(savedPost);
-      localStorage.setItem("profile", JSON.stringify(profile));
-      profileDispatch({ type: "UPDATE", payload: profile });
-    }
-  };
-
   return (
     <div className="outer-container">
       <Header onMessengerClick={handleMessengerClick} />
@@ -143,7 +96,7 @@ export default function Borrow() {
               type="borrow"
               onSearch={handleSearch}
               sortType={sortType}
-              setSortType={setSortType}
+              setSortType={handleSortTypeChange}
             />
             <CreatePostButton type="borrow" />
           </div>

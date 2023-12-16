@@ -1,6 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { defaultFilterParams } from "../../data-types/constants.ts";
+import { Link } from "react-router-dom";
+import {
+  conversationUrl,
+  defaultConversation,
+  defaultFilterParams,
+} from "../../data-types/constants.ts";
 import {
   Conversation,
   FilterParams,
@@ -21,7 +26,6 @@ import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
-import { Link } from "react-router-dom";
 
 export default function SectionExchange() {
   const [sectionexchangePosts, setSectionexchangePosts] = useState<
@@ -34,7 +38,7 @@ export default function SectionExchange() {
   const [sortType, setSortType] = useState<string>("");
   const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
   const [selectedConversation, setSelectedConversation] =
-    useState<Conversation>({} as Conversation);
+    useState<Conversation>(defaultConversation);
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profile = JSON.parse(localStorage.getItem("profile") as string);
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
@@ -42,47 +46,6 @@ export default function SectionExchange() {
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
-  };
-
-  const handleDMBoxClick = (otherUserID: string, otherUserUsername: string) => {
-    // Check if there is an existing conversation with that user, if there isn't create one
-    axios
-      .get(
-        "http://localhost:3000/conversation/conversation/userID/" + user?._id
-      )
-      .then((res) => {
-        const conversation = res.data.find((conv: Conversation) => {
-          return (
-            conv.userIDs.includes("" + user?._id) &&
-            conv.userIDs.includes(otherUserID)
-          );
-        });
-
-        if (conversation) {
-          conversation.username = otherUserUsername;
-          setSelectedConversation(conversation);
-        } else {
-          const newConversation: Conversation = {
-            userIDs: ["" + user?._id, otherUserID],
-            messages: [],
-            username: otherUserUsername,
-          };
-          setSelectedConversation(newConversation);
-
-          axios
-            .post(
-              "http://localhost:3000/conversation/conversation/",
-              newConversation
-            )
-            .then((res) => {
-              // SUCCESFULLY CREATED CONVERSATION
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      });
-    setIsMessengerVisible(true);
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -93,9 +56,52 @@ export default function SectionExchange() {
     setFilterParams(params);
   }
 
+  function handleSortTypeChange(sortType: string) {
+    setSortType(sortType);
+  }
+
+  const handleDMBoxClick = (otherUserID: string, otherUserUsername: string) => {
+    // Check if there is an existing conversation with that user, if there isn't create one
+    axios.get(conversationUrl + "/userID/" + user?._id).then((res) => {
+      const conversation = res.data.find((conv: Conversation) => {
+        return (
+          conv.userIDs.includes("" + user?._id) &&
+          conv.userIDs.includes(otherUserID)
+        );
+      });
+
+      if (conversation) {
+        conversation.username = otherUserUsername;
+        setSelectedConversation(conversation);
+      } else {
+        const newConversation: Conversation = {
+          userIDs: ["" + user?._id, otherUserID],
+          messages: [],
+          username: otherUserUsername,
+        };
+        setSelectedConversation(newConversation);
+
+        axios
+          .post(conversationUrl + "/", newConversation)
+          .then((res) => {
+            // SUCCESFULLY CREATED CONVERSATION
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+    setIsMessengerVisible(true);
+  };
+
   useEffect(() => {
     setLoading(true);
-    const url = prepareUrl(searchTerm, "sectionexchange", filterParams);
+    const url = prepareUrl(
+      sortType,
+      searchTerm,
+      "sectionexchange",
+      filterParams
+    );
 
     axios
       .get(url)
@@ -108,28 +114,7 @@ export default function SectionExchange() {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm, filterParams]);
-
-  useEffect(() => {
-    if (sortType === "date-asc") {
-      setSectionexchangePosts(
-        [...sectionexchangePosts].sort(
-          (a: SectionexchangePost, b: SectionexchangePost) =>
-            new Date(a.createdAt as Date).getTime() -
-            new Date(b.createdAt as Date).getTime()
-        )
-      );
-    } else {
-      setSectionexchangePosts(
-        [...sectionexchangePosts].sort(
-          (a: SectionexchangePost, b: SectionexchangePost) =>
-            new Date(b.createdAt as Date).getTime() -
-            new Date(a.createdAt as Date).getTime()
-        )
-      );
-    }
-    // do not add sectionexchangePosts to the dependency array
-  }, [sortType]);
+  }, [searchTerm, filterParams, sortType]);
 
   const handleSaveButton = (post: SectionexchangePost) => {
     // Post is saved, unsave
@@ -194,7 +179,7 @@ export default function SectionExchange() {
               type="sectionexchange"
               onSearch={handleSearch}
               sortType={sortType}
-              setSortType={setSortType}
+              setSortType={handleSortTypeChange}
             />
             <CreatePostButton type="sectionexchange" />
           </div>

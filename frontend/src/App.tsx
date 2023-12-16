@@ -1,10 +1,12 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
+import AdminPage from "./app/admin/Admin";
 import { AuthContextProvider } from "./app/authentication/AuthContext";
 import { useAuthContext } from "./app/authentication/AuthHelpers";
 import Login from "./app/authentication/Login";
 import Signup from "./app/authentication/Signup";
 import VerificationPage from "./app/authentication/Verification";
+import ForgetPassword from "./app/authentication/forgetPassword";
 import Borrow from "./app/borrow/Borrow";
 import BorrowPostDetails from "./app/borrow/BorrowPostDetails";
 import Donate from "./app/donate/Donate";
@@ -20,7 +22,6 @@ import { ProfileContextProvider } from "./app/profile/ProfileContext";
 import SecondHand from "./app/secondhand/Secondhand";
 import SecondHandPostDetails from "./app/secondhand/SecondhandPostDetails";
 import SectionExchange from "./app/sectionexchange/Sectionexchange";
-import AdminPage from "./app/admin/Admin";
 import "./bootstrap.css";
 import { UserContextType } from "./data-types/datatypes";
 
@@ -128,6 +129,10 @@ function AppContent() {
             element={!user ? <Signup /> : <Navigate to="/secondhand" />}
           />
           <Route
+            path="/forgetPassword"
+            element={!user ? <ForgetPassword /> : <Navigate to="/login" />}
+          />
+          <Route
             path="/verification"
             element={
               !user ? <VerificationPage /> : <Navigate to="/secondhand" />
@@ -135,8 +140,7 @@ function AppContent() {
           />
           <Route
             path="/admin"
-            element={!user ? <AdminPage /> : <Navigate to="/forum" />
-            }
+            element={!user ? <AdminPage /> : <Navigate to="/forum" />}
           />
           <Route
             path="/secondhandpost/:id"
@@ -234,7 +238,6 @@ function AppContent() {
               )
             }
           />
-
         </Routes>
       </BrowserRouter>
     </div>

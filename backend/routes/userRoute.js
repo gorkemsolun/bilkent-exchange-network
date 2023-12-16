@@ -1,10 +1,15 @@
 import express from "express";
 import {
   createEmailToken,
+  forgetPassword,
   getEmailToken,
   sendEmail,
 } from "../controllers/emailController.js";
-import { loginUser, signupUser, deleteUser} from "../controllers/userController.js";
+import {
+  deleteUser,
+  loginUser,
+  signupUser,
+} from "../controllers/userController.js";
 //controller functions
 
 const authRouter = express.Router();
@@ -14,6 +19,9 @@ authRouter.post("/login", loginUser);
 
 //signup route
 authRouter.post("/signup", signupUser);
+
+//forget password
+authRouter.post("/forgetPassword", forgetPassword);
 
 //send verification email route
 authRouter.post("/sendEmail", sendEmail);
@@ -25,6 +33,6 @@ authRouter.post("/emailToken", createEmailToken);
 authRouter.post("/getEmailToken", getEmailToken);
 
 // delete route
-authRouter.delete("/delete/:userId" , deleteUser);
+authRouter.delete("/delete/:userId", deleteUser);
 
 export default authRouter;

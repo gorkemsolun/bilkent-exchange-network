@@ -38,9 +38,17 @@ export default function Forum() {
     setSearchTerm(searchTerm);
   };
 
+  function passFilters(params: FilterParams) {
+    setFilterParams(params);
+  }
+
+  function handleSortTypeChange(sortType: string) {
+    setSortType(sortType);
+  }
+
   useEffect(() => {
     setLoading(true);
-    const url = prepareUrl(searchTerm, "forum", filterParams);
+    const url = prepareUrl(sortType, searchTerm, "forum", filterParams);
 
     axios
       .get(url)
@@ -53,27 +61,7 @@ export default function Forum() {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm, filterParams]);
-
-  useEffect(() => {
-    if (sortType === "date-asc") {
-      setForumPosts(
-        [...forumPosts].sort(
-          (a: ForumPost, b: ForumPost) =>
-            new Date(a.createdAt as Date).getTime() -
-            new Date(b.createdAt as Date).getTime()
-        )
-      );
-    } else {
-      setForumPosts(
-        [...forumPosts].sort(
-          (a: ForumPost, b: ForumPost) =>
-            new Date(b.createdAt as Date).getTime() -
-            new Date(a.createdAt as Date).getTime()
-        )
-      );
-    }
-  }, [sortType]);
+  }, [searchTerm, filterParams, sortType]);
 
   const handleSaveButton = (post: BorrowPost) => {
     // Post is saved, unsave
@@ -131,14 +119,14 @@ export default function Forum() {
       <Header onMessengerClick={handleMessengerClick} />
       <Navbar />
       <div className="flex flex-row grow">
-        <Filters type="forum" passFilters={setFilterParams}></Filters>
+        <Filters type="forum" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
           <div className="flex items-center justify-center mb-3">
             <SearchBar
               type="forum"
               onSearch={handleSearch}
               sortType={sortType}
-              setSortType={setSortType}
+              setSortType={handleSortTypeChange}
             />
             <CreatePostButton type="forum" />
           </div>

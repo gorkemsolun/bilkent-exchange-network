@@ -4,12 +4,16 @@ export default function SearchBar(props: {
   type: string;
   onSearch: (searchTerm: string) => void;
   sortType: string;
-  setSortType: React.Dispatch<React.SetStateAction<string>>;
+  setSortType: (sortType: string) => void;
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const handleSearch = () => {
     props.onSearch(searchTerm);
+  };
+
+  const handleSortTypeChange = (sortType: string) => {
+    props.setSortType(sortType);
   };
 
   return (
@@ -30,7 +34,7 @@ export default function SearchBar(props: {
         <div className=" right-0 mt-2 p-2 border bg-white center m-2 rounded-full text-black">
           <select
             value={props.sortType}
-            onChange={(e) => props.setSortType(e.target.value)}
+            onChange={(e) => handleSortTypeChange(e.target.value)}
             className="bg-white"
             title="Sort By"
           >

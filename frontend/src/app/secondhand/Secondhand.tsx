@@ -19,13 +19,13 @@ import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
 import { useProfileContext } from "../authentication/AuthHelpers.ts";
 export default function Secondhand() {
-  const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [secondhandPosts, setSecondhandPosts] = useState([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [secondhandPosts, setSecondhandPosts] = useState<SecondhandPost[]>([]);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
-  const [sortType, setSortType] = useState("");
-  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+  const [sortType, setSortType] = useState<string>("");
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
   const profile = JSON.parse(localStorage.getItem("profile") as string);
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -93,10 +93,15 @@ export default function Secondhand() {
     setFilterParams(params);
   }
 
+  function handleSortTypeChange(sortType: string) {
+    setSortType(sortType);
+  }
+
   useEffect(() => {
     setLoading(true);
 
-    const url = prepareUrl(searchTerm, "secondhand", filterParams);
+    const url = prepareUrl(sortType, searchTerm, "secondhand", filterParams);
+    console.log(url);
 
     axios
       .get(url)
@@ -109,40 +114,7 @@ export default function Secondhand() {
       .finally(() => {
         setLoading(false);
       });
-  }, [filterParams, searchTerm]);
-
-  useEffect(() => {
-    if (sortType === "price-asc") {
-      setSecondhandPosts(
-        [...secondhandPosts].sort(
-          (a: SecondhandPost, b: SecondhandPost) => a.price - b.price
-        )
-      );
-    } else if (sortType === "price-desc") {
-      setSecondhandPosts(
-        [...secondhandPosts].sort(
-          (a: SecondhandPost, b: SecondhandPost) => b.price - a.price
-        )
-      );
-    } else if (sortType === "date-asc") {
-      setSecondhandPosts(
-        [...secondhandPosts].sort(
-          (a: SecondhandPost, b: SecondhandPost) =>
-            new Date(a.createdAt as Date).getTime() -
-            new Date(b.createdAt as Date).getTime()
-        )
-      );
-    } else {
-      setSecondhandPosts(
-        [...secondhandPosts].sort(
-          (a: SecondhandPost, b: SecondhandPost) =>
-            new Date(b.createdAt as Date).getTime() -
-            new Date(a.createdAt as Date).getTime()
-        )
-      );
-    }
-    // do not add secondhandPosts to the dependency array
-  }, [sortType]);
+  }, [filterParams, searchTerm, sortType]);
 
   return (
     <div className="outer-container">
@@ -156,7 +128,7 @@ export default function Secondhand() {
               type="secondhand"
               onSearch={handleSearch}
               sortType={sortType}
-              setSortType={setSortType}
+              setSortType={handleSortTypeChange}
             />
             <CreatePostButton type="secondhand" />
           </div>

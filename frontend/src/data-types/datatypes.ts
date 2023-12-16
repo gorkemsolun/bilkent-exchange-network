@@ -120,8 +120,8 @@ export interface FilterParams {
     max: number | undefined;
   };
   dates: {
-    startDate: Date | undefined;
-    endDate: Date | undefined;
+    startDate: string;
+    endDate: string;
   };
   status: string;
   desiredCourse: string;

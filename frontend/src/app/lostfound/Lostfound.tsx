@@ -19,13 +19,13 @@ import Messenger from "../message/Messenger.tsx";
 import { useProfileContext } from "../authentication/AuthHelpers.ts";
 
 export default function LostFound() {
-  const [loading, setLoading] = useState(false);
-  const [lostFoundPosts, setLostFoundPosts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [lostFoundPosts, setLostFoundPosts] = useState<LostFoundPost[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
-  const [sortType, setSortType] = useState("");
-  const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+  const [sortType, setSortType] = useState<string>("");
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
   const profile = JSON.parse(localStorage.getItem("profile") as string);
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -34,9 +34,23 @@ export default function LostFound() {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  function passFilters(params: FilterParams) {
+    setFilterParams(params);
+  }
+
+  const handleSearch = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+  };
+
+  function handleSortTypeChange(sortType: string) {
+    setSortType(sortType);
+  }
+
   useEffect(() => {
     setLoading(true);
-    const url = prepareUrl(searchTerm, "lostfound", filterParams);
+    const url = prepareUrl(sortType, searchTerm, "lostfound", filterParams);
+
+    console.log(url);
 
     axios
       .get(url)
@@ -80,57 +94,6 @@ export default function LostFound() {
     setSearchTerm(searchTerm);
   };
 
-  const handleSaveButton = (post: LostFoundPost) => {
-    // Post is saved, unsave
-    if (
-      profile.savedPosts.some(
-        (savedPost: SavedPost) => savedPost.id === post._id
-      )
-    ) {
-      const body = {
-        profileID: profile?._id,
-        savedPost: post,
-      };
-
-      axios
-        .put("http://localhost:3000/profile/unsavepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
-
-      profile.savedPosts = profile.savedPosts.filter(
-        (savedPost: SavedPost) => savedPost.id !== post._id
-      );
-      localStorage.setItem("profile", JSON.stringify(profile));
-      profileDispatch({ type: "UPDATE", payload: profile });
-      console.log(profile);
-    } else {
-      // Post is unsaved, save
-      const body = {
-        profileID: profile?._id,
-        savedPost: post,
-      };
-
-      axios
-        .put("http://localhost:3000/profile/savepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
-
-      const savedPost: SavedPost = {
-        id: "" + post._id,
-        typename: "Secondhand,",
-        title: post.title,
-      };
-
-      profile.savedPosts.push(savedPost);
-      localStorage.setItem("profile", JSON.stringify(profile));
-      profileDispatch({ type: "UPDATE", payload: profile });
-    }
-  };
-
   return (
     <div className="outer-container">
       <Header onMessengerClick={handleMessengerClick} />
@@ -143,7 +106,7 @@ export default function LostFound() {
               type="lostandfound"
               onSearch={handleSearch}
               sortType={sortType}
-              setSortType={setSortType}
+              setSortType={handleSortTypeChange}
             />
             <CreatePostButton type="lostandfound" />
           </div>
