@@ -27,6 +27,15 @@ export interface SavedPost {
   desiredSection?: string;
 }
 
+export interface PostReport { // görkem report yapma, js kullanıyor.
+  _id?: string;
+  postId: string;
+  reason: string;
+  userId: string;
+  type: string;
+  title: string;
+}
+
 export interface UserProfile {
   _id?: string;
   userID: string;
@@ -60,6 +69,7 @@ export interface UserContextType {
 }
 
 export interface UserContext {
+  isAdmin: boolean; 
   email: string;
   token: string;
   _id: string;

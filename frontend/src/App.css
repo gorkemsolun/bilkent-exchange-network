@@ -1200,3 +1200,58 @@ td {
   left: 0;
   transition: all 0.8s ease-in-out;
 }
+
+.reports-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  align-items: center;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  margin-left: 2vw;
+  margin-right: 2vw;
+}
+
+.reports-title {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.report-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: fit-content;
+  margin-bottom: 4vh;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+.report-title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.report-description {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 2vh;
+}
+
+
+.dark-mode-toggle {
+  background-color: #333333;
+  color: #ffffff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dark-mode-toggle:hover {
+  background-color: #555555;
+}

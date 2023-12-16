@@ -140,6 +140,7 @@ export default function BorrowPostDetails() {
                   postId={"" + post._id}
                   profileId={"" + poster?._id}
                   type="borrow"
+                  title={post.title}
                 />
               )}
             </div>

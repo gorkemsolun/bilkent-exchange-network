@@ -1,16 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { defaultUserProfile, profileUrl } from "../../data-types/constants.ts";
 import {
   Conversation,
   UserContextType,
   UserProfile,
+  OwnPost
 } from "../../data-types/datatypes.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
-import Header from "../components/Header.tsx";
-import Loader from "../components/Loader.tsx";
-import Navbar from "../components/Navbar.tsx";
+import Header from "../components/header.tsx";
+import Loader from "../components/loader.tsx";
+import Navbar from "../components/navbar.tsx";
 import Messenger from "../message/Messenger.tsx";
 
 export default function Profile() {
@@ -83,6 +84,24 @@ export default function Profile() {
       });
   }, []);
 
+  // Function to handle kicking the user (assuming this functionality exists in your backend)
+  const handleKickUser = () => {
+      if (!id) {
+        console.error("User ID not available.");
+        return;
+      }
+      const kickUserUrl = `http://localhost:3000/user/delete/${id}`;  
+      axios
+        .delete(kickUserUrl)
+        .then((res) => {
+          console.log("User kicked successfully!");   
+        })
+        .catch((error) => {
+          console.error("Error kicking user:", error);
+        });
+    };
+
+
   return (
     <div className="outer-container">
       <Header onMessengerClick={handleMessengerClick} />
@@ -131,10 +150,87 @@ export default function Profile() {
                   {("" + userProfile?.createdAt).slice(0, 10)}
                 </p>
               </div>
+
+              {/* "Kick User" button visible to admin */}
+              {user?.isAdmin === true && (
+                <button onClick={handleKickUser }>Kick User</button>
+              )}
             </div>
           </div>
           <div className="profilePosts">
             <p className="statLabel">Posts</p>
+            <div className="justify-center">
+              <div className="container">
+                <div className="row">
+                  {userProfile?.ownPosts
+                    ? userProfile.ownPosts.map((post: OwnPost) => (
+                        <div className="col-12 mb-4" key={post.id}>
+                          <Link
+                            to={
+                              post.typename === "Forum"
+                                ? `/forumpost/${post.id}`
+                                : post.typename === "Secondhand"
+                                ? `/secondhandpost/${post.id}`
+                                : post.typename === "SectionExchange"
+                                ? `/sectionexchange/${post.id}`
+                                : post.typename === "Donate"
+                                ? `/donatepost/${post.id}`
+                                : post.typename === "Borrow"
+                                ? `/borrowpost/${post.id}`
+                                : `/lostfoundpost/${post.id}`
+                            }
+                            className="col-12 cursor-pointer"
+                            key={post.id}
+                          >
+                            <div className="card w-full" key={post.id}>
+                              <div className="card-body" key={post.id}>
+                                <h2
+                                  className="card-title"
+                                  style={{
+                                    fontSize: "1.5rem",
+                                    fontWeight: "bold",
+                                    textAlign: "left",
+                                  }}
+                                  key={post.id}
+                                >
+                                  {post.typename + ":       "}
+                                  {post.title}
+                                </h2>
+                                <div
+                                  className="description-container"
+                                  key={post.id}
+                                  style={{ height: "10%", textAlign: "left" }}
+                                >
+                                  {post.typename === "SectionExchange" ? (
+                                    <p className="card-text" key={post.id}>
+                                      offered Course:{" "}
+                                      {post.offeredCourse
+                                        ? post.offeredCourse
+                                        : null}
+                                      , offered Section:{" "}
+                                      {post.offeredSection
+                                        ? post.offeredSection
+                                        : null}
+                                      , desired Course:{" "}
+                                      {post.desiredCourse
+                                        ? post.desiredCourse
+                                        : null}
+                                      , desired section:{" "}
+                                      {post.desiredSection
+                                        ? post.desiredSection
+                                        : null}
+                                    </p>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      ))
+                    : null}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
