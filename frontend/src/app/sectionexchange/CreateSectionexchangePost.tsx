@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { urlsPost } from "../../data-types/constants";
+import { urlsGet } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,

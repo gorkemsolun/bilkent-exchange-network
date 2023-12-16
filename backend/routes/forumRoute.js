@@ -11,7 +11,6 @@ import {
 } from "../controllers/forumController.js";
 
 const router = express.Router();
-
 router.post("/forumpost", forumPostPOST);
 router.get(
   "/forumpost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
