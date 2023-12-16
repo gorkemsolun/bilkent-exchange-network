@@ -11,7 +11,7 @@ export default function Signup() {
   const email = searchParams.get("email");
   const { signUpRequest } = useSignup();
   const { getToken } = useEmailToken();
-
+  
   useEffect(() => {
     const fetchData = async () => {
       if (emailToken) {
@@ -34,10 +34,10 @@ export default function Signup() {
   }, [emailToken, getToken]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
     if (verified) {
       await signUpRequest(username, email as string, password);
-    }
+    } 
   };
 
   return (
@@ -97,7 +97,7 @@ export default function Signup() {
 
         <button
           className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
-          type="button"
+          type="submit"
         >
           Sign Up
         </button>

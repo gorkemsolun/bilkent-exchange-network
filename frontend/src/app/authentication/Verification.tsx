@@ -11,6 +11,7 @@ export default function VerificationPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsVerifying(true);
+    console.log("verification button pressed");
     await sendEmail(username, email);
   };
 
@@ -72,9 +73,10 @@ export default function VerificationPage() {
         </div>
 
         <button
-          disabled={isVerifying}
           className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
           type="button"
+          onClick={handleSubmit}
+          disabled={isVerifying}
         >
           Send Verification Mail
         </button>
