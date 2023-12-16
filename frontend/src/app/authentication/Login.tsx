@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogin } from "./AuthHelpers";
 import BackgroundManager from "../components/BackgroundManager";
+import { useLogin } from "./AuthHelpers";
 
 const bg = new BackgroundManager();
 const url = bg.getRandomImageUrl();
@@ -65,7 +65,10 @@ export default function Login() {
         />
 
         <div className="flex mt-6 justify-center text-xs">
-          <Link className="text-blue-400 hover:text-blue-500" to="/forgetPassword">
+          <Link
+            className="text-blue-400 hover:text-blue-500"
+            to="/forgetPassword"
+          >
             Forgot Password
           </Link>
           <span className="mx-2 text-gray-300">/</span>
