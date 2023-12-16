@@ -1,21 +1,14 @@
 import axios from "axios";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import {
-  ProfileContextType,
-  UserContextType,
-} from "../../data-types/datatypes";
+import { OwnPost, ProfileContextType } from "../../data-types/datatypes";
 import { DeletePostProps } from "../../data-types/props";
-import {
-  useAuthContext,
-  useProfileContext,
-} from "../authentication/AuthHelpers";
+import { useProfileContext } from "../authentication/AuthHelpers";
 import Loader from "./Loader";
 
 export default function DeletePost(props: DeletePostProps) {
   const [isDeleted, setIsDeleted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const user = (useAuthContext() as unknown as UserContextType).user;
 
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -41,9 +34,14 @@ export default function DeletePost(props: DeletePostProps) {
     const profile = JSON.parse(localStorage.getItem("profile") as string);
     let index;
 
-    if (profile)
-      index = profile.ownPosts.findIndex((post) => post.id === props.postId);
-    if (index) profile.ownPosts.splice(index, 1);
+    if (profile) {
+      index = profile.ownPosts.findIndex(
+        (post: OwnPost) => post.id === props.postId
+      );
+    }
+    if (index) {
+      profile.ownPosts.splice(index, 1);
+    }
     localStorage.setItem("profile", JSON.stringify(profile));
     profileDispatch({ type: "UPDATE", payload: profile });
     setLoading(false);

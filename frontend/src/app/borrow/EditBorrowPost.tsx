@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { categories } from "../../data-types/constants";
+import { borrowUrl, categories } from "../../data-types/constants";
 import {
+  OwnPost,
   ProfileContextType,
   UserContextType,
 } from "../../data-types/datatypes";
@@ -34,14 +35,14 @@ export default function EditBorrowPost(props: EditPostProps) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/borrow/borrowpost/${props.postId}`)
+      .get(`${borrowUrl}/${props.postId}`)
       .then((res) => {
         setPost(res.data);
         setSelectedCategory(res.data.category);
       })
       .catch((err) => {
         console.log(err);
-      })
+      });
   }, [props]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -64,27 +65,27 @@ export default function EditBorrowPost(props: EditPostProps) {
     };
 
     await axios
-      .put(
-        `http://localhost:3000/borrow/borrowpost/${props.postId}`,
-        editedPost
-      )
+      .put(`${borrowUrl}/${props.postId}`, editedPost)
       .then((res) => {
         console.log(res);
       })
       .catch((err) => {
         console.log(err);
         setError(err);
-      })
-      .finally(() => {});
+      });
 
-    
-      const  profile = JSON.parse(localStorage.getItem("profile") as string);
-      let index;
-      
-      if(profile) index = profile.ownPosts.findIndex(post => post.id === props.postId)
-      if (index) profile.ownPosts[index].title = editedPost.title;
-      localStorage.setItem("profile", JSON.stringify(profile))
-      profileDispatch({ type: "UPDATE", payload: profile });
+    const profile = JSON.parse(localStorage.getItem("profile") as string);
+    let index;
+
+    if (profile)
+      index = profile.ownPosts.findIndex(
+        (post: OwnPost) => post.id === props.postId
+      );
+    if (index) {
+      profile.ownPosts[index].title = editedPost.title;
+    }
+    localStorage.setItem("profile", JSON.stringify(profile));
+    profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
     setIsEdited(true);

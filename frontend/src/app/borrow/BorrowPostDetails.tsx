@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { borrowUrl, profileUrl } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
@@ -30,7 +31,7 @@ export default function BorrowPostDetails() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/borrow/borrowpost/${id}`)
+      .get(`${borrowUrl}/${id}`)
       .then((res) => {
         setPost(res.data);
       })
@@ -47,7 +48,7 @@ export default function BorrowPostDetails() {
       setPoster(profile);
     } else {
       axios
-        .get(`http://localhost:3000/profile/profile/${post.poster}`)
+        .get(`${profileUrl}/${post.poster}`)
         .then((res) => {
           setPoster(res.data.profile);
         })

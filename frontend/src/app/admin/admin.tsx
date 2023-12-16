@@ -1,9 +1,8 @@
-// AdminPage.jsx
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Loader from '../components/loader';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import Loader from "../components/Loader";
 
-const AdminPage = () => {
+export default function AdminPage() {
   const [reportedPosts, setReportedPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -11,12 +10,12 @@ const AdminPage = () => {
     setLoading(true);
 
     axios
-      .get('http://localhost:3000/admin/reported-posts') // Adjust the endpoint
+      .get("http://localhost:3000/admin/reported-posts") // Adjust the endpoint
       .then((res) => {
         setReportedPosts(res.data.reportedPosts);
       })
       .catch((err) => {
-        console.error('Error fetching reported posts:', err);
+        console.error("Error fetching reported posts:", err);
       })
       .finally(() => {
         setLoading(false);
@@ -42,16 +41,16 @@ const AdminPage = () => {
                       <h2
                         className="card-title"
                         style={{
-                          fontSize: '1.5rem',
-                          fontWeight: 'bold',
-                          textAlign: 'left',
+                          fontSize: "1.5rem",
+                          fontWeight: "bold",
+                          textAlign: "left",
                         }}
                       >
                         {`Reported Post ID: ${report.postId}`}
                       </h2>
                       <div
                         className="description-container"
-                        style={{ height: '10%', textAlign: 'left' }}
+                        style={{ height: "10%", textAlign: "left" }}
                       >
                         <p className="card-text">{`Reason: ${report.reason}`}</p>
                       </div>
@@ -65,6 +64,4 @@ const AdminPage = () => {
       )}
     </div>
   );
-};
-
-export default AdminPage;
+}

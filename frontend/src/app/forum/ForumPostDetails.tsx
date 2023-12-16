@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { forumUrl, profileUrl } from "../../data-types/constants";
 import {
   ForumEntry,
   ProfileContextType,
@@ -37,7 +38,7 @@ export default function ForumPostDetails() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/forum/forumpost/${id}`)
+      .get(`${forumUrl}/${id}`)
       .then((res) => {
         setPost(res.data);
       })
@@ -54,7 +55,7 @@ export default function ForumPostDetails() {
       setPoster(profile);
     } else {
       axios
-        .get(`http://localhost:3000/profile/profile/${post.poster}`)
+        .get(`${profileUrl}/${post.poster}`)
         .then((res) => {
           setPoster(res.data.profile);
         })
@@ -68,9 +69,7 @@ export default function ForumPostDetails() {
   useEffect(() => {
     const fetchUserInfo = async (userId: string) => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/profile/profile/${userId}`
-        );
+        const response = await axios.get(`${profileUrl}/${userId}`);
         return response.data.profile;
       } catch (error) {
         console.error("Error fetching user info:", error);

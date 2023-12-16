@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { urlsPost } from "../../data-types/constants";
+import { forumUrl } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
@@ -43,7 +43,7 @@ export default function CreateForumPost(props: CreatePostProps) {
 
     let postId;
     await axios
-      .post(urlsPost.forum, post)
+      .post(forumUrl, post)
       .then((res) => {
         postId = res.data._id;
       })

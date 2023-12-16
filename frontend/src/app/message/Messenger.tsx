@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { profileUrl } from "../../data-types/constants.ts";
 import {
   Conversation,
   Message,
@@ -38,7 +39,7 @@ const MessengerPage = (props: MessengerProps) => {
 
         // Fetch and update usernames for each conversation
         conversationsWithUsernames.forEach((conversation: Conversation) => {
-          let url = "http://localhost:3000/profile/profile/";
+          let url = profileUrl + "/";
           const otherUserID =
             conversation.userIDs[0] === user?._id
               ? conversation.userIDs[1]

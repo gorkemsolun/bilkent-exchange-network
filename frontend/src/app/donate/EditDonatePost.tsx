@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { categories } from "../../data-types/constants";
+import { categories, donateUrl } from "../../data-types/constants";
 import {
+  OwnPost,
   ProfileContextType,
   UserContextType,
 } from "../../data-types/datatypes";
@@ -35,7 +36,7 @@ export default function EditDonatePost(props: EditPostProps) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/donate/donatepost/${props.postId}`)
+      .get(`${donateUrl}/${props.postId}`)
       .then((res) => {
         setPost(res.data);
         setSelectedCategory(res.data.category);
@@ -69,10 +70,7 @@ export default function EditDonatePost(props: EditPostProps) {
     };
 
     await axios
-      .put(
-        `http://localhost:3000/donate/donatepost/${props.postId}`,
-        editedPost
-      )
+      .put(`${donateUrl}/${props.postId}`, editedPost)
       .then((res) => {
         // TODO SUCCESFULLY SENT
       })
@@ -84,7 +82,9 @@ export default function EditDonatePost(props: EditPostProps) {
     let index;
 
     if (profile) {
-      index = profile.ownPosts.findIndex((post) => post.id === props.postId);
+      index = profile.ownPosts.findIndex(
+        (post: OwnPost) => post.id === props.postId
+      );
     }
     if (index) {
       profile.ownPosts[index].title = editedPost.title;

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
-import { AuthContextType, ForumEntry } from "../../../data-types/datatypes";
+import { forumUrl } from "../../../data-types/constants";
+import { ForumEntry, UserContextType } from "../../../data-types/datatypes";
 import { EditEntryProps } from "../../../data-types/props";
 import { useAuthContext } from "../../authentication/AuthHelpers";
 import ErrorModal from "../../components/ErrorModal";
@@ -10,7 +11,7 @@ export default function EditEntry(props: EditEntryProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isEdited, setIsEdited] = useState(false);
-  const user = (useAuthContext() as unknown as AuthContextType).user;
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -18,13 +19,10 @@ export default function EditEntry(props: EditEntryProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    {
-      // Check if any field is empty
-      if (!formData.get("content")) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (!formData.get("content")) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const editedEntry: ForumEntry = {
@@ -33,13 +31,7 @@ export default function EditEntry(props: EditEntryProps) {
     };
 
     axios
-      .put(
-        "http://localhost:3000/forum/forumpost/" +
-          props.postId +
-          "/" +
-          props.entryId,
-        editedEntry
-      )
+      .put(forumUrl + "/" + props.postId + "/" + props.entryId, editedEntry)
       .then((res) => {
         // TODO SUCCESFULLY SENT
       })

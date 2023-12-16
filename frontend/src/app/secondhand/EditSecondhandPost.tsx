@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { categories } from "../../data-types/constants";
+import { categories, secondhandUrl } from "../../data-types/constants";
 import {
+  OwnPost,
   ProfileContextType,
   UserContextType,
 } from "../../data-types/datatypes";
@@ -35,7 +36,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/secondhand/secondhandpost/${props.postId}`)
+      .get(`${secondhandUrl}/${props.postId}`)
       .then((res) => {
         setPost(res.data);
         setSelectedCategory(res.data.category);
@@ -80,7 +81,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
 
     await axios
       .put(
-        `http://localhost:3000/secondhand/secondhandpost/${props.postId}`,
+        `${secondhandUrl}/${props.postId}`,
         editedPost
       )
       .then((res) => {
@@ -94,7 +95,9 @@ export default function EditSecondHandPost(props: EditPostProps) {
     let index;
 
     if (profile) {
-      index = profile.ownPosts.findIndex((post) => post.id === props.postId);
+      index = profile.ownPosts.findIndex(
+        (post: OwnPost) => post.id === props.postId
+      );
     }
     if (index) {
       profile.ownPosts[index].title = editedPost.title;

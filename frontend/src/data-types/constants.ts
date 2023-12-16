@@ -85,14 +85,14 @@ export const urlsGet = {
     "http://localhost:3000/forum/forumpost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
 };
 
-export const urlsPost = {
-  secondhand: "http://localhost:3000/secondhand/secondhandpost",
-  lostfound: "http://localhost:3000/lostfound/lostfoundpost",
-  donate: "http://localhost:3000/donate/donatepost",
-  borrow: "http://localhost:3000/borrow/borrowpost",
-  sectionexchange: "http://localhost:3000/sectionexchange/sectionexchangepost",
-  forum: "http://localhost:3000/forum/forumpost",
-};
+export const secondhandUrl = "http://localhost:3000/secondhand/secondhandpost";
+export const lostfoundUrl = "http://localhost:3000/lostfound/lostfoundpost";
+export const donateUrl = "http://localhost:3000/donate/donatepost";
+export const borrowUrl = "http://localhost:3000/borrow/borrowpost";
+export const sectionexchangeUrl =
+  "http://localhost:3000/sectionexchange/sectionexchangepost";
+export const forumUrl = "http://localhost:3000/forum/forumpost";
+export const profileUrl = "http://localhost:3000/profile/profile";
 
 export const defaultFilterParams = {
   categories: [],

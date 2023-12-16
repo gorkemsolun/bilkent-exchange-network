@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { forumUrl } from "../../data-types/constants";
 import {
+  OwnPost,
   ProfileContextType,
   UserContextType,
 } from "../../data-types/datatypes";
@@ -14,17 +16,17 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 
 export default function EditForumPost(props: EditPostProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [post, setPost] = useState<ForumPost>({} as ForumPost);
-  const [isEdited, setIsEdited] = useState(false);
+  const [isEdited, setIsEdited] = useState<boolean>(false);
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
   const user = (useAuthContext() as unknown as UserContextType).user;
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/forum/forumpost/${props.postId}`)
+      .get(`${forumUrl}/${props.postId}`)
       .then((res) => {
         setPost(res.data);
       })
@@ -55,18 +57,21 @@ export default function EditForumPost(props: EditPostProps) {
     };
 
     await axios
-      .put(`http://localhost:3000/forum/forumpost/${props.postId}`, editedPost)
+      .put(`${forumUrl}/${props.postId}`, editedPost)
       .then((res) => {
         // TODO SUCCESFULLY SENT
       })
       .catch((err) => {
         setError(err);
       });
+
     const profile = JSON.parse(localStorage.getItem("profile") as string);
     let index;
 
     if (profile) {
-      index = profile.ownPosts.findIndex((post) => post.id === props.postId);
+      index = profile.ownPosts.findIndex(
+        (post: OwnPost) => post.id === props.postId
+      );
     }
     if (index) {
       profile.ownPosts[index].title = editedPost.title;

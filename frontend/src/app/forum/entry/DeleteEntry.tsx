@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { forumUrl } from "../../../data-types/constants";
 import { DeleteEntryProps } from "../../../data-types/props";
 
 export default function DeleteEntry(props: DeleteEntryProps) {
@@ -7,12 +8,7 @@ export default function DeleteEntry(props: DeleteEntryProps) {
 
   const handleDelete = async () => {
     axios
-      .delete(
-        "http://localhost:3000/forum/forumpost/" +
-          props.postId +
-          "/" +
-          props.entryId
-      )
+      .delete(forumUrl + "/" + props.postId + "/" + props.entryId)
       .then((res) => {
         console.log(res);
       })

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { categories, urlsPost } from "../../data-types/constants";
+import { categories, borrowUrl } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
@@ -43,11 +43,11 @@ export default function CreateBorrowPost(props: CreatePostProps) {
 
     let postId;
     await axios
-      .post(urlsPost.borrow, post)
+      .post(borrowUrl, post)
       .then((res) => {
         console.log(res);
         // TODO SUCCESFULLY SENT
-        postId = res.data._id
+        postId = res.data._id;
       })
       .catch((err) => {
         //console.log(err);
@@ -57,20 +57,22 @@ export default function CreateBorrowPost(props: CreatePostProps) {
         //setLoading(false);
       });
 
-      const addToProfile = {
-        id: postId,
-        typename: "Borrow",
-        title: post.title
-      }
+    const addToProfile = {
+      id: postId,
+      typename: "Borrow",
+      title: post.title,
+    };
 
-      const profile = JSON.parse(localStorage.getItem("profile") as string);
-   
-      if(profile) profile.ownPosts.push(addToProfile)
-      
-      localStorage.setItem("profile", JSON.stringify(profile))
-      profileDispatch({ type: "UPDATE", payload: profile });
-      setLoading(false);
-      setIsSubmitted(true);
+    const profile = JSON.parse(localStorage.getItem("profile") as string);
+
+    if (profile) {
+      profile.ownPosts.push(addToProfile);
+    }
+
+    localStorage.setItem("profile", JSON.stringify(profile));
+    profileDispatch({ type: "UPDATE", payload: profile });
+    setLoading(false);
+    setIsSubmitted(true);
   };
 
   if (isSubmitted) {

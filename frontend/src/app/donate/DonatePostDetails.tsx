@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { donateUrl, profileUrl } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
@@ -30,7 +31,7 @@ export default function DonatePostDetails() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/donate/donatepost/${id}`)
+      .get(`${donateUrl}/${id}`)
       .then((res) => {
         setPost(res.data);
       })
@@ -47,7 +48,7 @@ export default function DonatePostDetails() {
       setPoster(profile);
     } else {
       axios
-        .get(`http://localhost:3000/profile/profile/${post.poster}`)
+        .get(`${profileUrl}/${post.poster}`)
         .then((res) => {
           setPoster(res.data.profile);
         })

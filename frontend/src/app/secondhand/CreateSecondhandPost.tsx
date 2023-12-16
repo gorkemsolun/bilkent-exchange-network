@@ -1,8 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { categories, urlsPost } from "../../data-types/constants";
-import { CreatePostProps } from "../../data-types/datatypes";
+import { categories, secondhandUrl } from "../../data-types/constants";
+import {
+  ProfileContextType,
+  UserContextType,
+} from "../../data-types/datatypes";
 import { SecondhandPost } from "../../data-types/posts";
+import { CreatePostProps } from "../../data-types/props";
 import { resizeImageFile } from "../PostHelpers";
 import {
   useAuthContext,
@@ -12,11 +16,12 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 
 export default function CreateSecondHandPost(props: CreatePostProps) {
-  const [loading, setLoading] = useState(false);
-  const { user } = useAuthContext();
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const { profileDispatch } = useProfileContext();
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
+  const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -24,20 +29,16 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    // Check for errors here
-    {
-      // Check if any field is empty
-      if (
-        !formData.get("title") ||
-        !formData.get("description") ||
-        !formData.get("price") ||
-        !formData.get("image") ||
-        !formData.get("category")
-      ) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (
+      !formData.get("title") ||
+      !formData.get("description") ||
+      !formData.get("price") ||
+      !formData.get("image") ||
+      !formData.get("category")
+    ) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const post: SecondhandPost = {
@@ -46,12 +47,12 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       price: formData.get("price") as unknown as number,
       image: await resizeImageFile(formData.get("image") as File),
       category: formData.get("category") as string,
-      poster: user._id,
+      poster: user?._id as string,
     };
 
     let postId;
     await axios
-      .post(urlsPost.secondhand, post)
+      .post(secondhandUrl, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
         postId = res.data._id;
@@ -59,19 +60,21 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       .catch((err) => {
         setError(err);
       });
-    
-      const addToProfile = {
-        id: postId,
-        typename: "Secondhand",
-        title: post.title
-      }
 
-      let profile = JSON.parse(localStorage.getItem("profile") as string);
-   
-      if(profile) profile.ownPosts.push(addToProfile)
-      
-      localStorage.setItem("profile", JSON.stringify(profile))
-      profileDispatch({ type: "UPDATE", payload: profile });
+    const addToProfile = {
+      id: postId,
+      typename: "Secondhand",
+      title: post.title,
+    };
+
+    const profile = JSON.parse(localStorage.getItem("profile") as string);
+
+    if (profile) {
+      profile.ownPosts.push(addToProfile);
+    }
+
+    localStorage.setItem("profile", JSON.stringify(profile));
+    profileDispatch({ type: "UPDATE", payload: profile });
     setLoading(false);
     setIsSubmitted(true);
   };

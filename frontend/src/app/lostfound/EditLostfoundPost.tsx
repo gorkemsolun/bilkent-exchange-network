@@ -1,13 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { categories } from "../../data-types/constants";
+import { categories, lostfoundUrl } from "../../data-types/constants";
 import {
+  OwnPost,
   ProfileContextType,
   UserContextType,
 } from "../../data-types/datatypes";
 import { LostFoundPost } from "../../data-types/posts";
 import { EditPostProps } from "../../data-types/props";
-import { resizeImageFile } from "../PostHelpers";
+import { isFileImage, resizeImageFile } from "../PostHelpers";
 import {
   useAuthContext,
   useProfileContext,
@@ -35,7 +36,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/lostfound/lostfoundpost/${props.postId}`)
+      .get(`${lostfoundUrl}/${props.postId}`)
       .then((res) => {
         setPost(res.data);
         setSelectedCategory(res.data.category);
@@ -52,40 +53,30 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    {
-      // Check if any field is empty
-      if (
-        !formData.get("title") ||
-        !formData.get("description") ||
-        !formData.get("image") ||
-        !formData.get("category")
-      ) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
-    }
-
-    //if no file is submitted then do not include image in the userProfile body
-    let image = await resizeImageFile(formData.get("image") as File);
-    if (image == "data:application/octet-stream;base64,") {
-      image = post.image;
+    if (
+      !formData.get("title") ||
+      !formData.get("description") ||
+      !formData.get("image") ||
+      !formData.get("category")
+    ) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const editedPost: LostFoundPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
-      image: image,
+      image: isFileImage(formData.get("image") as File) //if no file is submitted then do not include image in the userProfile body
+        ? await resizeImageFile(formData.get("image") as File)
+        : post.image,
       category: formData.get("category") as string,
       status: post.status,
       poster: user?._id as string,
     };
 
     await axios
-      .put(
-        `http://localhost:3000/lostfound/lostfoundpost/${props.postId}`,
-        editedPost
-      )
+      .put(`${lostfoundUrl}/${props.postId}`, editedPost)
       .then((res) => {
         console.log(res);
       })
@@ -97,7 +88,9 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
     let index;
 
     if (profile) {
-      index = profile.ownPosts.findIndex((post) => post.id === props.postId);
+      index = profile.ownPosts.findIndex(
+        (post: OwnPost) => post.id === props.postId
+      );
     }
     if (index) {
       profile.ownPosts[index].title = editedPost.title;

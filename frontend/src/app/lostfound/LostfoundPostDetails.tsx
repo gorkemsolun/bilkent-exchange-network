@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { lostfoundUrl, profileUrl } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
@@ -30,7 +31,7 @@ export default function LostFoundPostDetails() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/lostfound/lostfoundpost/${id}`)
+      .get(`${lostfoundUrl}/${id}`)
       .then((res) => {
         setPost(res.data);
       })
@@ -47,7 +48,7 @@ export default function LostFoundPostDetails() {
       setPoster(profile);
     } else {
       axios
-        .get(`http://localhost:3000/profile/profile/${post.poster}`)
+        .get(`${profileUrl}/${post.poster}`)
         .then((res) => {
           setPoster(res.data.profile);
         })

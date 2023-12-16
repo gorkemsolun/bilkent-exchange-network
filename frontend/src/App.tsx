@@ -20,7 +20,7 @@ import { ProfileContextProvider } from "./app/profile/ProfileContext";
 import SecondHand from "./app/secondhand/Secondhand";
 import SecondHandPostDetails from "./app/secondhand/SecondhandPostDetails";
 import SectionExchange from "./app/sectionexchange/Sectionexchange";
-import AdminPage from "./app/admin/admin";
+import AdminPage from "./app/admin/Admin";
 import "./bootstrap.css";
 import { UserContextType } from "./data-types/datatypes";
 

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { forumUrl } from "../../../data-types/constants";
 import { ForumEntry, UserContextType } from "../../../data-types/datatypes";
 import { CreateEntryProps } from "../../../data-types/props";
 import { useAuthContext } from "../../authentication/AuthHelpers";
@@ -7,9 +8,9 @@ import ErrorModal from "../../components/ErrorModal";
 import Loader from "../../components/Loader";
 
 export default function CreateEntry(props: CreateEntryProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -30,7 +31,7 @@ export default function CreateEntry(props: CreateEntryProps) {
     };
 
     axios
-      .post(`http://localhost:3000/forum/forumpost/${props.postId}`, post)
+      .post(`${forumUrl}/${props.postId}`, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
       })

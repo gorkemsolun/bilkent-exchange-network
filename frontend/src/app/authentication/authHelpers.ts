@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext, useState } from "react";
+import { profileUrl } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserAction,
@@ -85,7 +86,7 @@ export const useLogin = () => {
       localStorage.setItem("user", JSON.stringify(json));
 
       await axios
-        .get(`http://localhost:3000/profile/profile/${json._id}`)
+        .get(`${profileUrl}/${json._id}`)
         .then((res) => {
           localStorage.setItem("profile", JSON.stringify(res.data.profile));
           const resBody = res.data.profile;
@@ -135,7 +136,7 @@ export const useSignup = () => {
     } else {
       //save the user to local storage
       await axios
-        .get(`http://localhost:3000/profile/profile/${json._id}`)
+        .get(`${profileUrl}/${json._id}`)
         .then((res) => {
           localStorage.setItem("profile", JSON.stringify(res.data.profile));
           const resBody = res.data.profile;

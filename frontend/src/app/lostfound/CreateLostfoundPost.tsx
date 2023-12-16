@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
-import { categories, urlsPost } from "../../data-types/constants";
+import {
+  categories,
+  lostfoundUrl,
+  profileUrl,
+} from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
@@ -51,7 +55,7 @@ export default function CreateLostAndFoundPost(props: CreatePostProps) {
     };
 
     await axios
-      .post(urlsPost.lostfound, post)
+      .post(lostfoundUrl, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
       })
@@ -59,17 +63,15 @@ export default function CreateLostAndFoundPost(props: CreatePostProps) {
         setError(err);
         setError("Could not create post");
       });
+
     await axios
-      .get(`http://localhost:3000/profile/profile/${user?._id}`)
+      .get(`${profileUrl}/${user?._id}`)
       .then((res) => {
         profileDispatch({ type: "UPDATE", payload: res.data.profile });
         localStorage.setItem("profile", JSON.stringify(res.data.profile));
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        //
       });
 
     setLoading(false);

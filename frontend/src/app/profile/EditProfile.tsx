@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { defaultUserProfile } from "../../data-types/constants.ts";
+import { defaultUserProfile, profileUrl } from "../../data-types/constants.ts";
 import {
   ProfileContextType,
   UserContextType,
@@ -82,7 +82,7 @@ export default function EditProfile() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/profile/profile/${user?._id}`)
+      .get(`${profileUrl}/${user?._id}`)
       .then((res) => {
         setUserProfile(res.data.profile);
       })

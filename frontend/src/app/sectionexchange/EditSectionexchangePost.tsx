@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { sectionexchangeUrl } from "../../data-types/constants";
 import {
+  OwnPost,
   ProfileContextType,
   UserContextType,
 } from "../../data-types/datatypes";
@@ -26,9 +28,7 @@ export default function EditSectionExchangePost(props: EditPostProps) {
 
   useEffect(() => {
     axios
-      .get(
-        `http://localhost:3000/sectionexchange/sectionexchangepost/${props.postId}`
-      )
+      .get(`${sectionexchangeUrl}/${props.postId}`)
       .then((res) => {
         setPost(res.data);
       })
@@ -64,21 +64,21 @@ export default function EditSectionExchangePost(props: EditPostProps) {
     };
 
     await axios
-      .put(
-        `http://localhost:3000/sectionexchange/sectionexchangepost/${props.postId}`,
-        editedPost
-      )
+      .put(`${sectionexchangeUrl}/${props.postId}`, editedPost)
       .then((res) => {
         // TODO SUCCESFULLY SENT
       })
       .catch((err) => {
         setError(err);
       });
+
     const profile = JSON.parse(localStorage.getItem("profile") as string);
     let index;
-
-    if (profile)
-      index = profile.ownPosts.findIndex((post) => post.id === props.postId);
+    if (profile) {
+      index = profile.ownPosts.findIndex(
+        (post: OwnPost) => post.id === props.postId
+      );
+    }
     if (index) {
       profile.ownPosts[index].offeredCourse = editedPost.offeredCourse;
       profile.ownPosts[index].offeredSection = editedPost.offeredSection;

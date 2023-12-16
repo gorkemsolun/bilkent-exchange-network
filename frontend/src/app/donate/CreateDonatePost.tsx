@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { categories, urlsPost } from "../../data-types/constants";
+import { categories, donateUrl } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
@@ -45,7 +45,7 @@ export default function CreateDonatePost(props: CreatePostProps) {
 
     let postId;
     await axios
-      .post(urlsPost.donate, post)
+      .post(donateUrl, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
         postId = res.data._id;
