@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ReportSchema = new mongoose.Schema(
   {
-    postId: {
+    
     postId: {
       type: String,
       required: true,
