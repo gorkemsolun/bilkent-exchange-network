@@ -12,14 +12,21 @@ import { useAuthContext } from "../authentication/AuthHelpers.ts";
 const MessengerPage = (props: MessengerProps) => {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] =
-    useState<Conversation>({} as Conversation);
-  const [isInConversation, setIsInCoversation] = useState<boolean>(false);
+    useState<Conversation>(props.selectedConversation || ({} as Conversation));
+  const [isInConversation, setIsInCoversation] = useState<boolean>(
+    selectedConversation.userIDs !== undefined || false
+  );
   const [messageInput, setMessageInput] = useState<string>("");
   const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessageInput(e.target.value);
   };
+
+  useEffect(() => {
+    setSelectedConversation(props.selectedConversation || ({} as Conversation));
+    setIsInCoversation(selectedConversation.createdAt !== undefined || false);
+  }, [props.selectedConversation]);
 
   useEffect(() => {
     axios
@@ -55,7 +62,7 @@ const MessengerPage = (props: MessengerProps) => {
                 const index = updatedConversations.findIndex(
                   (conv) => conv._id === conversation._id
                 );
-                if (index !== -1) {
+                if (index !== -1 && res.data.profile) {
                   updatedConversations[index].username =
                     res.data.profile.username;
                 }
@@ -77,7 +84,9 @@ const MessengerPage = (props: MessengerProps) => {
     const newMessage: Message = {
       userID: user?._id as string,
       message: messageInput,
-      createdAt: new Date(),
+      createdAt: new Date().toLocaleString("en-US", {
+        timeZone: "Europe/Istanbul",
+      }),
     };
 
     const updatedConversation: Conversation = {
@@ -178,18 +187,26 @@ const MessengerPage = (props: MessengerProps) => {
             </label>
 
             <div className="messenger-conversation-messages">
-              {selectedConversation.messages.map((message: Message) => (
+              {selectedConversation.messages?.map((message: Message) => (
                 <div
                   key={message._id}
                   className={`messenger-conversation-message ${
                     message.userID === user?._id ? "outgoing" : "incoming"
                   }`}
                 >
-                  <label className="messenger-conversation-message-sender">
-                    {message.userID === user?._id
-                      ? "You"
-                      : selectedConversation.username}
-                  </label>
+                  <div className="messenger-conversation-message-top-half">
+                    <label className="messenger-conversation-message-sender">
+                      {message.userID === user?._id
+                        ? "You"
+                        : selectedConversation.username}
+                    </label>
+                    <label className="messenger-conversation-message-date">
+                      {"" +
+                        message.createdAt?.toString().slice(11, 16) +
+                        " " +
+                        message.createdAt?.toString().slice(0, 10)}
+                    </label>
+                  </div>
                   <p className="messenger-conversation-message-content">
                     {message.message}
                   </p>

@@ -7,7 +7,7 @@ const ConversationSchema = new mongoose.Schema(
       {
         userID: String,
         message: String,
-        timestamp: Date,
+        createdAt: String,
       },
     ],
   },

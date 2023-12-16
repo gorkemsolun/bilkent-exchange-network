@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { defaultFilterParams } from "../../data-types/constants.ts";
-import { FilterParams, UserContextType } from "../../data-types/datatypes.ts";
+import {
+  Conversation,
+  FilterParams,
+  UserContextType,
+} from "../../data-types/datatypes.ts";
 import { SectionexchangePost } from "../../data-types/posts.ts";
 import { prepareUrl } from "../PostHelpers.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
@@ -12,6 +16,7 @@ import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
+import { Link } from "react-router-dom";
 
 export default function SectionExchange() {
   const [sectionexchangePosts, setSectionexchangePosts] = useState<
@@ -23,28 +28,53 @@ export default function SectionExchange() {
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState<string>("");
   const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation>({} as Conversation);
   const user = (useAuthContext() as unknown as UserContextType).user;
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
-  const handleDMBoxClick = (otherUserID: string) => {
-    setIsMessengerVisible(true);
-
-    const conversation = {
-      userIDs: [user?._id, otherUserID],
-      messages: [],
-    };
-
+  const handleDMBoxClick = (otherUserID: string, otherUserUsername: string) => {
+    // Check if there is an existing conversation with that user, if there isn't create one
     axios
-      .post("http://localhost:3000/conversation/conversation/", conversation)
+      .get(
+        "http://localhost:3000/conversation/conversation/userID/" + user?._id
+      )
       .then((res) => {
-        // SUCCESFULLY CREATED CONVERSATION
-      })
-      .catch((err) => {
-        console.log(err);
+        const conversation = res.data.find((conv: Conversation) => {
+          return (
+            conv.userIDs.includes("" + user?._id) &&
+            conv.userIDs.includes(otherUserID)
+          );
+        });
+
+        if (conversation) {
+          conversation.username = otherUserUsername;
+          setSelectedConversation(conversation);
+        } else {
+          const newConversation: Conversation = {
+            userIDs: ["" + user?._id, otherUserID],
+            messages: [],
+            username: otherUserUsername,
+          };
+          setSelectedConversation(newConversation);
+
+          axios
+            .post(
+              "http://localhost:3000/conversation/conversation/",
+              newConversation
+            )
+            .then((res) => {
+              // SUCCESFULLY CREATED CONVERSATION
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       });
+    setIsMessengerVisible(true);
   };
 
   const handleSearch = (searchTerm: string) => {
@@ -144,7 +174,12 @@ export default function SectionExchange() {
                     <div className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2 bg-white">
                       <div className="row align-items-start justify-content-start">
                         <div className="col-md text-center border-r border-black">
-                          <p className="card-text">{String(post.poster)}</p>
+                          <Link
+                            to={"../profile/" + post.poster}
+                            className="card-text"
+                          >
+                            {post.posterUsername}
+                          </Link>
                         </div>
                         <div className="col-md text-center border-r border-black">
                           <p className="card-text">
@@ -163,7 +198,16 @@ export default function SectionExchange() {
                               src="./src/assets/dmbox.png"
                               alt="DM Box"
                               title="Send DM"
-                              onClick={() => handleDMBoxClick(post.poster)}
+                              onClick={() =>
+                                handleDMBoxClick(
+                                  post.poster,
+                                  post.posterUsername
+                                )
+                              }
+                              style={{
+                                height: "35px",
+                                width: "35px",
+                              }}
                             />
                           </div>
                         </div>
@@ -181,7 +225,10 @@ export default function SectionExchange() {
         <div
           className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
         >
-          <Messenger onClick={handleMessengerClick} />
+          <Messenger
+            onClick={handleMessengerClick}
+            selectedConversation={selectedConversation}
+          />
         </div>
       </div>
     </div>

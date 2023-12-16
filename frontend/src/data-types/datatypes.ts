@@ -86,14 +86,14 @@ export interface Conversation {
   messages: Message[];
   createdAt?: Date;
   updatedAt?: Date;
-  username: string; // username of the other user
+  username?: string; // username of the other user
 }
 
 export interface Message {
   _id?: string;
   userID: string;
   message: string;
-  createdAt?: Date;
+  createdAt?: string; // dont change to Date
 }
 
 export interface ForumEntry {
