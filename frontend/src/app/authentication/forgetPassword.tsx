@@ -31,6 +31,7 @@ export default function ForgetPassword() {
       <h2 className="forgot-password-h2">Forgot Password</h2>
       <form className="forgot-password-form" onSubmit={handleSubmit}>
         <label className="forgot-password-label">Email:</label>
+        <div className="forgot-password-button"></div>
         <input
           className="forgot-password-input"
           type="email"

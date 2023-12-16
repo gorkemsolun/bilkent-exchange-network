@@ -1,16 +1,11 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import { ErrorModalProps } from "../../data-types/props";
 
-interface ErrorModalProps {
-  message: string;
-  onClose?: () => void;
-  autoCloseDelay?: number;
-}
-
-const ErrorModal: React.FC<ErrorModalProps> = ({
+export default function ErrorModal({
   message = "An unspecified error occurred",
   onClose = () => {},
   autoCloseDelay = 1850,
-}) => {
+}: ErrorModalProps) {
   useEffect(() => {
     const timerId = setTimeout(() => {
       onClose();
@@ -27,6 +22,4 @@ const ErrorModal: React.FC<ErrorModalProps> = ({
       </div>
     </div>
   );
-};
-
-export default ErrorModal;
+}

@@ -97,7 +97,7 @@ export default function LostFoundPostDetails() {
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
-       axios
+      axios
         .get(`${profileUrl}/${post.poster}`)
         .then((res) => {
           setPoster(res.data.profile);
@@ -107,7 +107,7 @@ export default function LostFoundPostDetails() {
         })
         .finally(() => {});
     }
-  }, [post]);
+  }, [post, profile]);
 
   return (
     <div className="outer-container">

@@ -33,7 +33,6 @@ export interface ReportPostButtonProps {
 }
 
 export interface ReportPostProps extends ReportPostButtonProps {
-  
   onClose: () => void;
 }
 
@@ -87,4 +86,10 @@ export interface MessengerProps {
 
 export interface HeaderProps {
   onMessengerClick?: () => void;
+}
+
+export interface ErrorModalProps {
+  message: string;
+  onClose?: () => void;
+  autoCloseDelay?: number;
 }

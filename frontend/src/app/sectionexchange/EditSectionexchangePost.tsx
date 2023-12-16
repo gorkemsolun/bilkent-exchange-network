@@ -34,8 +34,7 @@ export default function EditSectionExchangePost(props: EditPostProps) {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {});
+      });
   }, [props]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -73,6 +72,7 @@ export default function EditSectionExchangePost(props: EditPostProps) {
       });
 
     const profile = JSON.parse(localStorage.getItem("profile") as string);
+
     let index;
     if (profile) {
       index = profile.ownPosts.findIndex(

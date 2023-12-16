@@ -1,8 +1,8 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const ReportSchema = new mongoose.Schema(
   {
-    postID: {
+    postId: {
       type: String,
       required: true,
     },
@@ -10,8 +10,8 @@ const ReportSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    userID: {
-      type: String, 
+    userId: {
+      type: String,
       required: true,
     },
   },
@@ -20,4 +20,4 @@ const ReportSchema = new mongoose.Schema(
   }
 );
 
-export const Report = mongoose.model('Report', ReportSchema);
+export const Report = mongoose.model("Report", ReportSchema);

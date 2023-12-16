@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { useVerificationEmail } from "./AuthHelpers";
 
 export default function VerificationPage() {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const { sendEmail } = useVerificationEmail();
+  const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
+  const { sendEmail } = useVerificationEmail();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +27,6 @@ export default function VerificationPage() {
       }}
     >
       <div className="flex flex-col items-center justify-center">
-        {/*<img src="bilkent.png" width={"250"} height={"250"} />*/}
         <h1 className="mb-1 text-xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           Verification
         </h1>

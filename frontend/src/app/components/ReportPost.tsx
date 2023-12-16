@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { ReportPostProps   } from "../../data-types/props";
+import { ReportPostProps } from "../../data-types/props";
 import ErrorModal from "./ErrorModal";
 
 export default function ReportPost(props: ReportPostProps) {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -26,17 +26,14 @@ export default function ReportPost(props: ReportPostProps) {
     }
 
     const reason = formData.get("reason") as string;
-    console.log(props); 
     try {
-      // Send the report to the server
-       await axios.post("http://localhost:3000/admin/reportedposts", {
-        postID: props.postId,
+      await axios.post("http://localhost:3000/admin/reportedposts", {
+        postId: props.postId,
         reason: reason,
-        userID : props.profileId,
+        userId: props.profileId,
       });
 
       alert("Post reported successfully!");
-
     } catch (err) {
       console.error("Error reporting post:", err);
       setError("An error occurred while reporting the post.");
@@ -79,7 +76,11 @@ export default function ReportPost(props: ReportPostProps) {
         </div>
 
         <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-danger" disabled={isSubmitting}>
+          <button
+            type="submit"
+            className="btn btn-danger"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? "Reporting..." : "Report"}
           </button>
           <button

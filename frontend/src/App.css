@@ -404,6 +404,7 @@ td {
 }
 
 .header-title-link {
+  textdecoration: "none";
   display: flex;
   align-items: center;
   color: #fff;
@@ -414,6 +415,7 @@ td {
   width: 50px;
   height: 50px;
   object-fit: contain;
+  margin-right: 10px;
 }
 
 .header-message-link {
@@ -981,4 +983,9 @@ td {
 
 .reset-password-container {
   max-width: 400px;
+}
+
+.forgot-password-button {
+  color: #007bff;
+  text-decoration: none;
 }

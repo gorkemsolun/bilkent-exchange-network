@@ -3,10 +3,10 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useEmailToken, useSignup } from "./AuthHelpers";
 
 export default function Signup() {
-  const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [verified, setVerified] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams(); // This should be fixed
+  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [verified, setVerified] = useState<boolean>(false);
+  const [searchParams] = useSearchParams();
   const emailToken = searchParams.get("emailToken");
   const email = searchParams.get("email");
   const { signUpRequest } = useSignup();
@@ -53,7 +53,6 @@ export default function Signup() {
       }}
     >
       <div className="flex flex-col items-center justify-center">
-        {/*<img src="bilkent.png" width={"250"} height={"250"} />*/}
         <h1 className="mb-1 text-xl font-bold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
           Sign Up
         </h1>
@@ -62,7 +61,6 @@ export default function Signup() {
         className="flex flex-col bg-white rounded shadow-lg p-12 mt-12 opacity-90"
         style={{ width: "23rem" }}
         onSubmit={handleSubmit}
-        //disabled = {isLoading}
       >
         <label
           className="font-semibold text-s mt-2"

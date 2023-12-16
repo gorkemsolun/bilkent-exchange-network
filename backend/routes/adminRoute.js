@@ -1,11 +1,12 @@
-import express from 'express';
+import express from "express";
+import {
+  getReportedPosts,
+  reportPost,
+} from "../controllers/adminController.js";
+
 const router = express.Router();
-import { getReportedPosts, reportPost } from '../controllers/adminController.js';
 
-// Route to get reported posts
-router.get('/reportedposts', getReportedPosts);
-
-// Route to report a post
-router.post('/reportedposts', reportPost);
+router.get("/reportedposts", getReportedPosts);
+router.post("/reportedposts", reportPost);
 
 export default router;
