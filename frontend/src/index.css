@@ -10,14 +10,6 @@
   .home-navbar-link {
     @apply object-fill w-full h-full p-5;
   }
-
-  .second-hand-category {
-    @apply text-left ml-2 font-semibold p-1;
-  }
-
-  .second-hand-subcategory {
-    @apply text-left ml-4 font-medium p-1;
-  }
 }
 
 :root {

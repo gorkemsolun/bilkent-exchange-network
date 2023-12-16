@@ -138,27 +138,24 @@ export default function Filters(props: FilterProps) {
         {props.type !== "sectionexchange" &&
           categories[props.type as keyof typeof categories].map(
             (category: string, index: number) => (
-              <div key={index} className="text-start ml-1">
-                <div className="second-hand-category">
-                  <input
-                    key={index}
-                    type="checkbox"
-                    value={category}
-                    checked={checkedCategories.includes(category)}
-                    onChange={() => handleCategoryChange(category)}
-                    className="mr-0.5"
-                    placeholder="Search..."
-                  />
-                  <label>{category}</label>
-                </div>
+              <div key={index} className="filter-category">
+                <input
+                  key={index}
+                  type="checkbox"
+                  value={category}
+                  checked={checkedCategories.includes(category)}
+                  onChange={() => handleCategoryChange(category)}
+                  placeholder="Category"
+                />
+                <span>{category}</span>
               </div>
             )
           )}
       </div>
       {props.type === "secondhand" && (
-        <div className="mb-3 flex flex-row second-hand-category">
-          <div className="mb-1 mr-1 max-w-1/2">
-            <label>Min Price</label>
+        <div className="filter-price-wrapper">
+          <div className="filter-price">
+            <span>Min Price</span>
             <input
               type="number"
               value={minPrice === undefined ? "" : minPrice}
@@ -167,13 +164,12 @@ export default function Filters(props: FilterProps) {
                   e.target.value === "" ? undefined : Number(e.target.value)
                 )
               }
-              className="border p-2 rounded-md bg-white w-full"
+              className="filter-price-input"
               placeholder="Min Price"
             />
           </div>
-
-          <div className="mb-1 max-w-1/2">
-            <label>Max Price</label>
+          <div className="filter-price">
+            <span>Max Price</span>
             <input
               type="number"
               value={maxPrice === undefined ? "" : maxPrice}
@@ -182,24 +178,24 @@ export default function Filters(props: FilterProps) {
                   e.target.value === "" ? undefined : Number(e.target.value)
                 )
               }
-              className="border p-2 rounded-md bg-white w-full"
+              className="filter-price-input"
               placeholder="Max Price"
             />
           </div>
         </div>
       )}
       {props.type === "lostfound" && (
-        <div>
+        <div className="filter-lostfound-wrapper">
           <div>
             <input
               type="checkbox"
               value="Lost"
               checked={checkedStatus === "Lost"}
               onChange={() => onCheckStatus("Lost")}
-              className="mr-0.5"
+              className="filter-lostfound-input"
               placeholder="Lost"
             />
-            <label>Lost</label>
+            <span>Lost</span>
           </div>
           <div>
             <input
@@ -207,25 +203,30 @@ export default function Filters(props: FilterProps) {
               value="Found"
               checked={checkedStatus === "Found"}
               onChange={() => onCheckStatus("Found")}
-              className="mr-0.5"
+              className="filter-lostfound-input"
               placeholder="Found"
             />
-            <label>Found</label>
+            <span>Found</span>
           </div>
         </div>
       )}
       {props.type === "sectionexchange" && (
-        <div>
-          <div>
-            <div className="mb-3">
-              <label>Desired Course</label>
+        <div className="filter-sectionexchange-wrapper">
+          <div className="filter-sectionexchange-course-outer-wrapper">
+            <div className="filter-sectionexchange-course-wrapper">
+              <span>Desired Course</span>
               <select
                 value={desiredCourse}
                 onChange={(e) => onCourseChange(e.target.value, true)}
-                className="border p-2 rounded-md bg-white"
+                className="filter-sectionexchange-course-select"
                 title="Desired Course"
               >
-                <option value="">Select Course</option>
+                <option
+                  className="filter-sectionexchange-course-select-option"
+                  value=""
+                >
+                  Select Course
+                </option>
                 {courses.map((course, index) => (
                   <option key={index} value={course}>
                     {course}
@@ -233,15 +234,20 @@ export default function Filters(props: FilterProps) {
                 ))}
               </select>
             </div>
-            <div className="mb-3">
-              <label>Offered Course</label>
+            <div className="filter-sectionexchange-course-wrapper">
+              <span>Offered Course</span>
               <select
                 value={offeredCourse}
                 onChange={(e) => onCourseChange(e.target.value, false)}
-                className="border p-2 rounded-md bg-white"
+                className="filter-sectionexchange-course-select"
                 title="Offered Course"
               >
-                <option value="">Select Course</option>
+                <option
+                  className="filter-sectionexchange-course-select-option"
+                  value=""
+                >
+                  Select Course
+                </option>
                 {courses.map((course, index) => (
                   <option key={index} value={course}>
                     {course}
@@ -250,27 +256,27 @@ export default function Filters(props: FilterProps) {
               </select>
             </div>
           </div>
-          <div>
-            <div className="mb-3">
+          <div className="filter-sectionexchange-section-outer-wrapper">
+            <div className="filter-sectionexchange-section-wrapper">
               <label>Desired Section Number</label>
               <input
                 type="number"
                 defaultValue={desiredSection}
                 onChange={(e) => onSectionChange(Number(e.target.value), true)}
                 min={1}
-                className="border p-2 rounded-md bg-white"
-                placeholder="Desired Section Number"
+                className="filter-sectionexchange-section-input"
+                placeholder="Section"
               />
             </div>
-            <div className="mb-3">
+            <div className="filter-sectionexchange-section-wrapper">
               <label>Offered Section Number</label>
               <input
                 type="number"
                 defaultValue={offeredSection}
                 onChange={(e) => onSectionChange(Number(e.target.value), false)}
                 min={1}
-                className="border p-2 rounded-md bg-white"
-                placeholder="Offered Section Number"
+                className="filter-sectionexchange-section-input"
+                placeholder="Section"
               />
             </div>
           </div>
@@ -299,41 +305,42 @@ export default function Filters(props: FilterProps) {
         </div>
       </div>
 
-      <div className="mb-3 flex flex-row second-hand-category">
-        <div className="mb-1 mr-1 max-w-1/2">
-          <label>Page Number</label>
+      <div className="filter-page-post-number-wrapper">
+        <div className="filter-page-number-wrapper">
+          <span>Page Number</span>
           <input
             type="number"
             value={page}
             onChange={(e) => handlePageChange(Number(e.target.value))}
-            className="border p-2 rounded-md bg-white w-full"
+            className="filter-page-number-input"
             placeholder="Min Price"
           />
         </div>
 
-        <div className="mb-1 max-w-1/2">
-          <label>Posts per Page</label>
+        <div className="filter-post-per-wrapper">
+          <span>Posts per Page</span>
           <input
             type="number"
             value={limit}
             onChange={(e) => handlePostPerPageChange(Number(e.target.value))}
-            className="border p-2 rounded-md bg-white w-full"
+            className="filter-post-per-input"
             placeholder="Max Price"
           />
         </div>
       </div>
 
-      <div className="flex flex-row justify-center">
+      <div className="filter-reset-filter-button-wrapper">
+        {/* tailwind button styles */}
         <button
           onClick={onResetClicked}
-          className="bg-red-500 text-white p-2 rounded-md ml-2 w-20"
+          className="bg-red-500 text-white p-2 m-1 rounded-md w-20"
           type="reset"
         >
           Reset
         </button>
         <button
           onClick={onFilterClicked}
-          className="bg-blue-500 text-white p-2 rounded-md ml-2 w-20"
+          className="bg-blue-500 text-white p-2 m-1 rounded-md w-20"
           type="submit"
         >
           Filter
