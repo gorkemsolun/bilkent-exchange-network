@@ -26,7 +26,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
-  // this is required to show the category of post. dont delete.
+  // this is required to show the category of post
   const handleCategoryChange = async (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -35,6 +35,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${lostfoundUrl}/${props.postId}`)
       .then((res) => {
@@ -44,7 +45,9 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
       .catch((err) => {
         console.log(err);
       })
-      .finally(() => {});
+      .finally(() => {
+        setLoading(false);
+      });
   }, [props]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

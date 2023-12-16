@@ -133,9 +133,8 @@ export default function Filters(props: FilterProps) {
   };
 
   return (
-    <div className="flex flex-col object-contain m-3 bg-slate-100 border-r-4 pr-1 w-18">
-      <div className="text-2xl font-bold p-1">Filters</div>
-      <div className="mb-3">
+    <div className="filter-outer-wrapper">
+      <div className="filter-categories-wrapper">
         {props.type !== "sectionexchange" &&
           categories[props.type as keyof typeof categories].map(
             (category: string, index: number) => (
@@ -277,24 +276,24 @@ export default function Filters(props: FilterProps) {
           </div>
         </div>
       )}
-      <div className="mb-3 flex flex-column second-hand-category max-w-1/4">
-        <div className="flex flex-column mb-1 basis-1/4 max-w-1/8">
+      <div className="filter-date-wrapper">
+        <div className="filter-date-input-earliest-wrapper">
           <label>Earliest Date</label>
           <input
             type="date"
             value={minDate}
             onChange={(e) => setMinDate(e.target.value)}
-            className="border p-2 rounded-md w-1"
+            className="filter-date-input-earliest"
             placeholder="Earliest Date"
           />
         </div>
-        <div className="flex flex-column mb-1 basis-1/4 max-w-1/4">
+        <div className="filter-date-input-latest-wrapper">
           <label>Latest Date</label>
           <input
             type="date"
             value={maxDate}
             onChange={(e) => setMaxDate(e.target.value)}
-            className="border p-2 rounded-md max-w-1/4 w-1"
+            className="filter-date-input-latest"
             placeholder="Latest Date"
           />
         </div>

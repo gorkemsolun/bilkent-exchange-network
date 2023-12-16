@@ -2,10 +2,10 @@ import { useState } from "react";
 import { EditPostButtonProps } from "../../data-types/props";
 import EditBorrowPost from "../borrow/EditBorrowPost";
 import EditDonatePost from "../donate/EditDonatePost";
-import EditSectionExchangePost from "../sectionexchange/EditSectionexchangePost";
 import EditForumPost from "../forum/EditForumPost";
 import EditLostAndFoundPost from "../lostfound/EditLostfoundPost";
 import EditSecondHandPost from "../secondhand/EditSecondhandPost";
+import EditSectionExchangePost from "../sectionexchange/EditSectionexchangePost";
 
 export default function EditPostButton(props: EditPostButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,7 +26,7 @@ export default function EditPostButton(props: EditPostButtonProps) {
       {isModalOpen && props.type == "secondhand" && (
         <EditSecondHandPost onClose={handleCloseModal} postId={props.postId} />
       )}
-      {isModalOpen && props.type == "lostandfound" && (
+      {isModalOpen && props.type == "lostfound" && (
         <EditLostAndFoundPost
           onClose={handleCloseModal}
           postId={props.postId}
