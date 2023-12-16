@@ -4,7 +4,6 @@ import { useVerificationEmail } from "./AuthHelpers";
 
 export default function VerificationPage() {
   const [email, setEmail] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const { sendEmail } = useVerificationEmail();
 
@@ -12,7 +11,7 @@ export default function VerificationPage() {
     e.preventDefault();
     setIsVerifying(true);
     console.log("verification button pressed");
-    await sendEmail(username, email);
+    await sendEmail("", email);
   };
 
   return (
@@ -42,20 +41,6 @@ export default function VerificationPage() {
           className="font-semibold text-s mt-2"
           style={{ textAlign: "left" }}
         >
-          Username
-        </label>
-        <input
-          className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
-          type="username"
-          onChange={(e) => setUsername(e.target.value)}
-          value={username}
-          placeholder="Enter your username"
-        />
-
-        <label
-          className="font-semibold text-s mt-2"
-          style={{ textAlign: "left" }}
-        >
           Email
         </label>
         <input
@@ -74,8 +59,7 @@ export default function VerificationPage() {
 
         <button
           className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
-          type="button"
-          onClick={handleSubmit}
+          type="submit"
           disabled={isVerifying}
         >
           Send Verification Mail

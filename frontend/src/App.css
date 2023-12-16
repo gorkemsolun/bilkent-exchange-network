@@ -1115,3 +1115,8 @@ td {
   text-align: center;
   margin-bottom: 2vh;
 }
+
+.post-image {
+  width: 28vw;
+  height: 36vh;
+}
