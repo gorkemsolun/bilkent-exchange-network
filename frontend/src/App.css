@@ -1251,16 +1251,3 @@ td {
   width: 28vw;
   height: 36vh;
 }
-
-.dark-mode-toggle {
-  background-color: #333333;
-  color: #ffffff;
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.dark-mode-toggle:hover {
-  background-color: #555555;
-}
