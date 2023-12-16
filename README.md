@@ -1,8 +1,8 @@
-# BILKENT EXCHANCE NETWORK (BEN)
-
 ## SPECIAL THANKS TO
 
 ![](readme-res/sponsors.jpg) <br>
+
+# BILKENT EXCHANCE NETWORK (BEN)
 
 ![](readme-res/logo.png) <br>
 
