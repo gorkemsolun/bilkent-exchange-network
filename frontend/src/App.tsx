@@ -25,6 +25,7 @@ import "./bootstrap.css";
 import { UserContextType } from "./data-types/datatypes";
 import SavedPosts from "./app/savedposts/SavedPosts";
 import AdminPage from "./app/admin/admin";
+import NewPassword from "./app/authentication/newPassword";
 
 export default function App() {
   return (
@@ -131,7 +132,11 @@ function AppContent() {
           />
           <Route
             path="/forgetPassword"
-            element={!user ? <ForgetPassword /> : <Navigate to="/login" />}
+            element={!user ? <ForgetPassword /> : <Navigate to="/secondhand" />}
+          />
+          <Route
+            path="/newPassword"
+            element={!user ? <NewPassword /> : <Navigate to="/secondhand" />}
           />
           <Route
             path="/verification"

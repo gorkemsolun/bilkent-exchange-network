@@ -238,3 +238,15 @@ export const deleteUser = async (userId: string) => {
     console.error("Error deleting user:", error);
   }
 };
+
+export const forgotPassword = async (email: string, password: string) => {
+  try {
+    await fetch("http://localhost:3000/user/forgotPassword", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password }),
+    });
+  }catch(error) {
+    console.error("Error updating password:", error);
+  }
+}

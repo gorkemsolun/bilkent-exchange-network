@@ -87,9 +87,9 @@ export const sendForgetVerificationMail = async (email) => {
   const MailOptions = {
     from: "Bilkent Exchange Network",
     to: email,
-    subject: "Re-enter your email.",
+    subject: "Forgot Password.",
     html: `<p> Hi, please verify your email by clicking this link </p> 
-            <a href='http://localhost:5000/signup?emailToken=${token.emailToken}&email=${email}'>Verify Your Email</a>`,
+            <a href='http://localhost:5000/newPassword?emailToken=${token.emailToken}&email=${email}'>Verify Your Email</a>`,
   };
 
   transporter.sendMail(MailOptions, (error, info) => {

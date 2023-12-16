@@ -1,5 +1,6 @@
 export interface User {
   _id?: string;
+  _isAdmin: boolean; 
   createdAt?: Date;
   username: string;
   bilkentId: string;
@@ -38,6 +39,7 @@ export interface PostReport { // görkem report yapma, js kullanıyor.
 
 export interface UserProfile {
   _id?: string;
+  _isAdmin: boolean; 
   userID: string;
   username: string;
   email: string;

@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
 import { UserProfile } from "../models/userProfile.js";
+import bcrypt from "bcrypt";
 
 const createToken = (_id) => {
   return jwt.sign({ _id }, "bununbirsecretolmasılazımnormalde", {
@@ -80,3 +81,20 @@ export const verifyEmail = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
+
+export const forgotPassword = async (req, res) => {
+  const {email, password} = req.body
+  try{
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(password, salt);
+   
+    const user = await User.findOneAndUpdate(
+      {email: email},
+      {password: hash}
+    )
+    res.status(200).json({user})
+  } catch (error) {
+    res.status(500).json({error:error.message})
+  }
+  
+}

@@ -7,6 +7,7 @@ import {
 } from "../controllers/emailController.js";
 import {
   deleteUser,
+  forgotPassword,
   loginUser,
   signupUser,
 } from "../controllers/userController.js";
@@ -20,7 +21,7 @@ authRouter.post("/login", loginUser);
 //signup route
 authRouter.post("/signup", signupUser);
 
-//forget password
+//forget password sends verification email
 authRouter.post("/forgetPassword", forgetPassword);
 
 //send verification email route
@@ -34,5 +35,10 @@ authRouter.post("/getEmailToken", getEmailToken);
 
 // delete route
 authRouter.delete("/delete/:userId", deleteUser);
+
+//forgot password actually changes user password
+authRouter.post("/forgotpassword", forgotPassword)
+
+
 
 export default authRouter;
