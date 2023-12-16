@@ -47,29 +47,35 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       poster: user?._id as string,
     };
 
+    let postId;
     await axios
       .post(urlsPost.sectionexchange, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
+        postId = res.data._id;
       })
       .catch((err) => {
         setError(err);
         setError("Could not create post");
       });
+    const addToProfile = {
+      id: postId,
+      typename: "SectionExchange",
+      title: "",
+      offeredCourse: post.offeredCourse,
+      offeredSection: post.offeredSection,
+      desiredCourse: post.desiredCourse,
+      desiredSection: post.desiredSection,
+    };
 
-    await axios
-      .get(`http://localhost:3000/profile/profile/${user?._id}`)
-      .then((res) => {
-        profileDispatch({ type: "UPDATE", payload: res.data.profile });
-        localStorage.setItem("profile", JSON.stringify(res.data.profile));
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        //
-      });
+    const profile = JSON.parse(localStorage.getItem("profile") as string);
 
+    if (profile) {
+      profile.ownPosts.push(addToProfile);
+    }
+
+    localStorage.setItem("profile", JSON.stringify(profile));
+    profileDispatch({ type: "UPDATE", payload: profile });
     setLoading(false);
     setIsSubmitted(true);
   };

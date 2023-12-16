@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { categories } from "../../data-types/constants";
 import {
-  AuthContextType,
-  AuthProfileContextType,
+  ProfileContextType,
+  UserContextType,
 } from "../../data-types/datatypes";
 import { LostFoundPost } from "../../data-types/posts";
 import { EditPostProps } from "../../data-types/props";
@@ -16,15 +16,14 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 
 export default function EditLostAndFoundPost(props: EditPostProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [post, setPost] = useState<LostFoundPost>({} as LostFoundPost);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [isEdited, setIsEdited] = useState(false);
-  const user = (useAuthContext() as unknown as AuthContextType).user;
-  const profileDispatch = (
-    useProfileContext() as unknown as AuthProfileContextType
-  ).profileDispatch;
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [isEdited, setIsEdited] = useState<boolean>(false);
+  const user = (useAuthContext() as unknown as UserContextType).user;
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
 
   // this is required to show the category of post. dont delete.
   const handleCategoryChange = async (
@@ -94,15 +93,17 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
         setError(err);
       });
 
-    await axios
-      .get(`http://localhost:3000/profile/profile/${user?._id}`)
-      .then((res) => {
-        localStorage.setItem("profile", JSON.stringify(res.data.profile));
-        profileDispatch({ type: "UPDATE", payload: res.data.profile });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const profile = JSON.parse(localStorage.getItem("profile") as string);
+    let index;
+
+    if (profile) {
+      index = profile.ownPosts.findIndex((post) => post.id === props.postId);
+    }
+    if (index) {
+      profile.ownPosts[index].title = editedPost.title;
+    }
+    localStorage.setItem("profile", JSON.stringify(profile));
+    profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
     setIsEdited(true);

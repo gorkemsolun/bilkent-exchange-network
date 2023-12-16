@@ -20,6 +20,7 @@ import { ProfileContextProvider } from "./app/profile/ProfileContext";
 import SecondHand from "./app/secondhand/Secondhand";
 import SecondHandPostDetails from "./app/secondhand/SecondhandPostDetails";
 import SectionExchange from "./app/sectionexchange/Sectionexchange";
+import AdminPage from "./app/admin/admin";
 import "./bootstrap.css";
 import { UserContextType } from "./data-types/datatypes";
 
@@ -132,7 +133,11 @@ function AppContent() {
               !user ? <VerificationPage /> : <Navigate to="/secondhand" />
             }
           />
-
+          <Route
+            path="/adminPage"
+            element={!user ? <AdminPage /> : <Navigate to="/forum" />
+            }
+          />
           <Route
             path="/secondhandpost/:id"
             element={
@@ -229,6 +234,7 @@ function AppContent() {
               )
             }
           />
+
         </Routes>
       </BrowserRouter>
     </div>

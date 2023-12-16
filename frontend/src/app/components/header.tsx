@@ -51,6 +51,13 @@ export default function Header(props: HeaderProps) {
               >
                 Logout
               </Link>
+              <Link
+                to="/adminPage"
+                className="header-profile-dropdown-link"
+                onClick={handleClick}
+              >
+                OnlyAdmins
+              </Link>
             </div>
           )}
         </div>
@@ -76,3 +83,4 @@ export default function Header(props: HeaderProps) {
     </div>
   );
 }
+
