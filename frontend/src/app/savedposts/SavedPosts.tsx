@@ -83,7 +83,7 @@ export default function SavedPosts() {
                       <div className="col-12 cursor-pointer" key={post.id}>
                         <div className="card w-full">
                           <div className="card-body">
-                            <div className="post-save-container-forumtype">
+                            <div className="post-save-container-forum-type">
                               {profile.savedPosts.some(
                                 (savedPost: SavedPost) =>
                                   savedPost.id === post.id
