@@ -14,6 +14,7 @@ import {
 } from "../authentication/AuthHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
+import SuccessModal from "../components/SuccessModal";
 
 export default function CreateSecondHandPost(props: CreatePostProps) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -79,9 +80,10 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
     setIsSubmitted(true);
   };
 
-  if (isSubmitted) {
+  const handleClose = () => {
+    // Call the provided onClose callback
     window.location.reload();
-  }
+  };
 
   return (
     <div className="modal-overlay">
@@ -91,11 +93,11 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
         style={{ width: "35vw" }}
       >
         {loading && <Loader />}
-        <span className="close" onClick={props.onClose}>
+        <span className="close" onClick={handleClose}>
           &times;
         </span>
 
-        <div>
+        {isSubmitted? (<SuccessModal/>) : (<><div>
           <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
             <label htmlFor="name">Title:</label>
             <input
@@ -161,7 +163,7 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
               setError(null);
             }}
           />
-        )}
+        )}</>)}
       </form>
     </div>
   );

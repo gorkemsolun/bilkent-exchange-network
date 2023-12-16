@@ -13,11 +13,13 @@ import {
 } from "../authentication/AuthHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
+import SuccessModal from "../components/SuccessModal";
 
 export default function CreateBorrowPost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -75,9 +77,10 @@ export default function CreateBorrowPost(props: CreatePostProps) {
     setIsSubmitted(true);
   };
 
-  if (isSubmitted) {
+  const handleClose = () => {
+    // Call the provided onClose callback
     window.location.reload();
-  }
+  };
 
   return (
     <div className="modal-overlay">
@@ -87,55 +90,69 @@ export default function CreateBorrowPost(props: CreatePostProps) {
         style={{ width: "35vw" }}
       >
         {loading && <Loader />}
-        <span className="close" onClick={props.onClose}>
+        <span className="close" onClick={handleClose}>
           &times;
         </span>
 
-        <div>
-          <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
-            <label htmlFor="name">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="form-control"
-              placeholder="Enter title"
-            />
-          </div>
-          <div className="modal-form-group" style={{ textAlign: "left" }}>
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              name="description"
-              className="form-control"
-              style={{ height: "15vh" }}
-            />
-          </div>
-        </div>
+        {isSubmitted ? (
+          <SuccessModal />
+        ) : (
+          <>
+            <div>
+              <div
+                className="modal-form-group pt-4"
+                style={{ textAlign: "left" }}
+              >
+                <label htmlFor="name">Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  className="form-control"
+                  placeholder="Enter title"
+                />
+              </div>
+              <div className="modal-form-group" style={{ textAlign: "left" }}>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  className="form-control"
+                  style={{ height: "15vh" }}
+                />
+              </div>
+            </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="category">Category</label>
-          <select id="category" name="category" className="form-control">
-            {categories.borrow.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                name="category"
+                className="form-control"
+              >
+                {categories.borrow.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-primary">
-            Create Post
-          </button>
-        </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
+            <div className="modal-form-group mt-4">
+              <button type="submit" className="btn btn-primary">
+                Create Post
+              </button>
+            </div>
+
+            {error && (
+              <ErrorModal
+                message={error}
+                onClose={() => {
+                  setError(null);
+                }}
+              />
+            )}
+          </>
         )}
       </form>
     </div>

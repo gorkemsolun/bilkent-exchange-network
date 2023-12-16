@@ -6,6 +6,7 @@ import { CreateEntryProps } from "../../../data-types/props";
 import { useAuthContext } from "../../authentication/AuthHelpers";
 import ErrorModal from "../../components/ErrorModal";
 import Loader from "../../components/Loader";
+import SuccessModal from "../../components/SuccessModal";
 
 export default function CreateEntry(props: CreateEntryProps) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,9 +44,10 @@ export default function CreateEntry(props: CreateEntryProps) {
     setIsSubmitted(true);
   };
 
-  if (isSubmitted) {
+  const handleClose = () => {
+    // Call the provided onClose callback
     window.location.reload();
-  }
+  };
 
   return (
     <div className="modal-overlay">
@@ -55,11 +57,11 @@ export default function CreateEntry(props: CreateEntryProps) {
         style={{ width: "35vw" }}
       >
         {loading && <Loader />}
-        <span className="close" onClick={props.onClose}>
+        <span className="close" onClick={handleClose}>
           &times;
         </span>
 
-        <div>
+        {isSubmitted ? (<SuccessModal/>) : (<><div>
           <div className="modal-form-group" style={{ textAlign: "left" }}>
             <label htmlFor="content">Message</label>
             <textarea
@@ -83,7 +85,7 @@ export default function CreateEntry(props: CreateEntryProps) {
               setError(null);
             }}
           />
-        )}
+        )}</>)}
       </form>
     </div>
   );

@@ -13,6 +13,7 @@ import {
 } from "../authentication/AuthHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
+import SuccessModal from "../components/SuccessModal";
 
 export default function CreateSectionExchangePost(props: CreatePostProps) {
   const [loading, setLoading] = useState(false);
@@ -81,9 +82,16 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
     setIsSubmitted(true);
   };
 
+  /*
   if (isSubmitted) {
     window.location.reload();
   }
+  */
+
+  const handleClose = () => {
+    // Call the provided onClose callback
+    window.location.reload();
+  };
 
   return (
     <div className="modal-overlay">
@@ -93,7 +101,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
           &times;
         </span>
 
-        <div>
+        {isSubmitted? (<SuccessModal/>) : (<><div>
           <div className="modal-form-group mt-8 text-left">
             <div className="flex justify-center ">
               <div className="mx-4">
@@ -152,7 +160,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
               setError(null);
             }}
           />
-        )}
+        )}</>)}
       </form>
     </div>
   );
