@@ -53,7 +53,7 @@ export default function MyProfile() {
         <Loader />
       ) : (
         <div className="profileContainer">
-          <div className="profileHeader">
+          <div className="profile-header">
             <img
               src={userProfile?.image}
               className="profileImage"

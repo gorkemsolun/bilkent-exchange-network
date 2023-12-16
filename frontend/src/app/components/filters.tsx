@@ -138,7 +138,7 @@ export default function Filters(props: FilterProps) {
         {props.type !== "sectionexchange" &&
           categories[props.type as keyof typeof categories].map(
             (category: string, index: number) => (
-              <div key={index} className="filter-category">
+              <div key={index} className="filter-category-complete">
                 <input
                   key={index}
                   type="checkbox"
@@ -147,7 +147,7 @@ export default function Filters(props: FilterProps) {
                   onChange={() => handleCategoryChange(category)}
                   placeholder="Category"
                 />
-                <span>{category}</span>
+                <span className="filter-category-text">{category}</span>
               </div>
             )
           )}
@@ -155,7 +155,7 @@ export default function Filters(props: FilterProps) {
       {props.type === "secondhand" && (
         <div className="filter-price-wrapper">
           <div className="filter-price">
-            <span>Min Price</span>
+            <span className="filter-price-text">Min Price</span>
             <input
               type="number"
               value={minPrice === undefined ? "" : minPrice}
@@ -169,7 +169,7 @@ export default function Filters(props: FilterProps) {
             />
           </div>
           <div className="filter-price">
-            <span>Max Price</span>
+            <span className="filter-price-text">Max Price</span>
             <input
               type="number"
               value={maxPrice === undefined ? "" : maxPrice}
@@ -283,23 +283,23 @@ export default function Filters(props: FilterProps) {
         </div>
       )}
       <div className="filter-date-wrapper">
-        <div className="filter-date-input-earliest-wrapper">
+        <div className="filter-date-input-wrapper">
           <label>Earliest Date</label>
           <input
             type="date"
             value={minDate}
             onChange={(e) => setMinDate(e.target.value)}
-            className="filter-date-input-earliest"
+            className="filter-date-input"
             placeholder="Earliest Date"
           />
         </div>
-        <div className="filter-date-input-latest-wrapper">
+        <div className="filter-date-input-wrapper">
           <label>Latest Date</label>
           <input
             type="date"
             value={maxDate}
             onChange={(e) => setMaxDate(e.target.value)}
-            className="filter-date-input-latest"
+            className="filter-date-input"
             placeholder="Latest Date"
           />
         </div>
@@ -333,14 +333,14 @@ export default function Filters(props: FilterProps) {
         {/* tailwind button styles */}
         <button
           onClick={onResetClicked}
-          className="bg-red-500 text-white p-2 m-1 rounded-md w-20"
+          className="bg-black-500 text-white p-2 m-1 rounded-md w-20"
           type="reset"
         >
           Reset
         </button>
         <button
           onClick={onFilterClicked}
-          className="bg-blue-500 text-white p-2 m-1 rounded-md w-20"
+          className="bg-grey-500 text-white p-2 m-1 rounded-md w-20"
           type="submit"
         >
           Filter

@@ -3,13 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-  .home-navbar-li {
-    @apply rounded-lg divide-x grid-cols-4 p-5 text-xl font-bold text-sky-100 object-fill;
-  }
-
-  .home-navbar-link {
-    @apply object-fill w-full h-full p-5;
-  }
 }
 
 :root {
@@ -70,7 +63,7 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #000000;
     background-color: #ffffff;
   }
   a:hover {

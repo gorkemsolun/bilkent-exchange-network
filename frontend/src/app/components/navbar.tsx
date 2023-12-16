@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="bg-gradient-to-r from-blue-500 to-cyan-300 w-screen">
-      <ul className="flex flex-row object-fill divide-x-5 ml-1 justify-center">
+    <nav className="navbar-outer">
+      <ul className="navbar-list">
         <li className="home-navbar-li">
           <Link className="home-navbar-link" to="/secondhand">
             Secondhand

@@ -106,7 +106,7 @@ export default function EditProfile() {
         <Loader />
       ) : (
         <form className="profileContainer" onSubmit={handleSubmit}>
-          <div className="editProfileHeader">
+          <div className="edit-profile-header">
             <p>{"Edit Profile"}</p>
           </div>
           <div className="profileDetails">
