@@ -8,9 +8,9 @@ import {
   UserProfile,
 } from "../../data-types/datatypes.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
-import Header from "../components/Header.tsx";
-import Loader from "../components/Loader.tsx";
-import Navbar from "../components/Navbar.tsx";
+import Header from "../components/header.tsx";
+import Loader from "../components/loader.tsx";
+import Navbar from "../components/navbar.tsx";
 import Messenger from "../message/Messenger.tsx";
 
 export default function Profile() {
@@ -83,6 +83,24 @@ export default function Profile() {
       });
   }, []);
 
+  // Function to handle kicking the user (assuming this functionality exists in your backend)
+  const handleKickUser = () => {
+      if (!id) {
+        console.error("User ID not available.");
+        return;
+      }
+      const kickUserUrl = `http://localhost:3000/user/delete/${id}`;  
+      axios
+        .delete(kickUserUrl)
+        .then((res) => {
+          console.log("User kicked successfully!");   
+        })
+        .catch((error) => {
+          console.error("Error kicking user:", error);
+        });
+    };
+
+
   return (
     <div className="outer-container">
       <Header onMessengerClick={handleMessengerClick} />
@@ -131,6 +149,11 @@ export default function Profile() {
                   {("" + userProfile?.createdAt).slice(0, 10)}
                 </p>
               </div>
+
+              {/* "Kick User" button visible to admin */}
+              {user?.isAdmin === true && (
+                <button onClick={handleKickUser }>Kick User</button>
+              )}
             </div>
           </div>
           <div className="profilePosts">
