@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { ErrorModalProps } from "../../data-types/props";
 
 export default function ErrorModal({
+  // This may also use extends to BaseModalProps
   message = "An unspecified error occurred",
   onClose = () => {},
   autoCloseDelay = 1850,

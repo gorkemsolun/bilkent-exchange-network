@@ -165,12 +165,12 @@ export default function Borrow() {
                     >
                       <div className="card" style={{ width: "100%" }}>
                         <div className="position-relative">
-                          <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
+                          <span className="badge bg-primary rounded-pill m-2 borrow-post-badge">
                             {post.category}
                           </span>
                         </div>
                         <div className="card-body">
-                          <div className="post-save-container-forumtype">
+                          <div className="post-save-container-borrow-type">
                             {profile.savedPosts.some(
                               (savedPost: SavedPost) =>
                                 savedPost.id === post._id

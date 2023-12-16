@@ -169,7 +169,7 @@ export default function Donate() {
                         </div>
 
                         <img
-                          className="card-img w-30vw h-40vh object-cover"
+                          className="post-image"
                           src={post.image}
                           alt="Image"
                         />

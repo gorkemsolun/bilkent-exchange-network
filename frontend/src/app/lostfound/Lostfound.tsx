@@ -193,12 +193,7 @@ export default function LostFound() {
                           )}
                         </div>
                         <img
-                          className="card-img"
-                          style={{
-                            width: "30vw",
-                            height: "40vh",
-                            objectFit: "cover",
-                          }}
+                          className="card-img post-image"
                           src={post.image}
                           alt="Image"
                         />

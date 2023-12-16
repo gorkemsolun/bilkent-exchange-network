@@ -581,10 +581,13 @@ td {
 
 .header-profile-dropdown {
   position: fixed;
+  top: 0;
+  margin-top: 55px;
   background-color: #fff;
   border: 1px solid #fff;
   border-radius: 5px;
   padding: 10px;
+  z-index: 1000;
 }
 
 .header-profile-dropdown-link {
@@ -592,7 +595,7 @@ td {
   padding: 5px 10px;
   color: #93c5fd;
   text-decoration: none;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.7s ease-in-out;
 }
 
 .header-profile-dropdown-link:hover {
@@ -1209,13 +1212,26 @@ td {
   top: 0;
 }
 
-.post-save-container-forumtype {
+.post-save-container-sectionexchange-type {
+  position: absolute;
+  top: 0;
+  left: 78vw;
+}
+
+.post-save-container-forum-type {
   display: flex;
   flex-direction: row;
   position: absolute;
   top: 0;
-  right: 0;
-  margin-right: 80px;
+  right: 30px;
+}
+
+.post-save-container-borrow-type {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  right: 30px;
 }
 
 .post-saved-icon {
@@ -1276,9 +1292,22 @@ td {
 .post-image {
   width: 28vw;
   height: 36vh;
+  object-fit: cover;
 }
 
 .post-image {
   width: 28vw;
   height: 36vh;
+}
+
+.borrow-post-badge {
+  position: absolute;
+  top: 0;
+  right: 70px;
+}
+
+.forum-post-title {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: left;
 }
