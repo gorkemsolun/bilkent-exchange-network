@@ -24,13 +24,19 @@ export const useProfileContext = () => {
 
 export const useLogout = () => {
   const dispatch = (useAuthContext() as unknown as UserContextType).dispatch;
-
+  const profileDispatch = (useProfileContext() as unknown as UserContextType).dispatch
   const logout = () => {
     //remove user from storage
     localStorage.removeItem("user");
 
+
     // update auth context with logout
     dispatch({ type: "LOGOUT", payload: null });
+
+    localStorage.removeItem("profile");
+
+    profileDispatch({type: "LOGOUT", payload: null});
+
   };
 
   return { logout };
@@ -122,10 +128,11 @@ export const useSignup = () => {
     setIsLoading(true);
     setError(null);
 
+
     const res = await fetch("http://localhost:3000/user/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ username : name, email: email, password: password }),
     });
 
     const json = await res.json();
