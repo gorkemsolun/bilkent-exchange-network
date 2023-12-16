@@ -1,24 +1,28 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "./AuthHelpers";
+import BackgroundManager from "../components/BackgroundManager";
+
+const bg = new BackgroundManager();
+const url = bg.getRandomImageUrl();
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
-
   const handleLogin = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     e.preventDefault();
     await login(email, password);
   };
-
   return (
     <div
       className="flex flex-col items-center justify-center bg-gray-200 text-gray-700 bg-cover bg-no-repeat bg-center w-screen h-screen"
       style={{
-        backgroundImage: `url("https://www.technopat.net/sosyal/eklenti/mountains_peaks_snow_192502_1920x1080-jpg.1367847/")`,
+        backgroundImage: `url("${url}")`,
+        backgroundSize: "cover", // Adjust as needed
+        backgroundPosition: "center", // Adjust as needed
       }}
     >
       <div className="flex flex-col items-center justify-center">
@@ -64,7 +68,7 @@ export default function Login() {
             <span>Loading...</span>
           ) : (
             <Link
-              className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700"
+              className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 opacity-100"
               to="/secondhand"
               onClick={handleLogin}
             >
