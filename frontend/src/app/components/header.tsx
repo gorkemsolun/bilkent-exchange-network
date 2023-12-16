@@ -4,6 +4,7 @@ import { defaultUserProfile } from "../../data-types/constants";
 import { ProfileContextType, UserProfile } from "../../data-types/datatypes";
 import { HeaderProps } from "../../data-types/props";
 import { useLogout, useProfileContext } from "../authentication/AuthHelpers";
+import {DarkModeToggle} from "./darkModeToggel"; 
 
 export default function Header(props: HeaderProps) {
   const { logout } = useLogout();
@@ -79,6 +80,9 @@ export default function Header(props: HeaderProps) {
           onClick={props.onMessengerClick}
           alt="DMs"
         />
+      </div>
+      <div>
+        <DarkModeToggle/> 
       </div>
     </div>
   );
