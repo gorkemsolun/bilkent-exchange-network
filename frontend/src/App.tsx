@@ -24,6 +24,7 @@ import SecondHandPostDetails from "./app/secondhand/SecondhandPostDetails";
 import SectionExchange from "./app/sectionexchange/Sectionexchange";
 import "./bootstrap.css";
 import { UserContextType } from "./data-types/datatypes";
+import SavedPosts from "./app/savedposts/SavedPosts";
 
 export default function App() {
   return (
@@ -231,6 +232,18 @@ function AppContent() {
             element={
               user ? (
                 <EditProfile />
+              ) : (
+                setTimeout(() => {
+                  <Navigate to="/login" />;
+                }, 100)
+              )
+            }
+          />
+          <Route
+            path="/saved-posts"
+            element={
+              user ? (
+                <SavedPosts />
               ) : (
                 setTimeout(() => {
                   <Navigate to="/login" />;
