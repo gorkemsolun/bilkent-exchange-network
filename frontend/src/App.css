@@ -25,59 +25,185 @@ td {
   width: 25vw;
 }
 
-.filter-outer-wrapper {
-  display: flex;
-  flex-direction: column;
-  object-fit: contain;
-  margin: 0.75rem;
-  background-color: #f8fafc;
-  border-radius: 1rem;
-  padding-right: 0.25rem;
-  width: 4.5rem;
+.filter-category {
+  text-align: left;
+  margin-left: 0.5rem;
+  font-weight: 600;
+  padding: 0.25rem;
+  margin-left: 0.25rem;
+  align-items: center;
 }
 
 .filter-categories-wrapper {
   margin-bottom: 1rem;
 }
 
-.filter-date-input-earliest {
+.filter-outer-wrapper {
+  display: flex;
+  flex-direction: column;
+  object-fit: contain;
+  margin-left: 0.25rem;
+
+  background-color: #D7FEFF;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  max-width: 150px;
+}
+
+.filter-price-wrapper {
+  padding-bottom: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 2px solid;
+}
+
+.filter-price {
+  max-width: 140px;
+}
+
+.filter-price-input {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
   width: 100%;
-  background-color: #ccc;
+  background-color: #FFF5E0;
+}
+
+.filter-lostfound-wrapper {
+  border-bottom: 2px solid;
+  flex-direction: row;
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-lostfound-input {
+  margin-bottom: 0.25rem;
+  margin-right: 0.25rem;
+  max-width: 140px;
+}
+
+.filter-sectionexchange-wrapper {
+  border-bottom: 2px solid;
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-sectionexchange-course-outer-wrapper {
+  align-items: center;
+  max-width: 140px;
+}
+
+.filter-sectionexchange-course-wrapper {
+  margin-bottom: 1rem;
+  max-width: 140px;
+}
+
+.filter-sectionexchange-course-select {
+  border: 2px solid;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #fff;
+}
+
+.filter-sectionexchange-course-select-option {
+}
+
+.filter-sectionexchange-section-outer-wrapper {
+  align-items: center;
+  max-width: 140px;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-sectionexchange-section-wrapper {
+  margin-bottom: 1rem;
+  max-width: 140px;
+}
+
+.filter-sectionexchange-section-input {
+  border: 2px solid;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  max-width: 140px;
+}
+
+.filter-date-input-earliest {
+  border: 2px solid;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #FFF5E0;
 }
 
 .filter-date-input-latest {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  width: 100%;
-  background-color: #ccc;
+  background-color: #FFF5E0;
 }
 
 .filter-date-input-earliest-wrapper {
   display: flex;
   flex-direction: column;
   margin-bottom: 0.25rem;
-  flex-basis: 25%;
-  max-width: 50%;
 }
 
 .filter-date-input-latest-wrapper {
   display: flex;
   flex-direction: column;
   margin-bottom: 0.25rem;
-  flex-basis: 25%;
-  max-width: 50%;
 }
 
 .filter-date-wrapper {
-  font-weight: bold;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   margin-bottom: 0.25rem;
+  border-bottom: 2px solid;
+}
+
+.filter-page-post-number-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+  border-bottom: 2px solid;
+}
+
+.filter-page-number-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.filter-post-per-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.filter-page-number-input {
+  border: 2px solid;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #FFF5E0;
+}
+
+.filter-post-per-input {
+  border: 2px solid;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #FFF5E0;
+}
+
+.filter-reset-filter-button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .create-post-button {
