@@ -1,30 +1,71 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Loader from "../components/Loader";
+import Loader from "../components/loader";
+import { Post } from "../../data-types/posts"; // Update the path as needed
+import Header from "../components/navbar";
+import Navbar from "../components/header";
+
+// URL generator
+const generatePostUrl = ({ postId, type }) =>
+  `/${type}/${postId}`;
 
 export default function AdminPage() {
-  const [reportedPosts, setReportedPosts] = useState([]);
+  const [forumPosts, setForumPosts] = useState<Post[]>([]);
+  const [reportedPosts, setReportedPosts] = useState<Post[]>([]); // Use the Post type
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
 
     axios
-      .get("http://localhost:3000/admin/reportedposts") //
+      .get("http://localhost:3000/admin/reportedposts")
       .then((res) => {
-        setReportedPosts(res.data.reportedPosts);
+        
+        const reportedPosts =  res.data; // Use the Post type
+       
+        if (reportedPosts && reportedPosts.length > 0) {
+          
+          const postUrls = reportedPosts.map((reportedPost) =>
+            generatePostUrl({
+              postId: reportedPost._id,
+              type: reportedPost.postType,
+            })
+          );
+          
+          const fetchPostPromises = postUrls.map((postUrl) =>
+            axios.get(postUrl)
+          );
+
+          Promise.all(fetchPostPromises)
+            .then((postResponses) => {
+              const posts = postResponses.map(
+                (postResponse) => postResponse.data
+              );
+
+              setReportedPosts(posts);
+              console.log(reportedPosts)
+            })
+            .catch((error) => {
+              console.error("Error fetching posts:", error);
+            })
+            .finally(() => {
+              setLoading(false);
+            });
+        } else {
+          console.log("No reported posts found");
+          setLoading(false);
+        }
       })
       .catch((err) => {
         console.error("Error fetching reported posts:", err);
-      })
-      .finally(() => {
         setLoading(false);
       });
   }, []);
 
   return (
     <div className="outer-container">
-      {/* Header and Navbar for Admin Page */}
+      <Header />
+      <Navbar />
       <div className="flex items-center justify-center mb-3">
         <h1>Admin Page - Reported Posts</h1>
       </div>
@@ -34,28 +75,10 @@ export default function AdminPage() {
         <div className="justify-center">
           <div className="container">
             <div className="row">
-              {reportedPosts.map((report) => (
-                <div className="col-12 mb-4" key={report._id}>
-                  <div className="card w-full">
-                    <div className="card-body">
-                      <h2
-                        className="card-title"
-                        style={{
-                          fontSize: "1.5rem",
-                          fontWeight: "bold",
-                          textAlign: "left",
-                        }}
-                      >
-                        {`Reported Post ID: ${report.postId}`}
-                      </h2>
-                      <div
-                        className="description-container"
-                        style={{ height: "10%", textAlign: "left" }}
-                      >
-                        <p className="card-text">{`Reason: ${report.reason}`}</p>
-                      </div>
-                    </div>
-                  </div>
+              {reportedPosts.map((post) => (
+                <div key={post._id}>
+                  <p>Post ID: {post._id}</p>
+                  <p>Post Content: {post.title}</p>
                 </div>
               ))}
             </div>

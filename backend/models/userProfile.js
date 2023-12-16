@@ -10,6 +10,16 @@ const OwnPostSchema = new mongoose.Schema({
   desiredSection: String,
 });
 
+const SavedPostSchema = new mongoose.Schema({
+  id: String,
+  typename: String,
+  title: String,
+  offeredCourse: String,
+  offeredSection: String,
+  desiredCourse: String,
+  desiredSection: String,
+});
+
 const UserProfileSchema = new mongoose.Schema(
   {
     userID: {
@@ -41,7 +51,7 @@ const UserProfileSchema = new mongoose.Schema(
     },
     savedPosts: {
       // for posts saved by this user
-      type: [[String]],
+      type: [SavedPostSchema],
       default: [],
     },
   },

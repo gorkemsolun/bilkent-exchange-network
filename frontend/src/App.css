@@ -1044,3 +1044,33 @@ td {
   color: #007bff;
   text-decoration: none;
 }
+
+.post-save-container {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+}
+
+.post-save-container-forumtype {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin-right: 80px;
+}
+
+.post-saved-icon {
+  height: 50px;
+  width: 45px;
+  left: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.post-notsaved-icon {
+  height: 40px;
+  width: 40px;
+  left: 0;
+  transition: all 0.8s ease-in-out;
+}

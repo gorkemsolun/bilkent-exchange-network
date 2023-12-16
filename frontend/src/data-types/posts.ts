@@ -67,3 +67,4 @@ export interface ForumPost {
   createdAt?: Date;
   entries: ForumEntry[];
 }
+

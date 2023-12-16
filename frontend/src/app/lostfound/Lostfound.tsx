@@ -2,7 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { defaultFilterParams } from "../../data-types/constants.ts";
-import { FilterParams } from "../../data-types/datatypes.ts";
+import {
+  FilterParams,
+  ProfileContextType,
+  SavedPost,
+} from "../../data-types/datatypes.ts";
 import { LostFoundPost } from "../../data-types/posts.ts";
 import { prepareUrl } from "../PostHelpers.ts";
 import CreatePostButton from "../components/CreatePostButton.tsx";
@@ -12,6 +16,7 @@ import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
+import { useProfileContext } from "../authentication/AuthHelpers.ts";
 
 export default function LostFound() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -21,6 +26,9 @@ export default function LostFound() {
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState<string>("");
   const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
+  const profile = JSON.parse(localStorage.getItem("profile") as string);
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -37,6 +45,57 @@ export default function LostFound() {
   function handleSortTypeChange(sortType: string) {
     setSortType(sortType);
   }
+
+  const handleSaveButton = (post: LostFoundPost) => {
+    // Post is saved, unsave
+    if (
+      profile.savedPosts.some(
+        (savedPost: SavedPost) => savedPost.id === post._id
+      )
+    ) {
+      const body = {
+        profileID: profile?._id,
+        savedPost: post,
+      };
+
+      axios
+        .put("http://localhost:3000/profile/unsavepost", body)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      profile.savedPosts = profile.savedPosts.filter(
+        (savedPost: SavedPost) => savedPost.id !== post._id
+      );
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
+      console.log(profile);
+    } else {
+      // Post is unsaved, save
+      const body = {
+        profileID: profile?._id,
+        savedPost: post,
+      };
+
+      axios
+        .put("http://localhost:3000/profile/savepost", body)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      const savedPost: SavedPost = {
+        id: "" + post._id,
+        typename: "Secondhand,",
+        title: post.title,
+      };
+
+      profile.savedPosts.push(savedPost);
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
+    }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -55,7 +114,28 @@ export default function LostFound() {
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm, filterParams, sortType]);
+  }, [searchTerm, filterParams]);
+
+  useEffect(() => {
+    if (sortType === "date-asc") {
+      setLostFoundPosts(
+        [...lostFoundPosts].sort(
+          (a: LostFoundPost, b: LostFoundPost) =>
+            new Date(a.createdAt as Date).getTime() -
+            new Date(b.createdAt as Date).getTime()
+        )
+      );
+    } else {
+      setLostFoundPosts(
+        [...lostFoundPosts].sort(
+          (a: LostFoundPost, b: LostFoundPost) =>
+            new Date(b.createdAt as Date).getTime() -
+            new Date(a.createdAt as Date).getTime()
+        )
+      );
+    }
+    // do not add lostFoundPosts to the dependency array
+  }, [sortType]);
 
   return (
     <div className="outer-container">
@@ -91,6 +171,27 @@ export default function LostFound() {
                         <span className="badge bg-danger rounded-pill position-absolute top-0 end-12 m-2">
                           {post.status}
                         </span>
+                        <div className="post-save-container">
+                          {profile.savedPosts.some(
+                            (savedPost: SavedPost) => savedPost.id === post._id
+                          ) ? (
+                            <img
+                              src="/src/assets/saved.png"
+                              className="post-saved-icon"
+                              onClick={() => {
+                                handleSaveButton(post);
+                              }}
+                            ></img>
+                          ) : (
+                            <img
+                              src="/src/assets/notsaved.png"
+                              className="post-notsaved-icon"
+                              onClick={() => {
+                                handleSaveButton(post);
+                              }}
+                            ></img>
+                          )}
+                        </div>
                         <img
                           className="card-img"
                           style={{

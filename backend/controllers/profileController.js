@@ -102,12 +102,12 @@ export const savePost = async (req, res) => {
       throw Error("Request body is empty");
     }
 
-    const profileId = req.body._id;
-    const newPost = req.body.newPost;
+    const profileId = req.body.profileID;
+    const savedPost = req.body.savedPost;
 
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { savedPosts: newPost } }
+      { $push: { savedPosts: savedPost } }
     );
 
     return res.status(200).json({});
@@ -123,12 +123,12 @@ export const unSavePost = async (req, res) => {
       throw Error("Request body is empty");
     }
 
-    const profileId = req.body._id;
-    const toBeRemoved = req.body.toBeRemoved;
+    const profileId = req.body.profileID;
+    const toBeRemovedId = req.body.savedPost._id;
 
     await UserProfile.updateOne(
       { _id: profileId },
-      { $pull: { savedPosts: toBeRemoved } }
+      { $pull: { savedPosts: { _id: toBeRemovedId } } }
     );
 
     return res.status(200).json({});
