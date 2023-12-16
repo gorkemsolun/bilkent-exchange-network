@@ -183,10 +183,10 @@ export default function SectionExchange() {
             />
             <CreatePostButton type="sectionexchange" />
           </div>
-          <div className="container w-full">
-            <div className="row mb-3 mr-20 ml-5">
+          <div className="container">
+            <div className="row">
               <div className="col-12">
-                <div className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2 bg-white font-bold">
+                <div className="card section-card row align-items-start justify-content-center bg-white font-bold">
                   <div className="row align-items-start justify-content-start">
                     <div className="col-md text-center border-r border-black">
                       <p className="card-text">{"Username"}</p>
@@ -213,9 +213,9 @@ export default function SectionExchange() {
           ) : (
             <div className="container w-full">
               {sectionexchangePosts.map((post: SectionexchangePost) => (
-                <div className="row mb-1 mr-20 ml-5" key={post._id}>
+                <div className="row mb-2" key={post._id}>
                   <div className="col-12">
-                    <div className="card section-card row align-items-start justify-content-center pl-1 pr-1 py-2 bg-white">
+                    <div className="card section-card row align-items-start justify-content-center bg-white">
                       <div className="row align-items-start justify-content-start">
                         <div className="col-md text-center border-r border-black">
                           <Link
@@ -245,7 +245,7 @@ export default function SectionExchange() {
                               onClick={() =>
                                 handleDMBoxClick(
                                   post.poster,
-                                  post.posterUsername
+                                  "" + post.posterUsername
                                 )
                               }
                               style={{
@@ -258,7 +258,7 @@ export default function SectionExchange() {
                         <div className="col-md text-center">
                           <p className="card-text">{String(post.createdAt)}</p>
                         </div>
-                        <div className="post-save-container">
+                        <div className="post-save-container-sectionexchange-type">
                           {profile.savedPosts.some(
                             (savedPost: SavedPost) => savedPost.id === post._id
                           ) ? (

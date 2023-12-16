@@ -141,7 +141,7 @@ export default function Forum() {
                       <div className="col-12 cursor-pointer" key={post._id}>
                         <div className="card w-full">
                           <div className="card-body">
-                            <div className="post-save-container-forumtype">
+                            <div className="post-save-container-forum-type">
                               {profile.savedPosts.some(
                                 (savedPost: SavedPost) =>
                                   savedPost.id === post._id
@@ -166,15 +166,12 @@ export default function Forum() {
                             <Link
                               to={`/forumpost/${post._id}`}
                               className="card-title"
-                              style={{
-                                fontSize: "1.5rem",
-                                fontWeight: "bold",
-                                textAlign: "left",
-                              }}
                             >
-                              {post.title.length < 50
-                                ? post.title
-                                : post.title.slice(0, 50) + "..."}
+                              <p className="forum-post-title">
+                                {post.title.length < 50
+                                  ? post.title
+                                  : post.title.slice(0, 50) + "..."}
+                              </p>
                             </Link>
                             <div
                               className="description-container"

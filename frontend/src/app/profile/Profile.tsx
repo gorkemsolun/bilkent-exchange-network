@@ -8,7 +8,13 @@ import {
   UserProfile,
   OwnPost
 } from "../../data-types/datatypes.ts";
-import { useAuthContext } from "../authentication/AuthHelpers.ts";
+
+import {
+  deleteUser,
+  useAuthContext,
+  useLogout
+} from "../authentication/AuthHelpers.js";
+
 import Header from "../components/header.tsx";
 import Loader from "../components/loader.tsx";
 import Navbar from "../components/navbar.tsx";
@@ -23,7 +29,7 @@ export default function Profile() {
   const { id } = useParams();
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation>({} as Conversation);
-
+    const { logout } = useLogout();
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
@@ -84,22 +90,16 @@ export default function Profile() {
       });
   }, []);
 
-  // Function to handle kicking the user (assuming this functionality exists in your backend)
-  const handleKickUser = () => {
-      if (!id) {
-        console.error("User ID not available.");
-        return;
-      }
-      const kickUserUrl = `http://localhost:3000/user/delete/${id}`;  
-      axios
-        .delete(kickUserUrl)
-        .then((res) => {
-          console.log("User kicked successfully!");   
-        })
-        .catch((error) => {
-          console.error("Error kicking user:", error);
-        });
-    };
+      // Remove account from database
+      const handleRemove = async () => {
+        await deleteUser(user?._id as string);
+        handleLogOut();
+      };
+
+      // before remove, account is loged out
+      const handleLogOut = () => {
+        logout();
+      };
 
 
   return (
@@ -151,10 +151,10 @@ export default function Profile() {
                 </p>
               </div>
 
-              {/* "Kick User" button visible to admin */}
-              {user?.isAdmin === true && (
-                <button onClick={handleKickUser }>Kick User</button>
-              )}
+              
+              {user?.isAdmin === "admin" && (
+                <button onClick={handleRemove }>Kick User</button>
+                )}
             </div>
           </div>
           <div className="profilePosts">

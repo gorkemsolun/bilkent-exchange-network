@@ -9,7 +9,6 @@ const url = bg.getRandomImageUrl();
 
 export default function VerificationPage() {
   const [email, setEmail] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const { sendEmail } = useVerificationEmail();
 
@@ -17,7 +16,7 @@ export default function VerificationPage() {
     e.preventDefault();
     setIsVerifying(true);
     console.log("verification button pressed");
-    await sendEmail(username, email);
+    await sendEmail("", email);
   };
 
   return (
@@ -83,9 +82,7 @@ export default function VerificationPage() {
 
             <button
               className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
-              type="button"
-              onClick={handleSubmit}
-              disabled={isVerifying}
+              type="submit"
             >
               Send Verification Mail
             </button>

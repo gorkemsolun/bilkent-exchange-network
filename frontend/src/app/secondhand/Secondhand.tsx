@@ -170,7 +170,7 @@ export default function Secondhand() {
                         </div>
 
                         <img
-                          className="card-img w-30vw h-40vh object-cover"
+                          className="card-img w-30vw h-40vh object-cover post-image"
                           src={post.image}
                           alt="Image"
                         />

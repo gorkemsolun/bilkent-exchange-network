@@ -44,7 +44,7 @@ td {
   object-fit: contain;
   margin-left: 0.25rem;
 
-  background-color: #D7FEFF;
+  background-color: #d7feff;
   border-radius: 0.25rem;
   padding: 0.25rem;
   max-width: 150px;
@@ -66,7 +66,7 @@ td {
   padding: 0.5rem;
   border-radius: 0.25rem;
   width: 100%;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-lostfound-wrapper {
@@ -134,14 +134,14 @@ td {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-date-input-latest {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-date-input-earliest-wrapper {
@@ -190,14 +190,14 @@ td {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-post-per-input {
   border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #FFF5E0;
+  background-color: #fff5e0;
 }
 
 .filter-reset-filter-button-wrapper {
@@ -561,10 +561,13 @@ td {
 
 .header-profile-dropdown {
   position: fixed;
+  top: 0;
+  margin-top: 55px;
   background-color: #fff;
   border: 1px solid #fff;
   border-radius: 5px;
   padding: 10px;
+  z-index: 1000;
 }
 
 .header-profile-dropdown-link {
@@ -572,7 +575,7 @@ td {
   padding: 5px 10px;
   color: #93c5fd;
   text-decoration: none;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.7s ease-in-out;
 }
 
 .header-profile-dropdown-link:hover {
@@ -1178,13 +1181,26 @@ td {
   top: 0;
 }
 
-.post-save-container-forumtype {
+.post-save-container-sectionexchange-type {
+  position: absolute;
+  top: 0;
+  left: 78vw;
+}
+
+.post-save-container-forum-type {
   display: flex;
   flex-direction: row;
   position: absolute;
   top: 0;
-  right: 0;
-  margin-right: 80px;
+  right: 30px;
+}
+
+.post-save-container-borrow-type {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  top: 0;
+  right: 30px;
 }
 
 .post-saved-icon {
@@ -1242,16 +1258,25 @@ td {
   margin-bottom: 2vh;
 }
 
-
-.dark-mode-toggle {
-  background-color: #333333;
-  color: #ffffff;
-  padding: 8px 16px;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
+.post-image {
+  width: 28vw;
+  height: 36vh;
+  object-fit: cover;
 }
 
-.dark-mode-toggle:hover {
-  background-color: #555555;
+.post-image {
+  width: 28vw;
+  height: 36vh;
+}
+
+.borrow-post-badge {
+  position: absolute;
+  top: 0;
+  right: 70px;
+}
+
+.forum-post-title {
+  font-size: 26px;
+  font-weight: bold;
+  text-align: left;
 }
