@@ -4,6 +4,7 @@ import { AuthContextProvider } from "./app/authentication/AuthContext";
 import { useAuthContext } from "./app/authentication/AuthHelpers";
 import Login from "./app/authentication/Login";
 import Signup from "./app/authentication/Signup";
+import ForgetPassword from "./app/authentication/forgetPassword";
 import VerificationPage from "./app/authentication/Verification";
 import Borrow from "./app/borrow/Borrow";
 import BorrowPostDetails from "./app/borrow/BorrowPostDetails";
@@ -126,6 +127,10 @@ function AppContent() {
           <Route
             path="/signup"
             element={!user ? <Signup /> : <Navigate to="/secondhand" />}
+          />
+          <Route
+            path="/forgetPassword"
+            element={!user ? <ForgetPassword /> : <Navigate to="/login" />}
           />
           <Route
             path="/verification"

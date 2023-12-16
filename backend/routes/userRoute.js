@@ -3,6 +3,7 @@ import {
   createEmailToken,
   getEmailToken,
   sendEmail,
+  forgetPassword
 } from "../controllers/emailController.js";
 import { loginUser, signupUser, deleteUser} from "../controllers/userController.js";
 //controller functions
@@ -14,6 +15,9 @@ authRouter.post("/login", loginUser);
 
 //signup route
 authRouter.post("/signup", signupUser);
+
+//forget password 
+authRouter.post("/forgetPassword", forgetPassword);
 
 //send verification email route
 authRouter.post("/sendEmail", sendEmail);
