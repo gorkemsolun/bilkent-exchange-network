@@ -24,10 +24,10 @@ export default function ReportPostButton(props: ReportPostButtonProps) {
       </button>
       {isModalOpen && (
         <ReportPost
-          onClose={handleCloseModal}
           postId={props.postId}
           profileId={props.profileId}
           type={props.type}
+          onClose={handleCloseModal}
         />
       )}
     </div>

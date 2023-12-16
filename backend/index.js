@@ -26,7 +26,7 @@ app.use("/forum", forumRouter);
 app.use("/user", authRouter);
 app.use("/profile", profileRouter);
 app.use("/conversation", conversationRouter);
-app.use("/adminPage",adminRouter ); 
+app.use("/admin",adminRouter ); 
 
 mongoose
   .connect(MONGO_URL)

@@ -97,7 +97,7 @@ export default function LostFoundPostDetails() {
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
-      axios
+       axios
         .get(`${profileUrl}/${post.poster}`)
         .then((res) => {
           setPoster(res.data.profile);
@@ -138,7 +138,7 @@ export default function LostFoundPostDetails() {
               ) : (
                 <ReportPostButton
                   postId={"" + post._id}
-                  profileId={"" + poster?._id}
+                  profileId={"" + poster}
                   type="lostfound"
                 />
               )}

@@ -134,7 +134,7 @@ function AppContent() {
             }
           />
           <Route
-            path="/adminPage"
+            path="/admin"
             element={!user ? <AdminPage /> : <Navigate to="/forum" />
             }
           />
