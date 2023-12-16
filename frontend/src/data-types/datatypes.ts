@@ -17,6 +17,16 @@ export interface OwnPost {
   desiredSection: string;
 }
 
+export interface SavedPost {
+  id: string;
+  typename: string;
+  title: string;
+  offeredCourse?: string;
+  offeredSection?: string;
+  desiredCourse?: string;
+  desiredSection?: string;
+}
+
 export interface UserProfile {
   _id?: string;
   userID: string;
@@ -26,7 +36,7 @@ export interface UserProfile {
   description: string;
   reputation: number;
   ownPosts: OwnPost[];
-  savedPosts: string[];
+  savedPosts: SavedPost[];
   createdAt?: Date;
 }
 

@@ -2,7 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { defaultFilterParams } from "../../data-types/constants";
-import { FilterParams } from "../../data-types/datatypes";
+import {
+  FilterParams,
+  ProfileContextType,
+  SavedPost,
+} from "../../data-types/datatypes";
 import { BorrowPost } from "../../data-types/posts";
 import { prepareUrl } from "../PostHelpers";
 import CreatePostButton from "../components/CreatePostButton";
@@ -12,6 +16,7 @@ import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/Searchbar";
 import Messenger from "../message/Messenger";
+import { useProfileContext } from "../authentication/AuthHelpers";
 
 export default function Borrow() {
   const [loading, setLoading] = useState(false);
@@ -21,6 +26,9 @@ export default function Borrow() {
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState("");
   const [isMessengerVisible, setIsMessengerVisible] = useState(false);
+  const profile = JSON.parse(localStorage.getItem("profile") as string);
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -72,6 +80,57 @@ export default function Borrow() {
     // do not add borrowPosts to the dependency array
   }, [sortType]);
 
+  const handleSaveButton = (post: BorrowPost) => {
+    // Post is saved, unsave
+    if (
+      profile.savedPosts.some(
+        (savedPost: SavedPost) => savedPost.id === post._id
+      )
+    ) {
+      const body = {
+        profileID: profile?._id,
+        savedPost: post,
+      };
+
+      axios
+        .put("http://localhost:3000/profile/unsavepost", body)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      profile.savedPosts = profile.savedPosts.filter(
+        (savedPost: SavedPost) => savedPost.id !== post._id
+      );
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
+      console.log(profile);
+    } else {
+      // Post is unsaved, save
+      const body = {
+        profileID: profile?._id,
+        savedPost: post,
+      };
+
+      axios
+        .put("http://localhost:3000/profile/savepost", body)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      const savedPost: SavedPost = {
+        id: "" + post._id,
+        typename: "Secondhand,",
+        title: post.title,
+      };
+
+      profile.savedPosts.push(savedPost);
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
+    }
+  };
+
   return (
     <div className="outer-container">
       <Header onMessengerClick={handleMessengerClick} />
@@ -95,8 +154,7 @@ export default function Borrow() {
               <div className="row">
                 {borrowPosts.map((post: BorrowPost) => (
                   <div className="col-12 mb-4" key={post._id}>
-                    <Link
-                      to={`/borrowpost/${post._id}`}
+                    <div
                       className="col-12"
                       key={post._id}
                       style={{ cursor: "pointer", textAlign: "left" }}
@@ -108,14 +166,37 @@ export default function Borrow() {
                           </span>
                         </div>
                         <div className="card-body">
-                          <h2
+                          <div className="post-save-container-forumtype">
+                            {profile.savedPosts.some(
+                              (savedPost: SavedPost) =>
+                                savedPost.id === post._id
+                            ) ? (
+                              <img
+                                src="/src/assets/saved.png"
+                                className="post-saved-icon"
+                                onClick={() => {
+                                  handleSaveButton(post);
+                                }}
+                              ></img>
+                            ) : (
+                              <img
+                                src="/src/assets/notsaved.png"
+                                className="post-notsaved-icon"
+                                onClick={() => {
+                                  handleSaveButton(post);
+                                }}
+                              ></img>
+                            )}
+                          </div>
+                          <Link
+                            to={`/borrowpost/${post._id}`}
                             className="card-title"
                             style={{ fontSize: "1.5rem", fontWeight: "bold" }}
                           >
                             {post.title.length < 50
                               ? post.title
                               : post.title.slice(0, 50) + "..."}
-                          </h2>
+                          </Link>
                           <div
                             className="description-container"
                             style={{ height: "10%" }}
@@ -128,7 +209,7 @@ export default function Borrow() {
                           </div>
                         </div>
                       </div>
-                    </Link>
+                    </div>
                   </div>
                 ))}
               </div>
