@@ -6,6 +6,10 @@ const SectionexchangePostSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    posterUsername: {
+      type: String,
+      required: true,
+    },
     offeredSection: {
       type: Number,
       required: true,

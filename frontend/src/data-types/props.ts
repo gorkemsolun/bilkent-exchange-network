@@ -1,4 +1,4 @@
-import { FilterParams } from "./datatypes";
+import { Conversation, FilterParams } from "./datatypes";
 
 export interface FilterProps {
   type: string;
@@ -81,14 +81,8 @@ export interface EditEntryProps {
 }
 
 export interface MessengerProps {
-  onMessageLinkClick?: () => void; //  WHICH ONE IS USED??
   onClick?: () => void;
-}
-
-export interface ChatMessageProps {
-  chatTitle: string;
-  onSelectChat: (chatTitle: string) => void;
-  isActive: boolean;
+  selectedConversation?: Conversation;
 }
 
 export interface HeaderProps {

@@ -51,6 +51,7 @@ export interface DonatePost {
 export interface SectionexchangePost {
   _id?: string;
   poster: string;
+  posterUsername: string;
   createdAt?: Date;
   offeredSection: string;
   desiredSection: string;
