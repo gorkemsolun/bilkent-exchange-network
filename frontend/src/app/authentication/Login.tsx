@@ -7,10 +7,10 @@ const bg = new BackgroundManager();
 const url = bg.getRandomImageUrl();
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loadingMessage, setLoadingMessage] = useState<string>("Loading");
   const { login, error, isLoading } = useLogin();
-  const [loadingMessage, setLoadingMessage] = useState("Loading");
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -34,8 +34,8 @@ export default function Login() {
       className="flex flex-col items-center justify-center bg-gray-200 text-gray-700 bg-cover bg-no-repeat bg-center w-screen h-screen"
       style={{
         backgroundImage: `url("${url}")`,
-        backgroundSize: "cover", // Adjust as needed
-        backgroundPosition: "center", // Adjust as needed
+        backgroundSize: "cover",
+        backgroundPosition: "center",
       }}
     >
       <div className="flex flex-col items-center justify-center">

@@ -224,16 +224,9 @@ export const useVerificationEmail = () => {
   return { sendEmail, isLoading, verificationError };
 };
 
-// Define a function to delete the user
 export const deleteUser = async (userId: string) => {
   try {
-    // Send a request to your server to delete the user
-    const response = await axios.delete(
-      `http://localhost:3000/user/delete/${userId}`
-    );
-
-    // Handle the response as needed
-    console.log(response.data); // Log the response if necessary
+    await axios.delete(`http://localhost:3000/user/delete/${userId}`);
   } catch (error) {
     console.error("Error deleting user:", error);
   }

@@ -9,11 +9,16 @@ import {
 import {
   Conversation,
   FilterParams,
+  ProfileContextType,
+  SavedPost,
   UserContextType,
 } from "../../data-types/datatypes.ts";
 import { SectionexchangePost } from "../../data-types/posts.ts";
 import { prepareUrl } from "../PostHelpers.ts";
-import { useAuthContext } from "../authentication/AuthHelpers.ts";
+import {
+  useAuthContext,
+  useProfileContext,
+} from "../authentication/AuthHelpers.ts";
 import CreatePostButton from "../components/CreatePostButton.tsx";
 import Filters from "../components/Filters.tsx";
 import Header from "../components/Header.tsx";
@@ -35,6 +40,9 @@ export default function SectionExchange() {
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation>(defaultConversation);
   const user = (useAuthContext() as unknown as UserContextType).user;
+  const profile = JSON.parse(localStorage.getItem("profile") as string);
+  const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
+    .profileDispatch;
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -107,6 +115,57 @@ export default function SectionExchange() {
         setLoading(false);
       });
   }, [searchTerm, filterParams, sortType]);
+
+  const handleSaveButton = (post: SectionexchangePost) => {
+    // Post is saved, unsave
+    if (
+      profile.savedPosts.some(
+        (savedPost: SavedPost) => savedPost.id === post._id
+      )
+    ) {
+      const body = {
+        profileID: profile?._id,
+        savedPost: post,
+      };
+
+      axios
+        .put("http://localhost:3000/profile/unsavepost", body)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      profile.savedPosts = profile.savedPosts.filter(
+        (savedPost: SavedPost) => savedPost.id !== post._id
+      );
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
+      console.log(profile);
+    } else {
+      // Post is unsaved, save
+      const body = {
+        profileID: profile?._id,
+        savedPost: post,
+      };
+
+      axios
+        .put("http://localhost:3000/profile/savepost", body)
+        .then((res) => {})
+        .catch((err) => {
+          console.log(err);
+        });
+
+      const savedPost: SavedPost = {
+        id: "" + post._id,
+        typename: "Secondhand,",
+        title: "Section Exchange",
+      };
+
+      profile.savedPosts.push(savedPost);
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
+    }
+  };
 
   return (
     <div className="outer-container">
@@ -198,6 +257,27 @@ export default function SectionExchange() {
                         </div>
                         <div className="col-md text-center">
                           <p className="card-text">{String(post.createdAt)}</p>
+                        </div>
+                        <div className="post-save-container">
+                          {profile.savedPosts.some(
+                            (savedPost: SavedPost) => savedPost.id === post._id
+                          ) ? (
+                            <img
+                              src="/src/assets/saved.png"
+                              className="post-saved-icon"
+                              onClick={() => {
+                                handleSaveButton(post);
+                              }}
+                            ></img>
+                          ) : (
+                            <img
+                              src="/src/assets/notsaved.png"
+                              className="post-notsaved-icon"
+                              onClick={() => {
+                                handleSaveButton(post);
+                              }}
+                            ></img>
+                          )}
                         </div>
                       </div>
                     </div>

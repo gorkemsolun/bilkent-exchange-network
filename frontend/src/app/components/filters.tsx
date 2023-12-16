@@ -47,7 +47,6 @@ export default function Filters(props: FilterProps) {
   };
 
   const onFilterClicked = () => {
-    console.log(minDate, maxDate);
     props.passFilters({
       categories: checkedCategories,
       prices: {

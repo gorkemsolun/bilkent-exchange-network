@@ -113,9 +113,6 @@ export const secondhandPostGET = async (req, res) => {
       }
     }
 
-    console.log(query);
-    console.log(sort);
-
     const secondhandposts = await SecondhandPost.find(query)
       .sort(sort)
       .skip(req.params.page * req.params.limit)
