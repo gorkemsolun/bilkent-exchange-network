@@ -9,8 +9,8 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isAdmin:{
-      type : Boolean,
+    isAdmin: {
+      type: Boolean,
       required: false,
     },
     email: {
@@ -43,7 +43,6 @@ const UserSchema = new mongoose.Schema(
   {
     timestamps: true,
   }
-
 );
 
 UserSchema.statics.signup = async function (username, email, password) {

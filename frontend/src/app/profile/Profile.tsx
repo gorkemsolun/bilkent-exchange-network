@@ -119,7 +119,7 @@ export default function Profile() {
               onClick={handleDMBoxClick}
             />
           </div>
-          <div className="profileHeader">
+          <div className="profile-header">
             <img
               src={userProfile?.image}
               className="profileImage"
@@ -151,10 +151,9 @@ export default function Profile() {
                 </p>
               </div>
 
-              
               {user?.isAdmin === "admin" && (
-                <button onClick={handleRemove }>Kick User</button>
-                )}
+                <button onClick={handleRemove}>Kick User</button>
+              )}
             </div>
           </div>
           <div className="profilePosts">

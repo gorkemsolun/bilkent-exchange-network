@@ -117,6 +117,7 @@ export const defaultFilterParams = {
 
 export const defaultUserProfile = {
   _id: "",
+  _isAdmin: false,
   userID: "",
   username: "",
   email: "",

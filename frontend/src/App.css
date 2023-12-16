@@ -25,29 +25,36 @@ td {
   width: 25vw;
 }
 
-.filter-category {
+.filter-categories-wrapper {
+  margin-bottom: 1rem;
+}
+
+.filter-category-complete {
   text-align: left;
-  margin-left: 0.5rem;
-  font-weight: 600;
   padding: 0.25rem;
-  margin-left: 0.25rem;
   align-items: center;
 }
 
-.filter-categories-wrapper {
-  margin-bottom: 1rem;
+.filter-category-text:hover {
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.filter-category-text {
+  padding-left: 0.75rem;
 }
 
 .filter-outer-wrapper {
   display: flex;
   flex-direction: column;
   object-fit: contain;
-  margin-left: 0.25rem;
-
-  background-color: #d7feff;
-  border-radius: 0.25rem;
-  padding: 0.25rem;
-  max-width: 150px;
+  padding-left: 0.25rem;
+  background: linear-gradient(to right, #2c2c2c, #2d2d2d);
+  color: #d0d0d0;
+  padding-left: 1rem;
+  font-weight: 700;
+  padding: 1rem;
+  max-width: 180px;
 }
 
 .filter-price-wrapper {
@@ -58,15 +65,16 @@ td {
 }
 
 .filter-price {
-  max-width: 140px;
+  padding-bottom: 0.5rem;
+}
+
+.filter-price-text {
 }
 
 .filter-price-input {
-  border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
   width: 100%;
-  background-color: #fff5e0;
 }
 
 .filter-lostfound-wrapper {
@@ -80,7 +88,6 @@ td {
 .filter-lostfound-input {
   margin-bottom: 0.25rem;
   margin-right: 0.25rem;
-  max-width: 140px;
 }
 
 .filter-sectionexchange-wrapper {
@@ -97,7 +104,6 @@ td {
 
 .filter-sectionexchange-course-wrapper {
   margin-bottom: 1rem;
-  max-width: 140px;
 }
 
 .filter-sectionexchange-course-select {
@@ -127,33 +133,17 @@ td {
   padding: 0.5rem;
   border-radius: 0.25rem;
   background-color: #fff;
-  max-width: 140px;
 }
 
-.filter-date-input-earliest {
-  border: 2px solid;
+.filter-date-input {
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #fff5e0;
 }
 
-.filter-date-input-latest {
-  border: 2px solid;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  background-color: #fff5e0;
-}
-
-.filter-date-input-earliest-wrapper {
+.filter-date-input-wrapper {
   display: flex;
   flex-direction: column;
-  margin-bottom: 0.25rem;
-}
-
-.filter-date-input-latest-wrapper {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .filter-date-wrapper {
@@ -183,21 +173,17 @@ td {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .filter-page-number-input {
-  border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #fff5e0;
 }
 
 .filter-post-per-input {
-  border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #fff5e0;
 }
 
 .filter-reset-filter-button-wrapper {
@@ -300,12 +286,6 @@ td {
   align-items: flex-start;
 }
 
-.profileHeader {
-  display: flex;
-  align-items: center;
-  margin-bottom: 2vh;
-}
-
 .profileImage {
   width: 150px;
   height: 150px;
@@ -351,7 +331,7 @@ td {
   margin-right: 1vw;
 }
 
-.editProfileHeader {
+.edit-profile-header {
   text-align: center;
   font-size: xx-large;
   width: 100%;
@@ -459,7 +439,7 @@ td {
   align-items: flex-start;
 }
 
-.profileHeader {
+.profile-header {
   display: flex;
   align-items: center;
   margin-bottom: 2vh;
@@ -530,8 +510,41 @@ td {
   font-size: 18px;
 }
 
+.navbar-outer {
+  background: linear-gradient(to right, #2c2c2c, #2d2d2d);
+  color: #adadad;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  padding-left: 3%;
+  object-fit: fill;
+}
+
+.navbar-list {
+  display: flex;
+  flex-direction: row;
+  object-fit: fill;
+  justify-content: space-between;
+}
+
+.home-navbar-li {
+  object-fit: fill;
+}
+
+.home-navbar-link {
+  color: #adadad;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.home-navbar-link:hover {
+  color: #fff;
+  transition: color 0.2s ease-in-out;
+}
+
 .header-outer {
-  background: linear-gradient(to right, #3b82f6, #93c5fd);
+  background: linear-gradient(to right, #2c2c2c, #2d2d2d);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -550,6 +563,13 @@ td {
   align-items: center;
   gap: 5px;
   color: #fff;
+}
+
+.header-profile-username {
+  color: #adadad;
+  font-size: 1.25rem;
+  font-weight: 700;
+  transition: color 0.2s ease-in-out;
 }
 
 .header-profile-image {
@@ -591,8 +611,19 @@ td {
   textdecoration: "none";
   display: flex;
   align-items: center;
-  color: #fff;
+  color: #adadad;
   text-decoration: none;
+}
+
+.header-title-link:hover {
+  color: #fff;
+  transition: color 0.2s ease-in-out;
+}
+
+.header-title-text {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 .header-title-image {

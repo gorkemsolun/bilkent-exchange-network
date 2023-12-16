@@ -29,8 +29,16 @@ export default function Header(props: HeaderProps) {
         onClick={() => setDropdownOpen(!isDropdownOpen)}
       >
         <div className="header-profile">
-          <img src={userProfile?.image} className="header-profile-image" />
-          <span>{userProfile?.username}</span>
+          <img
+            src={userProfile?.image}
+            className="header-profile-image"
+            alt="Profile"
+            title="Profile"
+          />
+          <div className="header-profile-username">
+            <span>{userProfile?.username}</span>
+          </div>
+
           {isDropdownOpen && (
             <div className="header-profile-dropdown">
               <Link to="/myprofile" className="header-profile-dropdown-link">
