@@ -39,12 +39,15 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       return;
     }
 
+    const profile = JSON.parse(localStorage.getItem("profile") as string);
+
     const post: SectionexchangePost = {
       offeredCourse: formData.get("offeredCourse") as string,
       offeredSection: formData.get("offeredSection") as string,
       desiredCourse: formData.get("desiredCourse") as string,
       desiredSection: formData.get("desiredSection") as string,
       poster: user?._id as string,
+      posterUsername: profile.username,
     };
 
     let postId;
@@ -67,8 +70,6 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       desiredCourse: post.desiredCourse,
       desiredSection: post.desiredSection,
     };
-
-    const profile = JSON.parse(localStorage.getItem("profile") as string);
 
     if (profile) {
       profile.ownPosts.push(addToProfile);

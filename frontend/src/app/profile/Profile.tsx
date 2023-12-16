@@ -2,7 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { defaultUserProfile, profileUrl } from "../../data-types/constants.ts";
-import { UserContextType, UserProfile } from "../../data-types/datatypes.ts";
+import {
+  Conversation,
+  UserContextType,
+  UserProfile,
+} from "../../data-types/datatypes.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
@@ -16,26 +20,52 @@ export default function Profile() {
   const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
   const user = (useAuthContext() as unknown as UserContextType).user;
   const { id } = useParams();
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation>({} as Conversation);
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
   const handleDMBoxClick = () => {
-    setIsMessengerVisible(true);
-
-    const conversation = {
-      userIDs: [user?._id, userProfile._id],
-      messages: [],
-    };
+    // Check if there is an existing conversation with that user, if there isn't create one
     axios
-      .post("http://localhost:3000/conversation/conversation/", conversation)
+      .get(
+        "http://localhost:3000/conversation/conversation/userID/" + user?._id
+      )
       .then((res) => {
-        // SUCCESFULLY SENT
-      })
-      .catch((err) => {
-        console.log(err);
+        const conversation = res.data.find((conv: Conversation) => {
+          return (
+            conv.userIDs.includes("" + user?._id) &&
+            conv.userIDs.includes(userProfile?.userID)
+          );
+        });
+
+        if (conversation) {
+          conversation.username = userProfile?.username;
+          setSelectedConversation(conversation);
+        } else {
+          const newConversation: Conversation = {
+            userIDs: ["" + user?._id, userProfile?.userID],
+            messages: [],
+            username: userProfile?.username,
+          };
+          setSelectedConversation(newConversation);
+
+          axios
+            .post(
+              "http://localhost:3000/conversation/conversation/",
+              newConversation
+            )
+            .then((res) => {
+              // SUCCESFULLY CREATED CONVERSATION
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       });
+    setIsMessengerVisible(true);
   };
 
   useEffect(() => {
@@ -64,7 +94,7 @@ export default function Profile() {
           <div className="profileDMBoxContainer">
             <img
               className="img-fluid mx-auto d-block max-w-4vw max-h-4vh"
-              src="./src/assets/dmbox.png"
+              src="/src/assets/dmbox.png"
               alt="DM Box"
               title="Send DM"
               onClick={handleDMBoxClick}
@@ -111,7 +141,10 @@ export default function Profile() {
       <div
         className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
       >
-        <Messenger onClick={handleMessengerClick} />
+        <Messenger
+          onClick={handleMessengerClick}
+          selectedConversation={selectedConversation}
+        />
       </div>
     </div>
   );
