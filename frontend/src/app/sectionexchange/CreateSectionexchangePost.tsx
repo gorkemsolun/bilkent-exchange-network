@@ -49,7 +49,7 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
 
     let postId;
     await axios
-      .post(urlsPost.sectionexchange, post)
+      .post(urlsGet.sectionexchange, post)
       .then((res) => {
         // TODO SUCCESFULLY SENT
         postId = res.data._id;

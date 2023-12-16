@@ -33,6 +33,7 @@ export interface ReportPostButtonProps {
 }
 
 export interface ReportPostProps extends ReportPostButtonProps {
+  
   onClose: () => void;
 }
 

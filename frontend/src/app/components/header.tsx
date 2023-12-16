@@ -52,7 +52,7 @@ export default function Header(props: HeaderProps) {
                 Logout
               </Link>
               <Link
-                to="/adminPage"
+                to="/admin"
                 className="header-profile-dropdown-link"
                 onClick={handleClick}
               >

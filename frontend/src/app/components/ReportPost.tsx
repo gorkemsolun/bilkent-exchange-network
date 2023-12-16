@@ -1,42 +1,55 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { ReportPostProps } from "../../data-types/props";
+import { ReportPostProps   } from "../../data-types/props";
 import ErrorModal from "./ErrorModal";
 
 export default function ReportPost(props: ReportPostProps) {
   const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (isSubmitting) {
+      return; // Prevent multiple submissions
+    }
+
+    setIsSubmitting(true);
 
     const formData = new FormData(event.currentTarget);
 
     // Check if any field is empty
     if (!formData.get("reason")) {
-      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setError("Please provide a reason for reporting the post.");
+      setIsSubmitting(false);
       return;
     }
 
     const reason = formData.get("reason") as string;
-
-    axios
-      .put("http://localhost:3000/report-post", {
-        postId: props.postId,
+    console.log(props); 
+    try {
+      // Send the report to the server
+       await axios.post("http://localhost:3000/admin/reportedposts", {
+        postID: props.postId,
         reason: reason,
-      })
-      .then((res) => {
-        alert("Post reported successfully!");
-        // TODO SUCCESFULLY SENT
-      })
-      .catch((err) => {
-        setError(err);
+        userID : props.profileId,
       });
 
-    props.onClose();
+      alert("Post reported successfully!");
+
+    } catch (err) {
+      console.error("Error reporting post:", err);
+      setError("An error occurred while reporting the post.");
+    } finally {
+      setIsSubmitting(false);
+      props.onClose();
+    }
   };
 
   const handleCancel = () => {
-    props.onClose();
+    if (!isSubmitting) {
+      props.onClose();
+    }
   };
 
   return (
@@ -46,7 +59,7 @@ export default function ReportPost(props: ReportPostProps) {
         className="create-item-form"
         style={{ width: "35vw" }}
       >
-        <span className="close" onClick={props.onClose}>
+        <span className="close" onClick={handleCancel}>
           &times;
         </span>
 
@@ -66,8 +79,8 @@ export default function ReportPost(props: ReportPostProps) {
         </div>
 
         <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-danger">
-            Report
+          <button type="submit" className="btn btn-danger" disabled={isSubmitting}>
+            {isSubmitting ? "Reporting..." : "Report"}
           </button>
           <button
             type="button"

@@ -1,5 +1,4 @@
-import { Report} from '../models/report.js'
-
+import { Report } from '../models/report.js';
 export const getReportedPosts = async (req, res) => {
   try {
     // Retrieve reported posts from the database
@@ -11,4 +10,20 @@ export const getReportedPosts = async (req, res) => {
     console.error('Error fetching reported posts:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+};
+
+export const reportPost = async (req, res) => {
+  console.log("fdfdfd"); 
+  const { postId, reason, userId } = req.body;
+
+  try {
+    // Save the report information to the database using the Report model
+    const newReport = await Report.create({ postId, reason, userId }); 
+    // Send a response indicating successful report
+    return res.status(201).send(newReport);
+  } catch (error) {
+    console.error('Error reporting post:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+  
 };

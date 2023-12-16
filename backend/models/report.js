@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const ReportSchema = new mongoose.Schema(
   {
-    postId: {
+    postID: {
       type: String,
       required: true,
     },
@@ -10,16 +10,9 @@ const ReportSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    userId: {
+    userID: {
       type: String, 
       required: true,
-    },
-    postDetails: {
-      title: String,
-      description: String,
-    },
-    reporterDetails: {
-      username: String,
     },
   },
   {

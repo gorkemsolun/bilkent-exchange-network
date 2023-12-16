@@ -10,7 +10,7 @@ export default function AdminPage() {
     setLoading(true);
 
     axios
-      .get("http://localhost:3000/admin/reported-posts") // Adjust the endpoint
+      .get("http://localhost:3000/admin/reportedposts") //
       .then((res) => {
         setReportedPosts(res.data.reportedPosts);
       })
