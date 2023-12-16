@@ -6,6 +6,16 @@ import { HeaderProps } from "../../data-types/props";
 import { useLogout, useProfileContext } from "../authentication/AuthHelpers";
 
 export default function Header(props: HeaderProps) {
+  const linkStyle = {
+    display: "flex", // Use flex display to align items horizontally
+    alignItems: "center", // Center items vertically
+    textDecoration: "none", // Remove default underline
+  };
+
+  const imageStyle = {
+    marginRight: "10px", // Adjust the value to set the desired gap
+  };
+
   const { logout } = useLogout();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(
@@ -63,13 +73,14 @@ export default function Header(props: HeaderProps) {
         </div>
       </div>
       <div className="header-title-outer">
-        <Link className="header-title-link" to="/secondhand">
+        <Link style={linkStyle} className="header-title-link" to="/secondhand">
           <img
+            style={imageStyle}
             className="header-title-image"
             src="./src/assets/logo.png"
             alt="Logo"
           />
-          Bilkent Exchange Network
+          <span className="header-title-text">Bilkent Exchange Network</span>
         </Link>
       </div>
       <div className="header-message-link">
@@ -83,4 +94,3 @@ export default function Header(props: HeaderProps) {
     </div>
   );
 }
-
