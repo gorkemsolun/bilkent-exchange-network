@@ -58,11 +58,13 @@ export const sectionexchangePostPOST = async (req, res) => {
 export const sectionexchangePostGET = async (req, res) => {
   try {
     let query = {};
+    let sort = {};
     let regexSearch = new RegExp(req.params.search, "i");
     let priceMin = req.params.price.split("*")[0],
       priceMax = req.params.price.split("*")[1];
     let dateMin = req.params.date.split("*")[0],
       dateMax = req.params.date.split("*")[1];
+    let sortType = req.params.sort;
 
     if (req.params.search !== "All") {
       query.title = { $regex: regexSearch };
@@ -75,11 +77,11 @@ export const sectionexchangePostGET = async (req, res) => {
       query.price = { $lte: priceMax };
     }
     if (dateMin && dateMin !== "All" && dateMax !== "All" && dateMax) {
-      query.timestamp = { $gte: dateMin, $lte: dateMax };
+      query.createdAt = { $gte: dateMin, $lte: dateMax };
     } else if (dateMin !== "All" && dateMin) {
-      query.timestamp = { $gte: dateMin };
+      query.createdAt = { $gte: dateMin };
     } else if (dateMax !== "All" && dateMax) {
-      query.timestamp = { $lte: dateMax };
+      query.createdAt = { $lte: dateMax };
     }
     if (req.params.offeredCourse !== "All") {
       query.offeredCourse = req.params.offeredCourse;
@@ -93,10 +95,16 @@ export const sectionexchangePostGET = async (req, res) => {
     if (req.params.desiredSection !== "undefined") {
       query.desiredSection = Number(req.params.desiredSection);
     }
-
-    console.log(req);
+    if (sortType && sortType !== "All") {
+      if (sortType === "date-desc") {
+        sort.createdAt = -1;
+      } else if (sortType === "date-asc") {
+        sort.createdAt = 1;
+      }
+    }
 
     const sectionexchangeposts = await SectionexchangePost.find(query)
+      .sort(sort)
       .skip(req.params.page * req.params.limit)
       .limit(req.params.limit);
 
@@ -139,8 +147,8 @@ export const sectionexchangePostPUT = async (req, res) => {
     if (!result) {
       return res.status(404).send("SectionexchangePost not found");
     }
-   
-    await updateOwnedSecExPost(req.body, result._id, result.poster)
+
+    await updateOwnedSecExPost(req.body, result._id, result.poster);
 
     return res.status(204).send("SectionexchangePost updated");
   } catch (err) {
@@ -156,7 +164,7 @@ export const sectionexchangePostDEL = async (req, res) => {
     if (!result) {
       return res.status(404).send("SectionexchangePost not found");
     }
-    await deleteOwnedPosts(result.poster, req.params.id)
+    await deleteOwnedPosts(result.poster, req.params.id);
     return res.status(204).send("SectionexchangePost deleted");
   } catch (err) {
     console.log(err);

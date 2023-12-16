@@ -3,9 +3,10 @@ import { defaultImage, urlsGet } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 
 export function prepareUrl(
+  sortType: string,
   searchTerm: string,
   type: string,
-  filterParams?: FilterParams
+  filterParams: FilterParams
 ) {
   let url: string = urlsGet[type as keyof typeof urlsGet];
   if (filterParams) {
@@ -46,19 +47,23 @@ export function prepareUrl(
     if (filterParams.dates.startDate && filterParams.dates.endDate) {
       url = url.replace(
         ":date",
-        filterParams.dates.startDate.toISOString() +
+        new Date(Date.parse(filterParams.dates.startDate)).toISOString() +
           "*" +
-          filterParams.dates.endDate.toISOString()
+          new Date(Date.parse(filterParams.dates.endDate)).toISOString()
       );
     } else if (filterParams.dates.startDate) {
       url = url.replace(
         ":date",
-        filterParams.dates.startDate.toISOString() + "*" + "All"
+        new Date(Date.parse(filterParams.dates.startDate)).toISOString() +
+          "*" +
+          "All"
       );
     } else if (filterParams.dates.endDate) {
       url = url.replace(
         ":date",
-        "All" + "*" + filterParams.dates.endDate.toISOString()
+        "All" +
+          "*" +
+          new Date(Date.parse(filterParams.dates.endDate)).toISOString()
       );
     } else {
       url = url.replace(":date", "All");
@@ -81,6 +86,12 @@ export function prepareUrl(
     url = url.replace(":search", searchTerm);
   } else {
     url = url.replace(":search", "All");
+  }
+
+  if (sortType) {
+    url = url.replace(":sort", sortType);
+  } else {
+    url = url.replace(":sort", "All");
   }
 
   return url;

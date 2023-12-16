@@ -13,7 +13,7 @@ import {
 const router = express.Router();
 router.post("/forumpost", forumPostPOST);
 router.get(
-  "/forumpost/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
+  "/forumpost/so/:sort/pg/:page/lm/:limit/c/:categories/d/:date/s/:search",
   forumPostGET
 );
 router.get("/forumpost/:id", forumPostGETId);

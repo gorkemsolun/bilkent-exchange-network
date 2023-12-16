@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "./AuthHelpers";
 import BackgroundManager from "../components/BackgroundManager";
@@ -10,6 +10,19 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, error, isLoading } = useLogin();
+  const [loadingMessage, setLoadingMessage] = useState("Loading");
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setLoadingMessage((prevMessage) => {
+        return prevMessage === "Loading..." ? "Loading" : prevMessage + ".";
+      });
+    }, 75);
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []); // Empty dependency array to run the effect only once on mount
+
   const handleLogin = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
@@ -32,7 +45,7 @@ export default function Login() {
         </h1>
       </div>
       <form
-        className="flex flex-col bg-white rounded shadow-lg p-12 mt-12 opacity-90"
+        className="flex flex-col bg-white rounded shadow-lg p-12 mt-12 opacity-95"
         action=""
       >
         <label className="font-semibold text-s mt-2">Email</label>
@@ -65,7 +78,14 @@ export default function Login() {
         </div>
         <div>
           {isLoading ? (
-            <span>Loading...</span>
+            <div style={{ marginTop: "20px" }}>
+              <span
+                style={{ color: "#3490dc" }}
+                className="loading-msg font-semibold text-s mt-2"
+              >
+                {loadingMessage}
+              </span>
+            </div>
           ) : (
             <Link
               className="flex items-center justify-center h-12 px-6 w-64 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 opacity-100"
@@ -76,7 +96,16 @@ export default function Login() {
             </Link>
           )}
         </div>
-        {error && <div className="error">{error}</div>}
+        {error && (
+          <div style={{ marginTop: "20px" }}>
+            <div
+              style={{ color: "#3490dc" }}
+              className="error font-semibold text-s mt-2"
+            >
+              {error}
+            </div>
+          </div>
+        )}
       </form>
     </div>
   );

@@ -1,6 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { profileUrl } from "../../data-types/constants.ts";
+import {
+  conversationUrl,
+  defaultConversation,
+  profileUrl,
+} from "../../data-types/constants.ts";
 import {
   Conversation,
   Message,
@@ -9,10 +13,10 @@ import {
 import { MessengerProps } from "../../data-types/props.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
 
-const MessengerPage = (props: MessengerProps) => {
+export default function Messenger(props: MessengerProps) {
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [selectedConversation, setSelectedConversation] =
-    useState<Conversation>(props.selectedConversation || ({} as Conversation));
+    useState<Conversation>(props.selectedConversation || defaultConversation);
   const [isInConversation, setIsInCoversation] = useState<boolean>(
     selectedConversation.userIDs !== undefined || false
   );
@@ -24,15 +28,14 @@ const MessengerPage = (props: MessengerProps) => {
   };
 
   useEffect(() => {
-    setSelectedConversation(props.selectedConversation || ({} as Conversation));
+    setSelectedConversation(props.selectedConversation || defaultConversation);
     setIsInCoversation(selectedConversation.createdAt !== undefined || false);
   }, [props.selectedConversation]);
+  // props is not a dependency, This should be checked NEEDS TO BE CONTROLLED
 
   useEffect(() => {
     axios
-      .get(
-        "http://localhost:3000/conversation/conversation/userID/" + user?._id
-      )
+      .get(conversationUrl + "/userID/" + user?._id)
       .then((res) => {
         const conversationsWithUsernames = res.data.map(
           (conversation: Conversation) => {
@@ -77,7 +80,7 @@ const MessengerPage = (props: MessengerProps) => {
       .catch((err) => {
         console.log(err);
       });
-    // props is not a dependency, This should be checked
+    // props is not a dependency, This should be checked NEEDS TO BE CONTROLLED
   }, []);
 
   const handleSendMessage = () => {
@@ -104,7 +107,7 @@ const MessengerPage = (props: MessengerProps) => {
       )
       .then((res) => {
         setMessageInput("");
-        // sent
+        // sent HERE RES SHOULD BE CHECKED
       })
       .catch((err) => {
         console.log(err);
@@ -239,6 +242,4 @@ const MessengerPage = (props: MessengerProps) => {
       )}
     </div>
   );
-};
-
-export default MessengerPage;
+}
