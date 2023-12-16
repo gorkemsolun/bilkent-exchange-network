@@ -1,4 +1,4 @@
-# BILKENT EXCHANCE NETWORK (BEN)
+# BILKENT EXCHANGE NETWORK (BEN)
 
 ![](readme-res/logo.png) <br>
 
