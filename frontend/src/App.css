@@ -1280,3 +1280,24 @@ td {
   font-weight: bold;
   text-align: left;
 }
+
+.success-modal-content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  opacity: 0.95; 
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.success-modal-content > * {
+  margin-bottom: 1rem; 
+}
+
+.success-modal-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.success-modal-content-par {
+  color:#0056b3;
+}

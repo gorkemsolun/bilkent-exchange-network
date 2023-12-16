@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { useVerificationEmail } from "./AuthHelpers";
 import BackgroundManager from "../components/BackgroundManager";
 import VerificationModal from "../components/VerificationModal";
+import ErrorModal from "../components/ErrorModal";
+import { isValidEmail } from "../components/WebMailValidator";
 
 const bg = new BackgroundManager();
 const url = bg.getRandomImageUrl();
@@ -11,10 +13,37 @@ export default function VerificationPage() {
   const [email, setEmail] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const { sendEmail } = useVerificationEmail();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!username && !email) {
+      setError("Please enter your username and email");
+      return;
+    }
+
+    if (!username) {
+      setError("Please enter a username");
+      return;
+    }
+
+    if (/*username exists check necessary*/ false) {
+      setError("Username already exists");
+      return;
+    }
+
+    if (!email) {
+      setError("Please enter an email");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setError("Email address is not valid");
+      return;
+    }
+
     setIsVerifying(true);
     console.log("verification button pressed");
     await sendEmail("", email);
@@ -87,6 +116,16 @@ export default function VerificationPage() {
             >
               Send Verification Mail
             </button>
+            <div style={{ marginTop: "30px" }}>
+              {error && (
+                <ErrorModal
+                  message={error}
+                  onClose={() => {
+                    setError("");
+                  }}
+                />
+              )}
+            </div>
           </>
         )}
       </form>
