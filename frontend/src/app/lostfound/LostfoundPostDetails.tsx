@@ -100,9 +100,6 @@ export default function LostFoundPostDetails() {
         .catch((err) => {
           console.log(err);
           setError(err);
-        })
-        .finally(() => {
-          setLoading(false);
         });
     }
   }, [post, profile]);

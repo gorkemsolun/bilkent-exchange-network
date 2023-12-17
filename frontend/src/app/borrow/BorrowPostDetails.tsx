@@ -101,9 +101,6 @@ export default function BorrowPostDetails() {
           setError(err);
           console.log(err);
         })
-        .finally(() => {
-          setLoading(false);
-        });
     }
   }, [post, profile]);
 

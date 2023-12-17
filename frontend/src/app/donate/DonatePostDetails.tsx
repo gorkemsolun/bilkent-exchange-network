@@ -100,9 +100,6 @@ export default function DonatePostDetails() {
         .catch((err) => {
           setError(err);
           console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
         });
     }
   }, [post, profile]);
