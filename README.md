@@ -39,7 +39,11 @@
 3. Using the command `git clone https://github.com/gorkemsolun/bilkent-exchange-network.git`, install the required files. <br>
 4. Once the installation is complete, change your directory to `...\bilkent-exchange-network` using `cd` command <br>
 
-> ❗❗❗ Terminal must have been opened on the specified root which should end with `...\bilkent-exchange-network`. Or if you have cloned the directory with a different name, then that name should be present `...\[the-custom-name-you-used]`. <br>
+![](readme-res/cd-com.png) <br>
+
+> ❗❗❗ Terminal must have been opened on the specified root which should end with `\bilkent-exchange-network`. <br>
+
+![](readme-res/root-red.png) <br>
 
 5. Type the following commands in order: <br>
 
@@ -53,24 +57,30 @@ npm install
 
 > After completing this step, you will have successfully configured the dependencies, paving the way for the next phase: running the project. <br>
 
-> Please be aware that you will need to open two separate terminals. <br>
+6. Close the terminal. <br>
 
-> ❗❗❗ Both of the terminals must have been opened on the same root. Both of them should end with `...\bilkent-exchange-network`. Or if you have cloned the directory with a different name, then that name should be present, then that name should be present `...\[the-custom-name-you-used]`. <br>
+7. Using the same shortcut (Windows key + R) as before open two separate terminals. <br>
 
-6. From one of the terminals type: <br>
+8. Navigate to the `\bilkent-exchange-network` directory using `cd` command.
+
+> ❗❗❗ Once again make sure that both of the terminals are opened on the same root before continuing. Both of the roots should end with `...\bilkent-exchange-network`. <br>
+
+9. From one of the terminals type: <br>
 
 ```
 cd frontend
 npm run dev
 ```
 
-7. And from the other terminal type:
+10. And from the other terminal type:
 
 ```
 cd backend
 npm run dev
 ```
 
-8. Open up your desired browser and type `http://localhost:5000` to address bar. <br>
-9. Either log in to the system with credentials provided in the directory, or create yourself an account. <br>
-10. Enjoy and BEN-d the rules of social network. <br>
+> ❗ WHILE TRYING OUT THE PROJECT DO NOT CLOSE NEITHER OF THE LAST TWO TERMINALS ❗ <br>
+
+11. Open up your desired browser and type `http://localhost:5000` to address bar. <br>
+12. Either log in to the system with credentials provided in the directory, or create yourself an account. <br>
+13. Enjoy and BEN-d the rules of social network. <br>
