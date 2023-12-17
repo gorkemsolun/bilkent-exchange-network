@@ -33,7 +33,6 @@ export const getReportedPosts = async (req, res) => {
  * @returns {Object} - The response indicating the successful report or an error message.
  */
 export const reportPost = async (req, res) => {
-  console.log(req.body);
   var { postId, reason, userId, type, title } = req.body;
 
   try {

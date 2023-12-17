@@ -17,6 +17,7 @@ export interface DeletePostButtonProps {
   postId: string;
   profileId: string;
   type: string;
+  fromProfile?: boolean;
 }
 
 export interface DeletePostProps {
@@ -24,6 +25,7 @@ export interface DeletePostProps {
   postId: string;
   profileId: string;
   type: string;
+  fromProfile?: boolean;
 }
 
 export interface ReportPostButtonProps {
@@ -40,11 +42,13 @@ export interface ReportPostProps extends ReportPostButtonProps {
 export interface EditPostButtonProps {
   type: string;
   postId: string;
+  fromProfile?: boolean;
 }
 
 export interface EditPostProps {
   onClose: () => void;
   postId: string;
+  fromProfile?: boolean;
 }
 
 export interface CreateEntryButtonProps {

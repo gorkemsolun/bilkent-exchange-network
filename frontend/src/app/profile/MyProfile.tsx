@@ -14,11 +14,11 @@ import {
   UserProfile,
 } from "../../data-types/datatypes.ts";
 import { useProfileContext } from "../authentication/AuthHelpers.js";
+import DeletePostButton from "../components/DeletePostButton.tsx";
+import EditPostButton from "../components/EditPostButton.tsx";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
-import DeletePostButton from "../components/DeletePostButton.tsx";
-import EditPostButton from "../components/EditPostButton.tsx";
 
 export default function MyProfile() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -126,11 +126,13 @@ export default function MyProfile() {
                                     postId={"" + post.id}
                                     profileId={"" + userProfile._id}
                                     type={post.typename}
+                                    fromProfile={true}
                                   />
                                   <div className="profile-posts-edit-button">
                                     <EditPostButton
                                       postId={"" + post.id}
                                       type={post.typename.toLowerCase()}
+                                      fromProfile={true}
                                     />
                                   </div>
                                 </div>

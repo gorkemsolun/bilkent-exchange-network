@@ -44,7 +44,6 @@ export default function DeletePost(props: DeletePostProps) {
       profileDispatch({ type: "UPDATE", payload: profile });
     }
     setLoading(false);
-
     if (error === null || error === undefined) {
       setIsDeleted(true);
     }
@@ -57,7 +56,9 @@ export default function DeletePost(props: DeletePostProps) {
     props.onClose();
   };
 
-  if (isDeleted) {
+  if (isDeleted && props?.fromProfile) {
+    window.location.reload();
+  } else if (isDeleted) {
     return <Navigate to="/myprofile" />;
   }
 

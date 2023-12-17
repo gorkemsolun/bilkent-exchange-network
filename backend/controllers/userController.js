@@ -1,13 +1,13 @@
-import jwt from "jsonwebtoken";
-import { User } from "../models/user.js";
-import { UserProfile } from "../models/userProfile.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { BorrowPost } from "../models/borrowpost.js";
 import { DonatePost } from "../models/donatepost.js";
-import { ForumPost } from "../models/forumpost.js"; 
+import { ForumPost } from "../models/forumpost.js";
 import { LostfoundPost } from "../models/lostfoundpost.js";
 import { SecondhandPost } from "../models/secondhandpost.js";
 import { SectionexchangePost } from "../models/sectionexchangepost.js";
+import { User } from "../models/user.js";
+import { UserProfile } from "../models/userProfile.js";
 
 /**
  * Creates a token for the given user ID.
@@ -77,45 +77,37 @@ export const signupUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   const userId = req.params.userId;
   try {
-    
-    console.log(userId);
-
     const deletedUser = await User.findByIdAndDelete(userId);
 
     if (!deletedUser) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const profile = await UserProfile.findOne(
-      {userID: userId}
-    );
-    
+    const profile = await UserProfile.findOne({ userID: userId });
+
     profile.ownPosts.map(async (post) => {
-      console.log(post);
-      if (post.typename === "Secondhand"){
-        console.log("removed secondhand")
-       await  SecondhandPost.findByIdAndDelete(post.id)
-      }else if (post.typename === "Lostfound"){
-        await LostfoundPost.findByIdAndDelete(post.id)
-      }else if (post.typename === "Donate"){
-        await DonatePost.findByIdAndDelete(post.id)
-      }else if (post.typename === "Borrow"){
-        await BorrowPost.findByIdAndDelete(post.id)
-      }else if (post.typename === "Forum"){
-        await ForumPost.findByIdAndDelete(post.id)
-      }else if (post.typename === "SectionExchange"){
-        await SectionexchangePost.findByIdAndDelete(post.id)
+      if (post.typename === "Secondhand") {
+        await SecondhandPost.findByIdAndDelete(post.id);
+      } else if (post.typename === "Lostfound") {
+        await LostfoundPost.findByIdAndDelete(post.id);
+      } else if (post.typename === "Donate") {
+        await DonatePost.findByIdAndDelete(post.id);
+      } else if (post.typename === "Borrow") {
+        await BorrowPost.findByIdAndDelete(post.id);
+      } else if (post.typename === "Forum") {
+        await ForumPost.findByIdAndDelete(post.id);
+      } else if (post.typename === "SectionExchange") {
+        await SectionexchangePost.findByIdAndDelete(post.id);
       }
+    });
 
-    })
+    profile.username = "removed";
+    profile.email = "removed";
+    profile.description = "removed";
+    profile.ownPosts = null;
+    profile.image = null;
 
-    profile.username = "removed"
-    profile.email ="removed"
-    profile.description ="removed"
-    profile.ownPosts = null
-    profile.image = null
-    
-    await profile.save()
+    await profile.save();
 
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
@@ -157,37 +149,37 @@ export const verifyEmail = async (req, res) => {
 
 /**
  * Handles the forgot password functionality.
- * 
+ *
  * @param {Object} req - The request object.
  * @param {Object} res - The response object.
  * @returns {Promise<void>} - A promise that resolves when the operation is complete.
  */
 export const forgotPassword = async (req, res) => {
-  const {email, password} = req.body
-  try{
+  const { email, password } = req.body;
+  try {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(password, salt);
-   
-    const user = await User.findOneAndUpdate(
-      {email: email},
-      {password: hash}
-    )
-    res.status(200).json({user})
-  } catch (error) {
-    res.status(500).json({error:error.message})
-  }
-}
 
-export const checkIfUserAlreadyExists= async (req, res) => {
-  const {email} = req.body
-  const user = await User.findOne({email: email});
-  const bilkentEmailRegex = /^[^\s@]+@ug\.bilkent\.edu\.tr$/;
-  
-  if(user) {
-    res.status(500).json({error: "Email already in use"})
-  } else if(!bilkentEmailRegex.test(email)){
-    res.status(500).json({error: "Not a Bilkent Mail"})
-  }else{
-    res.status(200).json({})
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      { password: hash }
+    );
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-}
+};
+
+export const checkIfUserAlreadyExists = async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email: email });
+  const bilkentEmailRegex = /^[^\s@]+@ug\.bilkent\.edu\.tr$/;
+
+  if (user) {
+    res.status(500).json({ error: "Email already in use" });
+  } else if (!bilkentEmailRegex.test(email)) {
+    res.status(500).json({ error: "Not a Bilkent Mail" });
+  } else {
+    res.status(200).json({});
+  }
+};

@@ -40,6 +40,7 @@ export default function DeletePostButton(props: DeletePostButtonProps) {
           postId={props.postId}
           profileId={props.profileId}
           type={props.type}
+          fromProfile={props.fromProfile}
         />
       )}
     </div>

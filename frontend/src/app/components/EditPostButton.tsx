@@ -20,7 +20,6 @@ export default function EditPostButton(props: EditPostButtonProps) {
    */
   function handleEditPost(): void {
     setIsModalOpen(true);
-    console.log(props);
   }
 
   /**
@@ -36,7 +35,11 @@ export default function EditPostButton(props: EditPostButtonProps) {
         Edit
       </button>
       {isModalOpen && props.type == "secondhand" && (
-        <EditSecondHandPost onClose={handleCloseModal} postId={props.postId} />
+        <EditSecondHandPost
+          onClose={handleCloseModal}
+          postId={props.postId}
+          fromProfile={props.fromProfile}
+        />
       )}
       {isModalOpen && props.type == "lostfound" && (
         <EditLostAndFoundPost
@@ -45,19 +48,32 @@ export default function EditPostButton(props: EditPostButtonProps) {
         />
       )}
       {isModalOpen && props.type == "donate" && (
-        <EditDonatePost onClose={handleCloseModal} postId={props.postId} />
+        <EditDonatePost
+          onClose={handleCloseModal}
+          postId={props.postId}
+          fromProfile={props.fromProfile}
+        />
       )}
       {isModalOpen && props.type == "borrow" && (
-        <EditBorrowPost onClose={handleCloseModal} postId={props.postId} />
+        <EditBorrowPost
+          onClose={handleCloseModal}
+          postId={props.postId}
+          fromProfile={props.fromProfile}
+        />
       )}
       {isModalOpen && props.type == "sectionexchange" && (
         <EditSectionExchangePost
           onClose={handleCloseModal}
           postId={props.postId}
+          fromProfile={props.fromProfile}
         />
       )}
       {isModalOpen && props.type == "forum" && (
-        <EditForumPost onClose={handleCloseModal} postId={props.postId} />
+        <EditForumPost
+          onClose={handleCloseModal}
+          postId={props.postId}
+          fromProfile={props.fromProfile}
+        />
       )}
     </div>
   );

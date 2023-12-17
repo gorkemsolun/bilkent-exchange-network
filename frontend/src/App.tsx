@@ -158,7 +158,6 @@ function AppContent() {
                 <AdminPage />
               ) : (
                 setTimeout(() => {
-                  console.log(user);
                   <p>You don't have permission to access this page.</p>;
                   <Navigate to="/secondhandpost" />;
                 }, 10)

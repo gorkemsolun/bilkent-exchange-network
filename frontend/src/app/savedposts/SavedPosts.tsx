@@ -29,7 +29,6 @@ export default function SavedPosts() {
    */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
-    console.log(profile);
   };
 
   /**

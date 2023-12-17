@@ -172,7 +172,6 @@ export default function SectionExchange() {
       );
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
-      console.log(profile);
     } else {
       // Post is unsaved, save
       const type = "sectionexchange";
