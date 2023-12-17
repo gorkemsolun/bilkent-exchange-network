@@ -156,6 +156,7 @@ export default function LostFound() {
                             onClick={() => {
                               handleSaveButton(post);
                             }}
+                            title="saved"
                           ></img>
                         ) : (
                           <img
@@ -164,6 +165,7 @@ export default function LostFound() {
                             onClick={() => {
                               handleSaveButton(post);
                             }}
+                            title="not saved"
                           ></img>
                         )}
                       </div>

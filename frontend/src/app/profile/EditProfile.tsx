@@ -47,12 +47,17 @@ export default function EditProfile() {
 
     const formData = new FormData(event.currentTarget);
 
+    if (!formData.get("username")) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
+    }
+
     userProfile.username = formData.get("username") as string;
     userProfile.description = formData.get("description") as string;
+    //if no file is submitted then do not include image in the userProfile body
     if (isFileImage(formData.get("image") as File)) {
       userProfile.image = await resizeImageFile(formData.get("image") as File);
-    } else {
-      //if no file is submitted then do not include image in the userProfile body
     }
 
     axios
@@ -72,8 +77,11 @@ export default function EditProfile() {
     });
 
     localStorage.setItem("profile", JSON.stringify(userProfile));
+
     setLoading(false);
-    setIsSubmitted(true);
+    if (error === null || error === undefined) {
+      setIsSubmitted(true);
+    }
   };
 
   // Reset the form to the original values

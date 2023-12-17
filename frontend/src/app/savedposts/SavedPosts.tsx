@@ -1,19 +1,22 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { saveUrl, unsaveUrl } from "../../data-types/constants";
 import { ProfileContextType, SavedPost } from "../../data-types/datatypes";
 import { useProfileContext } from "../authentication/AuthHelpers";
+import ErrorModal from "../components/ErrorModal";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 import Messenger from "../message/Messenger";
 
 export default function SavedPosts() {
-  const profile = JSON.parse(localStorage.getItem("profile") as string);
+  const [error, setError] = useState<string | null>(null);
+  const [loading] = useState<boolean>(false);
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
-  const [loading, setLoading] = useState<boolean>(false);
-  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
+  const profile = JSON.parse(localStorage.getItem("profile") as string);
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -31,18 +34,16 @@ export default function SavedPosts() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/unsavepost", body)
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(unsaveUrl, body).catch((err) => {
+        setError(err);
+        console.log(err);
+      });
 
       profile.savedPosts = profile.savedPosts.filter(
         (savedPost: SavedPost) => savedPost.id !== post.id
       );
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
-      console.log(profile);
     } else {
       // Post is unsaved, save
       const body = {
@@ -50,8 +51,9 @@ export default function SavedPosts() {
         savedPost: post,
       };
 
-      axios.put("http://localhost:3000/profile/savepost", body).catch((err) => {
+      axios.put(saveUrl, body).catch((err) => {
         console.log(err);
+        setError(err);
       });
 
       const savedPost: SavedPost = {
@@ -173,6 +175,14 @@ export default function SavedPosts() {
             <Messenger onClick={handleMessengerClick} />
           </div>
         </div>
+      )}
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
       )}
     </div>
   );
