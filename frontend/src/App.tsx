@@ -147,11 +147,11 @@ function AppContent() {
           <Route
             path="/admin"
             element={
-              user?.isAdmin? (
+              !user?.isAdmin? (
                 <AdminPage />
               ) : (
                 setTimeout(() => {
-                  console.log(user?.isAdmin); 
+                  console.log(user); 
                   <p>You don't have permission to access this page.</p>; 
                   <Navigate to="/secondhandpost" />;
                 }, 10)
