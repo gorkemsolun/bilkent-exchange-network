@@ -41,7 +41,7 @@
 
 ![](readme-res/cd-com.png) <br>
 
-> ❗❗❗ Terminal must have been opened on the specified root which should end with `...\bilkent-exchange-network`. <br>
+> ❗❗❗ Terminal must have been opened on the specified root which should end with `\bilkent-exchange-network`. <br>
 
 ![](readme-res/root-red.png) <br>
 
@@ -61,7 +61,9 @@ npm install
 
 7. Using the same shortcut (Windows key + R) as before open two separate terminals. <br>
 
-> ❗❗❗ Once again make sure that both of the terminals are opened on the same root. Both of the roots should end with `...\bilkent-exchange-network`. <br>
+8. Navigate to the `\bilkent-exchange-network` directory using `cd` command.
+
+> ❗❗❗ Once again make sure that both of the terminals are opened on the same root before continuing. Both of the roots should end with `...\bilkent-exchange-network`. <br>
 
 8. From one of the terminals type: <br>
 
