@@ -80,8 +80,7 @@ export default function Messenger(props: MessengerProps) {
       .catch((err) => {
         console.log(err);
       });
-    // props is not a dependency, This should be checked NEEDS TO BE CONTROLLED
-  }, []);
+  }, [props.onClick]);
 
   const handleSendMessage = () => {
     const newMessage: Message = {

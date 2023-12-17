@@ -275,18 +275,6 @@ td {
   transition: background-color 0.3s ease;
 }
 
-.profileContainer {
-  max-width: 600px;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
 .profileImage {
   width: 150px;
   height: 150px;
@@ -307,14 +295,17 @@ td {
 }
 
 .profileUsername {
-  color: #555;
+  color: black;
   margin: 0;
+  font-weight: bold;
+  font-size: 28px;
 }
 
 .profileDetails {
   display: flex;
   justify-content: space-between;
   margin-bottom: 3vh;
+  margin-top: 1vh;
 }
 
 .profileEditIcon {
@@ -322,6 +313,7 @@ td {
   max-width: 5vw;
   margin-left: 37vw;
   margin-bottom: 1vh;
+  margin-top: 12px;
 }
 
 .editProfileButtonContainer {
@@ -349,7 +341,14 @@ td {
 .profileInfo {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-top: 14px;
+}
+
+.profile-description {
+  height: fit-content;
+  text-align: left;
+  width: 55%;
+  overflow-wrap: break-word;
 }
 
 .infoLabel {
@@ -367,6 +366,12 @@ td {
 
 .profilePosts {
   margin-top: 20px;
+}
+
+.profilePostsTitle {
+  text-align: left;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 .statLabel {
@@ -432,10 +437,11 @@ td {
 .profileContainer {
   max-width: 600px;
   margin: auto;
+  margin-top: 12px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
 }
