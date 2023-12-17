@@ -37,7 +37,7 @@ export default function VerificationPage() {
       return;
     }
 
-    const res = await fetch("http://localhost:3000/user/signup", {
+    const res = await fetch("http://localhost:3000/user/checkUser", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -48,7 +48,7 @@ export default function VerificationPage() {
     const json = await res.json();
 
     if (!res.ok){
-      setError(json.error)
+      setError(json.error as string)
     } else{
       setIsVerifying(true);
       await sendEmail("", email);

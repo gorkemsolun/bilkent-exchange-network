@@ -35,6 +35,6 @@ authRouter.delete("/delete/:userId", deleteUser);
 //forgot password actually changes user password
 authRouter.post("/forgotpassword", forgotPassword);
 
-authRouter.get("/checkUser",checkIfUserAlreadyExists );
+authRouter.post("/checkUser",checkIfUserAlreadyExists );
 
 export default authRouter;
