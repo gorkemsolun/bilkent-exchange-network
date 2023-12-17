@@ -35,8 +35,9 @@ export const loginUser = async (req, res) => {
 
     const token = createToken(user._id);
     const _id = user._id;
+    const isAdmin = user.isAdmin;
 
-    res.status(200).json({ email, _id, token });
+    res.status(200).json({ email, _id, token, isAdmin });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -77,7 +78,7 @@ export const deleteUser = async (req, res) => {
   const userId = req.params.userId;
   try {
     
-   
+    console.log(userId);
 
     const deletedUser = await User.findByIdAndDelete(userId);
 
@@ -88,24 +89,34 @@ export const deleteUser = async (req, res) => {
     const profile = await UserProfile.findOne(
       {userID: userId}
     );
-
-    profile.ownPosts.map((post) => {
-      
+    
+    profile.ownPosts.map(async (post) => {
+      console.log(post);
       if (post.typename === "Secondhand"){
-        SecondhandPost.deleteOne({_id: post.id})
+        console.log("removed secondhand")
+       await  SecondhandPost.findByIdAndDelete(post.id)
       }else if (post.typename === "Lostfound"){
-        LostfoundPost.deleteOne({_id: post.id})
+        await LostfoundPost.findByIdAndDelete(post.id)
       }else if (post.typename === "Donate"){
-        DonatePost.deleteOne({_id: post.id})
+        await DonatePost.findByIdAndDelete(post.id)
       }else if (post.typename === "Borrow"){
-        BorrowPost.deleteOne({_id: post.id})
+        await BorrowPost.findByIdAndDelete(post.id)
       }else if (post.typename === "Forum"){
-        ForumPost.deleteOne({_id: post.id})
+        await ForumPost.findByIdAndDelete(post.id)
       }else if (post.typename === "SectionExchange"){
-        SectionexchangePost.deleteOne({_id: post.id})
+        await SectionexchangePost.findByIdAndDelete(post.id)
       }
 
     })
+
+    profile.username = "removed"
+    profile.email ="removed"
+    profile.description ="removed"
+    profile.ownPosts = null
+    profile.image = null
+    
+    await profile.save()
+
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user:", error);
