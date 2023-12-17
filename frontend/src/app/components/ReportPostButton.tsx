@@ -5,10 +5,16 @@ import ReportPost from "./ReportPost";
 export default function ReportPostButton(props: ReportPostButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  /**
+   * Handles the action of reporting a post.
+   */
   function handleReportPost(): void {
     setIsModalOpen(true);
   }
 
+  /**
+   * Handles the action of closing the report modal.
+   */
   function handleCloseModal(): void {
     setIsModalOpen(false);
   }

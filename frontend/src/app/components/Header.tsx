@@ -18,10 +18,18 @@ export default function Header(props: HeaderProps) {
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
 
+  /**
+   * Handles the click event for the header component.
+   * Calls the logout function.
+   */
   const handleClick = () => {
     logout();
   };
 
+  /**
+   * Sets the user profile when the profile changes.
+   * @param {UserProfile} profile - The new user profile.
+   */
   useEffect(() => {
     setUserProfile(profile);
   }, [profile]);

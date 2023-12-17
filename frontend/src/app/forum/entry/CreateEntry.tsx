@@ -1,3 +1,8 @@
+/**
+ * Component for creating a new forum entry.
+ * @param props - The component props.
+ * @returns The CreateEntry component.
+ */
 import axios from "axios";
 import { useState } from "react";
 import { forumUrl } from "../../../data-types/constants";
@@ -14,6 +19,10 @@ export default function CreateEntry(props: CreateEntryProps) {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const user = (useAuthContext() as unknown as UserContextType).user;
 
+  /**
+   * Handles the form submission for creating a new forum entry.
+   * @param event - The form submission event.
+   */
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -40,6 +49,9 @@ export default function CreateEntry(props: CreateEntryProps) {
     setIsSubmitted(true);
   };
 
+  /**
+   * Closes the entry creation form and reloads the page.
+   */
   const handleClose = () => {
     // Call the provided onClose callback
     window.location.reload();

@@ -25,7 +25,10 @@ export default function EditBorrowPost(props: EditPostProps) {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
-  // this is required to show the category of post
+  /**
+   * Handles the change event of the category select element.
+   * @param event - The change event.
+   */
   const handleCategoryChange = async (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -33,6 +36,11 @@ export default function EditBorrowPost(props: EditPostProps) {
     setSelectedCategory(event.target.value);
   };
 
+  /**
+   * Fetches the borrow post data from the server and updates the component state.
+   *
+   * @param {object} props - The component props.
+   */
   useEffect(() => {
     axios
       .get(`${borrowUrl}/${props.postId}`)
@@ -46,12 +54,24 @@ export default function EditBorrowPost(props: EditPostProps) {
       });
   }, [props]);
 
+  /**
+   * Handles the form submission for editing a borrow post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
 
+    /**
+     * Updates a borrow post with the edited information.
+     * If any required input fields are missing, an error message is set and the update is aborted.
+     * The updated post is sent to the server using an HTTP PUT request.
+     * If the update is successful, the post title is also updated in the user's profile stored in the local storage.
+     * Finally, the loading state is set to false and the isEdited state is set to true.
+     * @returns {Promise<void>} A promise that resolves when the update is complete.
+     */
     if (!formData.get("title") || !formData.get("description")) {
       setError("ALL INPUT FIELDS MUST BE SPECIFIED");
       setLoading(false);
@@ -89,6 +109,9 @@ export default function EditBorrowPost(props: EditPostProps) {
     }
   };
 
+  /**
+   * Reloads the current page if the post is edited.
+   */
   if (isEdited) {
     window.location.reload();
   }
