@@ -123,6 +123,7 @@ export interface ForumEntry {
   content: string;
   poster: string;
   createdAt?: string;
+  userInfo?: UserProfile;
 }
 
 export interface FilterParams {

@@ -79,7 +79,6 @@ export default function SecondHandPostDetails() {
   };
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(`${secondhandUrl}/${id}`)
       .then((res) => {
@@ -95,7 +94,6 @@ export default function SecondHandPostDetails() {
   }, [id]);
 
   useEffect(() => {
-    setLoading(true);
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {

@@ -371,6 +371,17 @@ td {
 
 .profilePosts {
   margin-top: 20px;
+  background-color: transparent;
+}
+
+.profilePost {
+  background-color: rgba(0, 0, 0, 0.2); /* Black w/opacity/see-through */
+  backdrop-filter: blur(5px);
+  margin-bottom: 20px;
+  color: white;
+  border-radius: 16px;
+  height: fit-content;
+  padding: 20px;
 }
 
 .profilePostsTitle {
@@ -691,7 +702,7 @@ td {
   text-align: left;
   font-size: xx-large;
   font-weight: bold;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #fff;
 }
 
 .postdetails-image img {
@@ -721,8 +732,8 @@ td {
 .postdetails-user-info-container {
   flex-shrink: 0;
   height: fit-content;
-  border: #000000 1px solid;
-  border-radius: 5%;
+  border: #fff 2px solid;
+  border-radius: 20px;
   padding: 1w;
   margin-bottom: 2vw;
   width: 100%;
@@ -760,8 +771,8 @@ td {
 }
 
 .postdetails-details-container {
-  border: #000000 1px solid;
-  border-radius: 5%;
+  border: #fff 2px solid;
+  border-radius: 20px;
   padding-top: 2vh;
   padding-left: 2vw;
   padding-right: 2vw;
@@ -778,13 +789,13 @@ td {
 
 .postdetails-status {
   font-size: x-large;
-  color: red;
+  color: rgb(0, 255, 0);
   text-align: left;
 }
 
 .postdetails-description {
   font-size: large;
-  border-bottom: 1px solid #000000;
+  border-bottom: 1px solid #fff;
   text-align: left;
   max-height: 82%;
   overflow: auto;
@@ -816,13 +827,14 @@ td {
   width: 80%;
   margin: 2vw auto;
   color: white;
+  margin-bottom: 0;
 }
 
 .forumpostdetails-first-entry-container {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
+  border: 1px solid white;
+  border-radius: 20px;
   margin-bottom: 4vh;
   padding-top: 2vh;
   padding-bottom: 2vh;
@@ -836,8 +848,8 @@ td {
   padding-bottom: 1vh;
   padding-left: 1vw;
   padding-right: 1vw;
-  border: 1px solid #ccc;
-  border-radius: 0.25rem;
+  border: 1px solid white;
+  border-radius: 20px;
 }
 
 .forumpostdetails-entry-top {
@@ -913,7 +925,6 @@ td {
   width: 100%;
   height: fit-content;
   align-items: left;
-  margin-bottom: 1vh;
   margin-top: 1vh;
   padding-left: 2vw;
   padding-right: 2vw;
@@ -946,7 +957,8 @@ td {
 
 .posts-container {
   width: 100%;
-  padding: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .post-container {
@@ -956,6 +968,21 @@ td {
   margin-bottom: 20px;
   color: white;
   border-radius: 16px;
+}
+
+.post-body {
+  height: 21vh;
+}
+
+.post-title {
+  margin-top: 4px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.post-description {
+  font-size: 16px;
+  height: 20px;
 }
 
 .sectionexchange-post-container {

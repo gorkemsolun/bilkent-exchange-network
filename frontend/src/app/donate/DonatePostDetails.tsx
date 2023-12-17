@@ -74,7 +74,6 @@ export default function DonatePostDetails() {
   };
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(`${donateUrl}/${id}`)
       .then((res) => {
@@ -90,7 +89,6 @@ export default function DonatePostDetails() {
   }, [id]);
 
   useEffect(() => {
-    setLoading(true);
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {

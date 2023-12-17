@@ -74,7 +74,6 @@ export default function LostFoundPostDetails() {
   };
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(`${lostfoundUrl}/${id}`)
       .then((res) => {
@@ -90,7 +89,6 @@ export default function LostFoundPostDetails() {
   }, [id]);
 
   useEffect(() => {
-    setLoading(true);
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {

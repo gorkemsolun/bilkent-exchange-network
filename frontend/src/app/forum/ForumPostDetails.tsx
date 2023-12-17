@@ -169,21 +169,23 @@ export default function ForumPostDetails() {
                       </Link>
                     </div>
                     <div className="forumpostdetails-date">
-                      {entry.createdAt.slice(11, 16) +
+                      {entry.createdAt?.slice(11, 16) +
                         " " +
-                        entry.createdAt.slice(0, 10)}
+                        entry.createdAt?.slice(0, 10)}
                     </div>
-                    <div className="entry-edit-delete-container">
-                      <EditEntryButton
-                        postId={"" + post._id}
-                        entryId={entry._id as string}
-                        entryContent={entry.content}
-                      />
-                      <DeleteEntryButton
-                        postId={"" + post._id}
-                        entryId={entry._id as string}
-                      />
-                    </div>
+                    {entry.userInfo?.userID == user?._id && (
+                      <div className="entry-edit-delete-container">
+                        <EditEntryButton
+                          postId={"" + post._id}
+                          entryId={entry._id as string}
+                          entryContent={entry.content}
+                        />
+                        <DeleteEntryButton
+                          postId={"" + post._id}
+                          entryId={entry._id as string}
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <div className="forumpostdetails-entry-content">

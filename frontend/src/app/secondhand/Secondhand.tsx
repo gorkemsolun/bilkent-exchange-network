@@ -172,10 +172,10 @@ export default function Secondhand() {
                       />
                     </div>
 
-                    <div className="card-body">
-                      <h4 className="card-title">{post.title}</h4>
-                      <div className="description-container h-13vh text-left">
-                        <p className="card-text">
+                    <div className="post-body">
+                      <h4 className="post-title">{post.title}</h4>
+                      <div className="description-container text-left">
+                        <p className="post-description">
                           {post.description.length < 75
                             ? post.description
                             : post.description.slice(0, 75) + "..."}

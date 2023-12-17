@@ -74,7 +74,6 @@ export default function BorrowPostDetails() {
   };
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(`${borrowUrl}/${id}`)
       .then((res) => {
@@ -90,7 +89,6 @@ export default function BorrowPostDetails() {
   }, [id]);
 
   useEffect(() => {
-    setLoading(true);
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {

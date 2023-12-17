@@ -151,7 +151,7 @@ export default function Profile() {
           <div className="profilePosts">
             <p className="profilePostsTitle">Posts</p>
             <div className="justify-center">
-              <div className="container">
+              <div className="">
                 <div className="row">
                   {userProfile?.ownPosts
                     ? userProfile.ownPosts.map((post: OwnPost) => (
@@ -172,7 +172,7 @@ export default function Profile() {
                             }
                             className="col-12 cursor-pointer"
                           >
-                            <div className="card w-full">
+                            <div className="profilePost w-full">
                               <div className="card-body">
                                 <h2
                                   className="card-title"

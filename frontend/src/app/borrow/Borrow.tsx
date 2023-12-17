@@ -144,7 +144,7 @@ export default function Borrow() {
                 >
                   <div className="post-container" style={{ width: "100%" }}>
                     <div className="position-relative">
-                      <span className="badge bg-primary rounded-pill m-2 borrow-post-badge">
+                      <span className="badge bg-primary rounded-pill borrow-post-badge">
                         {post.category}
                       </span>
                     </div>
@@ -159,7 +159,7 @@ export default function Borrow() {
                             onClick={() => {
                               handleSaveButton(post);
                             }}
-                                title="saved"
+                            title="saved"
                           ></img>
                         ) : (
                           <img
@@ -168,7 +168,7 @@ export default function Borrow() {
                             onClick={() => {
                               handleSaveButton(post);
                             }}
-                                title="notsaved"
+                            title="notsaved"
                           ></img>
                         )}
                       </div>

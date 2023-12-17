@@ -77,8 +77,8 @@ export default function MyProfile() {
           <div className="profilePosts">
             <p className="profilePostsTitle">Posts</p>
             <div className="justify-center">
-              <div className="container">
-                <div className="row">
+              <div className="">
+                <div className="">
                   {userProfile?.ownPosts
                     ? userProfile.ownPosts.map((post: OwnPost) => (
                         <div className="col-12 mb-4" key={post.id}>
@@ -98,7 +98,7 @@ export default function MyProfile() {
                             }
                             className="col-12 cursor-pointer"
                           >
-                            <div className="card w-full">
+                            <div className="profilePost w-full">
                               <div className="card-body">
                                 <h2
                                   className="card-title"

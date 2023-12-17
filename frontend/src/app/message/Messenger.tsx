@@ -33,7 +33,6 @@ export default function Messenger(props: MessengerProps) {
     setSelectedConversation(props.selectedConversation || defaultConversation);
     setIsInCoversation(selectedConversation.createdAt !== undefined || false);
   }, [props.selectedConversation]);
-  // props is not a dependency, This should be checked NEEDS TO BE CONTROLLED
 
   useEffect(() => {
     axios
