@@ -33,6 +33,14 @@ export default function MyProfile() {
     handleLogOut();
   };
 
+  const makeAdmin = async () => {
+    if(userProfile){
+      userProfile._isAdmin = !userProfile._isAdmin;
+    }
+    console.log("Admin check")
+    console.log(userProfile?._isAdmin); 
+  };
+
   // before remove, account is loged out
   const handleLogOut = () => {
     logout();
@@ -173,6 +181,13 @@ export default function MyProfile() {
                         </div>
                       ))
                     : null}
+                    <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={makeAdmin}
+                >
+                  Admin/DeAdmin the Account
+                </button>
                 </div>
               </div>
             </div>
