@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { saveUrl, unsaveUrl } from "../../data-types/constants";
+import { unsaveUrl } from "../../data-types/constants";
 import { ProfileContextType, SavedPost } from "../../data-types/datatypes";
 import { useProfileContext } from "../authentication/AuthHelpers";
 import ErrorModal from "../components/ErrorModal";

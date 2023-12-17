@@ -74,6 +74,7 @@ export default function LostFoundPostDetails() {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${lostfoundUrl}/${id}`)
       .then((res) => {
