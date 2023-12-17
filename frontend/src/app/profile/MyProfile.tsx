@@ -97,10 +97,9 @@ export default function MyProfile() {
                                 : `/lostfoundpost/${post.id}`
                             }
                             className="col-12 cursor-pointer"
-                            key={post.id}
                           >
-                            <div className="card w-full" key={post.id}>
-                              <div className="card-body" key={post.id}>
+                            <div className="card w-full">
+                              <div className="card-body">
                                 <h2
                                   className="card-title"
                                   style={{
@@ -108,18 +107,16 @@ export default function MyProfile() {
                                     fontWeight: "bold",
                                     textAlign: "left",
                                   }}
-                                  key={post.id}
                                 >
                                   {post.typename + ":       "}
                                   {post.title}
                                 </h2>
                                 <div
                                   className="description-container"
-                                  key={post.id}
                                   style={{ height: "10%", textAlign: "left" }}
                                 >
                                   {post.typename === "SectionExchange" ? (
-                                    <p className="card-text" key={post.id}>
+                                    <p className="card-text">
                                       offered Course:{" "}
                                       {post.offeredCourse
                                         ? post.offeredCourse

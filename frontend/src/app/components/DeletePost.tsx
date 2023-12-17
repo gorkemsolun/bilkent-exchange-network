@@ -25,18 +25,18 @@ export default function DeletePost(props: DeletePostProps) {
       });
 
     const profile = JSON.parse(localStorage.getItem("profile") as string);
-    let index;
+    let index = -1;
 
     if (profile) {
       index = profile.ownPosts.findIndex(
         (post: OwnPost) => post.id === props.postId
       );
     }
-    if (index) {
+    if (index !== -1) {
       profile.ownPosts.splice(index, 1);
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
     }
-    localStorage.setItem("profile", JSON.stringify(profile));
-    profileDispatch({ type: "UPDATE", payload: profile });
     setLoading(false);
 
     if (error === null || error === undefined) {
