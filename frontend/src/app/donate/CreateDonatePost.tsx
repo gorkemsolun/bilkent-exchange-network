@@ -1,3 +1,9 @@
+/**
+ * Component for creating a donate post.
+ *
+ * @param props - The component props.
+ * @returns The JSX element representing the create donate post form.
+ */
 import axios from "axios";
 import { useState } from "react";
 import { categories, donateUrl } from "../../data-types/constants";
@@ -24,6 +30,10 @@ export default function CreateDonatePost(props: CreatePostProps) {
     .profileDispatch;
   const user = (useAuthContext() as unknown as UserContextType).user;
 
+  /**
+   * Handles the form submission for creating a donate post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();

@@ -14,6 +14,9 @@ export default function AdminPage() {
   const [reportedPosts, setReportedPosts] = useState<PostReport[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
+  /**
+   * Fetches reported posts from the server and updates the state.
+   */
   useEffect(() => {
     setLoading(true);
 

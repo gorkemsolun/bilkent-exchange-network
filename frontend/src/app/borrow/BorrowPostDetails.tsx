@@ -39,10 +39,18 @@ export default function BorrowPostDetails() {
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
 
+  /**
+   * Toggles the visibility of the messenger.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the click event on the DM box.
+   * Checks if there is an existing conversation with the user, and creates one if there isn't.
+   * Sets the selected conversation and updates the messenger visibility accordingly.
+   */
   const handleDMBoxClick = () => {
     // Check if there is an existing conversation with that user, if there isn't create one
     axios.get(conversationUrl + "/userID/" + user?._id).then((res) => {
@@ -73,6 +81,10 @@ export default function BorrowPostDetails() {
     setIsMessengerVisible(true);
   };
 
+  /**
+   * Fetches the borrow post details from the server and updates the state.
+   * @param {number} id - The ID of the borrow post.
+   */
   useEffect(() => {
     axios
       .get(`${borrowUrl}/${id}`)
@@ -88,6 +100,12 @@ export default function BorrowPostDetails() {
       });
   }, [id]);
 
+  /**
+   * Fetches the poster's profile information from the server and updates the state.
+   * If the poster is the current user, sets the poster state to the current user's profile.
+   * @param {object} post - The borrow post object.
+   * @param {object} profile - The current user's profile object.
+   */
   useEffect(() => {
     if (post.poster === profile?.userID) {
       setPoster(profile);
@@ -100,7 +118,7 @@ export default function BorrowPostDetails() {
         .catch((err) => {
           setError(err);
           console.log(err);
-        })
+        });
     }
   }, [post, profile]);
 

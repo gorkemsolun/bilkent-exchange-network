@@ -27,6 +27,9 @@ import SectionExchange from "./app/sectionexchange/Sectionexchange";
 import "./bootstrap.css";
 import { UserContextType } from "./data-types/datatypes";
 
+/**
+ * Renders the content of the application based on the user's authentication status.
+ */
 export default function App() {
   return (
     <div>
@@ -39,6 +42,10 @@ export default function App() {
   );
 }
 
+/**
+ * The main component of the application.
+ * Renders the routes based on the user's authentication status.
+ */
 function AppContent() {
   const user = (useAuthContext() as unknown as UserContextType).user;
 

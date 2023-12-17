@@ -24,6 +24,10 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
     .profileDispatch;
   const user = (useAuthContext() as unknown as UserContextType).user;
 
+  /**
+   * Handles the form submission for creating a secondhand post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();

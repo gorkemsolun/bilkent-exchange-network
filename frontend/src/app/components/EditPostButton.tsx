@@ -1,3 +1,8 @@
+/**
+ * Renders a button that allows the user to edit a post.
+ * @param {EditPostButtonProps} props - The component props.
+ * @returns {JSX.Element} The rendered component.
+ */
 import { useState } from "react";
 import { EditPostButtonProps } from "../../data-types/props";
 import EditBorrowPost from "../borrow/EditBorrowPost";
@@ -10,11 +15,17 @@ import EditSectionExchangePost from "../sectionexchange/EditSectionexchangePost"
 export default function EditPostButton(props: EditPostButtonProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  /**
+   * Handles the edit post action.
+   */
   function handleEditPost(): void {
     setIsModalOpen(true);
     console.log(props);
   }
 
+  /**
+   * Handles the close modal action.
+   */
   function handleCloseModal(): void {
     setIsModalOpen(false);
   }

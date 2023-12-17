@@ -1,3 +1,8 @@
+/**
+ * Component for creating a section exchange post.
+ * @param props - The component props.
+ * @returns The CreateSectionExchangePost component.
+ */
 import axios from "axios";
 import { useState } from "react";
 import { courses, sectionexchangeUrl } from "../../data-types/constants";
@@ -23,6 +28,10 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
+  /**
+   * Handles the form submission for creating a section exchange post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();

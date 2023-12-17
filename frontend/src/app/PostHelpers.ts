@@ -2,6 +2,15 @@ import Resizer from "react-image-file-resizer";
 import { defaultImage, urlsGet } from "../data-types/constants.ts";
 import { FilterParams } from "../data-types/datatypes.ts";
 
+/**
+ * Prepares the URL for making a request based on the provided parameters.
+ *
+ * @param sortType - The sort type for the request.
+ * @param searchTerm - The search term for the request.
+ * @param type - The type of the request.
+ * @param filterParams - The filter parameters for the request.
+ * @returns The prepared URL.
+ */
 export function prepareUrl(
   sortType: string,
   searchTerm: string,
@@ -112,6 +121,11 @@ export async function getBase64Image(file: File) {
 }
 */
 
+/**
+ * Checks if a file is an image.
+ * @param file - The file to check.
+ * @returns `true` if the file is an image, `false` otherwise.
+ */
 export function isFileImage(file: File) {
   if (file && file.type.includes("image")) {
     return true;
@@ -119,6 +133,12 @@ export function isFileImage(file: File) {
   return false;
 }
 
+/**
+ * Resizes an image file to a specified width and height.
+ * If the file is not an image, it returns a default image.
+ * @param file The image file to be resized.
+ * @returns A promise that resolves to the resized image URI as a base64 string.
+ */
 export async function resizeImageFile(file: File) {
   if (isFileImage(file) === false) {
     return defaultImage;

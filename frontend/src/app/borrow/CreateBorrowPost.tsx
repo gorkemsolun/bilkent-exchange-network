@@ -1,3 +1,10 @@
+/**
+ * Component for creating a borrow post.
+ * 
+ * @component
+ * @param {CreatePostProps} props - The props for the component.
+ * @returns {JSX.Element} The JSX element representing the create borrow post component.
+ */
 import axios from "axios";
 import { useState } from "react";
 import { borrowUrl, categories } from "../../data-types/constants";
@@ -19,11 +26,14 @@ export default function CreateBorrowPost(props: CreatePostProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
+  /**
+   * Handles the form submission for creating a borrow post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();

@@ -8,10 +8,17 @@ export default function SearchBar(props: {
 }) {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
+  /**
+   * Handles the search action.
+   */
   const handleSearch = () => {
     props.onSearch(searchTerm);
   };
 
+  /**
+   * Handles the change of sort type.
+   * @param sortType - The new sort type.
+   */
   const handleSortTypeChange = (sortType: string) => {
     props.setSortType(sortType);
   };

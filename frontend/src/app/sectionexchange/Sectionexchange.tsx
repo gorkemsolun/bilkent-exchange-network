@@ -48,22 +48,44 @@ export default function SectionExchange() {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
+  /**
+   * Handles the click event for the messenger button.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the search event.
+   * @param searchTerm - The search term entered by the user.
+   */
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
 
+  /**
+   * Passes the filter parameters to the component.
+   * @param params - The filter parameters.
+   */
   function passFilters(params: FilterParams) {
     setFilterParams(params);
   }
 
+  /**
+   * Handles the change event for the sort type.
+   * @param sortType - The new sort type.
+   */
   function handleSortTypeChange(sortType: string) {
     setSortType(sortType);
   }
 
+  /**
+   * Handles the click event on the DM box.
+   * Checks if there is an existing conversation with the other user, and creates one if there isn't.
+   * Updates the selected conversation and displays the messenger.
+   * @param otherUserID - The ID of the other user.
+   * @param otherUserUsername - The username of the other user.
+   */
   const handleDMBoxClick = (otherUserID: string, otherUserUsername: string) => {
     // Check if there is an existing conversation with that user, if there isn't create one
     axios.get(conversationUrl + "/userID/" + user?._id).then((res) => {
@@ -94,6 +116,14 @@ export default function SectionExchange() {
     setIsMessengerVisible(true);
   };
 
+  /**
+   * Fetches section exchange posts from the server based on the provided search term, filter parameters, and sort type.
+   * Updates the state with the fetched data and handles loading state.
+   *
+   * @param {string} searchTerm - The search term to filter section exchange posts.
+   * @param {object} filterParams - The filter parameters to apply to the section exchange posts.
+   * @param {string} sortType - The sort type to determine the order of section exchange posts.
+   */
   useEffect(() => {
     setLoading(true);
     const url = prepareUrl(
@@ -116,6 +146,11 @@ export default function SectionExchange() {
       });
   }, [searchTerm, filterParams, sortType]);
 
+  /**
+   * Handles the save button functionality for a SectionexchangePost.
+   * If the post is already saved, it will unsave it. If the post is not saved, it will save it.
+   * @param post - The SectionexchangePost to be saved or unsaved.
+   */
   const handleSaveButton = (post: SectionexchangePost) => {
     // Post is saved, unsave
     if (

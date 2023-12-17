@@ -1,3 +1,10 @@
+/**
+ * Component for creating a forum post.
+ *
+ * @component
+ * @param {CreatePostProps} props - The props for the component.
+ * @returns {JSX.Element} The JSX element representing the create forum post component.
+ */
 import axios from "axios";
 import { useState } from "react";
 import { forumUrl } from "../../data-types/constants";
@@ -23,6 +30,10 @@ export default function CreateForumPost(props: CreatePostProps) {
     .profileDispatch;
   const user = (useAuthContext() as unknown as UserContextType).user;
 
+  /**
+   * Handles the form submission for creating a forum post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();

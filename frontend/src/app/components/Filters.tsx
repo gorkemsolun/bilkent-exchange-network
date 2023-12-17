@@ -20,6 +20,12 @@ export default function Filters(props: FilterProps) {
   const [checkedCategories, setCheckedCategories] = useState<string[]>([]);
   const [checkedStatus, setCheckedStatus] = useState<string>("All");
 
+  /**
+   * Handles the change of a category.
+   * If the category is already checked, it will be unchecked.
+   * If the category is not checked, it will be checked.
+   * @param {string} category - The category to be changed.
+   */
   const handleCategoryChange = (category: string) => {
     if (checkedCategories.includes(category)) {
       setCheckedCategories(
@@ -30,6 +36,12 @@ export default function Filters(props: FilterProps) {
     }
   };
 
+  /**
+   * Handles the change of the page number.
+   * If the page number is greater than 0, it will be set as the new page.
+   * If the page number is less than or equal to 0, it will be set as 1.
+   * @param {number} page - The new page number.
+   */
   const handlePageChange = (page: number) => {
     if (page > 0) {
       setPage(page);
@@ -38,6 +50,10 @@ export default function Filters(props: FilterProps) {
     }
   };
 
+  /**
+   * Handles the change of the number of posts per page.
+   * @param postsPerPage - The number of posts per page.
+   */
   const handlePostPerPageChange = (postsPerPage: number) => {
     if (postsPerPage > 0) {
       setLimit(postsPerPage);
@@ -46,6 +62,9 @@ export default function Filters(props: FilterProps) {
     }
   };
 
+  /**
+   * Handles the click event of the filter button.
+   */
   const onFilterClicked = () => {
     props.passFilters({
       categories: checkedCategories,
@@ -67,6 +86,10 @@ export default function Filters(props: FilterProps) {
     });
   };
 
+  /**
+   * Handles the selection of a status checkbox.
+   * @param status - The status value of the checkbox.
+   */
   const onCheckStatus = (status: string) => {
     if (checkedStatus === "All") {
       if (status === "Lost") {
@@ -87,6 +110,9 @@ export default function Filters(props: FilterProps) {
     }
   };
 
+  /**
+   * Resets all the filter values to their initial state.
+   */
   const onResetClicked = () => {
     setCheckedCategories([]);
     setMinPrice(undefined);
@@ -100,6 +126,11 @@ export default function Filters(props: FilterProps) {
     setOfferedSection(undefined);
   };
 
+  /**
+   * Handles the change of a course selection.
+   * @param {string} course - The selected course.
+   * @param {boolean} isDesired - Indicates whether the course is desired or offered.
+   */
   const onCourseChange = (course: string, isDesired: boolean) => {
     if (isDesired) {
       if (!course) {
@@ -116,6 +147,11 @@ export default function Filters(props: FilterProps) {
     }
   };
 
+  /**
+   * Handles the change of a section selection.
+   * @param {number} section - The selected section.
+   * @param {boolean} isDesired - Indicates whether the section is desired or offered.
+   */
   const onSectionChange = (section: number, isDesired: boolean) => {
     if (isDesired) {
       if (section === 0) {

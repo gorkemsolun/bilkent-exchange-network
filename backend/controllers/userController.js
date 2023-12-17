@@ -2,6 +2,12 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/user.js";
 import { UserProfile } from "../models/userProfile.js";
 import bcrypt from "bcrypt";
+import { BorrowPost } from "../models/borrowpost.js";
+import { DonatePost } from "../models/donatepost.js";
+import { ForumPost } from "../models/forumpost.js"; 
+import { LostfoundPost } from "../models/lostfoundpost.js";
+import { SecondhandPost } from "../models/secondhandpost.js";
+import { SectionexchangePost } from "../models/sectionexchangepost.js";
 
 /**
  * Creates a token for the given user ID.
@@ -70,12 +76,36 @@ export const signupUser = async (req, res) => {
 export const deleteUser = async (req, res) => {
   const userId = req.params.userId;
   try {
+    
+   
+
     const deletedUser = await User.findByIdAndDelete(userId);
 
     if (!deletedUser) {
       return res.status(404).json({ error: "User not found" });
     }
 
+    const profile = await UserProfile.findOne(
+      {userID: userId}
+    );
+
+    profile.ownPosts.map((post) => {
+      
+      if (post.typename === "Secondhand"){
+        SecondhandPost.deleteOne({_id: post.id})
+      }else if (post.typename === "Lostfound"){
+        LostfoundPost.deleteOne({_id: post.id})
+      }else if (post.typename === "Donate"){
+        DonatePost.deleteOne({_id: post.id})
+      }else if (post.typename === "Borrow"){
+        BorrowPost.deleteOne({_id: post.id})
+      }else if (post.typename === "Forum"){
+        ForumPost.deleteOne({_id: post.id})
+      }else if (post.typename === "SectionExchange"){
+        SectionexchangePost.deleteOne({_id: post.id})
+      }
+
+    })
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user:", error);

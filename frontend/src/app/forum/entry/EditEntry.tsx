@@ -1,3 +1,8 @@
+/**
+ * Component for editing a forum entry.
+ * @param props - The component props.
+ * @returns The JSX element representing the EditEntry component.
+ */
 import axios from "axios";
 import { useState } from "react";
 import { forumUrl } from "../../../data-types/constants";
@@ -13,6 +18,10 @@ export default function EditEntry(props: EditEntryProps) {
   const [isEdited, setIsEdited] = useState(false);
   const user = (useAuthContext() as unknown as UserContextType).user;
 
+  /**
+   * Handles the form submission for editing an entry.
+   * @param event - The form event.
+   */
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -41,6 +50,9 @@ export default function EditEntry(props: EditEntryProps) {
     setIsEdited(true);
   };
 
+  /**
+   * Reloads the current page if the entry is edited.
+   */
   if (isEdited) {
     window.location.reload();
   }

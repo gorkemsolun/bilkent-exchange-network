@@ -1,3 +1,7 @@
+/**
+ * Renders the navigation bar component.
+ * @returns The JSX element representing the navigation bar.
+ */
 import { Link } from "react-router-dom";
 
 export default function Navbar() {

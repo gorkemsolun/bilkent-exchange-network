@@ -27,7 +27,10 @@ export default function EditSecondHandPost(props: EditPostProps) {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
-  // this is required to show the category of post
+  /**
+   * Handles the change event of the category select element.
+   * @param event - The change event.
+   */
   const handleCategoryChange = async (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -35,6 +38,10 @@ export default function EditSecondHandPost(props: EditPostProps) {
     setSelectedCategory(event.target.value);
   };
 
+  /**
+   * Fetches the secondhand post data from the server and updates the component state.
+   * @param {object} props - The component props.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -52,6 +59,10 @@ export default function EditSecondHandPost(props: EditPostProps) {
       });
   }, [props]);
 
+  /**
+   * Handles the form submission for editing a secondhand post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();

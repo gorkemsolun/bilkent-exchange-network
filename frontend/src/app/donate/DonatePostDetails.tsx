@@ -1,3 +1,9 @@
+/**
+ * Renders the details of a donate post.
+ * Fetches the post details and the poster information from the server.
+ * Allows the user to interact with the post, such as editing, deleting, reporting, and messaging.
+ * Displays an error modal if there is an error during the API calls.
+ */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -39,10 +45,18 @@ export default function DonatePostDetails() {
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
 
+  /**
+   * Toggles the visibility of the messenger.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the click event on the DM box.
+   * Checks if there is an existing conversation with the user, and creates one if there isn't.
+   * Updates the selected conversation and displays the messenger.
+   */
   const handleDMBoxClick = () => {
     // Check if there is an existing conversation with that user, if there isn't create one
     axios.get(conversationUrl + "/userID/" + user?._id).then((res) => {
@@ -73,6 +87,11 @@ export default function DonatePostDetails() {
     setIsMessengerVisible(true);
   };
 
+  /**
+   * Fetches the details of a donate post from the server.
+   * 
+   * @param {number} id - The ID of the donate post.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -89,6 +108,16 @@ export default function DonatePostDetails() {
       });
   }, [id]);
 
+  /**
+   * Fetches the poster information for the donate post.
+   * If the post's poster is the same as the logged-in user's profile, sets the poster as the logged-in user's profile.
+   * Otherwise, makes an API call to fetch the poster's profile information.
+   * Sets the fetched poster information using the setPoster function.
+   * Handles any errors that occur during the API call and logs them to the console.
+   * 
+   * @param post - The donate post object.
+   * @param profile - The logged-in user's profile.
+   */
   useEffect(() => {
     if (post.poster === profile?.userID) {
       setPoster(profile);

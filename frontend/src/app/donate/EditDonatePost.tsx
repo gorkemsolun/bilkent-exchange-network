@@ -26,7 +26,12 @@ export default function EditDonatePost(props: EditPostProps) {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
-  // this is required to show the category of post. dont delete.
+  /**
+   * Handles the change event of the category select element.
+   * Updates the selected category state.
+   *
+   * @param event - The change event.
+   */
   const handleCategoryChange = async (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -34,6 +39,10 @@ export default function EditDonatePost(props: EditPostProps) {
     setSelectedCategory(event.target.value);
   };
 
+  /**
+   * Fetches the donate post data from the server and updates the component state.
+   * @param {object} props - The component props.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -51,6 +60,10 @@ export default function EditDonatePost(props: EditPostProps) {
       });
   }, [props]);
 
+  /**
+   * Handles the form submission for editing a donate post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -98,6 +111,9 @@ export default function EditDonatePost(props: EditPostProps) {
     }
   };
 
+  /**
+   * Reloads the current page if the post has been edited.
+   */
   if (isEdited) {
     window.location.reload();
   }

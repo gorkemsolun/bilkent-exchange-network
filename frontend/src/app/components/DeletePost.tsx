@@ -12,10 +12,14 @@ export default function DeletePost(props: DeletePostProps) {
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
+  /**
+   * Handles the deletion of a post.
+   * Sets the loading state to true, sends a delete request to the server,
+   * updates the user's profile if necessary, and sets the isDeleted state to true if there are no errors.
+   */
   const handleDelete = async () => {
     setLoading(true);
 
@@ -46,6 +50,9 @@ export default function DeletePost(props: DeletePostProps) {
     }
   };
 
+  /**
+   * Handles the cancel action.
+   */
   const handleCancel = () => {
     props.onClose();
   };

@@ -1,3 +1,9 @@
+/**
+ * Renders the Borrow page component.
+ *
+ * This component displays a list of borrow posts and provides functionality for searching, filtering, and sorting the posts.
+ * Users can save or unsave posts, and can also open the messenger to communicate with other users.
+ */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -36,22 +42,48 @@ export default function Borrow() {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
+  /**
+   * Handles the click event for the messenger button.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the search event.
+   *
+   * @param searchTerm - The search term entered by the user.
+   */
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
 
+  /**
+   * Passes the filter parameters to the component.
+   *
+   * @param params - The filter parameters.
+   */
   function passFilters(params: FilterParams) {
     setFilterParams(params);
   }
 
+  /**
+   * Handles the change event for the sort type.
+   *
+   * @param sortType - The new sort type.
+   */
   function handleSortTypeChange(sortType: string) {
     setSortType(sortType);
   }
 
+  /**
+   * Fetches borrow posts from the server based on the provided search term, filter parameters, and sort type.
+   * Updates the borrow posts state and handles loading and error states.
+   *
+   * @param {string} searchTerm - The search term to filter borrow posts.
+   * @param {object} filterParams - The filter parameters to apply to the borrow posts.
+   * @param {string} sortType - The sort type to order the borrow posts.
+   */
   useEffect(() => {
     setLoading(true);
     const url = prepareUrl(sortType, searchTerm, "borrow", filterParams);
@@ -70,6 +102,13 @@ export default function Borrow() {
       });
   }, [searchTerm, filterParams, sortType]);
 
+  /**
+   * Handles the save button action for a BorrowPost.
+   * If the post is already saved, it will be unsaved.
+   * If the post is not saved, it will be saved.
+   * Updates the profile and local storage accordingly.
+   * @param post The BorrowPost to be saved or unsaved.
+   */
   const handleSaveButton = (post: BorrowPost) => {
     // Post is saved, unsave
     if (

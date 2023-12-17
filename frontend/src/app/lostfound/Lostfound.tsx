@@ -1,3 +1,7 @@
+/**
+ * Represents the LostFound component.
+ * This component displays lost and found posts, allows filtering, searching, sorting, and saving posts.
+ */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -36,22 +40,43 @@ export default function LostFound() {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
+  /**
+   * Handles the click event for the messenger button.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Passes the filter parameters to the component.
+   * @param params - The filter parameters.
+   */
   function passFilters(params: FilterParams) {
     setFilterParams(params);
   }
 
+  /**
+   * Handles the search event.
+   * @param searchTerm - The search term.
+   */
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
 
+  /**
+   * Handles the change event for the sort type.
+   * @param sortType - The sort type.
+   */
   function handleSortTypeChange(sortType: string) {
     setSortType(sortType);
   }
 
+  /**
+   * Handles the save button functionality for a LostFoundPost.
+   * If the post is already saved, it will unsave it.
+   * If the post is not saved, it will save it.
+   * @param post The LostFoundPost to be saved or unsaved.
+   */
   const handleSaveButton = (post: LostFoundPost) => {
     // Post is saved, unsave
     if (
@@ -100,6 +125,14 @@ export default function LostFound() {
     }
   };
 
+  /**
+   * Fetches lost and found posts from the server based on search term, filter parameters, and sort type.
+   * Sets the fetched posts to the state and handles loading and error states.
+   *
+   * @param {string} searchTerm - The search term to filter the posts.
+   * @param {object} filterParams - The filter parameters to apply to the posts.
+   * @param {string} sortType - The sort type to order the posts.
+   */
   useEffect(() => {
     setLoading(true);
     const url = prepareUrl(sortType, searchTerm, "lostfound", filterParams);

@@ -36,10 +36,19 @@ export default function Profile() {
   const { logout } = useLogout();
   const { id } = useParams();
 
+  /**
+   * Handles the click event for the messenger button.
+   * Toggles the visibility of the messenger component.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the click event on the DM box.
+   * Checks if there is an existing conversation with the user. If there isn't, creates a new conversation.
+   * Updates the selected conversation and makes the messenger visible.
+   */
   const handleDMBoxClick = () => {
     // Check if there is an existing conversation with that user, if there isn't create one
     axios.get(conversationUrl + "/userID/" + user?._id).then((res) => {
@@ -70,6 +79,9 @@ export default function Profile() {
     setIsMessengerVisible(true);
   };
 
+  /**
+   * Fetches the user profile data from the server and updates the state.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -86,7 +98,11 @@ export default function Profile() {
       });
   }, []);
 
-  // Remove account from database
+  /**
+   * Removes the account from the database.
+   * @async
+   * @returns {Promise<void>}
+   */
   const handleRemove = async () => {
     await deleteUser(id as string);
     window.location.reload;

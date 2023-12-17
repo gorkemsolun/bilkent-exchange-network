@@ -1,7 +1,16 @@
+/**
+ * Represents the Donate page component.
+ * Fetches donate posts from the server based on the provided search term, filter parameters, and sort type.
+ * Renders the list of donate posts along with search bar, filters, and save functionality.
+ */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultFilterParams } from "../../data-types/constants.ts";
+import {
+  defaultFilterParams,
+  saveUrl,
+  unsaveUrl,
+} from "../../data-types/constants.ts";
 import {
   FilterParams,
   ProfileContextType,
@@ -32,22 +41,43 @@ export default function Donate() {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
+  /**
+   * Handles the click event for the messenger button.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the search event.
+   * @param searchTerm - The search term entered by the user.
+   */
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
 
+  /**
+   * Passes the filter parameters to update the filter state.
+   * @param params - The filter parameters.
+   */
   function passFilters(params: FilterParams) {
     setFilterParams(params);
   }
 
+  /**
+   * Handles the change event for the sort type.
+   * @param sortType - The new sort type.
+   */
   function handleSortTypeChange(sortType: string) {
     setSortType(sortType);
   }
 
+  /**
+   * Handles the save button functionality for a donate post.
+   * If the post is already saved, it will unsave it.
+   * If the post is not saved, it will save it.
+   * @param post - The donate post to be saved or unsaved.
+   */
   const handleSaveButton = (post: DonatePost) => {
     // Post is saved, unsave
     if (
@@ -60,12 +90,10 @@ export default function Donate() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/unsavepost", body)
-        .catch((err) => {
-          console.log(err);
-          setError(err);
-        });
+      axios.put(unsaveUrl, body).catch((err) => {
+        console.log(err);
+        setError(err);
+      });
 
       profile.savedPosts = profile.savedPosts.filter(
         (savedPost: SavedPost) => savedPost.id !== post._id
@@ -81,7 +109,7 @@ export default function Donate() {
         savedPost: post,
       };
 
-      axios.put("http://localhost:3000/profile/savepost", body).catch((err) => {
+      axios.put(saveUrl, body).catch((err) => {
         console.log(err);
         setError(err);
       });
@@ -98,6 +126,14 @@ export default function Donate() {
     }
   };
 
+  /**
+   * Fetches donate posts from the server based on the provided search term, filter parameters, and sort type.
+   * Updates the state variables donatePosts, loading, and error accordingly.
+   *
+   * @param {string} searchTerm - The search term to filter the donate posts.
+   * @param {object} filterParams - The filter parameters to narrow down the donate posts.
+   * @param {string} sortType - The sort type to determine the order of the donate posts.
+   */
   useEffect(() => {
     setLoading(true);
 

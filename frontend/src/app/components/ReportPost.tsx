@@ -7,6 +7,11 @@ export default function ReportPost(props: ReportPostProps) {
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  /**
+   * Handles the form submission for reporting a post.
+   * 
+   * @param event - The form submission event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -46,6 +51,10 @@ export default function ReportPost(props: ReportPostProps) {
     }
   };
 
+  /**
+   * Handles the cancel action.
+   * Closes the component if not currently submitting.
+   */
   const handleCancel = () => {
     if (!isSubmitting) {
       props.onClose();
