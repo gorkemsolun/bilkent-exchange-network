@@ -146,7 +146,7 @@ export default function DonatePostDetails() {
             </div>
             <div className="postdetails-user-info-container">
               <div className="postdetails-username-dmbox">
-                <Link to={`/profile/` + poster?.userID}>
+                <Link to={`/profile/` + poster?.userID} className="link">
                   {poster?.username}
                 </Link>
                 <div className="postdetails-dmbox-container">

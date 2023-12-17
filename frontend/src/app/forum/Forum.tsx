@@ -138,7 +138,7 @@ export default function Forum() {
             <div className="justify-center">
               <div className="row posts-container">
                 {forumPosts.map((post) => (
-                  <div className="col-12 mb-4" key={post._id}>
+                  <div className="col-12" key={post._id}>
                     <div className="col-12 cursor-pointer" key={post._id}>
                       <div className="post-container w-full">
                         <div className="card-body">
@@ -153,7 +153,7 @@ export default function Forum() {
                                 onClick={() => {
                                   handleSaveButton(post);
                                 }}
-                                  title="saved"
+                                title="saved"
                               ></img>
                             ) : (
                               <img
@@ -162,7 +162,7 @@ export default function Forum() {
                                 onClick={() => {
                                   handleSaveButton(post);
                                 }}
-                                  title="not saved"
+                                title="not saved"
                               ></img>
                             )}
                           </div>

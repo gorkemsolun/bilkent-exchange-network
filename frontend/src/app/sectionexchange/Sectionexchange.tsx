@@ -26,6 +26,7 @@ import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
+import ErrorModal from "../components/ErrorModal.tsx";
 
 export default function SectionExchange() {
   const [sectionexchangePosts, setSectionexchangePosts] = useState<
@@ -176,7 +177,7 @@ export default function SectionExchange() {
             />
             <CreatePostButton type="sectionexchange" />
           </div>
-          <div className="row sectionexchange-post-container">
+          <div className="sectionexchange-post-container">
             <div className="row align-items font-bold">
               <div className="col-md text-center border-r border-black">
                 <p className="card-text">{"Username"}</p>
@@ -201,15 +202,12 @@ export default function SectionExchange() {
           {loading ? (
             <Loader />
           ) : (
-            <div className="row sectionexchange-post-container">
+            <div className="">
               {sectionexchangePosts.map((post: SectionexchangePost) => (
-                <div className="row mb-3" key={post._id}>
-                  <div className="row align-items-start justify-content-start">
+                <div className="sectionexchange-post-container" key={post._id}>
+                  <div className="row">
                     <div className="col-md text-center border-r border-black">
-                      <Link
-                        to={"../profile/" + post.poster}
-                        className="card-text"
-                      >
+                      <Link to={"../profile/" + post.poster} className="link">
                         {post.posterUsername}
                       </Link>
                     </div>

@@ -815,6 +815,7 @@ td {
 .forumpostdetails-container {
   width: 80%;
   margin: 2vw auto;
+  color: white;
 }
 
 .forumpostdetails-first-entry-container {
@@ -959,12 +960,13 @@ td {
 
 .sectionexchange-post-container {
   background-color: rgba(0, 0, 0, 0.2); /* Black w/opacity/see-through */
+  margin-left: 20px;
   backdrop-filter: blur(5px);
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   color: white;
   border-radius: 16px;
-  width: 100%;
+  width: 94%;
   justify-content: center;
 }
 
@@ -1260,7 +1262,7 @@ td {
 
 .post-save-container-sectionexchange-type {
   position: absolute;
-  left: 92vw;
+  left: 77vw;
 }
 
 .post-save-container-forum-type {
@@ -1389,4 +1391,8 @@ td {
 
 .success-modal-content-par {
   color: #0056b3;
+}
+
+.link {
+  color: white;
 }
