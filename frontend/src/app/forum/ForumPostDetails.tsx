@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { forumUrl, profileUrl } from "../../data-types/constants";
+import { defaultImage, forumUrl, profileUrl } from "../../data-types/constants";
 import {
   ForumEntry,
   ProfileContextType,
@@ -131,7 +131,7 @@ export default function ForumPostDetails() {
                 title="Profile Picture"
               />
               <div className="forumpostdetails-username">
-                <Link to={`/profile/` + poster?.userID}>
+                <Link to={`/profile/` + poster?.userID} className="link">
                   {poster?.username}
                 </Link>
               </div>
@@ -158,12 +158,15 @@ export default function ForumPostDetails() {
                 >
                   <div className="forumpostdetails-entry-top">
                     <img
-                      src={entry.userInfo?.image || "/src/assets/cs319.png"}
+                      src={entry.userInfo?.image || defaultImage}
                       className="forumpostdetails-profile-picture"
                       alt="Profile Picture"
                     />
                     <div className="forumpostdetails-username">
-                      <Link to={`/profile/${entry.userInfo?.userID || ""}`}>
+                      <Link
+                        to={`/profile/${entry.userInfo?.userID || ""}`}
+                        className="link"
+                      >
                         {entry.userInfo?.username || "Unknown User"}
                       </Link>
                     </div>

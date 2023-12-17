@@ -125,7 +125,7 @@ export default function SavedPosts() {
                                   ? `/borrowpost/${post.id}`
                                   : `/lostfoundpost/${post.id}`
                               }
-                              className="card-title"
+                              className="link"
                               style={{
                                 fontSize: "1.5rem",
                                 fontWeight: "bold",
