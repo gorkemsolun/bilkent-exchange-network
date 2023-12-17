@@ -76,7 +76,9 @@ export default function LostFound() {
       profileDispatch({ type: "UPDATE", payload: profile });
     } else {
       // Post is unsaved, save
+      const type = "lostandfound";
       const body = {
+        typename: type,
         profileID: profile?._id,
         savedPost: post,
       };
@@ -88,7 +90,7 @@ export default function LostFound() {
 
       const savedPost: SavedPost = {
         id: "" + post._id,
-        typename: "Secondhand,",
+        typename: "lostandfound",
         title: post.title,
       };
 

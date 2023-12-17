@@ -20,6 +20,7 @@ export default function SavedPosts() {
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
+    console.log(profile);
   };
 
   const handleSaveButton = (post: SavedPost) => {
@@ -44,27 +45,6 @@ export default function SavedPosts() {
       );
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
-    } else {
-      // Post is unsaved, save
-      const body = {
-        profileID: profile?._id,
-        savedPost: post,
-      };
-
-      axios.put(saveUrl, body).catch((err) => {
-        console.log(err);
-        setError(err);
-      });
-
-      const savedPost: SavedPost = {
-        id: "" + post.id,
-        typename: "Secondhand",
-        title: post.title,
-      };
-
-      profile.savedPosts.push(savedPost);
-      localStorage.setItem("profile", JSON.stringify(profile));
-      profileDispatch({ type: "UPDATE", payload: profile });
     }
   };
 
@@ -76,96 +56,86 @@ export default function SavedPosts() {
         <Loader />
       ) : (
         <div className="justify-center">
-          <label className="text-4xl font-bold">Saved Posts</label>
-          <div className="container">
-            <div className="row">
-              {profile?.savedPosts
-                ? profile.savedPosts.map((post: SavedPost) => (
-                    <div className="col-12 mb-4" key={post.id}>
-                      <div className="col-12 cursor-pointer" key={post.id}>
-                        <div className="card w-full">
-                          <div className="card-body">
-                            <div className="post-save-container-forum-type">
-                              {profile.savedPosts.some(
-                                (savedPost: SavedPost) =>
-                                  savedPost.id === post.id
-                              ) ? (
-                                <img
-                                  src="/src/assets/saved.png"
-                                  className="post-saved-icon"
-                                  onClick={() => {
-                                    handleSaveButton(post);
-                                  }}
-                                  placeholder="Saved"
-                                  title="Unsave Post"
-                                ></img>
-                              ) : (
-                                <img
-                                  src="/src/assets/notsaved.png"
-                                  className="post-notsaved-icon"
-                                  onClick={() => {
-                                    handleSaveButton(post);
-                                  }}
-                                  placeholder="Not Saved"
-                                  title="Save Post"
-                                ></img>
-                              )}
-                            </div>
-                            <Link
-                              to={
-                                post.typename === "Forum"
-                                  ? `/forumpost/${post.id}`
-                                  : post.typename === "Secondhand"
-                                  ? `/secondhandpost/${post.id}`
-                                  : post.typename === "SectionExchange"
-                                  ? `/sectionexchange/${post.id}`
-                                  : post.typename === "Donate"
-                                  ? `/donatepost/${post.id}`
-                                  : post.typename === "Borrow"
-                                  ? `/borrowpost/${post.id}`
-                                  : `/lostfoundpost/${post.id}`
-                              }
-                              className="link"
-                              style={{
-                                fontSize: "1.5rem",
-                                fontWeight: "bold",
-                                textAlign: "left",
+          <label className="saved-post-title">Saved Posts</label>
+          <div className="saved-posts-container">
+            {profile?.savedPosts
+              ? profile.savedPosts.map((post: SavedPost) => (
+                  <div className="col-12 mb-4" key={post.id}>
+                    <div className="profilePost w-full">
+                      <div className="card-body">
+                        <div className="saved-posts-save-icon">
+                          {profile.savedPosts.some(
+                            (savedPost: SavedPost) => savedPost.id === post.id
+                          ) ? (
+                            <img
+                              src="/src/assets/saved.png"
+                              className="post-saved-icon"
+                              onClick={() => {
+                                handleSaveButton(post);
                               }}
-                            >
-                              {post.typename + ": " + post.title}
-                            </Link>
-                            <div
-                              className="description-container"
-                              style={{ height: "10%", textAlign: "left" }}
-                            >
-                              {post.typename === "SectionExchange" ? (
-                                <p className="card-text">
-                                  offered Course:{" "}
-                                  {post.offeredCourse
-                                    ? post.offeredCourse
-                                    : null}
-                                  , offered Section:{" "}
-                                  {post.offeredSection
-                                    ? post.offeredSection
-                                    : null}
-                                  , desired Course:{" "}
-                                  {post.desiredCourse
-                                    ? post.desiredCourse
-                                    : null}
-                                  , desired section:{" "}
-                                  {post.desiredSection
-                                    ? post.desiredSection
-                                    : null}
-                                </p>
-                              ) : null}
-                            </div>
-                          </div>
+                              placeholder="Saved"
+                              title="Unsave Post"
+                            ></img>
+                          ) : (
+                            <img
+                              src="/src/assets/notsaved.png"
+                              className="post-notsaved-icon"
+                              onClick={() => {
+                                handleSaveButton(post);
+                              }}
+                              placeholder="Not Saved"
+                              title="Save Post"
+                            ></img>
+                          )}
+                        </div>
+                        <Link
+                          to={
+                            post.typename === "forum"
+                              ? `/forumpost/${post.id}`
+                              : post.typename === "secondhand"
+                              ? `/secondhandpost/${post.id}`
+                              : post.typename === "sectionexchange"
+                              ? `/saved-posts`
+                              : post.typename === "donate"
+                              ? `/donatepost/${post.id}`
+                              : post.typename === "borrow"
+                              ? `/borrowpost/${post.id}`
+                              : `/lostfoundpost/${post.id}`
+                          }
+                          className="saved-post-title"
+                          style={{
+                            fontSize: "1.5rem",
+                            fontWeight: "bold",
+                            textAlign: "left",
+                          }}
+                        >
+                          {post.typename.charAt(0).toUpperCase() +
+                            post.typename.slice(1) +
+                            ":       "}
+                          {post.title}
+                        </Link>
+                        <div
+                          className="description-container"
+                          style={{ height: "10%", textAlign: "left" }}
+                        >
+                          {post.typename === "SectionExchange" ? (
+                            <p className="card-text">
+                              offered Course:{" "}
+                              {post.offeredCourse ? post.offeredCourse : null},
+                              offered Section:{" "}
+                              {post.offeredSection ? post.offeredSection : null}
+                              , desired Course:{" "}
+                              {post.desiredCourse ? post.desiredCourse : null},
+                              desired section:{" "}
+                              {post.desiredSection ? post.desiredSection : null}
+                            </p>
+                          ) : null}
                         </div>
                       </div>
                     </div>
-                  ))
-                : null}
-            </div>
+                  </div>
+                ))
+              : null}
           </div>
           <div
             className={`messenger-box ${

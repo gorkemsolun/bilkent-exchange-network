@@ -67,7 +67,9 @@ export default function Secondhand() {
       profileDispatch({ type: "UPDATE", payload: profile });
     } else {
       // Post is unsaved, save
+      const type = "secondhand";
       const body = {
+        typename: type,
         profileID: profile?._id,
         savedPost: post,
       };
@@ -79,7 +81,7 @@ export default function Secondhand() {
 
       const savedPost: SavedPost = {
         id: "" + post._id,
-        typename: "Secondhand,",
+        typename: "secondhand",
         title: post.title,
       };
 

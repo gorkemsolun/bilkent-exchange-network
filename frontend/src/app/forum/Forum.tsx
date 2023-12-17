@@ -94,7 +94,9 @@ export default function Forum() {
       profileDispatch({ type: "UPDATE", payload: profile });
     } else {
       // Post is unsaved, save
+      const type = "forum";
       const body = {
+        typename: type,
         profileID: profile?._id,
         savedPost: post,
       };
@@ -106,7 +108,7 @@ export default function Forum() {
 
       const savedPost: SavedPost = {
         id: "" + post._id,
-        typename: "Secondhand,",
+        typename: "forum",
         title: post.title,
       };
 

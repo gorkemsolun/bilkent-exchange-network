@@ -80,6 +80,8 @@ td {
   padding: 0.5rem;
   border-radius: 0.25rem;
   width: 100%;
+  background-color: #333;
+  color: white;
 }
 
 .filter-lostfound-wrapper {
@@ -144,6 +146,8 @@ td {
 .filter-date-input {
   padding: 0.5rem;
   border-radius: 0.25rem;
+  background-color: #333;
+  color: white;
 }
 
 .filter-date-input-wrapper {
@@ -185,11 +189,15 @@ td {
 .filter-page-number-input {
   padding: 0.5rem;
   border-radius: 0.25rem;
+  background-color: #333;
+  color: white;
 }
 
 .filter-post-per-input {
   padding: 0.5rem;
   border-radius: 0.25rem;
+  background-color: #333;
+  color: white;
 }
 
 .filter-reset-filter-button-wrapper {
@@ -234,6 +242,8 @@ td {
   float: right;
   font-size: 20px;
   cursor: pointer;
+  text-align: end;
+  margin-top: -16px;
 }
 
 .modal-header {
@@ -725,6 +735,7 @@ td {
   width: 30%;
   padding: 2vw;
   background: white;
+  color: black;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
@@ -1192,6 +1203,9 @@ td {
   padding-top: 6px;
   padding-left: 8px;
   color: white;
+  background-color: #333;
+  border: #0056b3 1px solid;
+  border-radius: 20px;
 }
 
 .messenger-conversation-send-button {
@@ -1421,5 +1435,38 @@ td {
 }
 
 .link {
+  color: white;
+}
+
+.saved-post-title {
+  color: white;
+  font-size: 32px;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+
+.saved-posts-container {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 0;
+  padding: 10px;
+  justify-content: start;
+  text-align: left;
+  margin-right: auto;
+}
+
+.saved-posts-save-icon {
+  position: absolute;
+  top: 0;
+  right: 20px;
+}
+
+.reset-button {
+  background-color: red;
+  color: white;
+}
+
+.filter-button {
+  background-color: #007bff;
   color: white;
 }
