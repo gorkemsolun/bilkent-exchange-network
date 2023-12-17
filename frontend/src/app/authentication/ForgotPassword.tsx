@@ -69,6 +69,11 @@ export default function ForgetPassword() {
                 Submit
               </button>
             </div>
+            <div className="flex mt-6 justify-center text-xs">
+              <Link className="text-blue-400 hover:text-blue-500" to="/login">
+                Already have an account? Login
+              </Link>
+            </div>
             {error && (
               <div style={{ marginTop: "20px" }}>
                 <div
