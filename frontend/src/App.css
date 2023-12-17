@@ -327,9 +327,17 @@ td {
 .profileEditIcon {
   max-height: 5vh;
   max-width: 5vw;
-  margin-left: 37vw;
-  margin-bottom: 1vh;
-  margin-top: 12px;
+  margin-left: auto;
+}
+
+.profile-posts-edit-delete {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+}
+
+.profile-posts-edit-button {
+  margin-left: 8px;
 }
 
 .editProfileButtonContainer {
@@ -385,9 +393,16 @@ td {
   background-color: transparent;
 }
 
+.profilePostsContainer {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
 .profilePost {
   background-color: rgba(0, 0, 0, 0.2); /* Black w/opacity/see-through */
-  backdrop-filter: blur(5px);
   margin-bottom: 20px;
   color: white;
   border-radius: 16px;

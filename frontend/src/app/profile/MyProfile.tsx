@@ -13,6 +13,8 @@ import { useProfileContext } from "../authentication/AuthHelpers.js";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
+import DeletePostButton from "../components/DeletePostButton.tsx";
+import EditPostButton from "../components/EditPostButton.tsx";
 
 export default function MyProfile() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -82,25 +84,23 @@ export default function MyProfile() {
                   {userProfile?.ownPosts
                     ? userProfile.ownPosts.map((post: OwnPost) => (
                         <div className="col-12 mb-4" key={post.id}>
-                          <Link
-                            to={
-                              post.typename === "Forum"
-                                ? `/forumpost/${post.id}`
-                                : post.typename === "Secondhand"
-                                ? `/secondhandpost/${post.id}`
-                                : post.typename === "SectionExchange"
-                                ? `/sectionexchange/${post.id}`
-                                : post.typename === "Donate"
-                                ? `/donatepost/${post.id}`
-                                : post.typename === "Borrow"
-                                ? `/borrowpost/${post.id}`
-                                : `/lostfoundpost/${post.id}`
-                            }
-                            className="col-12 cursor-pointer"
-                          >
+                          <div className="col-12 cursor-pointer">
                             <div className="profilePost w-full">
-                              <div className="card-body">
-                                <h2
+                              <div className="profilePostsContainer">
+                                <Link
+                                  to={
+                                    post.typename === "Forum"
+                                      ? `/forumpost/${post.id}`
+                                      : post.typename === "Secondhand"
+                                      ? `/secondhandpost/${post.id}`
+                                      : post.typename === "SectionExchange"
+                                      ? `/sectionexchange/${post.id}`
+                                      : post.typename === "Donate"
+                                      ? `/donatepost/${post.id}`
+                                      : post.typename === "Borrow"
+                                      ? `/borrowpost/${post.id}`
+                                      : `/lostfoundpost/${post.id}`
+                                  }
                                   className="card-title"
                                   style={{
                                     fontSize: "1.5rem",
@@ -110,35 +110,48 @@ export default function MyProfile() {
                                 >
                                   {post.typename + ":       "}
                                   {post.title}
-                                </h2>
-                                <div
-                                  className="description-container"
-                                  style={{ height: "10%", textAlign: "left" }}
-                                >
-                                  {post.typename === "SectionExchange" ? (
-                                    <p className="card-text">
-                                      offered Course:{" "}
-                                      {post.offeredCourse
-                                        ? post.offeredCourse
-                                        : null}
-                                      , offered Section:{" "}
-                                      {post.offeredSection
-                                        ? post.offeredSection
-                                        : null}
-                                      , desired Course:{" "}
-                                      {post.desiredCourse
-                                        ? post.desiredCourse
-                                        : null}
-                                      , desired section:{" "}
-                                      {post.desiredSection
-                                        ? post.desiredSection
-                                        : null}
-                                    </p>
-                                  ) : null}
+                                </Link>
+                                <div className="profile-posts-edit-delete">
+                                  <DeletePostButton
+                                    postId={"" + post.id}
+                                    profileId={"" + userProfile._id}
+                                    type={post.typename}
+                                  />
+                                  <div className="profile-posts-edit-button">
+                                    <EditPostButton
+                                      postId={"" + post.id}
+                                      type={post.typename.toLowerCase()}
+                                    />
+                                  </div>
                                 </div>
                               </div>
+                              <div
+                                className="description-container"
+                                style={{ height: "10%", textAlign: "left" }}
+                              >
+                                {post.typename === "SectionExchange" ? (
+                                  <p className="card-text">
+                                    offered Course:{" "}
+                                    {post.offeredCourse
+                                      ? post.offeredCourse
+                                      : null}
+                                    , offered Section:{" "}
+                                    {post.offeredSection
+                                      ? post.offeredSection
+                                      : null}
+                                    , desired Course:{" "}
+                                    {post.desiredCourse
+                                      ? post.desiredCourse
+                                      : null}
+                                    , desired section:{" "}
+                                    {post.desiredSection
+                                      ? post.desiredSection
+                                      : null}
+                                  </p>
+                                ) : null}
+                              </div>
                             </div>
-                          </Link>
+                          </div>
                         </div>
                       ))
                     : null}
