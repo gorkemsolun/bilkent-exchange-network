@@ -20,6 +20,7 @@ export default function EditPostButton(props: EditPostButtonProps) {
    */
   function handleEditPost(): void {
     setIsModalOpen(true);
+    console.log(props);
   }
 
   /**
@@ -32,7 +33,7 @@ export default function EditPostButton(props: EditPostButtonProps) {
   return (
     <div>
       <button className="btn btn-info" onClick={handleEditPost} type="button">
-        Edit Post
+        Edit
       </button>
       {isModalOpen && props.type == "secondhand" && (
         <EditSecondHandPost onClose={handleCloseModal} postId={props.postId} />
