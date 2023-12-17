@@ -88,13 +88,8 @@ export default function Profile() {
 
   // Remove account from database
   const handleRemove = async () => {
-    await deleteUser(user?._id as string);
-    handleLogOut();
-  };
-
-  // before remove, account is loged out
-  const handleLogOut = () => {
-    logout();
+    await deleteUser(id as string);
+    window.location.reload;
   };
 
   return (
@@ -105,15 +100,26 @@ export default function Profile() {
         <Loader />
       ) : (
         <div className="profileContainer">
-          <div className="profileDMBoxContainer">
+          <div className="profileDMBoxReportContainer">
+            {user?.isAdmin === true && (
+              <button
+                type="button"
+                className="btn btn-danger "
+                onClick={handleRemove}
+                style={{ marginLeft: "20px" }}
+              >
+                Remove Account
+              </button>
+            )}
             <img
-              className="img-fluid mx-auto d-block max-w-4vw max-h-4vh"
+              className=" profileDMBox"
               src="/src/assets/dmbox.png"
               alt="DM Box"
               title="Send DM"
               onClick={handleDMBoxClick}
             />
           </div>
+
           <div className="profile-header">
             <img
               src={userProfile?.image || defaultImage}
