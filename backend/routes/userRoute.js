@@ -1,7 +1,7 @@
 import express from "express";
 import {
   createEmailToken,
-  forgetPassword,
+  forgotPassword,
   getEmailToken,
   sendEmail,
 } from "../controllers/emailController.js";
@@ -22,8 +22,8 @@ const authRouter = express.Router();
 authRouter.post("/login", loginUser);
 authRouter.post("/signup", signupUser);
 
-//forget password sends verification email
-authRouter.post("/forgetPassword", forgetPassword);
+//forgot password sends verification email
+authRouter.post("/forgotPassword", forgotPassword);
 
 //send verification email route
 authRouter.post("/sendEmail", sendEmail);

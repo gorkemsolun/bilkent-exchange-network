@@ -11,7 +11,7 @@ import { useLogin } from "./AuthHelpers";
 const bg = new BackgroundManager();
 const url = bg.getRandomImageUrl();
 
-export default function ForgetPassword() {
+export default function ForgotPassword() {
   const [email, setEmail] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const { error } = useLogin();

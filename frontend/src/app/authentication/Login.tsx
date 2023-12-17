@@ -98,7 +98,7 @@ export default function Login() {
         <div className="flex mt-6 justify-center text-xs">
           <Link
             className="text-blue-400 hover:text-blue-500"
-            to="/forgetPassword"
+            to="/forgotPassword"
           >
             Forgot Password
           </Link>

@@ -3,7 +3,7 @@ import "./App.css";
 import AdminPage from "./app/admin/Admin";
 import { AuthContextProvider } from "./app/authentication/AuthContext";
 import { useAuthContext } from "./app/authentication/AuthHelpers";
-import ForgetPassword from "./app/authentication/ForgotPassword";
+import ForgotPassword from "./app/authentication/ForgotPassword";
 import Login from "./app/authentication/Login";
 import NewPassword from "./app/authentication/NewPassword";
 import Signup from "./app/authentication/Signup";
@@ -131,8 +131,8 @@ function AppContent() {
             element={!user ? <Signup /> : <Navigate to="/secondhand" />}
           />
           <Route
-            path="/forgetPassword"
-            element={!user ? <ForgetPassword /> : <Navigate to="/secondhand" />}
+            path="/forgotPassword"
+            element={!user ? <ForgotPassword /> : <Navigate to="/secondhand" />}
           />
           <Route
             path="/newPassword"

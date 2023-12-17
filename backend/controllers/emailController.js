@@ -92,11 +92,11 @@ const checkIfUserExists = async (email) => {
  * @param {Object} res - The response object.
  * @returns {Promise<void>} - A promise that resolves when the email is sent successfully.
  */
-export const forgetPassword = async (req, res) => {
+export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    await sendForgetVerificationMail(email);
+    await sendForgotVerificationMail(email);
     res.json({ message: "Verification email sent successfully." });
   } catch (error) {
     console.error("Error sending verification email:", error);
@@ -109,7 +109,7 @@ export const forgetPassword = async (req, res) => {
  * @param {string} email - The email address to send the verification email to.
  * @returns {Promise<void>} - A promise that resolves once the verification email is sent.
  */
-export const sendForgetVerificationMail = async (email) => {
+export const sendForgotVerificationMail = async (email) => {
   // Check if the provided username and email exist (replace this with your actual logic)
   const userExists = await checkIfUserExists(email);
 
