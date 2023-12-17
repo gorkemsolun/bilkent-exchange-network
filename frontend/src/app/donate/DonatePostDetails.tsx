@@ -74,6 +74,7 @@ export default function DonatePostDetails() {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${donateUrl}/${id}`)
       .then((res) => {

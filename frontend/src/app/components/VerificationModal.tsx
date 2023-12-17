@@ -4,7 +4,7 @@ import { SuccessModalProps } from "../../data-types/props";
 
 export default function VerificationModal({
   message = "Please verify your email!",
-  prompt = "We have sent an email to",
+  prompt = "You can close this page now.\nWe have sent an email to",
   email: initialEmail,
   width = "100px",
   height = "100px",

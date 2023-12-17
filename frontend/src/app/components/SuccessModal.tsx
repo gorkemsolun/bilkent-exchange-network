@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import okTickImage from "../../assets/gr-tick.avif";
+import { tickImage } from "../../data-types/constants";
 import { SuccessModalProps } from "../../data-types/props";
 
 export default function SuccessModal({
@@ -17,7 +17,7 @@ export default function SuccessModal({
     <div className="okay-modal">
       <div className="okay-content">
         <img
-          src={okTickImage}
+          src={tickImage}
           alt="Okay Tick"
           style={{
             width,
