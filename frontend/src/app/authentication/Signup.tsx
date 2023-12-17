@@ -6,6 +6,7 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useEmailToken, useSignup } from "./AuthHelpers";
+import ErrorModal from "../components/ErrorModal";
 
 export default function Signup() {
   const [password, setPassword] = useState<string>("");
@@ -16,6 +17,7 @@ export default function Signup() {
   const email = searchParams.get("email");
   const { signUpRequest } = useSignup();
   const { getToken } = useEmailToken();
+  const [error, setError] = useState<string>("");
 
   /**
    * Fetches the token from the server and updates the local storage and state
@@ -50,6 +52,22 @@ export default function Signup() {
    */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!username && !password) {
+      setError("All field must be filled");
+      return;
+    }
+
+    if (!username) {
+      setError("Please enter an username");
+      return;
+    }
+
+    if (!password) {
+      setError("Please enter a password");
+      return;
+    }
+
     if (verified) {
       await signUpRequest(username, email as string, password);
     }
@@ -116,6 +134,16 @@ export default function Signup() {
         >
           Sign Up
         </button>
+        <div style={{ marginTop: "30px" }}>
+          {error && (
+            <ErrorModal
+              message={error}
+              onClose={() => {
+                setError("");
+              }}
+            />
+          )}
+        </div>
       </form>
     </div>
   );
