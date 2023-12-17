@@ -98,6 +98,7 @@ export const conversationUrl =
 export const messageUrl = "http://localhost:3000/message/message";
 export const saveUrl = "http://localhost:3000/profile/savepost";
 export const unsaveUrl = "http://localhost:3000/profile/unsavepost";
+export const localUrl = "http://localhost:3000/";
 
 export const defaultFilterParams = {
   categories: [],

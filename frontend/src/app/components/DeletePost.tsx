@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { localUrl } from "../../data-types/constants";
 import { OwnPost, ProfileContextType } from "../../data-types/datatypes";
 import { DeletePostProps } from "../../data-types/props";
 import { useProfileContext } from "../authentication/AuthHelpers";
@@ -18,14 +19,7 @@ export default function DeletePost(props: DeletePostProps) {
   const handleDelete = async () => {
     setLoading(true);
     await axios
-      .delete(
-        "http://localhost:3000/" +
-          props.type +
-          "/" +
-          props.type +
-          "post/" +
-          props.postId
-      )
+      .delete(localUrl + props.type + "/" + props.type + "post/" + props.postId)
       .catch((err) => {
         setError(err);
       });
