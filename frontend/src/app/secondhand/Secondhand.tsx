@@ -155,6 +155,7 @@ export default function Secondhand() {
                             onClick={() => {
                               handleSaveButton(post);
                             }}
+                            title="saved"
                           ></img>
                         ) : (
                           <img
@@ -163,6 +164,7 @@ export default function Secondhand() {
                             onClick={() => {
                               handleSaveButton(post);
                             }}
+                            title="not saved"
                           ></img>
                         )}
                       </div>

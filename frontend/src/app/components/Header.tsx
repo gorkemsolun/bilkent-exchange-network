@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultImage, defaultUserProfile } from "../../data-types/constants";
+import {
+  defaultImage,
+  defaultUserProfile,
+  logo,
+} from "../../data-types/constants";
 import { ProfileContextType, UserProfile } from "../../data-types/datatypes";
 import { HeaderProps } from "../../data-types/props";
 import { useLogout, useProfileContext } from "../authentication/AuthHelpers";
@@ -65,11 +69,7 @@ export default function Header(props: HeaderProps) {
       </div>
       <div className="header-title-outer">
         <Link className="header-title-link" to="/secondhand">
-          <img
-            className="header-title-image"
-            src="./src/assets/logo.png"
-            alt="Logo"
-          />
+          <img className="header-title-image" src={logo} alt="Logo" />
           <span className="header-title-text">Bilkent Exchange Network</span>
         </Link>
       </div>
