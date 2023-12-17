@@ -140,10 +140,13 @@ export const forgotPassword = async (req, res) => {
 export const checkIfUserAlreadyExists= async (req, res) => {
   const {email} = req.body
   const user = await User.findOne({email: email});
-
+  const bilkentEmailRegex = /^[^\s@]+@ug\.bilkent\.edu\.tr$/;
+  
   if(user) {
     res.status(500).json({error: "Email already in use"})
-  } else{
-    res.status(200).json()
+  } else if(!bilkentEmailRegex.test(email)){
+    res.status(500).json({error: "Not a Bilkent Mail"})
+  }else{
+    res.status(200).json({})
   }
 }
