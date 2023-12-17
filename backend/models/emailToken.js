@@ -1,6 +1,14 @@
 import crypto from "crypto";
 import mongoose from "mongoose";
 
+/**
+ * Mongoose schema for email token.
+ *
+ * @typedef {Object} EmailTokenSchema
+ * @property {string} emailToken - The email token.
+ * @property {Date} createdAt - The creation date of the email token.
+ * @property {Date} updatedAt - The last update date of the email token.
+ */
 const emailTokenSchema = new mongoose.Schema(
   {
     emailToken: {

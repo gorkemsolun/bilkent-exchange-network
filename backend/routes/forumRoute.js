@@ -10,6 +10,10 @@ import {
   forumPostPUT,
 } from "../controllers/forumController.js";
 
+/**
+ * Express router object for handling forum routes.
+ * @type {express.Router}
+ */
 const router = express.Router();
 
 router.post("/forumpost", forumPostPOST);

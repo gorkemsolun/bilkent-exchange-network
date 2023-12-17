@@ -20,10 +20,22 @@ const SavedPostSchema = new mongoose.Schema({
   desiredSection: String,
 });
 
+/**
+ * @typedef {Object} UserProfileSchema
+ * @property {string} userID - The ID of the user.
+ * @property {string} username - The username of the user.
+ * @property {string} email - The email of the user.
+ * @property {string} image - The image URL of the user.
+ * @property {string} description - The description of the user.
+ * @property {number} reputation - The reputation score of the user.
+ * @property {OwnPostSchema[]} ownPosts - The array of own posts by the user.
+ * @property {SavedPostSchema[]} savedPosts - The array of saved posts by the user.
+ * @property {Date} createdAt - The timestamp when the user profile was created.
+ * @property {Date} updatedAt - The timestamp when the user profile was last updated.
+ */
 const UserProfileSchema = new mongoose.Schema(
   {
     userID: {
-      // for the owner of this profile's ID
       type: String,
       required: true,
     },
@@ -50,7 +62,6 @@ const UserProfileSchema = new mongoose.Schema(
       default: [],
     },
     savedPosts: {
-      // for posts saved by this user
       type: [SavedPostSchema],
       default: [],
     },

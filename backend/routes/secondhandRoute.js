@@ -7,6 +7,10 @@ import {
   secondhandPostPUT,
 } from "../controllers/secondhandController.js";
 
+/**
+ * Express router object for handling secondhand routes.
+ * @type {import('express').Router}
+ */
 const router = express.Router();
 /*
   When we finish the project remove it out of the comment

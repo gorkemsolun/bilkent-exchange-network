@@ -7,6 +7,10 @@ import {
   borrowPostPUT,
 } from "../controllers/borrowController.js";
 
+/**
+ * Express router object for handling borrow routes.
+ * @type {import('express').Router}
+ */
 const router = express.Router();
 /*
   When we finish the project remove it out of the comment

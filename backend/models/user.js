@@ -3,6 +3,21 @@ import crypto from "crypto";
 import mongoose from "mongoose";
 import validator from "validator";
 
+/**
+ * UserSchema represents the schema for the User model in the database.
+ *
+ * @typedef {Object} UserSchema
+ * @property {string} username - The username of the user.
+ * @property {boolean} isAdmin - Indicates whether the user is an admin or not.
+ * @property {string} email - The email address of the user.
+ * @property {string} password - The password of the user.
+ * @property {string} image - The image URL of the user.
+ * @property {boolean} verified - Indicates whether the user's email is verified or not.
+ * @property {string} emailToken - The token used for email verification.
+ * @property {Array<string>} conversations - The array of conversation IDs associated with the user.
+ * @property {Date} createdAt - The timestamp when the user was created.
+ * @property {Date} updatedAt - The timestamp when the user was last updated.
+ */
 const UserSchema = new mongoose.Schema(
   {
     username: {

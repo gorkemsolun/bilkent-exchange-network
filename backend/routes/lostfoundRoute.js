@@ -7,6 +7,10 @@ import {
   lostfoundPostPUT,
 } from "../controllers/lostfoundController.js";
 
+/**
+ * Express router for handling lost and found routes.
+ * @type {import('express').Router}
+ */
 const router = express.Router();
 /*
   When we finish the project remove it out of the comment

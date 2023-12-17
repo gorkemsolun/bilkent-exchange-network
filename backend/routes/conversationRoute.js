@@ -6,6 +6,10 @@ import {
   conversationPUTUpdate,
 } from "../controllers/conversationController.js";
 
+/**
+ * Express router for handling conversation routes.
+ * @type {import('express').Router}
+ */
 const router = express.Router();
 /*
   When we finish the project remove it out of the comment
