@@ -134,61 +134,59 @@ export default function Forum() {
             <Loader />
           ) : (
             <div className="justify-center">
-              <div className="container">
-                <div className="row">
-                  {forumPosts.map((post) => (
-                    <div className="col-12 mb-4" key={post._id}>
-                      <div className="col-12 cursor-pointer" key={post._id}>
-                        <div className="card w-full">
-                          <div className="card-body">
-                            <div className="post-save-container-forum-type">
-                              {profile.savedPosts.some(
-                                (savedPost: SavedPost) =>
-                                  savedPost.id === post._id
-                              ) ? (
-                                <img
-                                  src="/src/assets/saved.png"
-                                  className="post-saved-icon"
-                                  onClick={() => {
-                                    handleSaveButton(post);
-                                  }}
-                                ></img>
-                              ) : (
-                                <img
-                                  src="/src/assets/notsaved.png"
-                                  className="post-notsaved-icon"
-                                  onClick={() => {
-                                    handleSaveButton(post);
-                                  }}
-                                ></img>
-                              )}
-                            </div>
-                            <Link
-                              to={`/forumpost/${post._id}`}
-                              className="card-title"
-                            >
-                              <p className="forum-post-title">
-                                {post.title.length < 50
-                                  ? post.title
-                                  : post.title.slice(0, 50) + "..."}
-                              </p>
-                            </Link>
-                            <div
-                              className="description-container"
-                              style={{ height: "10%", textAlign: "left" }}
-                            >
-                              <p className="card-text">
-                                {post.description.length < 315
-                                  ? post.description
-                                  : post.description.slice(0, 315) + "..."}
-                              </p>
-                            </div>
+              <div className="row posts-container">
+                {forumPosts.map((post) => (
+                  <div className="col-12 mb-4" key={post._id}>
+                    <div className="col-12 cursor-pointer" key={post._id}>
+                      <div className="post-container w-full">
+                        <div className="card-body">
+                          <div className="post-save-container-forum-type">
+                            {profile.savedPosts.some(
+                              (savedPost: SavedPost) =>
+                                savedPost.id === post._id
+                            ) ? (
+                              <img
+                                src="/src/assets/saved.png"
+                                className="post-saved-icon"
+                                onClick={() => {
+                                  handleSaveButton(post);
+                                }}
+                              ></img>
+                            ) : (
+                              <img
+                                src="/src/assets/notsaved.png"
+                                className="post-notsaved-icon"
+                                onClick={() => {
+                                  handleSaveButton(post);
+                                }}
+                              ></img>
+                            )}
+                          </div>
+                          <Link
+                            to={`/forumpost/${post._id}`}
+                            className="card-title"
+                          >
+                            <p className="forum-post-title">
+                              {post.title.length < 50
+                                ? post.title
+                                : post.title.slice(0, 50) + "..."}
+                            </p>
+                          </Link>
+                          <div
+                            className="description-container"
+                            style={{ height: "10%", textAlign: "left" }}
+                          >
+                            <p className="card-text">
+                              {post.description.length < 315
+                                ? post.description
+                                : post.description.slice(0, 315) + "..."}
+                            </p>
                           </div>
                         </div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           )}

@@ -17,7 +17,7 @@ export default function SearchBar(props: {
   };
 
   return (
-    <div className="inline-flex items-center bg-purple-300 rounded-full mx-2 mt-2">
+    <div className="inline-flex items-center rounded-full mx-2 mt-2 search-bar">
       <input
         type="text"
         value={searchTerm}

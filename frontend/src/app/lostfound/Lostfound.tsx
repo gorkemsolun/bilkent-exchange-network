@@ -156,76 +156,71 @@ export default function LostFound() {
           {loading ? (
             <Loader />
           ) : (
-            <div className="container">
-              <div className="row">
-                {lostFoundPosts.map((post: LostFoundPost) => (
-                  <div
-                    className="col-12 col-sm-8 col-md-6 col-lg-4 mb-4"
-                    key={post._id}
-                  >
-                    <div className="card">
-                      <div className="position-relative">
-                        <span className="badge bg-primary rounded-pill lostfound-post-category-badge">
-                          {post.category}
-                        </span>
-                        <span className="badge bg-danger rounded-pill lostfound-post-status-badge">
-                          {post.status}
-                        </span>
-                        <div className="post-save-container">
-                          {profile.savedPosts.some(
-                            (savedPost: SavedPost) => savedPost.id === post._id
-                          ) ? (
-                            <img
-                              src="/src/assets/saved.png"
-                              className="post-saved-icon"
-                              onClick={() => {
-                                handleSaveButton(post);
-                              }}
-                            ></img>
-                          ) : (
-                            <img
-                              src="/src/assets/notsaved.png"
-                              className="post-notsaved-icon"
-                              onClick={() => {
-                                handleSaveButton(post);
-                              }}
-                            ></img>
-                          )}
-                        </div>
-                        <img
-                          className="card-img post-image"
-                          src={post.image}
-                          alt="Image"
-                        />
+            <div className="row posts-container">
+              {lostFoundPosts.map((post: LostFoundPost) => (
+                <div className="col-lg-4" key={post._id}>
+                  <div className="post-container">
+                    <div className="position-relative">
+                      <span className="badge bg-primary rounded-pill lostfound-post-category-badge">
+                        {post.category}
+                      </span>
+                      <span className="badge bg-danger rounded-pill lostfound-post-status-badge">
+                        {post.status}
+                      </span>
+                      <div className="post-save-container">
+                        {profile.savedPosts.some(
+                          (savedPost: SavedPost) => savedPost.id === post._id
+                        ) ? (
+                          <img
+                            src="/src/assets/saved.png"
+                            className="post-saved-icon"
+                            onClick={() => {
+                              handleSaveButton(post);
+                            }}
+                          ></img>
+                        ) : (
+                          <img
+                            src="/src/assets/notsaved.png"
+                            className="post-notsaved-icon"
+                            onClick={() => {
+                              handleSaveButton(post);
+                            }}
+                          ></img>
+                        )}
                       </div>
-                      <div className="card-body">
-                        <h4 className="card-title">{post.title}</h4>
-                        <div
-                          className="description-container"
-                          style={{ height: "13vh", textAlign: "left" }}
-                        >
-                          <p className="card-text">
-                            {post.description.length < 75
-                              ? post.description
-                              : post.description.slice(0, 75) + "..."}
-                          </p>
-                        </div>{" "}
-                        <div className="buy d-flex justify-content-between align-items-center">
-                          <div className="price text-success">
-                            <h5 className="mt-4"></h5>
-                          </div>
-                          <Link
-                            className="btn btn-danger mt-3"
-                            to={`/lostfoundpost/${post._id}`}
-                          >
-                            <i className="fas fa-shopping-cart"></i> Details
-                          </Link>
+                      <img
+                        className="card-img post-image"
+                        src={post.image}
+                        alt="Image"
+                      />
+                    </div>
+                    <div className="card-body">
+                      <h4 className="card-title">{post.title}</h4>
+                      <div
+                        className="description-container"
+                        style={{ height: "13vh", textAlign: "left" }}
+                      >
+                        <p className="card-text">
+                          {post.description.length < 75
+                            ? post.description
+                            : post.description.slice(0, 75) + "..."}
+                        </p>
+                      </div>{" "}
+                      <div className="buy d-flex justify-content-between align-items-center">
+                        <div className="price text-success">
+                          <h5 className="mt-4"></h5>
                         </div>
+                        <Link
+                          className="btn btn-danger mt-3"
+                          to={`/lostfoundpost/${post._id}`}
+                        >
+                          <i className="fas fa-shopping-cart"></i> Details
+                        </Link>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           )}
         </div>

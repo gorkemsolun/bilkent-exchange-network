@@ -49,12 +49,17 @@ td {
   flex-direction: column;
   object-fit: contain;
   padding-left: 0.25rem;
-  background: linear-gradient(to right, #2c2c2c, #2d2d2d);
+  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.3); /* Black w/opacity/see-through */
   color: #d0d0d0;
   padding-left: 1rem;
   font-weight: 700;
   padding: 1rem;
   max-width: 180px;
+  border-radius: 20px;
+  margin-left: 2px;
+  box-shadow: 0px 1px 5px #fff;
+  color: white;
 }
 
 .filter-price-wrapper {
@@ -444,6 +449,7 @@ td {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
+  color: white;
 }
 
 .profile-header {
@@ -471,7 +477,7 @@ td {
 }
 
 .profileUsername {
-  color: #555;
+  color: white;
   margin: 0;
   width: 25vw;
   overflow: hidden;
@@ -518,8 +524,8 @@ td {
 }
 
 .navbar-outer {
-  background: linear-gradient(to right, #2c2c2c, #2d2d2d);
-  color: #adadad;
+  background-color: rgba(0, 0, 0, 0.2); /* Black w/opacity/see-through */
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -540,7 +546,7 @@ td {
 }
 
 .home-navbar-link {
-  color: #adadad;
+  color: white;
   font-size: 1.5rem;
   font-weight: 700;
 }
@@ -551,7 +557,7 @@ td {
 }
 
 .header-outer {
-  background: linear-gradient(to right, #2c2c2c, #2d2d2d);
+  background-color: rgba(0, 0, 0, 0.3); /* Black w/opacity/see-through */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -573,7 +579,7 @@ td {
 }
 
 .header-profile-username {
-  color: #adadad;
+  color: white;
   font-size: 1.25rem;
   font-weight: 700;
 }
@@ -622,7 +628,7 @@ td {
   textdecoration: "none";
   display: flex;
   align-items: center;
-  color: #adadad;
+  color: white;
   text-decoration: none;
 }
 
@@ -642,6 +648,7 @@ td {
   height: 50px;
   object-fit: contain;
   margin-right: 10px;
+  border-radius: 25px;
 }
 
 .header-message-link {
@@ -649,6 +656,7 @@ td {
 
 .postdetails-container {
   display: flex;
+  color: white;
 }
 
 .postdetails-left-container {
@@ -713,7 +721,6 @@ td {
 .postdetails-user-info-container {
   flex-shrink: 0;
   height: fit-content;
-  background-color: #c4e1fa;
   border: #000000 1px solid;
   border-radius: 5%;
   padding: 1w;
@@ -765,7 +772,7 @@ td {
 
 .postdetails-price {
   font-size: x-large;
-  color: green;
+  color: rgb(0, 255, 0);
   text-align: left;
 }
 
@@ -928,6 +935,37 @@ td {
   width: 100vw;
   min-height: 100vh;
   height: fit-content;
+  background-image: linear-gradient(to right, #2c3e50, #4ca1af);
+}
+
+.search-bar {
+  background-image: linear-gradient(to right, #2c3e50, #4ca1af);
+  color: white;
+}
+
+.posts-container {
+  width: 100%;
+  padding: 20px;
+}
+
+.post-container {
+  background-color: rgba(0, 0, 0, 0.2); /* Black w/opacity/see-through */
+  backdrop-filter: blur(5px);
+  padding: 10px;
+  margin-bottom: 20px;
+  color: white;
+  border-radius: 16px;
+}
+
+.sectionexchange-post-container {
+  background-color: rgba(0, 0, 0, 0.2); /* Black w/opacity/see-through */
+  backdrop-filter: blur(5px);
+  padding: 10px;
+  margin-bottom: 20px;
+  color: white;
+  border-radius: 16px;
+  width: 100%;
+  justify-content: center;
 }
 
 .messenger-box {
@@ -940,7 +978,7 @@ td {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(200, 200, 200, 0.9);
+  background-image: linear-gradient(to right, #d3cce3, #e9e4f0);
   border-radius: 20px;
   border: #007bff 2px solid;
   margin-top: 3px;
@@ -1036,7 +1074,7 @@ td {
   padding-bottom: 2px;
   padding-left: 5px;
   padding-right: 5px;
-  background-color: #aaa;
+  background-color: #b9abf1;
 }
 
 .messenger-conversation {

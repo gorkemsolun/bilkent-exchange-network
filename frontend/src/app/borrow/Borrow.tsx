@@ -154,69 +154,64 @@ export default function Borrow() {
           {loading ? (
             <Loader />
           ) : (
-            <div className="container">
-              <div className="row">
-                {borrowPosts.map((post: BorrowPost) => (
-                  <div className="col-12 mb-4" key={post._id}>
-                    <div
-                      className="col-12"
-                      key={post._id}
-                      style={{ cursor: "pointer", textAlign: "left" }}
-                    >
-                      <div className="card" style={{ width: "100%" }}>
-                        <div className="position-relative">
-                          <span className="badge bg-primary rounded-pill m-2 borrow-post-badge">
-                            {post.category}
-                          </span>
-                        </div>
-                        <div className="card-body">
-                          <div className="post-save-container-borrow-type">
-                            {profile.savedPosts.some(
-                              (savedPost: SavedPost) =>
-                                savedPost.id === post._id
-                            ) ? (
-                              <img
-                                src="/src/assets/saved.png"
-                                className="post-saved-icon"
-                                onClick={() => {
-                                  handleSaveButton(post);
-                                }}
-                              ></img>
-                            ) : (
-                              <img
-                                src="/src/assets/notsaved.png"
-                                className="post-notsaved-icon"
-                                onClick={() => {
-                                  handleSaveButton(post);
-                                }}
-                              ></img>
-                            )}
-                          </div>
-                          <Link
-                            to={`/borrowpost/${post._id}`}
-                            className="card-title"
-                            style={{ fontSize: "1.5rem", fontWeight: "bold" }}
-                          >
-                            {post.title.length < 50
-                              ? post.title
-                              : post.title.slice(0, 50) + "..."}
-                          </Link>
-                          <div
-                            className="description-container"
-                            style={{ height: "10%" }}
-                          >
-                            <p className="card-text">
-                              {post.description.length < 315
-                                ? post.description
-                                : post.description.slice(0, 315) + "..."}
-                            </p>
-                          </div>
-                        </div>
+            <div className="row posts-container">
+              {borrowPosts.map((post: BorrowPost) => (
+                <div
+                  className="col-12"
+                  key={post._id}
+                  style={{ cursor: "pointer", textAlign: "left" }}
+                >
+                  <div className="post-container" style={{ width: "100%" }}>
+                    <div className="position-relative">
+                      <span className="badge bg-primary rounded-pill m-2 borrow-post-badge">
+                        {post.category}
+                      </span>
+                    </div>
+                    <div className="card-body">
+                      <div className="post-save-container-borrow-type">
+                        {profile.savedPosts.some(
+                          (savedPost: SavedPost) => savedPost.id === post._id
+                        ) ? (
+                          <img
+                            src="/src/assets/saved.png"
+                            className="post-saved-icon"
+                            onClick={() => {
+                              handleSaveButton(post);
+                            }}
+                          ></img>
+                        ) : (
+                          <img
+                            src="/src/assets/notsaved.png"
+                            className="post-notsaved-icon"
+                            onClick={() => {
+                              handleSaveButton(post);
+                            }}
+                          ></img>
+                        )}
+                      </div>
+                      <Link
+                        to={`/borrowpost/${post._id}`}
+                        className="card-title"
+                        style={{ fontSize: "1.5rem", fontWeight: "bold" }}
+                      >
+                        {post.title.length < 50
+                          ? post.title
+                          : post.title.slice(0, 50) + "..."}
+                      </Link>
+                      <div
+                        className="description-container"
+                        style={{ height: "10%" }}
+                      >
+                        <p className="card-text">
+                          {post.description.length < 315
+                            ? post.description
+                            : post.description.slice(0, 315) + "..."}
+                        </p>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           )}
         </div>
