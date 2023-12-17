@@ -15,6 +15,7 @@ import {
 } from "../authentication/AuthHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
+import SuccessModal from "../components/SuccessModal";
 
 export default function EditSecondHandPost(props: EditPostProps) {
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
-  // this is required to show the category of post. dont delete.
+  // this is required to show the category of post
   const handleCategoryChange = async (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
@@ -35,6 +36,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${secondhandUrl}/${props.postId}`)
       .then((res) => {
@@ -42,9 +44,11 @@ export default function EditSecondHandPost(props: EditPostProps) {
         setSelectedCategory(res.data.category);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       })
-      .finally(() => {});
+      .finally(() => {
+        setLoading(false);
+      });
   }, [props]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -53,19 +57,16 @@ export default function EditSecondHandPost(props: EditPostProps) {
 
     const formData = new FormData(event.currentTarget);
 
-    {
-      // Check if any field is empty
-      if (
-        !formData.get("title") ||
-        !formData.get("description") ||
-        !formData.get("price") ||
-        !formData.get("image") ||
-        !formData.get("category")
-      ) {
-        setError("ALL INPUT FIELDS MUST BE SPECIFIED");
-        setLoading(false);
-        return;
-      }
+    if (
+      !formData.get("title") ||
+      !formData.get("description") ||
+      !formData.get("price") ||
+      !formData.get("image") ||
+      !formData.get("category")
+    ) {
+      setError("ALL INPUT FIELDS MUST BE SPECIFIED");
+      setLoading(false);
+      return;
     }
 
     const editedPost: SecondhandPost = {
@@ -80,13 +81,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
     };
 
     await axios
-      .put(
-        `${secondhandUrl}/${props.postId}`,
-        editedPost
-      )
-      .then((res) => {
-        console.log(res);
-      })
+      .put(`${secondhandUrl}/${props.postId}`, editedPost)
       .catch((err) => {
         setError(err);
       });
@@ -99,19 +94,19 @@ export default function EditSecondHandPost(props: EditPostProps) {
         (post: OwnPost) => post.id === props.postId
       );
     }
+
     if (index) {
       profile.ownPosts[index].title = editedPost.title;
     }
+
     localStorage.setItem("profile", JSON.stringify(profile));
     profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
-    setIsEdited(true);
+    if (error !== null || error !== undefined) {
+      setIsEdited(true);
+    }
   };
-
-  if (isEdited) {
-    window.location.reload();
-  }
 
   return (
     <div className="modal-overlay">
@@ -124,83 +119,91 @@ export default function EditSecondHandPost(props: EditPostProps) {
         <span className="close" onClick={props.onClose}>
           &times;
         </span>
+        {isEdited ? (
+          <SuccessModal />
+        ) : (
+          <>
+            <div>
+              <div
+                className="modal-form-group pt-4"
+                style={{ textAlign: "left" }}
+              >
+                <label htmlFor="name">Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  className="form-control"
+                  defaultValue={post.title}
+                  placeholder="Enter title"
+                />
+              </div>
+              <div className="modal-form-group" style={{ textAlign: "left" }}>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  className="form-control"
+                  style={{ height: "15vh" }}
+                  defaultValue={post.description}
+                />
+              </div>
+            </div>
 
-        <div>
-          <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
-            <label htmlFor="name">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="form-control"
-              defaultValue={post.title}
-              placeholder="Enter title"
-            />
-          </div>
-          <div className="modal-form-group" style={{ textAlign: "left" }}>
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              name="description"
-              className="form-control"
-              style={{ height: "15vh" }}
-              defaultValue={post.description}
-            />
-          </div>
-        </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="price">Price:</label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                className="form-control"
+                defaultValue={post.price}
+              />
+            </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="price">Price:</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            className="form-control"
-            defaultValue={post.price}
-          />
-        </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                name="category"
+                className="form-control"
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+              >
+                {categories.secondhand.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="category">Category</label>
-          <select
-            id="category"
-            name="category"
-            className="form-control"
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-          >
-            {categories.secondhand.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="image">Image:</label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="jpg, jpeg, png"
+                className="form-control"
+                defaultValue={post.image}
+              />
+            </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="image">Image:</label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="jpg, jpeg, png"
-            className="form-control"
-            defaultValue={post.image}
-          />
-        </div>
-
-        <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-primary">
-            Edit Post
-          </button>
-        </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
+            <div className="modal-form-group mt-4">
+              <button type="submit" className="btn btn-primary">
+                Edit Post
+              </button>
+            </div>
+            {error && (
+              <ErrorModal
+                message={error}
+                onClose={() => {
+                  setError(null);
+                }}
+              />
+            )}
+          </>
         )}
       </form>
     </div>

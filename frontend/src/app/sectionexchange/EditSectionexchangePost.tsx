@@ -34,7 +34,7 @@ export default function EditSectionExchangePost(props: EditPostProps) {
         setPost(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       });
   }, [props]);
 

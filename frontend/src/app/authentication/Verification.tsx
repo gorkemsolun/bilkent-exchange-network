@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useVerificationEmail } from "./AuthHelpers";
 import BackgroundManager from "../components/BackgroundManager";
 import VerificationModal from "../components/VerificationModal";
-import ErrorModal from "../components/errorModal";
 import { isValidEmail } from "../components/WebMailValidator";
+import ErrorModal from "../components/errorModal";
+import { useVerificationEmail } from "./AuthHelpers";
 
 const bg = new BackgroundManager();
 const url = bg.getRandomImageUrl();
@@ -29,7 +29,6 @@ export default function VerificationPage() {
     }
 
     setIsVerifying(true);
-    console.log("verification button pressed");
     await sendEmail("", email);
   };
 

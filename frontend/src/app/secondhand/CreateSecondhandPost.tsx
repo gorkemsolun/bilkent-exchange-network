@@ -6,7 +6,6 @@ import {
   UserContextType,
 } from "../../data-types/datatypes";
 import { SecondhandPost } from "../../data-types/posts";
-import { CreatePostProps } from "../../data-types/props";
 import { resizeImageFile } from "../PostHelpers";
 import {
   useAuthContext,
@@ -16,7 +15,7 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 import SuccessModal from "../components/SuccessModal";
 
-export default function CreateSecondHandPost(props: CreatePostProps) {
+export default function CreateSecondHandPost() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -42,6 +41,12 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
       return;
     }
 
+    if ((formData.get("price") as unknown as number) <= 0) {
+      setError("PRICE SHOULD BE GREATER THAN 0");
+      setLoading(false);
+      return;
+    }
+
     const post: SecondhandPost = {
       title: formData.get("title") as string,
       description: formData.get("description") as string,
@@ -55,7 +60,6 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
     await axios
       .post(secondhandUrl, post)
       .then((res) => {
-        // TODO SUCCESFULLY SENT
         postId = res.data._id;
       })
       .catch((err) => {
@@ -77,11 +81,12 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
     localStorage.setItem("profile", JSON.stringify(profile));
     profileDispatch({ type: "UPDATE", payload: profile });
     setLoading(false);
-    setIsSubmitted(true);
+    if (error === null || error === undefined) {
+      setIsSubmitted(true);
+    }
   };
 
   const handleClose = () => {
-    // Call the provided onClose callback
     window.location.reload();
   };
 
@@ -97,73 +102,82 @@ export default function CreateSecondHandPost(props: CreatePostProps) {
           &times;
         </span>
 
-        {isSubmitted? (<SuccessModal/>) : (<><div>
-          <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
-            <label htmlFor="name">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="form-control"
-              placeholder="Enter title"
-            />
-          </div>
-          <div className="modal-form-group" style={{ textAlign: "left" }}>
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              name="description"
-              className="form-control"
-              style={{ height: "15vh" }}
-            />
-          </div>
-        </div>
+        {isSubmitted ? (
+          <SuccessModal />
+        ) : (
+          <>
+            <div>
+              <div
+                className="modal-form-group pt-4"
+                style={{ textAlign: "left" }}
+              >
+                <label htmlFor="name">Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  className="form-control"
+                  placeholder="Enter title"
+                />
+              </div>
+              <div className="modal-form-group" style={{ textAlign: "left" }}>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  className="form-control"
+                  style={{ height: "15vh" }}
+                />
+              </div>
+            </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="price">Price:</label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            className="form-control"
-          />
-        </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="price">Price:</label>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                className="form-control"
+              />
+            </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="category">Category</label>
-          <select id="category" name="category" className="form-control">
-            {categories.secondhand.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="category">Category</label>
+              <select id="category" name="category" className="form-control">
+                {categories.secondhand.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="image">Image:</label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="jpg, jpeg, png"
-            className="form-control"
-          />
-        </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="image">Image:</label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="jpg, jpeg, png"
+                className="form-control"
+              />
+            </div>
 
-        <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-primary">
-            Create Post
-          </button>
-        </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
-        )}</>)}
+            <div className="modal-form-group mt-4">
+              <button type="submit" className="btn btn-primary">
+                Create Post
+              </button>
+            </div>
+            {error && (
+              <ErrorModal
+                message={error}
+                onClose={() => {
+                  setError(null);
+                }}
+              />
+            )}
+          </>
+        )}
       </form>
     </div>
   );

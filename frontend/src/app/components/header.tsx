@@ -13,7 +13,7 @@ export default function Header(props: HeaderProps) {
   );
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
-  console.log(profile);
+
   const handleClick = () => {
     logout();
   };
