@@ -91,20 +91,20 @@ export default function EditSectionExchangePost(props: EditPostProps) {
 
     const profile = JSON.parse(localStorage.getItem("profile") as string);
 
-    let index;
+    let index = -1;
     if (profile) {
       index = profile.ownPosts.findIndex(
         (post: OwnPost) => post.id === props.postId
       );
     }
-    if (index) {
+    if (index !== -1) {
       profile.ownPosts[index].offeredCourse = editedPost.offeredCourse;
       profile.ownPosts[index].offeredSection = editedPost.offeredSection;
       profile.ownPosts[index].desiredCourse = editedPost.desiredCourse;
       profile.ownPosts[index].desiredSection = editedPost.desiredSection;
+      localStorage.setItem("profile", JSON.stringify(profile));
+      profileDispatch({ type: "UPDATE", payload: profile });
     }
-    localStorage.setItem("profile", JSON.stringify(profile));
-    profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
     if (error === null || error === undefined) {

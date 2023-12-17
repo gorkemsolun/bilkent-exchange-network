@@ -176,34 +176,32 @@ export default function SectionExchange() {
             />
             <CreatePostButton type="sectionexchange" />
           </div>
-          <div className="container">
-            <div className="row">
-              <div className="row align-items font-bold">
-                <div className="col-md text-center border-r border-black">
-                  <p className="card-text">{"Username"}</p>
-                </div>
-                <div className="col-md text-center border-r border-black">
-                  <p className="card-text">{"Offered Course-Section"}</p>
-                </div>
-                <div className="col-md text-center border-r border-black">
-                  <p className="card-text">{"Desired Course-Section"}</p>
-                </div>
-                <div className="col-md text-center border-r border-black">
-                  <p className="card-text">{"DM"}</p>
-                </div>
-                <div
-                  className="col-md text-center"
-                  style={{ marginRight: "35px" }}
-                >
-                  <p className="card-text">{"Date"}</p>
-                </div>
+          <div className="row sectionexchange-post-container">
+            <div className="row align-items font-bold">
+              <div className="col-md text-center border-r border-black">
+                <p className="card-text">{"Username"}</p>
+              </div>
+              <div className="col-md text-center border-r border-black">
+                <p className="card-text">{"Offered Course-Section"}</p>
+              </div>
+              <div className="col-md text-center border-r border-black">
+                <p className="card-text">{"Desired Course-Section"}</p>
+              </div>
+              <div className="col-md text-center border-r border-black">
+                <p className="card-text">{"DM"}</p>
+              </div>
+              <div
+                className="col-md text-center"
+                style={{ marginRight: "35px" }}
+              >
+                <p className="card-text">{"Date"}</p>
               </div>
             </div>
           </div>
           {loading ? (
             <Loader />
           ) : (
-            <div className="container w-full">
+            <div className="row sectionexchange-post-container">
               {sectionexchangePosts.map((post: SectionexchangePost) => (
                 <div className="row mb-3" key={post._id}>
                   <div className="row align-items-start justify-content-start">
