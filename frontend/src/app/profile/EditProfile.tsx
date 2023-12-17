@@ -109,7 +109,7 @@ export default function EditProfile() {
   }, [user?._id]);
 
   if (isSubmitted) {
-    return <Navigate to="/myprofile" />;
+    window.location.href = "/myprofile"; // değiştirme
   }
 
   return (

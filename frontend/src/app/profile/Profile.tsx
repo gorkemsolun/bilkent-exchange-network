@@ -1,24 +1,26 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { defaultUserProfile, profileUrl } from "../../data-types/constants.ts";
+import {
+  defaultImage,
+  defaultUserProfile,
+  profileUrl,
+} from "../../data-types/constants.ts";
 import {
   Conversation,
   UserContextType,
   UserProfile,
-  OwnPost
+  OwnPost,
 } from "../../data-types/datatypes.ts";
-
 import {
   deleteUser,
   useAuthContext,
-  useLogout
+  useLogout,
 } from "../authentication/AuthHelpers.js";
-
-import Header from "../components/header.tsx";
-import Loader from "../components/loader.tsx";
-import Navbar from "../components/navbar.tsx";
 import Messenger from "../message/Messenger.tsx";
+import Header from "../components/Header.tsx";
+import Navbar from "../components/Navbar.tsx";
+import Loader from "../components/Loader.tsx";
 
 export default function Profile() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,7 +31,7 @@ export default function Profile() {
   const { id } = useParams();
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation>({} as Conversation);
-    const { logout } = useLogout();
+  const { logout } = useLogout();
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
@@ -64,9 +66,7 @@ export default function Profile() {
               "http://localhost:3000/conversation/conversation/",
               newConversation
             )
-            .then((res) => {
-              // SUCCESFULLY CREATED CONVERSATION
-            })
+            .then(() => {})
             .catch((err) => {
               console.log(err);
             });
@@ -90,17 +90,16 @@ export default function Profile() {
       });
   }, []);
 
-      // Remove account from database
-      const handleRemove = async () => {
-        await deleteUser(user?._id as string);
-        handleLogOut();
-      };
+  // Remove account from database
+  const handleRemove = async () => {
+    await deleteUser(user?._id as string);
+    handleLogOut();
+  };
 
-      // before remove, account is loged out
-      const handleLogOut = () => {
-        logout();
-      };
-
+  // before remove, account is loged out
+  const handleLogOut = () => {
+    logout();
+  };
 
   return (
     <div className="outer-container">
@@ -121,7 +120,7 @@ export default function Profile() {
           </div>
           <div className="profile-header">
             <img
-              src={userProfile?.image}
+              src={userProfile?.image || defaultImage}
               className="profileImage"
               alt="Profile Image"
             />
@@ -133,16 +132,13 @@ export default function Profile() {
             <div className="profileColumn">
               <div className="profileInfo">
                 <p className="infoLabel">Description:</p>
-                <p className="infoValue">{userProfile?.description}</p>
+                <p className="infoValue profile-description">
+                  {userProfile?.description}
+                </p>
               </div>
               <div className="profileInfo">
                 <p className="infoLabel">Email:</p>
                 <p className="infoValue">{userProfile?.email}</p>
-              </div>
-
-              <div className="profileInfo">
-                <p className="infoLabel">Reputation:</p>
-                <p className="infoValue">{userProfile?.reputation}</p>
               </div>
               <div className="profileInfo">
                 <p className="infoLabel">Joined at:</p>
@@ -151,13 +147,13 @@ export default function Profile() {
                 </p>
               </div>
 
-              {user?.isAdmin === "admin" && (
+              {user?.isAdmin === true && (
                 <button onClick={handleRemove}>Kick User</button>
               )}
             </div>
           </div>
           <div className="profilePosts">
-            <p className="statLabel">Posts</p>
+            <p className="profilePostsTitle">Posts</p>
             <div className="justify-center">
               <div className="container">
                 <div className="row">

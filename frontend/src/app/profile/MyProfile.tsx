@@ -44,6 +44,13 @@ export default function MyProfile() {
         <Loader />
       ) : (
         <div className="profileContainer">
+          <Link to={"/myprofile/edit"}>
+            <img
+              src="./src/assets/editicon.png"
+              className="profileEditIcon"
+              title="Edit"
+            />
+          </Link>
           <div className="profile-header">
             <img
               src={userProfile?.image || defaultImage}
@@ -54,27 +61,17 @@ export default function MyProfile() {
               <p className="profileUsername">@{userProfile?.username}</p>
             </div>
           </div>
-          <Link to={"/myprofile/edit"}>
-            <img
-              src="./src/assets/editicon.png"
-              className="profileEditIcon"
-              title="Edit"
-            />
-          </Link>
           <div className="profileDetails">
             <div className="profileColumn">
               <div className="profileInfo">
                 <p className="infoLabel">Description:</p>
-                <p className="infoValue">{userProfile?.description}</p>
+                <p className="infoValue profile-description">
+                  {userProfile?.description}
+                </p>
               </div>
               <div className="profileInfo">
                 <p className="infoLabel">Email:</p>
                 <p className="infoValue">{userProfile?.email}</p>
-              </div>
-
-              <div className="profileInfo">
-                <p className="infoLabel">Reputation:</p>
-                <p className="infoValue">{userProfile?.reputation}</p>
               </div>
               <div className="profileInfo">
                 <p className="infoLabel">Joined at:</p>
@@ -85,7 +82,7 @@ export default function MyProfile() {
             </div>
           </div>
           <div className="profilePosts">
-            <p className="statLabel">Posts</p>
+            <p className="profilePostsTitle">Posts</p>
             <div className="justify-center">
               <div className="container">
                 <div className="row">
