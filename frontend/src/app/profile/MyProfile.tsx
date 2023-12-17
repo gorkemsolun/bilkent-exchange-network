@@ -155,6 +155,13 @@ export default function MyProfile() {
                         </div>
                       ))
                     : null}
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={makeAdmin}
+                  >
+                    Admin/DeAdmin the Account
+                  </button>
                 </div>
               </div>
             </div>
