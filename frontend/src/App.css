@@ -576,6 +576,10 @@ td {
   color: #adadad;
   font-size: 1.25rem;
   font-weight: 700;
+}
+
+.header-profile-username:hover {
+  color: #fff;
   transition: color 0.2s ease-in-out;
 }
 
