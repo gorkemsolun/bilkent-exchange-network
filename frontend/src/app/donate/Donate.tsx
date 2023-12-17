@@ -122,7 +122,7 @@ export default function Donate() {
       <div className="flex flex-row grow">
         <Filters type="donate" passFilters={passFilters}></Filters>
         <div className="w-full h-full">
-          <div className="flex items-center justify-center mb-3">
+          <div className="flex items-center justify-center mb-3 mt-2">
             <SearchBar
               type="donate"
               onSearch={handleSearch}

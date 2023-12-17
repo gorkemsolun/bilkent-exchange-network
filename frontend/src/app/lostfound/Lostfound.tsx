@@ -165,10 +165,10 @@ export default function LostFound() {
                   >
                     <div className="card">
                       <div className="position-relative">
-                        <span className="badge bg-primary rounded-pill position-absolute top-0 end-0 m-2">
+                        <span className="badge bg-primary rounded-pill lostfound-post-category-badge">
                           {post.category}
                         </span>
-                        <span className="badge bg-danger rounded-pill position-absolute top-0 end-12 m-2">
+                        <span className="badge bg-danger rounded-pill lostfound-post-status-badge">
                           {post.status}
                         </span>
                         <div className="post-save-container">

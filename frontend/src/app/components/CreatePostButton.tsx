@@ -19,7 +19,7 @@ export default function CreatePostButton(props: CreatePostButtonProps) {
   }
 
   return (
-    <div>
+    <div className="mt-2">
       <button
         className="create-post-button"
         onClick={handleCreatePost}

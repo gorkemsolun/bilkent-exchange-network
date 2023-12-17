@@ -133,6 +133,7 @@ td {
   padding: 0.5rem;
   border-radius: 0.25rem;
   background-color: #fff;
+  max-width: 140px;
 }
 
 .filter-date-input {
@@ -1214,8 +1215,7 @@ td {
 
 .post-save-container-sectionexchange-type {
   position: absolute;
-  top: 0;
-  left: 78vw;
+  left: 92vw;
 }
 
 .post-save-container-forum-type {
@@ -1304,6 +1304,19 @@ td {
   position: absolute;
   top: 0;
   right: 70px;
+}
+
+.lostfound-post-status-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 52px;
+}
+
+.lostfound-post-category-badge {
+  position: absolute;
+  top: 10px;
+  right: 68px;
 }
 
 .forum-post-title {

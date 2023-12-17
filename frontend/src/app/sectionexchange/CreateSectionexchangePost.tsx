@@ -97,70 +97,76 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
     <div className="modal-overlay">
       <form onSubmit={handleSubmit} className="create-item-form w-35vw">
         {loading && <Loader />}
-        <span className="close" onClick={props.onClose}>
+        <span className="close" onClick={handleClose}>
           &times;
         </span>
 
-        {isSubmitted? (<SuccessModal/>) : (<><div>
-          <div className="modal-form-group mt-8 text-left">
-            <div className="flex justify-center ">
-              <div className="mx-4">
-                <label htmlFor="offeredCourse">Offered Course</label>
-                <input
-                  type="text"
-                  id="offeredCourse"
-                  name="offeredCourse"
-                  className="form-control"
-                />
+        {isSubmitted ? (
+          <SuccessModal />
+        ) : (
+          <>
+            <div>
+              <div className="modal-form-group mt-8 text-left">
+                <div className="flex justify-center ">
+                  <div className="mx-4">
+                    <label htmlFor="offeredCourse">Offered Course</label>
+                    <input
+                      type="text"
+                      id="offeredCourse"
+                      name="offeredCourse"
+                      className="form-control"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="offeredSection">Offered Section</label>
+                    <input
+                      type="text"
+                      id="offeredSection"
+                      name="offeredSection"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
               </div>
-              <div>
-                <label htmlFor="offeredSection">Offered Section</label>
-                <input
-                  type="text"
-                  id="offeredSection"
-                  name="offeredSection"
-                  className="form-control"
-                />
+              <div className="modal-form-group text-left">
+                <div className="flex justify-center ">
+                  <div className="mx-4">
+                    <label htmlFor="desiredCourse">Desired Course</label>
+                    <input
+                      type="text"
+                      id="desiredCourse"
+                      name="desiredCourse"
+                      className="form-control"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="desiredSection">Desired Section</label>
+                    <input
+                      type="text"
+                      id="desiredSection"
+                      name="desiredSection"
+                      className="form-control"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="modal-form-group text-left">
-            <div className="flex justify-center ">
-              <div className="mx-4">
-                <label htmlFor="desiredCourse">Desired Course</label>
-                <input
-                  type="text"
-                  id="desiredCourse"
-                  name="desiredCourse"
-                  className="form-control"
-                />
-              </div>
-              <div>
-                <label htmlFor="desiredSection">Desired Section</label>
-                <input
-                  type="text"
-                  id="desiredSection"
-                  name="desiredSection"
-                  className="form-control"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-primary">
-            Create Post
-          </button>
-        </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
-        )}</>)}
+            <div className="modal-form-group mt-4">
+              <button type="submit" className="btn btn-primary">
+                Create Post
+              </button>
+            </div>
+            {error && (
+              <ErrorModal
+                message={error}
+                onClose={() => {
+                  setError(null);
+                }}
+              />
+            )}
+          </>
+        )}
       </form>
     </div>
   );
