@@ -1,3 +1,8 @@
+/**
+ * Component for editing user profile.
+ *
+ * @returns JSX.Element
+ */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -30,17 +35,28 @@ export default function EditProfile() {
   const user = (useAuthContext() as unknown as UserContextType).user;
   const { logout } = useLogout();
 
-  // Remove account from database
+  /**
+   * Removes the account from the database.
+   * @async
+   * @returns {Promise<void>}
+   */
   const handleRemove = async () => {
     await deleteUser(user?._id as string);
     handleLogOut();
   };
 
-  // before remove, account is loged out
+  /**
+   * Logs out the user before removing the account.
+   * @returns {void}
+   */
   const handleLogOut = () => {
     logout();
   };
 
+  /**
+   * Handles the form submission for editing the user profile.
+   * @param event - The form submission event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -55,7 +71,8 @@ export default function EditProfile() {
 
     userProfile.username = formData.get("username") as string;
     userProfile.description = formData.get("description") as string;
-    //if no file is submitted then do not include image in the userProfile body
+
+    // If no file is submitted, then do not include image in the userProfile body
     if (isFileImage(formData.get("image") as File)) {
       userProfile.image = await resizeImageFile(formData.get("image") as File);
     }
@@ -79,12 +96,15 @@ export default function EditProfile() {
     localStorage.setItem("profile", JSON.stringify(userProfile));
 
     setLoading(false);
+
     if (error === null || error === undefined) {
       setIsSubmitted(true);
     }
   };
 
-  // Reset the form to the original values
+  /**
+   * Resets the form to the original values.
+   */
   const handleReset = () => {
     const imageInput = document.getElementById("image") as HTMLInputElement;
     const usernameInput = document.getElementById(
@@ -101,6 +121,10 @@ export default function EditProfile() {
     }
   };
 
+  /**
+   * Fetches the user profile data from the server and updates the state.
+   * @param {string} user?._id - The ID of the user.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -117,6 +141,9 @@ export default function EditProfile() {
       });
   }, [user?._id]);
 
+  /**
+   * Redirects the user to the "/myprofile" page if the form is submitted.
+   */
   if (isSubmitted) {
     window.location.href = "/myprofile"; // değiştirme
   }

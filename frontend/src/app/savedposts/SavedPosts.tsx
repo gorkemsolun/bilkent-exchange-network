@@ -1,3 +1,8 @@
+/**
+ * Component for displaying saved posts.
+ * 
+ * @returns JSX.Element
+ */
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -18,11 +23,21 @@ export default function SavedPosts() {
     .profileDispatch;
   const profile = JSON.parse(localStorage.getItem("profile") as string);
 
+  /**
+   * Handles the click event for the messenger button.
+   * Toggles the visibility of the messenger component and logs the profile.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
     console.log(profile);
   };
 
+  /**
+   * Handles the save button click event for a post.
+   * If the post is already saved, it will unsave it.
+   * Updates the profile and local storage accordingly.
+   * @param post - The post to be saved or unsaved.
+   */
   const handleSaveButton = (post: SavedPost) => {
     // Post is saved, unsave
     if (

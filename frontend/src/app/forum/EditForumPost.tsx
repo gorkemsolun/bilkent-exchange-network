@@ -1,3 +1,10 @@
+/**
+ * Component for editing a forum post.
+ *
+ * @component
+ * @param {EditPostProps} props - The props for the EditForumPost component.
+ * @returns {JSX.Element} The JSX element representing the EditForumPost component.
+ */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { forumUrl } from "../../data-types/constants";
@@ -25,6 +32,10 @@ export default function EditForumPost(props: EditPostProps) {
     .profileDispatch;
   const user = (useAuthContext() as unknown as UserContextType).user;
 
+  /**
+   * Fetches the forum post data from the server and updates the component state.
+   * @param {Object} props - The component props.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -41,6 +52,10 @@ export default function EditForumPost(props: EditPostProps) {
       });
   }, [props]);
 
+  /**
+   * Handles the form submission for editing a forum post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -86,6 +101,9 @@ export default function EditForumPost(props: EditPostProps) {
     }
   };
 
+  /**
+   * Reloads the window if the post is edited.
+   */
   if (isEdited) {
     window.location.reload();
   }

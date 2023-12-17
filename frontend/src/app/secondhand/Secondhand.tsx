@@ -35,14 +35,28 @@ export default function Secondhand() {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
+  /**
+   * Handles the click event for the messenger button.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the search event.
+   *
+   * @param searchTerm - The search term entered by the user.
+   */
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
 
+  /**
+   * Handles the save button action for a secondhand post.
+   * If the post is already saved, it will be unsaved.
+   * If the post is not saved, it will be saved.
+   * @param post The secondhand post to be saved or unsaved.
+   */
   const handleSaveButton = (post: SecondhandPost) => {
     // Post is saved, unsave
     if (
@@ -91,14 +105,29 @@ export default function Secondhand() {
     }
   };
 
+  /**
+   * Updates the filter parameters and triggers a re-render of the component.
+   * @param params - The new filter parameters.
+   */
   function passFilters(params: FilterParams) {
     setFilterParams(params);
   }
 
+  /**
+   * Updates the sort type and triggers a re-render of the component.
+   * @param sortType - The new sort type.
+   */
   function handleSortTypeChange(sortType: string) {
     setSortType(sortType);
   }
 
+  /**
+   * Fetches secondhand posts from the server based on the provided parameters.
+   *
+   * @param {object} filterParams - The filter parameters for the posts.
+   * @param {string} searchTerm - The search term to filter the posts.
+   * @param {string} sortType - The sorting type for the posts.
+   */
   useEffect(() => {
     setLoading(true);
 

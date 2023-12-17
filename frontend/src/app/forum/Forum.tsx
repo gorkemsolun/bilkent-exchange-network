@@ -1,3 +1,7 @@
+/**
+ * Represents the Forum component.
+ * This component displays forum posts, allows searching and filtering, and provides functionality to save and unsave posts.
+ */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -36,22 +40,48 @@ export default function Forum() {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
 
+  /**
+   * Handles the click event for the messenger button.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the search event.
+   *
+   * @param searchTerm - The search term entered by the user.
+   */
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
   };
 
+  /**
+   * Passes the filter parameters to the component.
+   *
+   * @param params - The filter parameters.
+   */
   function passFilters(params: FilterParams) {
     setFilterParams(params);
   }
 
+  /**
+   * Handles the change event for the sort type.
+   *
+   * @param sortType - The new sort type.
+   */
   function handleSortTypeChange(sortType: string) {
     setSortType(sortType);
   }
 
+  /**
+   * Fetches forum posts from the server based on the provided parameters.
+   *
+   * @param {string} sortType - The sorting type for the forum posts.
+   * @param {string} searchTerm - The search term to filter the forum posts.
+   * @param {string} filterParams - Additional filter parameters for the forum posts.
+   * @returns {void}
+   */
   useEffect(() => {
     setLoading(true);
     const url = prepareUrl(sortType, searchTerm, "forum", filterParams);
@@ -70,6 +100,12 @@ export default function Forum() {
       });
   }, [searchTerm, filterParams, sortType]);
 
+  /**
+   * Handles the save button functionality for a forum post.
+   * If the post is already saved, it will unsave it.
+   * If the post is not saved, it will save it.
+   * @param post The forum post to be saved or unsaved.
+   */
   const handleSaveButton = (post: ForumPost) => {
     // Post is saved, unsave
     if (

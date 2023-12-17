@@ -25,15 +25,29 @@ export default function Messenger(props: MessengerProps) {
   const [messageInput, setMessageInput] = useState<string>("");
   const user = (useAuthContext() as unknown as UserContextType).user;
 
+  /**
+   * Handles the change event of the input field.
+   * @param {React.ChangeEvent<HTMLTextAreaElement>} e - The change event object.
+   * @returns {void}
+   */
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessageInput(e.target.value);
   };
 
+  /**
+   * Sets the selected conversation and updates the conversation status.
+   * @param {Object} props - The component props.
+   * @param {Object} props.selectedConversation - The selected conversation object.
+   */
   useEffect(() => {
     setSelectedConversation(props.selectedConversation || defaultConversation);
     setIsInCoversation(selectedConversation.createdAt !== undefined || false);
   }, [props.selectedConversation]);
 
+  /**
+   * Fetches conversations and updates usernames for each conversation.
+   * @param {Function} props.onClick - The onClick function.
+   */
   useEffect(() => {
     axios
       .get(conversationUrl + "/userID/" + user?._id)
@@ -83,6 +97,9 @@ export default function Messenger(props: MessengerProps) {
       });
   }, [props.onClick]);
 
+  /**
+   * Handles sending a new message.
+   */
   const handleSendMessage = () => {
     const newMessage: Message = {
       userID: user?._id as string,
@@ -113,12 +130,20 @@ export default function Messenger(props: MessengerProps) {
       });
   };
 
+  /**
+   * Closes the messenger component.
+   */
   const handleCloseMessenger = () => {
     if (props.onClick) {
       props.onClick();
     }
   };
 
+  /**
+   * Retrieves the last message of a conversation.
+   * @param messages - An array of messages in the conversation.
+   * @returns The last message in the conversation, or an empty string if there are no messages.
+   */
   function getLastMessageOfConversation(messages: Message[]) {
     if (messages.length === 0) {
       return "";

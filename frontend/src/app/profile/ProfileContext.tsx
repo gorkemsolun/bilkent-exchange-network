@@ -1,8 +1,17 @@
 import { createContext, useEffect, useReducer } from "react";
 import { ProfileAction, ProfileState } from "../../data-types/datatypes";
 
+/**
+ * Context for managing the profile state.
+ */
 export const ProfileContext = createContext({});
 
+/**
+ * Reducer function for the profile state.
+ * @param state - The current profile state.
+ * @param action - The profile action to be performed.
+ * @returns The updated profile state.
+ */
 const profileReducer = (state: ProfileState, action: ProfileAction) => {
   switch (action.type) {
     case "UPDATE":
@@ -14,6 +23,10 @@ const profileReducer = (state: ProfileState, action: ProfileAction) => {
   }
 };
 
+/**
+ * Provider component for the ProfileContext.
+ * @param children - The child components.
+ */
 export const ProfileContextProvider = ({
   children,
 }: {
@@ -23,7 +36,7 @@ export const ProfileContextProvider = ({
     profile: null,
   });
 
-  //when the webpage is reloaded
+  // When the webpage is reloaded, retrieve the profile from local storage
   useEffect(() => {
     const profile = JSON.parse(localStorage.getItem("profile") as string);
 

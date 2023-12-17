@@ -37,6 +37,10 @@ export default function ForumPostDetails() {
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
 
+  /**
+   * Fetches the forum post details from the server and updates the state.
+   * @param {number} id - The ID of the forum post.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -52,6 +56,16 @@ export default function ForumPostDetails() {
       });
   }, [id]);
 
+  /**
+   * Fetches the poster information for the forum post.
+   * If the post's poster is the same as the current user's profile, sets the poster as the current user's profile.
+   * Otherwise, makes a GET request to retrieve the poster's profile information from the server.
+   * Sets the poster state with the retrieved profile data.
+   * Handles any errors that occur during the process.
+   *
+   * @param {Object} post - The forum post object.
+   * @param {Object} profile - The current user's profile object.
+   */
   useEffect(() => {
     if (post.poster === profile?.userID) {
       setPoster(profile);
@@ -68,6 +82,11 @@ export default function ForumPostDetails() {
     }
   }, [post, profile]);
 
+  /**
+   * Fetches user information for a given user ID.
+   * @param userId - The ID of the user.
+   * @returns The user's profile information.
+   */
   useEffect(() => {
     const fetchUserInfo = async (userId: string) => {
       try {
@@ -79,6 +98,9 @@ export default function ForumPostDetails() {
       }
     };
 
+    /**
+     * Fetches entries with user information and updates the state.
+     */
     const fetchEntriesWithUserInfo = async () => {
       if (post.entries) {
         const entriesPromises = post.entries.map(async (entry: ForumEntry) => {

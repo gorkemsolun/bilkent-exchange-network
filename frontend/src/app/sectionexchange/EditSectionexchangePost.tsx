@@ -1,3 +1,10 @@
+/**
+ * Component for editing a section exchange post.
+ *
+ * @component
+ * @param {EditPostProps} props - The props for the component.
+ * @returns {JSX.Element} The JSX element representing the edit section exchange post component.
+ */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { sectionexchangeUrl } from "../../data-types/constants";
@@ -27,6 +34,11 @@ export default function EditSectionExchangePost(props: EditPostProps) {
     .profileDispatch;
   const user = (useAuthContext() as unknown as UserContextType).user;
 
+  /**
+   * Fetches the section exchange post data from the server and updates the state.
+   * @param {object} props - The component props.
+   * @param {string} props.postId - The ID of the post to fetch.
+   */
   useEffect(() => {
     axios
       .get(`${sectionexchangeUrl}/${props.postId}`)
@@ -39,6 +51,10 @@ export default function EditSectionExchangePost(props: EditPostProps) {
       });
   }, [props]);
 
+  /**
+   * Handles the form submission for editing a section exchange post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();

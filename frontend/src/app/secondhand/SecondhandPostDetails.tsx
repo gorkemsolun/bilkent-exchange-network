@@ -1,3 +1,9 @@
+/**
+ * Renders the details of a secondhand post.
+ * Fetches the post details and poster information from the server.
+ * Allows users to interact with the post, such as editing, deleting, reporting, and messaging.
+ */
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -39,10 +45,18 @@ export default function SecondHandPostDetails() {
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
 
+  /**
+   * Toggles the visibility of the messenger.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the click event on the DM box.
+   * Checks if there is an existing conversation with the user, if not, creates a new one.
+   * Updates the selected conversation and displays the messenger.
+   */
   const handleDMBoxClick = () => {
     // Check if there is an existing conversation with that user, if there isn't create one
     axios.get(conversationUrl + "/userID/" + user?._id).then((res) => {
@@ -73,6 +87,11 @@ export default function SecondHandPostDetails() {
     setIsMessengerVisible(true);
   };
 
+  /**
+   * Fetches the details of a secondhand post from the server.
+   *
+   * @param {number} id - The ID of the post to fetch.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -89,6 +108,15 @@ export default function SecondHandPostDetails() {
       });
   }, [id]);
 
+  /**
+   * Fetches the poster information for the secondhand post.
+   * If the post's poster is the same as the current user's profile, sets the poster as the current user's profile.
+   * Otherwise, makes an API call to fetch the poster's profile information.
+   * Sets the fetched poster information or error in the state.
+   *
+   * @param {Object} post - The secondhand post object.
+   * @param {Object} profile - The current user's profile object.
+   */
   useEffect(() => {
     if (post.poster === profile?.userID) {
       setPoster(profile);

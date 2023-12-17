@@ -39,10 +39,18 @@ export default function LostFoundPostDetails() {
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
 
+  /**
+   * Toggles the visibility of the messenger.
+   */
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
+  /**
+   * Handles the click event on the DM box.
+   * Checks if there is an existing conversation with the user, and creates one if there isn't.
+   * Updates the selected conversation and displays the messenger.
+   */
   const handleDMBoxClick = () => {
     // Check if there is an existing conversation with that user, if there isn't create one
     axios.get(conversationUrl + "/userID/" + user?._id).then((res) => {
@@ -73,6 +81,11 @@ export default function LostFoundPostDetails() {
     setIsMessengerVisible(true);
   };
 
+  /**
+   * Fetches the details of a lost/found post from the server.
+   *
+   * @param {number} id - The ID of the post to fetch.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -89,6 +102,15 @@ export default function LostFoundPostDetails() {
       });
   }, [id]);
 
+  /**
+   * Fetches the poster information for the given post.
+   * If the post's poster is the same as the current user's profile, sets the poster as the current user's profile.
+   * Otherwise, makes an API request to fetch the poster's profile information.
+   * Sets the fetched poster information or error state accordingly.
+   *
+   * @param {object} post - The post object.
+   * @param {object} profile - The current user's profile object.
+   */
   useEffect(() => {
     if (post.poster === profile?.userID) {
       setPoster(profile);

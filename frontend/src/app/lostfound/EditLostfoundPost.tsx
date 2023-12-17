@@ -35,6 +35,15 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
     setSelectedCategory(event.target.value);
   };
 
+  /**
+   * Fetches the data for editing a lost/found post.
+   * Sets the loading state to true, makes an HTTP GET request to retrieve the post data,
+   * and updates the state with the fetched data.
+   * If an error occurs during the request, it logs the error and sets the error state.
+   * Finally, sets the loading state to false.
+   *
+   * @param {object} props - The component props.
+   */
   useEffect(() => {
     setLoading(true);
     axios
@@ -52,6 +61,10 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
       });
   }, [props]);
 
+  /**
+   * Handles the form submission for editing a lost/found post.
+   * @param event - The form event.
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
     event.preventDefault();
@@ -100,13 +113,16 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
     }
-    
+
     setLoading(false);
     if (error === null || error === undefined) {
       setIsEdited(true);
     }
   };
 
+  /**
+   * Reloads the current page if the post is edited.
+   */
   if (isEdited) {
     window.location.reload();
   }

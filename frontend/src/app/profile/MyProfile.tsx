@@ -1,3 +1,7 @@
+/**
+ * Renders the user's profile page.
+ * @returns The JSX element representing the user's profile page.
+ */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -24,6 +28,12 @@ export default function MyProfile() {
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
 
+  /**
+   * useEffect hook to set the user profile and loading state.
+   * @remarks
+   * This hook is used to set the user profile and loading state in the component.
+   * It is triggered only once when the component mounts.
+   */
   useEffect(() => {
     setLoading(true);
     setUserProfile(profile);
