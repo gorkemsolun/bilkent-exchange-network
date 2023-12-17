@@ -95,7 +95,7 @@ export const deleteUser = async (req, res) => {
       if (post.typename === "Secondhand"){
         console.log("removed secondhand")
        await  SecondhandPost.findByIdAndDelete(post.id)
-      }else if (post.typename === "Lostfound"){
+      }else if (post.typename === "LostFound"){
         await LostfoundPost.findByIdAndDelete(post.id)
       }else if (post.typename === "Donate"){
         await DonatePost.findByIdAndDelete(post.id)
