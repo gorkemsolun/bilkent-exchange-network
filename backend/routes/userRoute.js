@@ -10,6 +10,7 @@ import {
   forgotPassword,
   loginUser,
   signupUser,
+  checkIfUserAlreadyExists
 } from "../controllers/userController.js";
 //controller functions
 
@@ -33,5 +34,7 @@ authRouter.delete("/delete/:userId", deleteUser);
 
 //forgot password actually changes user password
 authRouter.post("/forgotpassword", forgotPassword);
+
+authRouter.get("/checkUser",checkIfUserAlreadyExists );
 
 export default authRouter;
