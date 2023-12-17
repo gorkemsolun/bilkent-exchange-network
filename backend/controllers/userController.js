@@ -86,18 +86,20 @@ export const deleteUser = async (req, res) => {
     const profile = await UserProfile.findOne({ userID: userId });
 
     profile.ownPosts.map(async (post) => {
-      if (post.typename === "Secondhand") {
-        await SecondhandPost.findByIdAndDelete(post.id);
-      } else if (post.typename === "Lostfound") {
-        await LostfoundPost.findByIdAndDelete(post.id);
-      } else if (post.typename === "Donate") {
-        await DonatePost.findByIdAndDelete(post.id);
-      } else if (post.typename === "Borrow") {
-        await BorrowPost.findByIdAndDelete(post.id);
-      } else if (post.typename === "Forum") {
-        await ForumPost.findByIdAndDelete(post.id);
-      } else if (post.typename === "SectionExchange") {
-        await SectionexchangePost.findByIdAndDelete(post.id);
+      console.log(post);
+      if (post.typename === "Secondhand"){
+        console.log("removed secondhand")
+       await  SecondhandPost.findByIdAndDelete(post.id)
+      }else if (post.typename === "LostFound"){
+        await LostfoundPost.findByIdAndDelete(post.id)
+      }else if (post.typename === "Donate"){
+        await DonatePost.findByIdAndDelete(post.id)
+      }else if (post.typename === "Borrow"){
+        await BorrowPost.findByIdAndDelete(post.id)
+      }else if (post.typename === "Forum"){
+        await ForumPost.findByIdAndDelete(post.id)
+      }else if (post.typename === "SectionExchange"){
+        await SectionexchangePost.findByIdAndDelete(post.id)
       }
     });
 

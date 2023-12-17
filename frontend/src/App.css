@@ -1489,9 +1489,10 @@ td {
 }
 
 .saved-posts-save-icon {
-  position: absolute;
-  top: 0;
+  margin-left: 1100px;
+  width: 100%;
   right: 20px;
+  height: 20px;
 }
 
 .reset-button {
