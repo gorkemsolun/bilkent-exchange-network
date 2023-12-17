@@ -2,6 +2,11 @@ import { SectionexchangePost } from "../models/sectionexchangepost.js";
 import { UserProfile } from "../models/userProfile.js";
 import { deleteOwnedPosts, updateOwnedSecExPost } from "./profileController.js";
 
+/**
+ * Checks if all required fields are present in the request body.
+ * @param {Object} reqBody - The request body object.
+ * @returns {boolean} - Returns true if all required fields are present, false otherwise.
+ */
 function fieldController(reqBody) {
   if (
     !reqBody.poster ||
@@ -15,6 +20,13 @@ function fieldController(reqBody) {
   return true;
 }
 
+/**
+ * Handles the POST request for creating a new section exchange post.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} - The created section exchange post.
+ * @throws {Error} - If there is an error while creating the post.
+ */
 export const sectionexchangePostPOST = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -55,6 +67,24 @@ export const sectionexchangePostPOST = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves section exchange posts based on the provided search parameters.
+ * @param {Object} req - The request object.
+ * @param {Object} req.params - The parameters sent with the request.
+ * @param {string} req.params.search - The search keyword.
+ * @param {string} req.params.price - The price range.
+ * @param {string} req.params.date - The date range.
+ * @param {string} req.params.sort - The sorting type.
+ * @param {string} req.params.offeredCourse - The offered course.
+ * @param {string} req.params.offeredSection - The offered section.
+ * @param {string} req.params.desiredCourse - The desired course.
+ * @param {string} req.params.desiredSection - The desired section.
+ * @param {number} req.params.page - The page number.
+ * @param {number} req.params.limit - The number of posts to retrieve per page.
+ * @param {Object} res - The response object.
+ * @returns {Object} - The retrieved section exchange posts.
+ * @throws {Error} - If an error occurs while retrieving the posts.
+ */
 export const sectionexchangePostGET = async (req, res) => {
   try {
     let query = {};
@@ -115,6 +145,12 @@ export const sectionexchangePostGET = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves a section exchange post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the section exchange post is retrieved.
+ */
 export const sectionexchangePostGETId = async (req, res) => {
   try {
     const sectionexchangepost = await SectionexchangePost.findById(
@@ -132,6 +168,14 @@ export const sectionexchangePostGETId = async (req, res) => {
   }
 };
 
+/**
+ * Updates a section exchange post by ID.
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body containing the updated post data.
+ * @param {string} req.params.id - The ID of the section exchange post to update.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves once the post is updated.
+ */
 export const sectionexchangePostPUT = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -157,6 +201,14 @@ export const sectionexchangePostPUT = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a SectionexchangePost by its ID.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the SectionexchangePost is deleted.
+ * @throws {Error} - If there is an error while deleting the SectionexchangePost.
+ */
 export const sectionexchangePostDEL = async (req, res) => {
   try {
     const result = await SectionexchangePost.findByIdAndDelete(req.params.id);

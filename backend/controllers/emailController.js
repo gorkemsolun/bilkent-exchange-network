@@ -2,6 +2,17 @@ import nodemailer from "nodemailer";
 import { emailTokenDB } from "../models/emailToken.js";
 import { User } from "../models/user.js";
 
+/**
+ * Sends an email with verification mail to the specified recipient.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.name - The name of the recipient.
+ * @param {string} req.body.email - The email address of the recipient.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the email is sent successfully.
+ * @throws {Error} - If there is an error while sending the email.
+ */
 export const sendEmail = async (req, res) => {
   const { name, email } = req.body;
 
@@ -13,6 +24,10 @@ export const sendEmail = async (req, res) => {
   }
 };
 
+/**
+ * Creates a mail transporter using nodemailer.
+ * @returns {Object} The created mail transporter.
+ */
 const createMailTransporter = () => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -25,6 +40,12 @@ const createMailTransporter = () => {
   return transporter;
 };
 
+/**
+ * Sends a verification email to the specified user.
+ * @param {string} username - The username of the user.
+ * @param {string} email - The email address of the user.
+ * @returns {Promise<void>} - A promise that resolves when the email is sent.
+ */
 export const sendVerificationMail = async (username, email) => {
   const token = await emailTokenDB.createToken();
 
@@ -47,6 +68,12 @@ export const sendVerificationMail = async (username, email) => {
   });
 };
 
+/**
+ * Checks if a user with the given email exists.
+ * @param {string} email - The email of the user to check.
+ * @returns {Promise<boolean>} - A promise that resolves to true if the user exists, false otherwise.
+ * @throws {Error} - Throws an error if the email is not provided.
+ */
 const checkIfUserExists = async (email) => {
   if (!email) {
     throw Error("All fields must be filled");
@@ -58,6 +85,13 @@ const checkIfUserExists = async (email) => {
   return false;
 };
 
+/**
+ * Sends a verification email for password reset.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the email is sent successfully.
+ */
 export const forgetPassword = async (req, res) => {
   const { email } = req.body;
 
@@ -70,6 +104,11 @@ export const forgetPassword = async (req, res) => {
   }
 };
 
+/**
+ * Sends a verification email for password reset to the provided email address.
+ * @param {string} email - The email address to send the verification email to.
+ * @returns {Promise<void>} - A promise that resolves once the verification email is sent.
+ */
 export const sendForgetVerificationMail = async (email) => {
   // Check if the provided username and email exist (replace this with your actual logic)
   const userExists = await checkIfUserExists(email);
@@ -101,6 +140,12 @@ export const sendForgetVerificationMail = async (email) => {
   });
 };
 
+/**
+ * Creates an email token.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the created token.
+ */
 export const createEmailToken = async (req, res) => {
   try {
     const token = await emailTokenDB.createToken();
@@ -110,6 +155,15 @@ export const createEmailToken = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves the email token from the request body and searches for it in the emailTokenDB.
+ * If found, returns the token in the response.
+ * If not found, returns an error message in the response.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the token is retrieved and the response is sent.
+ */
 export const getEmailToken = async (req, res) => {
   const { emailToken } = req.body;
 
