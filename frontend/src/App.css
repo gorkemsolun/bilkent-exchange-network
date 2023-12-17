@@ -297,6 +297,7 @@ td {
   flex-direction: column;
   font-size: 24px;
   font: bold;
+  text-align: left;
 }
 
 .profileName {
@@ -436,7 +437,6 @@ td {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
 .profile-header {
@@ -1316,13 +1316,13 @@ td {
   display: flex;
   flex-direction: column;
   background-color: white;
-  opacity: 0.95; 
+  opacity: 0.95;
   font-weight: 600;
   font-size: 0.875rem;
 }
 
 .success-modal-content > * {
-  margin-bottom: 1rem; 
+  margin-bottom: 1rem;
 }
 
 .success-modal-content > *:last-child {
@@ -1330,5 +1330,5 @@ td {
 }
 
 .success-modal-content-par {
-  color:#0056b3;
+  color: #0056b3;
 }

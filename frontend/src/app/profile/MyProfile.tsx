@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultUserProfile } from "../../data-types/constants.ts";
+import {
+  defaultImage,
+  defaultUserProfile,
+} from "../../data-types/constants.ts";
 import {
   OwnPost,
   ProfileContextType,
@@ -25,18 +28,6 @@ export default function MyProfile() {
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
   const user = (useAuthContext() as unknown as UserContextType).user;
-  const { logout } = useLogout();
-
-  // Remove account from database
-  const handleRemove = async () => {
-    await deleteUser(user?._id as string);
-    handleLogOut();
-  };
-
-  // before remove, account is loged out
-  const handleLogOut = () => {
-    logout();
-  };
 
   useEffect(() => {
     setLoading(true);
@@ -55,7 +46,7 @@ export default function MyProfile() {
         <div className="profileContainer">
           <div className="profile-header">
             <img
-              src={userProfile?.image}
+              src={userProfile?.image || defaultImage}
               className="profileImage"
               alt="Profile Image"
             />
@@ -69,15 +60,6 @@ export default function MyProfile() {
               className="profileEditIcon"
               title="Edit"
             />
-          </Link>
-          <Link to={"/login"}>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={handleRemove}
-            >
-              Remove Account
-            </button>
           </Link>
           <div className="profileDetails">
             <div className="profileColumn">

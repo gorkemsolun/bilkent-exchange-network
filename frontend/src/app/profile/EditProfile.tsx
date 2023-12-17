@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { defaultUserProfile, profileUrl } from "../../data-types/constants.ts";
 import {
   ProfileContextType,
@@ -9,8 +9,10 @@ import {
 } from "../../data-types/datatypes.ts";
 import { isFileImage, resizeImageFile } from "../PostHelpers.ts";
 import {
+  deleteUser,
   useAuthContext,
   useProfileContext,
+  useLogout,
 } from "../authentication/AuthHelpers.js";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
@@ -24,6 +26,18 @@ export default function EditProfile() {
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
   const user = (useAuthContext() as unknown as UserContextType).user;
+  const { logout } = useLogout();
+
+  // Remove account from database
+  const handleRemove = async () => {
+    await deleteUser(user?._id as string);
+    handleLogOut();
+  };
+
+  // before remove, account is loged out
+  const handleLogOut = () => {
+    logout();
+  };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -147,6 +161,21 @@ export default function EditProfile() {
                   defaultValue={userProfile.description}
                   placeholder="Enter description"
                 />
+              </div>
+              <div className="profileInfo">
+                <p className="infoLabel" style={{ alignSelf: "flex-start" }}>
+                  Remove Account
+                </p>
+                <Link to={"/login"}>
+                  <button
+                    type="button"
+                    className="btn btn-danger "
+                    onClick={handleRemove}
+                    style={{ marginLeft: "20px" }}
+                  >
+                    Remove Account
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

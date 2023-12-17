@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useVerificationEmail } from "./AuthHelpers";
 import BackgroundManager from "../components/BackgroundManager";
 import VerificationModal from "../components/VerificationModal";
-import ErrorModal from "../components/ErrorModal";
+import ErrorModal from "../components/errorModal";
 import { isValidEmail } from "../components/WebMailValidator";
 
 const bg = new BackgroundManager();
@@ -11,28 +11,12 @@ const url = bg.getRandomImageUrl();
 
 export default function VerificationPage() {
   const [email, setEmail] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
   const { sendEmail } = useVerificationEmail();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (!username && !email) {
-      setError("Please enter your username and email");
-      return;
-    }
-
-    if (!username) {
-      setError("Please enter a username");
-      return;
-    }
-
-    if (/*username exists check necessary*/ false) {
-      setError("Username already exists");
-      return;
-    }
 
     if (!email) {
       setError("Please enter an email");
@@ -76,20 +60,6 @@ export default function VerificationPage() {
           <VerificationModal email={email} />
         ) : (
           <>
-            <label
-              className="font-semibold text-s mt-2"
-              //style={{ textAlign: "left" }}
-            >
-              Username
-            </label>
-            <input
-              className="flex items-center h-12 px-4 bg-gray-200 rounded focus:outline-none focus:ring-2 w-full"
-              type="username"
-              onChange={(e) => setUsername(e.target.value)}
-              value={username}
-              placeholder="Enter your username"
-            />
-
             <label
               className="font-semibold text-s mt-2"
               //style={{ textAlign: "left" }}
