@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultFilterParams } from "../../data-types/constants";
+import {
+  defaultFilterParams,
+  saveUrl,
+  unsaveUrl,
+} from "../../data-types/constants";
 import {
   FilterParams,
   ProfileContextType,
@@ -9,14 +13,15 @@ import {
 } from "../../data-types/datatypes";
 import { BorrowPost } from "../../data-types/posts";
 import { prepareUrl } from "../PostHelpers";
+import { useProfileContext } from "../authentication/AuthHelpers";
 import CreatePostButton from "../components/CreatePostButton";
+import ErrorModal from "../components/ErrorModal";
 import Filters from "../components/Filters";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
 import SearchBar from "../components/Searchbar";
 import Messenger from "../message/Messenger";
-import { useProfileContext } from "../authentication/AuthHelpers";
 
 export default function Borrow() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,6 +30,7 @@ export default function Borrow() {
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
   const profile = JSON.parse(localStorage.getItem("profile") as string);
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
@@ -56,33 +62,13 @@ export default function Borrow() {
         setBorrowPosts(res.data);
       })
       .catch((err) => {
+        setError(err);
         console.log(err);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm, filterParams]);
-
-  useEffect(() => {
-    if (sortType === "date-asc") {
-      setBorrowPosts(
-        [...borrowPosts].sort(
-          (a: BorrowPost, b: BorrowPost) =>
-            new Date(a.createdAt as Date).getTime() -
-            new Date(b.createdAt as Date).getTime()
-        )
-      );
-    } else {
-      setBorrowPosts(
-        [...borrowPosts].sort(
-          (a: BorrowPost, b: BorrowPost) =>
-            new Date(b.createdAt as Date).getTime() -
-            new Date(a.createdAt as Date).getTime()
-        )
-      );
-    }
-    // do not add borrowPosts to the dependency array
-  }, [sortType]);
+  }, [searchTerm, filterParams, sortType]);
 
   const handleSaveButton = (post: BorrowPost) => {
     // Post is saved, unsave
@@ -96,19 +82,16 @@ export default function Borrow() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/unsavepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(unsaveUrl, body).catch((err) => {
+        setError(err);
+        console.log(err);
+      });
 
       profile.savedPosts = profile.savedPosts.filter(
         (savedPost: SavedPost) => savedPost.id !== post._id
       );
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
-      console.log(profile);
     } else {
       // Post is unsaved, save
       const body = {
@@ -116,12 +99,10 @@ export default function Borrow() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/savepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(saveUrl, body).catch((err) => {
+        setError(err);
+        console.log(err);
+      });
 
       const savedPost: SavedPost = {
         id: "" + post._id,
@@ -181,6 +162,7 @@ export default function Borrow() {
                                 onClick={() => {
                                   handleSaveButton(post);
                                 }}
+                                title="saved"
                               ></img>
                             ) : (
                               <img
@@ -189,6 +171,7 @@ export default function Borrow() {
                                 onClick={() => {
                                   handleSaveButton(post);
                                 }}
+                                title="notsaved"
                               ></img>
                             )}
                           </div>
@@ -226,6 +209,14 @@ export default function Borrow() {
           <Messenger onClick={handleMessengerClick} />
         </div>
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -44,6 +44,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
         setSelectedCategory(res.data.category);
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
       })
       .finally(() => {
@@ -83,6 +84,7 @@ export default function EditSecondHandPost(props: EditPostProps) {
     await axios
       .put(`${secondhandUrl}/${props.postId}`, editedPost)
       .catch((err) => {
+        console.log(err);
         setError(err);
       });
 

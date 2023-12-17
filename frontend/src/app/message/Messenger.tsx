@@ -12,9 +12,11 @@ import {
 } from "../../data-types/datatypes.ts";
 import { MessengerProps } from "../../data-types/props.ts";
 import { useAuthContext } from "../authentication/AuthHelpers.ts";
+import ErrorModal from "../components/ErrorModal.tsx";
 
 export default function Messenger(props: MessengerProps) {
   const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation>(props.selectedConversation || defaultConversation);
   const [isInConversation, setIsInCoversation] = useState<boolean>(
@@ -100,16 +102,15 @@ export default function Messenger(props: MessengerProps) {
 
     axios
       .put(
-        "http://localhost:3000/conversation/conversation/conversationID/" +
-          selectedConversation._id,
+        conversationUrl + "/conversationID/" + selectedConversation._id,
         updatedConversation
       )
-      .then((res) => {
+      .then(() => {
         setMessageInput("");
-        // sent HERE RES SHOULD BE CHECKED
       })
       .catch((err) => {
         console.log(err);
+        setError(err);
       });
   };
 
@@ -238,6 +239,14 @@ export default function Messenger(props: MessengerProps) {
             </div>
           </div>
         </div>
+      )}
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
       )}
     </div>
   );

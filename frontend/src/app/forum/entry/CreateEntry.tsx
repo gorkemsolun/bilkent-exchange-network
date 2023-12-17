@@ -31,14 +31,10 @@ export default function CreateEntry(props: CreateEntryProps) {
       poster: user?._id as string,
     };
 
-    axios
-      .post(`${forumUrl}/${props.postId}`, post)
-      .then((res) => {
-        // TODO SUCCESFULLY SENT
-      })
-      .catch((err) => {
-        setError(err);
-      });
+    axios.post(`${forumUrl}/${props.postId}`, post).catch((err) => {
+      console.log(err);
+      setError(err);
+    });
 
     setLoading(false);
     setIsSubmitted(true);
@@ -61,31 +57,37 @@ export default function CreateEntry(props: CreateEntryProps) {
           &times;
         </span>
 
-        {isSubmitted ? (<SuccessModal/>) : (<><div>
-          <div className="modal-form-group" style={{ textAlign: "left" }}>
-            <label htmlFor="content">Message</label>
-            <textarea
-              id="content"
-              name="content"
-              className="form-control"
-              style={{ height: "15vh" }}
-            />
-          </div>
-        </div>
+        {isSubmitted ? (
+          <SuccessModal />
+        ) : (
+          <>
+            <div>
+              <div className="modal-form-group" style={{ textAlign: "left" }}>
+                <label htmlFor="content">Message</label>
+                <textarea
+                  id="content"
+                  name="content"
+                  className="form-control"
+                  style={{ height: "15vh" }}
+                />
+              </div>
+            </div>
 
-        <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-primary">
-            Reply
-          </button>
-        </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
-        )}</>)}
+            <div className="modal-form-group mt-4">
+              <button type="submit" className="btn btn-primary">
+                Reply
+              </button>
+            </div>
+            {error && (
+              <ErrorModal
+                message={error}
+                onClose={() => {
+                  setError(null);
+                }}
+              />
+            )}
+          </>
+        )}
       </form>
     </div>
   );

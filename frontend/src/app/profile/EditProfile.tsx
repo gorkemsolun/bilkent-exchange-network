@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { defaultUserProfile, profileUrl } from "../../data-types/constants.ts";
 import {
   ProfileContextType,
@@ -11,16 +11,18 @@ import { isFileImage, resizeImageFile } from "../PostHelpers.ts";
 import {
   deleteUser,
   useAuthContext,
-  useProfileContext,
   useLogout,
+  useProfileContext,
 } from "../authentication/AuthHelpers.js";
+import ErrorModal from "../components/ErrorModal.tsx";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 
 export default function EditProfile() {
-  const [loading, setLoading] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [userProfile, setUserProfile] =
     useState<UserProfile>(defaultUserProfile);
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
@@ -55,11 +57,9 @@ export default function EditProfile() {
 
     axios
       .put(`http://localhost:3000/profile/update-profile/`, userProfile)
-      .then((res) => {
-        // TODO Show a success message
-      })
       .catch((err) => {
         console.log(err);
+        setError(err);
       });
 
     profileDispatch({
@@ -102,6 +102,7 @@ export default function EditProfile() {
       })
       .catch((err) => {
         console.log(err);
+        setError(err);
       })
       .finally(() => {
         setLoading(false);
@@ -192,6 +193,14 @@ export default function EditProfile() {
             </button>
           </div>
         </form>
+      )}
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
       )}
     </div>
   );

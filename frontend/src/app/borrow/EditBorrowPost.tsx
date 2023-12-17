@@ -16,11 +16,11 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 
 export default function EditBorrowPost(props: EditPostProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [post, setPost] = useState<BorrowPost>({} as BorrowPost);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [isEdited, setIsEdited] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [isEdited, setIsEdited] = useState<boolean>(false);
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -42,6 +42,7 @@ export default function EditBorrowPost(props: EditPostProps) {
       })
       .catch((err) => {
         console.log(err);
+        setError(err);
       });
   }, [props]);
 
@@ -64,15 +65,10 @@ export default function EditBorrowPost(props: EditPostProps) {
       poster: user?._id as string,
     };
 
-    await axios
-      .put(`${borrowUrl}/${props.postId}`, editedPost)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        setError(err);
-      });
+    await axios.put(`${borrowUrl}/${props.postId}`, editedPost).catch((err) => {
+      console.log(err);
+      setError(err);
+    });
 
     const profile = JSON.parse(localStorage.getItem("profile") as string);
     let index;
@@ -88,7 +84,9 @@ export default function EditBorrowPost(props: EditPostProps) {
     profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
-    setIsEdited(true);
+    if (error === null || error === undefined) {
+      setIsEdited(true);
+    }
   };
 
   if (isEdited) {

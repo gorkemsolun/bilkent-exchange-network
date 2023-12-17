@@ -15,6 +15,7 @@ import {
 } from "../authentication/AuthHelpers";
 import DeletePostButton from "../components/DeletePostButton";
 import EditPostButton from "../components/EditPostButton";
+import ErrorModal from "../components/ErrorModal";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
@@ -25,13 +26,14 @@ export default function SecondHandPostDetails() {
   const [post, setPost] = useState<SecondhandPost>({} as SecondhandPost);
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation>({} as Conversation);
   const { id } = useParams();
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
-  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
-  const [selectedConversation, setSelectedConversation] =
-    useState<Conversation>({} as Conversation);
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -67,10 +69,8 @@ export default function SecondHandPostDetails() {
               "http://localhost:3000/conversation/conversation/",
               newConversation
             )
-            .then((res) => {
-              // SUCCESFULLY CREATED CONVERSATION
-            })
             .catch((err) => {
+              setError(err);
               console.log(err);
             });
         }
@@ -86,6 +86,7 @@ export default function SecondHandPostDetails() {
         setPost(res.data);
       })
       .catch((err) => {
+        setError(err);
         console.log(err);
       })
       .finally(() => {
@@ -94,6 +95,7 @@ export default function SecondHandPostDetails() {
   }, [id]);
 
   useEffect(() => {
+    setLoading(true);
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
@@ -103,11 +105,14 @@ export default function SecondHandPostDetails() {
           setPoster(res.data.profile);
         })
         .catch((err) => {
+          setError(err);
           console.log(err);
         })
-        .finally(() => {});
+        .finally(() => {
+          setLoading(false);
+        });
     }
-  }, [post]);
+  }, [post, profile]);
 
   return (
     <div className="outer-container">
@@ -207,6 +212,14 @@ export default function SecondHandPostDetails() {
           selectedConversation={selectedConversation}
         />
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

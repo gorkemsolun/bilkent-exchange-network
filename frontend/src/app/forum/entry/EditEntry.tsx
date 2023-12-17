@@ -32,10 +32,8 @@ export default function EditEntry(props: EditEntryProps) {
 
     axios
       .put(forumUrl + "/" + props.postId + "/" + props.entryId, editedEntry)
-      .then((res) => {
-        // TODO SUCCESFULLY SENT
-      })
       .catch((err) => {
+        console.log(err);
         setError(err);
       });
 

@@ -21,6 +21,7 @@ export default function NewPassword() {
 
           if (json.error) {
             setError(json.error);
+            console.log(json.error);
             return;
           }
 
@@ -28,6 +29,7 @@ export default function NewPassword() {
           setVerified(true);
         } catch (error) {
           setError(error as string);
+          console.log(error);
         }
       }
     };

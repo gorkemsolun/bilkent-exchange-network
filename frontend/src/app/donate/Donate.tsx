@@ -9,19 +9,21 @@ import {
 } from "../../data-types/datatypes.ts";
 import { DonatePost } from "../../data-types/posts.ts";
 import { prepareUrl } from "../PostHelpers.ts";
+import { useProfileContext } from "../authentication/AuthHelpers.ts";
 import CreatePostButton from "../components/CreatePostButton.tsx";
+import ErrorModal from "../components/ErrorModal.tsx";
 import Filters from "../components/Filters.tsx";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
-import { useProfileContext } from "../authentication/AuthHelpers.ts";
 
 export default function Donate() {
   const [donatePosts, setDonatePosts] = useState<DonatePost[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState<string>("");
@@ -60,9 +62,9 @@ export default function Donate() {
 
       axios
         .put("http://localhost:3000/profile/unsavepost", body)
-        .then((res) => {})
         .catch((err) => {
           console.log(err);
+          setError(err);
         });
 
       profile.savedPosts = profile.savedPosts.filter(
@@ -70,7 +72,6 @@ export default function Donate() {
       );
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
-      console.log(profile);
     } else {
       // Post is unsaved, save
       const body = {
@@ -78,12 +79,10 @@ export default function Donate() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/savepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put("http://localhost:3000/profile/savepost", body).catch((err) => {
+        console.log(err);
+        setError(err);
+      });
 
       const savedPost: SavedPost = {
         id: "" + post._id,
@@ -108,6 +107,7 @@ export default function Donate() {
         setDonatePosts(res.data);
       })
       .catch((err) => {
+        setError(err);
         console.log(err);
       })
       .finally(() => {
@@ -156,6 +156,7 @@ export default function Donate() {
                               onClick={() => {
                                 handleSaveButton(post);
                               }}
+                              title="saved"
                             ></img>
                           ) : (
                             <img
@@ -164,6 +165,7 @@ export default function Donate() {
                               onClick={() => {
                                 handleSaveButton(post);
                               }}
+                              title="notsaved"
                             ></img>
                           )}
                         </div>
@@ -208,6 +210,14 @@ export default function Donate() {
           <Messenger onClick={handleMessengerClick} />
         </div>
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

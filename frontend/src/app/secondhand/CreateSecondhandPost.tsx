@@ -6,6 +6,7 @@ import {
   UserContextType,
 } from "../../data-types/datatypes";
 import { SecondhandPost } from "../../data-types/posts";
+import { CreatePostProps } from "../../data-types/props";
 import { resizeImageFile } from "../PostHelpers";
 import {
   useAuthContext,
@@ -15,7 +16,7 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 import SuccessModal from "../components/SuccessModal";
 
-export default function CreateSecondHandPost() {
+export default function CreateSecondHandPost(props: CreatePostProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -63,6 +64,7 @@ export default function CreateSecondHandPost() {
         postId = res.data._id;
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
       });
 
@@ -80,14 +82,11 @@ export default function CreateSecondHandPost() {
 
     localStorage.setItem("profile", JSON.stringify(profile));
     profileDispatch({ type: "UPDATE", payload: profile });
+
     setLoading(false);
     if (error === null || error === undefined) {
       setIsSubmitted(true);
     }
-  };
-
-  const handleClose = () => {
-    window.location.reload();
   };
 
   return (
@@ -98,7 +97,7 @@ export default function CreateSecondHandPost() {
         style={{ width: "35vw" }}
       >
         {loading && <Loader />}
-        <span className="close" onClick={handleClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
 

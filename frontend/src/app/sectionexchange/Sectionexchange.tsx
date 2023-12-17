@@ -37,6 +37,7 @@ export default function SectionExchange() {
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState<string>("");
   const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation>(defaultConversation);
   const user = (useAuthContext() as unknown as UserContextType).user;
@@ -82,6 +83,7 @@ export default function SectionExchange() {
         setSelectedConversation(newConversation);
 
         axios.post(conversationUrl + "/", newConversation).catch((err) => {
+          setError(err);
           console.log(err);
         });
       }
@@ -292,6 +294,14 @@ export default function SectionExchange() {
           />
         </div>
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

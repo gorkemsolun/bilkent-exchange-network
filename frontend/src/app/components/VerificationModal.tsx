@@ -1,21 +1,14 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import image from "../../assets/ver-asset.jpg";
-import BaseModalProps from "./BaseModalProps";
+import { SuccessModalProps } from "../../data-types/props";
 
-interface SuccessModalProps extends BaseModalProps {
-  email: string;
-  width?: string;
-  height?: string;
-  prompt?: string;
-}
-
-const VerificationModal: React.FC<SuccessModalProps> = ({
+export default function VerificationModal({
   message = "Please verify your email!",
   prompt = "We have sent an email to",
   email: initialEmail,
   width = "100px",
   height = "100px",
-}) => {
+}: SuccessModalProps) {
   useEffect(() => {
     return () => {};
   }, []);
@@ -39,6 +32,4 @@ const VerificationModal: React.FC<SuccessModalProps> = ({
       </div>
     </div>
   );
-};
-
-export default VerificationModal;
+}

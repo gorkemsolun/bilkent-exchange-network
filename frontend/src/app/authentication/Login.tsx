@@ -63,8 +63,10 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              e.preventDefault(); // Prevent the default behavior of adding a new line
-              handleLogin(e as any);
+              e.preventDefault();
+              handleLogin(
+                e as unknown as React.MouseEvent<HTMLAnchorElement, MouseEvent>
+              );
             }
           }}
           placeholder="Password"

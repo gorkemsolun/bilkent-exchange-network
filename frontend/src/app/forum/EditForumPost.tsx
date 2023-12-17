@@ -14,6 +14,7 @@ import {
 } from "../authentication/AuthHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
+import SuccessModal from "../components/SuccessModal";
 
 export default function EditForumPost(props: EditPostProps) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,15 +26,19 @@ export default function EditForumPost(props: EditPostProps) {
   const user = (useAuthContext() as unknown as UserContextType).user;
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${forumUrl}/${props.postId}`)
       .then((res) => {
         setPost(res.data);
       })
       .catch((err) => {
+        setError(err);
         console.log(err);
       })
-      .finally(() => {});
+      .finally(() => {
+        setLoading(false);
+      });
   }, [props]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -56,14 +61,10 @@ export default function EditForumPost(props: EditPostProps) {
       entries: post.entries,
     };
 
-    await axios
-      .put(`${forumUrl}/${props.postId}`, editedPost)
-      .then((res) => {
-        // TODO SUCCESFULLY SENT
-      })
-      .catch((err) => {
-        setError(err);
-      });
+    await axios.put(`${forumUrl}/${props.postId}`, editedPost).catch((err) => {
+      console.log(err);
+      setError(err);
+    });
 
     const profile = JSON.parse(localStorage.getItem("profile") as string);
     let index;
@@ -80,7 +81,9 @@ export default function EditForumPost(props: EditPostProps) {
     profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
-    setIsEdited(true);
+    if (error === null || error === undefined) {
+      setIsEdited(true);
+    }
   };
 
   if (isEdited) {
@@ -98,43 +101,51 @@ export default function EditForumPost(props: EditPostProps) {
         <span className="close" onClick={props.onClose}>
           &times;
         </span>
+        {isEdited ? (
+          <SuccessModal />
+        ) : (
+          <>
+            <div>
+              <div
+                className="modal-form-group pt-4"
+                style={{ textAlign: "left" }}
+              >
+                <label htmlFor="name">Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  className="form-control"
+                  defaultValue={post.title}
+                  placeholder="Enter title"
+                />
+              </div>
+              <div className="modal-form-group" style={{ textAlign: "left" }}>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  className="form-control"
+                  style={{ height: "15vh" }}
+                  defaultValue={post.description}
+                />
+              </div>
+            </div>
 
-        <div>
-          <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
-            <label htmlFor="name">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="form-control"
-              defaultValue={post.title}
-              placeholder="Enter title"
-            />
-          </div>
-          <div className="modal-form-group" style={{ textAlign: "left" }}>
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              name="description"
-              className="form-control"
-              style={{ height: "15vh" }}
-              defaultValue={post.description}
-            />
-          </div>
-        </div>
-
-        <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-primary">
-            Edit Post
-          </button>
-        </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
+            <div className="modal-form-group mt-4">
+              <button type="submit" className="btn btn-primary">
+                Edit Post
+              </button>
+            </div>
+            {error && (
+              <ErrorModal
+                message={error}
+                onClose={() => {
+                  setError(null);
+                }}
+              />
+            )}
+          </>
         )}
       </form>
     </div>

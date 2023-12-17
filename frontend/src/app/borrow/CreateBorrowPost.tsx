@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { categories, borrowUrl } from "../../data-types/constants";
+import { borrowUrl, categories } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
@@ -16,10 +16,10 @@ import Loader from "../components/Loader";
 import SuccessModal from "../components/SuccessModal";
 
 export default function CreateBorrowPost(props: CreatePostProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -47,16 +47,11 @@ export default function CreateBorrowPost(props: CreatePostProps) {
     await axios
       .post(borrowUrl, post)
       .then((res) => {
-        console.log(res);
-        // TODO SUCCESFULLY SENT
         postId = res.data._id;
       })
       .catch((err) => {
-        //console.log(err);
+        console.log(err);
         setError(err);
-      })
-      .finally(() => {
-        //setLoading(false);
       });
 
     const addToProfile = {
@@ -74,12 +69,10 @@ export default function CreateBorrowPost(props: CreatePostProps) {
     localStorage.setItem("profile", JSON.stringify(profile));
     profileDispatch({ type: "UPDATE", payload: profile });
     setLoading(false);
-    setIsSubmitted(true);
-  };
 
-  const handleClose = () => {
-    // Call the provided onClose callback
-    window.location.reload();
+    if (error === null || error === undefined) {
+      setIsSubmitted(true);
+    }
   };
 
   return (
@@ -90,7 +83,7 @@ export default function CreateBorrowPost(props: CreatePostProps) {
         style={{ width: "35vw" }}
       >
         {loading && <Loader />}
-        <span className="close" onClick={handleClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
 
@@ -125,11 +118,7 @@ export default function CreateBorrowPost(props: CreatePostProps) {
 
             <div className="modal-form-group" style={{ textAlign: "left" }}>
               <label htmlFor="category">Category</label>
-              <select
-                id="category"
-                name="category"
-                className="form-control"
-              >
+              <select id="category" name="category" className="form-control">
                 {categories.borrow.map((category) => (
                   <option key={category} value={category}>
                     {category}

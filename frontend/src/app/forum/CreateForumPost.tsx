@@ -49,6 +49,7 @@ export default function CreateForumPost(props: CreatePostProps) {
         postId = res.data._id;
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
       });
     const addToProfile = {
@@ -67,18 +68,9 @@ export default function CreateForumPost(props: CreatePostProps) {
     profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
-    setIsSubmitted(true);
-  };
-
-  /*
-  if (isSubmitted) {
-    window.location.reload();
-  }
-  */
-
-  const handleClose = () => {
-    // Call the provided onClose callback
-    window.location.reload();
+    if (error === null || error === undefined) {
+      setIsSubmitted(true);
+    }
   };
 
   return (
@@ -89,45 +81,53 @@ export default function CreateForumPost(props: CreatePostProps) {
         style={{ width: "35vw" }}
       >
         {loading && <Loader />}
-        <span className="close" onClick={handleClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
+        {isSubmitted ? (
+          <SuccessModal />
+        ) : (
+          <>
+            <div>
+              <div
+                className="modal-form-group pt-4"
+                style={{ textAlign: "left" }}
+              >
+                <label htmlFor="name">Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  className="form-control"
+                  placeholder="Enter title"
+                />
+              </div>
+              <div className="modal-form-group" style={{ textAlign: "left" }}>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  className="form-control"
+                  style={{ height: "15vh" }}
+                />
+              </div>
+            </div>
 
-        {isSubmitted? (<SuccessModal/>) : (<><div>
-          <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
-            <label htmlFor="name">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="form-control"
-              placeholder="Enter title"
-            />
-          </div>
-          <div className="modal-form-group" style={{ textAlign: "left" }}>
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              name="description"
-              className="form-control"
-              style={{ height: "15vh" }}
-            />
-          </div>
-        </div>
-
-        <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-primary">
-            Create Post
-          </button>
-        </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
-        )}</>)}
+            <div className="modal-form-group mt-4">
+              <button type="submit" className="btn btn-primary">
+                Create Post
+              </button>
+            </div>
+            {error && (
+              <ErrorModal
+                message={error}
+                onClose={() => {
+                  setError(null);
+                }}
+              />
+            )}
+          </>
+        )}
       </form>
     </div>
   );

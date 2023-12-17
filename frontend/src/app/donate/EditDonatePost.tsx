@@ -35,6 +35,7 @@ export default function EditDonatePost(props: EditPostProps) {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${donateUrl}/${props.postId}`)
       .then((res) => {
@@ -42,9 +43,12 @@ export default function EditDonatePost(props: EditPostProps) {
         setSelectedCategory(res.data.category);
       })
       .catch((err) => {
+        setError(err);
         console.log(err);
       })
-      .finally(() => {});
+      .finally(() => {
+        setLoading(false);
+      });
   }, [props]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -69,14 +73,10 @@ export default function EditDonatePost(props: EditPostProps) {
       poster: user?._id as string,
     };
 
-    await axios
-      .put(`${donateUrl}/${props.postId}`, editedPost)
-      .then((res) => {
-        // TODO SUCCESFULLY SENT
-      })
-      .catch((err) => {
-        setError(err);
-      });
+    await axios.put(`${donateUrl}/${props.postId}`, editedPost).catch((err) => {
+      setError(err);
+      console.log(err);
+    });
 
     const profile = JSON.parse(localStorage.getItem("profile") as string);
     let index;
@@ -93,7 +93,9 @@ export default function EditDonatePost(props: EditPostProps) {
     profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
-    setIsEdited(true);
+    if (error === null || error === undefined) {
+      setIsEdited(true);
+    }
   };
 
   if (isEdited) {

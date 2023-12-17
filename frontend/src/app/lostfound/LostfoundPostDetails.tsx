@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { lostfoundUrl, profileUrl } from "../../data-types/constants";
+import {
+  conversationUrl,
+  lostfoundUrl,
+  profileUrl,
+} from "../../data-types/constants";
 import {
   Conversation,
   ProfileContextType,
@@ -15,6 +19,7 @@ import {
 } from "../authentication/AuthHelpers";
 import DeletePostButton from "../components/DeletePostButton";
 import EditPostButton from "../components/EditPostButton";
+import ErrorModal from "../components/ErrorModal";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
@@ -24,14 +29,15 @@ import Messenger from "../message/Messenger";
 export default function LostFoundPostDetails() {
   const [post, setPost] = useState<LostFoundPost>({} as LostFoundPost);
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
-  const [loading, setLoading] = useState(false);
+  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation>({} as Conversation);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const { id } = useParams();
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
-  const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
-  const [selectedConversation, setSelectedConversation] =
-    useState<Conversation>({} as Conversation);
 
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
@@ -39,42 +45,31 @@ export default function LostFoundPostDetails() {
 
   const handleDMBoxClick = () => {
     // Check if there is an existing conversation with that user, if there isn't create one
-    axios
-      .get(
-        "http://localhost:3000/conversation/conversation/userID/" + user?._id
-      )
-      .then((res) => {
-        const conversation = res.data.find((conv: Conversation) => {
-          return (
-            conv.userIDs.includes("" + user?._id) &&
-            conv.userIDs.includes("" + poster.userID)
-          );
-        });
-
-        if (conversation) {
-          conversation.username = poster?.username;
-          setSelectedConversation(conversation);
-        } else {
-          const newConversation: Conversation = {
-            userIDs: ["" + user?._id, "" + poster?.userID],
-            messages: [],
-            username: poster?.username,
-          };
-          setSelectedConversation(newConversation);
-
-          axios
-            .post(
-              "http://localhost:3000/conversation/conversation/",
-              newConversation
-            )
-            .then((res) => {
-              // SUCCESFULLY CREATED CONVERSATION
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
+    axios.get(conversationUrl + "/userID/" + user?._id).then((res) => {
+      const conversation = res.data.find((conv: Conversation) => {
+        return (
+          conv.userIDs.includes("" + user?._id) &&
+          conv.userIDs.includes("" + poster.userID)
+        );
       });
+
+      if (conversation) {
+        conversation.username = poster?.username;
+        setSelectedConversation(conversation);
+      } else {
+        const newConversation: Conversation = {
+          userIDs: ["" + user?._id, "" + poster?.userID],
+          messages: [],
+          username: poster?.username,
+        };
+        setSelectedConversation(newConversation);
+
+        axios.post(conversationUrl + "/", newConversation).catch((err) => {
+          console.log(err);
+          setError(err);
+        });
+      }
+    });
     setIsMessengerVisible(true);
   };
 
@@ -87,6 +82,7 @@ export default function LostFoundPostDetails() {
       })
       .catch((err) => {
         console.log(err);
+        setError(err);
       })
       .finally(() => {
         setLoading(false);
@@ -94,6 +90,7 @@ export default function LostFoundPostDetails() {
   }, [id]);
 
   useEffect(() => {
+    setLoading(true);
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
@@ -104,8 +101,11 @@ export default function LostFoundPostDetails() {
         })
         .catch((err) => {
           console.log(err);
+          setError(err);
         })
-        .finally(() => {});
+        .finally(() => {
+          setLoading(false);
+        });
     }
   }, [post, profile]);
 
@@ -207,6 +207,14 @@ export default function LostFoundPostDetails() {
           selectedConversation={selectedConversation}
         />
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

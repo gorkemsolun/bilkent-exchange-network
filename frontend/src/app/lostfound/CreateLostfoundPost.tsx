@@ -10,6 +10,7 @@ import {
   UserContextType,
 } from "../../data-types/datatypes";
 import { LostFoundPost } from "../../data-types/posts";
+import { CreatePostProps } from "../../data-types/props";
 import { resizeImageFile } from "../PostHelpers";
 import {
   useAuthContext,
@@ -19,7 +20,7 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 import SuccessModal from "../components/SuccessModal";
 
-export default function CreateLostAndFoundPost() {
+export default function CreateLostAndFoundPost(props: CreatePostProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -55,6 +56,7 @@ export default function CreateLostAndFoundPost() {
     };
 
     await axios.post(lostfoundUrl, post).catch((err) => {
+      console.log(err);
       setError(err);
       setError("Could not create post");
     });
@@ -66,19 +68,14 @@ export default function CreateLostAndFoundPost() {
         localStorage.setItem("profile", JSON.stringify(res.data.profile));
       })
       .catch((err) => {
+        setError(err);
         console.log(err);
       });
 
     setLoading(false);
-
     if (error === null || error === undefined) {
       setIsSubmitted(true);
     }
-  };
-
-  const handleClose = () => {
-    // Call the provided onClose callback
-    window.location.reload();
   };
 
   return (
@@ -89,7 +86,7 @@ export default function CreateLostAndFoundPost() {
         style={{ width: "35vw" }}
       >
         {loading && <Loader />}
-        <span className="close" onClick={handleClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
 

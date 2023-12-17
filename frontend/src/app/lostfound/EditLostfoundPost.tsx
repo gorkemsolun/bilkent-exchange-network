@@ -44,6 +44,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
         setSelectedCategory(res.data.category);
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
       })
       .finally(() => {
@@ -82,6 +83,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
     await axios
       .put(`${lostfoundUrl}/${props.postId}`, editedPost)
       .catch((err) => {
+        console.log(err);
         setError(err);
       });
 

@@ -113,3 +113,10 @@ export interface SuccessModalProps extends BaseModalProps {
   width?: string;
   height?: string;
 }
+
+export interface SuccessModalProps extends BaseModalProps {
+  email?: string;
+  width?: string;
+  height?: string;
+  prompt?: string;
+}

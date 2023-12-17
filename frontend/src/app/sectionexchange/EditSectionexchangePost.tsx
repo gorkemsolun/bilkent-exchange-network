@@ -34,6 +34,7 @@ export default function EditSectionExchangePost(props: EditPostProps) {
         setPost(res.data);
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
       });
   }, [props]);
@@ -84,6 +85,7 @@ export default function EditSectionExchangePost(props: EditPostProps) {
     await axios
       .put(`${sectionexchangeUrl}/${props.postId}`, editedPost)
       .catch((err) => {
+        console.log(err);
         setError(err);
       });
 

@@ -56,6 +56,7 @@ export default function Secondhand() {
       };
 
       axios.put(unsaveUrl, body).catch((err) => {
+        console.log(err);
         setError(err);
       });
 
@@ -72,6 +73,7 @@ export default function Secondhand() {
       };
 
       axios.put(saveUrl, body).catch((err) => {
+        console.log(err);
         setError(err);
       });
 
@@ -106,6 +108,7 @@ export default function Secondhand() {
         setSecondhandPosts(res.data);
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
       })
       .finally(() => {

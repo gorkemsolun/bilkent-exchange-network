@@ -1,26 +1,28 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
+  conversationUrl,
   defaultImage,
   defaultUserProfile,
   profileUrl,
 } from "../../data-types/constants.ts";
 import {
   Conversation,
+  OwnPost,
   UserContextType,
   UserProfile,
-  OwnPost,
 } from "../../data-types/datatypes.ts";
 import {
   deleteUser,
   useAuthContext,
   useLogout,
 } from "../authentication/AuthHelpers.js";
-import Messenger from "../message/Messenger.tsx";
+import ErrorModal from "../components/ErrorModal.tsx";
 import Header from "../components/Header.tsx";
-import Navbar from "../components/Navbar.tsx";
 import Loader from "../components/Loader.tsx";
+import Navbar from "../components/Navbar.tsx";
+import Messenger from "../message/Messenger.tsx";
 
 export default function Profile() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,50 +30,43 @@ export default function Profile() {
     useState<UserProfile>(defaultUserProfile);
   const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
   const user = (useAuthContext() as unknown as UserContextType).user;
-  const { id } = useParams();
+  const [error, setError] = useState<string | null>(null);
   const [selectedConversation, setSelectedConversation] =
     useState<Conversation>({} as Conversation);
   const { logout } = useLogout();
+  const { id } = useParams();
+
   const handleMessengerClick = () => {
     setIsMessengerVisible(!isMessengerVisible);
   };
 
   const handleDMBoxClick = () => {
     // Check if there is an existing conversation with that user, if there isn't create one
-    axios
-      .get(
-        "http://localhost:3000/conversation/conversation/userID/" + user?._id
-      )
-      .then((res) => {
-        const conversation = res.data.find((conv: Conversation) => {
-          return (
-            conv.userIDs.includes("" + user?._id) &&
-            conv.userIDs.includes(userProfile?.userID)
-          );
-        });
-
-        if (conversation) {
-          conversation.username = userProfile?.username;
-          setSelectedConversation(conversation);
-        } else {
-          const newConversation: Conversation = {
-            userIDs: ["" + user?._id, userProfile?.userID],
-            messages: [],
-            username: userProfile?.username,
-          };
-          setSelectedConversation(newConversation);
-
-          axios
-            .post(
-              "http://localhost:3000/conversation/conversation/",
-              newConversation
-            )
-            .then(() => {})
-            .catch((err) => {
-              console.log(err);
-            });
-        }
+    axios.get(conversationUrl + "/userID/" + user?._id).then((res) => {
+      const conversation = res.data.find((conv: Conversation) => {
+        return (
+          conv.userIDs.includes("" + user?._id) &&
+          conv.userIDs.includes(userProfile?.userID)
+        );
       });
+
+      if (conversation) {
+        conversation.username = userProfile?.username;
+        setSelectedConversation(conversation);
+      } else {
+        const newConversation: Conversation = {
+          userIDs: ["" + user?._id, userProfile?.userID],
+          messages: [],
+          username: userProfile?.username,
+        };
+        setSelectedConversation(newConversation);
+
+        axios.post(conversationUrl + "/", newConversation).catch((err) => {
+          console.log(err);
+          setError(err);
+        });
+      }
+    });
     setIsMessengerVisible(true);
   };
 
@@ -84,6 +79,7 @@ export default function Profile() {
       })
       .catch((err) => {
         console.log(err);
+        setError(err);
       })
       .finally(() => {
         setLoading(false);
@@ -237,6 +233,14 @@ export default function Profile() {
           selectedConversation={selectedConversation}
         />
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

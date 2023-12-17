@@ -65,6 +65,7 @@ export default function LostFound() {
       };
 
       axios.put(unsaveUrl, body).catch((err) => {
+        console.log(err);
         setError(err);
       });
 
@@ -81,6 +82,7 @@ export default function LostFound() {
       };
 
       axios.put(saveUrl, body).catch((err) => {
+        console.log(err);
         setError(err);
       });
 
@@ -106,6 +108,7 @@ export default function LostFound() {
         setLostFoundPosts(res.data);
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
       })
       .finally(() => {
@@ -207,20 +210,20 @@ export default function LostFound() {
             </div>
           )}
         </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
-        )}
         <div
           className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
         >
           <Messenger onClick={handleMessengerClick} />
         </div>
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

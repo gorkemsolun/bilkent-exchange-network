@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import BackgroundManager from "../components/BackgroundManager";
+import ErrorModal from "../components/ErrorModal";
 import VerificationModal from "../components/VerificationModal";
 import { isValidEmail } from "../components/WebMailValidator";
-import ErrorModal from "../components/errorModal";
 import { useVerificationEmail } from "./AuthHelpers";
 
 const bg = new BackgroundManager();

@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultFilterParams } from "../../data-types/constants.ts";
+import {
+  defaultFilterParams,
+  saveUrl,
+  unsaveUrl,
+} from "../../data-types/constants.ts";
 import {
   FilterParams,
   ProfileContextType,
@@ -9,14 +13,15 @@ import {
 } from "../../data-types/datatypes.ts";
 import { ForumPost } from "../../data-types/posts.ts";
 import { prepareUrl } from "../PostHelpers.ts";
+import { useProfileContext } from "../authentication/AuthHelpers.ts";
 import CreatePostButton from "../components/CreatePostButton.tsx";
+import ErrorModal from "../components/ErrorModal.tsx";
 import Filters from "../components/Filters.tsx";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
-import { useProfileContext } from "../authentication/AuthHelpers.ts";
 
 export default function Forum() {
   const [forumPosts, setForumPosts] = useState<ForumPost[]>([]);
@@ -24,6 +29,7 @@ export default function Forum() {
   const [loading, setLoading] = useState<boolean>(false);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
+  const [error, setError] = useState<string | null>(null);
   const [sortType, setSortType] = useState<string>("");
   const [isMessengerVisible, setIsMessengerVisible] = useState<boolean>(false);
   const profile = JSON.parse(localStorage.getItem("profile") as string);
@@ -56,6 +62,7 @@ export default function Forum() {
         setForumPosts(res.data);
       })
       .catch((err) => {
+        setError(err);
         console.log(err);
       })
       .finally(() => {
@@ -75,19 +82,16 @@ export default function Forum() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/unsavepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(unsaveUrl, body).catch((err) => {
+        console.log(err);
+        setError(err);
+      });
 
       profile.savedPosts = profile.savedPosts.filter(
         (savedPost: SavedPost) => savedPost.id !== post._id
       );
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
-      console.log(profile);
     } else {
       // Post is unsaved, save
       const body = {
@@ -95,12 +99,10 @@ export default function Forum() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/savepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(saveUrl, body).catch((err) => {
+        console.log(err);
+        setError(err);
+      });
 
       const savedPost: SavedPost = {
         id: "" + post._id,
@@ -152,6 +154,7 @@ export default function Forum() {
                                   onClick={() => {
                                     handleSaveButton(post);
                                   }}
+                                  title="saved"
                                 ></img>
                               ) : (
                                 <img
@@ -160,6 +163,7 @@ export default function Forum() {
                                   onClick={() => {
                                     handleSaveButton(post);
                                   }}
+                                  title="not saved"
                                 ></img>
                               )}
                             </div>
@@ -199,6 +203,14 @@ export default function Forum() {
           <Messenger onClick={handleMessengerClick} />
         </div>
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -18,10 +18,12 @@ export default function DeletePost(props: DeletePostProps) {
 
   const handleDelete = async () => {
     setLoading(true);
+
     await axios
       .delete(localUrl + props.type + "/" + props.type + "post/" + props.postId)
       .catch((err) => {
         setError(err);
+        console.log(err);
       });
 
     const profile = JSON.parse(localStorage.getItem("profile") as string);

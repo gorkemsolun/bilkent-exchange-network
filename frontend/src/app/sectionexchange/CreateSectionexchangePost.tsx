@@ -6,6 +6,7 @@ import {
   UserContextType,
 } from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posts";
+import { CreatePostProps } from "../../data-types/props";
 import {
   useAuthContext,
   useProfileContext,
@@ -14,7 +15,7 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 import SuccessModal from "../components/SuccessModal";
 
-export default function CreateSectionExchangePost() {
+export default function CreateSectionExchangePost(props: CreatePostProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
@@ -75,6 +76,7 @@ export default function CreateSectionExchangePost() {
         postId = res.data._id;
       })
       .catch((err) => {
+        console.log(err);
         setError(err);
         setError("Could not create post");
       });
@@ -94,21 +96,18 @@ export default function CreateSectionExchangePost() {
 
     localStorage.setItem("profile", JSON.stringify(profile));
     profileDispatch({ type: "UPDATE", payload: profile });
+    
     setLoading(false);
     if (error === null || error === undefined) {
       setIsSubmitted(true);
     }
   };
 
-  const handleClose = () => {
-    window.location.reload();
-  };
-
   return (
     <div className="modal-overlay">
       <form onSubmit={handleSubmit} className="create-item-form w-35vw">
         {loading && <Loader />}
-        <span className="close" onClick={handleClose}>
+        <span className="close" onClick={props.onClose}>
           &times;
         </span>
         {isSubmitted ? (

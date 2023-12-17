@@ -87,6 +87,7 @@ export const useLogin = () => {
     if (!res.ok) {
       setIsLoading(false);
       setError(json.error);
+      console.log(json.error);
     } else {
       //save the user to local storage
       localStorage.setItem("user", JSON.stringify(json));
@@ -140,6 +141,7 @@ export const useSignup = () => {
     if (!res.ok) {
       setIsLoading(false);
       setError(json.error);
+      console.log(json.error);
     } else {
       //save the user to local storage
       await axios
@@ -179,6 +181,7 @@ export const useEmailToken = () => {
 
     if (!res.ok) {
       setError(json.error);
+      console.log(json.error);
     }
     return json;
   };
@@ -196,6 +199,7 @@ export const useEmailToken = () => {
 
     if (!res.ok) {
       setError(json.error);
+      console.log(json.error);
     }
     return json;
   };
@@ -222,6 +226,7 @@ export const useVerificationEmail = () => {
     if (!res.ok) {
       setIsLoading(false);
       setError(json.error);
+      console.log(json.error);
     } else {
       //might need a context? I don't think so for now.
       setIsLoading(false);
