@@ -90,7 +90,6 @@ export default function BorrowPostDetails() {
   }, [id]);
 
   useEffect(() => {
-    setLoading(true);
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
@@ -103,9 +102,6 @@ export default function BorrowPostDetails() {
           setError(err);
           console.log(err);
         })
-        .finally(() => {
-          setLoading(false);
-        });
     }
   }, [post, profile]);
 

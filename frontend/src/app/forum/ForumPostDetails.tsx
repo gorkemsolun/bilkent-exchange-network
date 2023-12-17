@@ -15,6 +15,7 @@ import {
 } from "../authentication/AuthHelpers";
 import DeletePostButton from "../components/DeletePostButton";
 import EditPostButton from "../components/EditPostButton";
+import ErrorModal from "../components/ErrorModal";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
@@ -27,6 +28,7 @@ export default function ForumPostDetails() {
   const [post, setPost] = useState<ForumPost>({} as ForumPost);
   const [poster, setPoster] = useState<UserProfile>({} as UserProfile);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [entriesWithUserInfo, setEntriesWithUserInfo] = useState<ForumEntry[]>(
     []
   );
@@ -61,10 +63,10 @@ export default function ForumPostDetails() {
         })
         .catch((err) => {
           console.log(err);
-        })
-        .finally(() => {});
+          setError(err);
+        });
     }
-  }, [post]);
+  }, [post, profile]);
 
   useEffect(() => {
     const fetchUserInfo = async (userId: string) => {
@@ -190,6 +192,14 @@ export default function ForumPostDetails() {
               ))}
           </div>
         </div>
+      )}
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
       )}
     </div>
   );

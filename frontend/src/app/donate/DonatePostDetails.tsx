@@ -90,7 +90,6 @@ export default function DonatePostDetails() {
   }, [id]);
 
   useEffect(() => {
-    setLoading(true);
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
@@ -102,9 +101,6 @@ export default function DonatePostDetails() {
         .catch((err) => {
           setError(err);
           console.log(err);
-        })
-        .finally(() => {
-          setLoading(false);
         });
     }
   }, [post, profile]);

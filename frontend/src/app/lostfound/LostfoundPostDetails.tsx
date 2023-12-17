@@ -90,7 +90,6 @@ export default function LostFoundPostDetails() {
   }, [id]);
 
   useEffect(() => {
-    setLoading(true);
     if (post.poster === profile?.userID) {
       setPoster(profile);
     } else {
@@ -102,9 +101,6 @@ export default function LostFoundPostDetails() {
         .catch((err) => {
           console.log(err);
           setError(err);
-        })
-        .finally(() => {
-          setLoading(false);
         });
     }
   }, [post, profile]);

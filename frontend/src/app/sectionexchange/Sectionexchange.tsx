@@ -5,6 +5,8 @@ import {
   conversationUrl,
   defaultConversation,
   defaultFilterParams,
+  saveUrl,
+  unsaveUrl,
 } from "../../data-types/constants.ts";
 import {
   Conversation,
@@ -20,6 +22,7 @@ import {
   useProfileContext,
 } from "../authentication/AuthHelpers.ts";
 import CreatePostButton from "../components/CreatePostButton.tsx";
+import ErrorModal from "../components/ErrorModal.tsx";
 import Filters from "../components/Filters.tsx";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
@@ -125,11 +128,9 @@ export default function SectionExchange() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/unsavepost", body)
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(unsaveUrl, body).catch((err) => {
+        console.log(err);
+      });
 
       profile.savedPosts = profile.savedPosts.filter(
         (savedPost: SavedPost) => savedPost.id !== post._id
@@ -144,7 +145,7 @@ export default function SectionExchange() {
         savedPost: post,
       };
 
-      axios.put("http://localhost:3000/profile/savepost", body).catch((err) => {
+      axios.put(saveUrl, body).catch((err) => {
         console.log(err);
       });
 
