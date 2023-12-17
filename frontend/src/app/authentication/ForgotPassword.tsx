@@ -2,12 +2,12 @@
  * Component for the forgot password page.
  * Allows users to enter their email and submit a request to reset their password.
  */
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import BackgroundManager from "../components/BackgroundManager";
 import VerificationModal from "../components/VerificationModal";
 import { useLogin } from "./AuthHelpers";
-import axios from "axios";
 
 const bg = new BackgroundManager();
 const url = bg.getRandomImageUrl();
@@ -25,12 +25,9 @@ export default function ForgotPassword() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/user/forgetPassword",
-        {
-          email: email,
-        }
-      );
+      await axios.post("http://localhost:3000/user/forgetPassword", {
+        email: email,
+      });
     } catch (error) {
       console.error("Error sending forgot password request:", error);
     }

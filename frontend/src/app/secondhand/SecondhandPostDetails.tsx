@@ -74,6 +74,7 @@ export default function SecondHandPostDetails() {
   };
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${secondhandUrl}/${id}`)
       .then((res) => {
@@ -100,7 +101,7 @@ export default function SecondHandPostDetails() {
         .catch((err) => {
           setError(err);
           console.log(err);
-        })
+        });
     }
   }, [post, profile]);
 
