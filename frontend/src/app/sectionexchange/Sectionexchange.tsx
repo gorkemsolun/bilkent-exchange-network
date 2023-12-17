@@ -81,14 +81,9 @@ export default function SectionExchange() {
         };
         setSelectedConversation(newConversation);
 
-        axios
-          .post(conversationUrl + "/", newConversation)
-          .then((res) => {
-            // SUCCESFULLY CREATED CONVERSATION
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        axios.post(conversationUrl + "/", newConversation).catch((err) => {
+          console.log(err);
+        });
       }
     });
     setIsMessengerVisible(true);
@@ -130,7 +125,6 @@ export default function SectionExchange() {
 
       axios
         .put("http://localhost:3000/profile/unsavepost", body)
-        .then((res) => {})
         .catch((err) => {
           console.log(err);
         });
@@ -148,12 +142,9 @@ export default function SectionExchange() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/savepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put("http://localhost:3000/profile/savepost", body).catch((err) => {
+        console.log(err);
+      });
 
       const savedPost: SavedPost = {
         id: "" + post._id,
@@ -273,6 +264,7 @@ export default function SectionExchange() {
                           onClick={() => {
                             handleSaveButton(post);
                           }}
+                          title="Unsave Post"
                         ></img>
                       ) : (
                         <img
@@ -281,6 +273,7 @@ export default function SectionExchange() {
                           onClick={() => {
                             handleSaveButton(post);
                           }}
+                          title="Save Post"
                         ></img>
                       )}
                     </div>

@@ -14,6 +14,7 @@ import {
 } from "../authentication/AuthHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
+import SuccessModal from "../components/SuccessModal";
 
 export default function EditSectionExchangePost(props: EditPostProps) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -54,6 +55,24 @@ export default function EditSectionExchangePost(props: EditPostProps) {
       return;
     }
 
+    if (
+      formData.get("offeredCourse") === formData.get("desiredCourse") &&
+      formData.get("offeredSection") === formData.get("desiredSection")
+    ) {
+      setError("CANNOT OFFER AND DESIRE THE SAME COURSE");
+      setLoading(false);
+      return;
+    }
+
+    if (
+      Number(formData.get("offeredSection")) <= 0 ||
+      Number(formData.get("desiredSection")) <= 0
+    ) {
+      setError("INVALID SECTION NUMBER");
+      setLoading(false);
+      return;
+    }
+
     const editedPost: SectionexchangePost = {
       offeredCourse: formData.get("offeredCourse") as string,
       offeredSection: formData.get("offeredSection") as string,
@@ -64,9 +83,6 @@ export default function EditSectionExchangePost(props: EditPostProps) {
 
     await axios
       .put(`${sectionexchangeUrl}/${props.postId}`, editedPost)
-      .then((res) => {
-        // TODO SUCCESFULLY SENT
-      })
       .catch((err) => {
         setError(err);
       });
@@ -89,12 +105,10 @@ export default function EditSectionExchangePost(props: EditPostProps) {
     profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
-    setIsEdited(true);
+    if (error === null || error === undefined) {
+      setIsEdited(true);
+    }
   };
-
-  if (isEdited) {
-    window.location.reload();
-  }
 
   return (
     <div className="modal-overlay">
@@ -103,70 +117,75 @@ export default function EditSectionExchangePost(props: EditPostProps) {
         <span className="close" onClick={props.onClose}>
           &times;
         </span>
-
-        <div>
-          <div className="modal-form-group mt-8 text-left">
-            <div className="flex justify-center ">
-              <div className="mx-4">
-                <label htmlFor="offeredCourse">Offered Course</label>
-                <input
-                  type="text"
-                  id="offeredCourse"
-                  name="offeredCourse"
-                  className="form-control"
-                  defaultValue={post.offeredCourse}
-                />
+        {isEdited ? (
+          <SuccessModal />
+        ) : (
+          <>
+            <div>
+              <div className="modal-form-group mt-8 text-left">
+                <div className="flex justify-center ">
+                  <div className="mx-4">
+                    <label htmlFor="offeredCourse">Offered Course</label>
+                    <input
+                      type="text"
+                      id="offeredCourse"
+                      name="offeredCourse"
+                      className="form-control"
+                      defaultValue={post.offeredCourse}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="offeredSection">Offered Section</label>
+                    <input
+                      type="text"
+                      id="offeredSection"
+                      name="offeredSection"
+                      className="form-control"
+                      defaultValue={post.offeredSection}
+                    />
+                  </div>
+                </div>
               </div>
-              <div>
-                <label htmlFor="offeredSection">Offered Section</label>
-                <input
-                  type="text"
-                  id="offeredSection"
-                  name="offeredSection"
-                  className="form-control"
-                  defaultValue={post.offeredSection}
-                />
+              <div className="modal-form-group text-left">
+                <div className="flex justify-center ">
+                  <div className="mx-4">
+                    <label htmlFor="desiredCourse">Desired Course</label>
+                    <input
+                      type="text"
+                      id="desiredCourse"
+                      name="desiredCourse"
+                      className="form-control"
+                      defaultValue={post.desiredCourse}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="desiredSection">Desired Section</label>
+                    <input
+                      type="text"
+                      id="desiredSection"
+                      name="desiredSection"
+                      className="form-control"
+                      defaultValue={post.desiredSection}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="modal-form-group text-left">
-            <div className="flex justify-center ">
-              <div className="mx-4">
-                <label htmlFor="desiredCourse">Desired Course</label>
-                <input
-                  type="text"
-                  id="desiredCourse"
-                  name="desiredCourse"
-                  className="form-control"
-                  defaultValue={post.desiredCourse}
-                />
-              </div>
-              <div>
-                <label htmlFor="desiredSection">Desired Section</label>
-                <input
-                  type="text"
-                  id="desiredSection"
-                  name="desiredSection"
-                  className="form-control"
-                  defaultValue={post.desiredSection}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-primary">
-            Edit Post
-          </button>
-        </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
+            <div className="modal-form-group mt-4">
+              <button type="submit" className="btn btn-primary">
+                Edit Post
+              </button>
+            </div>
+            {error && (
+              <ErrorModal
+                message={error}
+                onClose={() => {
+                  setError(null);
+                }}
+              />
+            )}
+          </>
         )}
       </form>
     </div>

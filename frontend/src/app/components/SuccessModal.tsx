@@ -1,21 +1,15 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import okTickImage from "../../assets/gr-tick.avif";
-import BaseModalProps from "./BaseModalProps";
+import { SuccessModalProps } from "../../data-types/props";
 
-interface SuccessModalProps extends BaseModalProps {
-  width?: string;
-  height?: string;
-}
-
-const SuccessModal: React.FC<SuccessModalProps> = ({
+export default function SuccessModal({
   message = "Done Successfully!",
   width = "100px",
   height = "100px",
-}) => {
+}: SuccessModalProps) {
   useEffect(() => {
-    // No auto close logic
     return () => {
-      // Cleanup or additional actions when the component is unmounted
+      window.location.reload();
     };
   }, []);
 
@@ -36,6 +30,4 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
       </div>
     </div>
   );
-};
-
-export default SuccessModal;
+}

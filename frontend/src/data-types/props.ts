@@ -94,3 +94,22 @@ export interface ErrorModalProps {
   onClose?: () => void;
   autoCloseDelay?: number;
 }
+
+export default interface BaseModalProps {
+  title?: string;
+  message?: string;
+  onClose?: () => void;
+  onConfirm?: () => void;
+  onCancel?: () => void;
+  showCloseButton?: boolean;
+  customClass?: string;
+  disableOverlayClick?: boolean;
+  modalWidth?: string;
+  modalHeight?: string;
+  draggable?: boolean;
+}
+
+export interface SuccessModalProps extends BaseModalProps {
+  width?: string;
+  height?: string;
+}
