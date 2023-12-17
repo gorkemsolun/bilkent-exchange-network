@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema(
     },
     isAdmin: {
       type: Boolean,
-      required: false,
+      required: true,
     },
     email: {
       type: String,
@@ -81,6 +81,7 @@ UserSchema.statics.signup = async function (username, email, password) {
 
   const user = await this.create({
     username,
+    isAdmin: false,
     email,
     password: hash,
     image: "",
