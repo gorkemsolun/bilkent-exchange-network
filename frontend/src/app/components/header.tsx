@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultUserProfile } from "../../data-types/constants";
+import { defaultImage, defaultUserProfile } from "../../data-types/constants";
 import { ProfileContextType, UserProfile } from "../../data-types/datatypes";
 import { HeaderProps } from "../../data-types/props";
 import { useLogout, useProfileContext } from "../authentication/AuthHelpers";
@@ -13,7 +13,7 @@ export default function Header(props: HeaderProps) {
   );
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
-
+  console.log(profile);
   const handleClick = () => {
     logout();
   };
@@ -30,7 +30,7 @@ export default function Header(props: HeaderProps) {
       >
         <div className="header-profile">
           <img
-            src={userProfile?.image}
+            src={userProfile?.image || defaultImage}
             className="header-profile-image"
             alt="Profile"
             title="Profile"
@@ -54,13 +54,11 @@ export default function Header(props: HeaderProps) {
               >
                 Logout
               </Link>
-              <Link
-                to="/admin"
-                className="header-profile-dropdown-link"
-                onClick={handleClick}
-              >
-                OnlyAdmins
-              </Link>
+              {profile?._isAdmin == true && (
+                <Link to="/admin" className="header-profile-dropdown-link">
+                  Admin Page
+                </Link>
+              )}
             </div>
           )}
         </div>

@@ -21,8 +21,8 @@ const VerificationModal: React.FC<SuccessModalProps> = ({
   }, []);
 
   return (
-    <div className="okay-modal">
-      <div className="okay-content">
+    <div className="success-modal">
+      <div className="success-modal-content">
         <img
           src={image}
           alt="Awatinig Verification"
@@ -33,9 +33,9 @@ const VerificationModal: React.FC<SuccessModalProps> = ({
             margin: "auto",
           }}
         />
-        <p style={{ color: "green" }}>{message}</p>
-        <p style={{ color: "green" }}>{prompt}</p>
-        <p style={{ color: "green" }}>{initialEmail}</p>
+        <p className="success-modal-content-par">{message}</p>
+        <p className="success-modal-content-par">{prompt}</p>
+        <p className="success-modal-content-par">{initialEmail}</p>
       </div>
     </div>
   );

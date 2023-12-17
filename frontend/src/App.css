@@ -133,6 +133,7 @@ td {
   padding: 0.5rem;
   border-radius: 0.25rem;
   background-color: #fff;
+  max-width: 140px;
 }
 
 .filter-date-input {
@@ -297,6 +298,7 @@ td {
   flex-direction: column;
   font-size: 24px;
   font: bold;
+  text-align: left;
 }
 
 .profileName {
@@ -436,7 +438,6 @@ td {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 }
 
 .profile-header {
@@ -1218,8 +1219,7 @@ td {
 
 .post-save-container-sectionexchange-type {
   position: absolute;
-  top: 0;
-  left: 78vw;
+  left: 92vw;
 }
 
 .post-save-container-forum-type {
@@ -1310,8 +1310,42 @@ td {
   right: 70px;
 }
 
+.lostfound-post-status-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 52px;
+}
+
+.lostfound-post-category-badge {
+  position: absolute;
+  top: 10px;
+  right: 68px;
+}
+
 .forum-post-title {
   font-size: 26px;
   font-weight: bold;
   text-align: left;
+}
+
+.success-modal-content {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  opacity: 0.95;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.success-modal-content > * {
+  margin-bottom: 1rem;
+}
+
+.success-modal-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.success-modal-content-par {
+  color: #0056b3;
 }

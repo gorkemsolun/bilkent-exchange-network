@@ -1,3 +1,7 @@
+## SPECIAL THANKS TO
+
+![](readme-res/sponsors.jpg) <br>
+
 # BILKENT EXCHANCE NETWORK (BEN)
 
 ![](readme-res/logo.png) <br>
@@ -51,7 +55,7 @@ npm install
 
 > Please be aware that you will need to open two separate terminals. <br>
 
-> ❗❗❗ Both of the terminals must have been opened on the same root. Both of them should end with `...\bilkent-exchange-network`. Or if you have cloned the directory with a different name, then that name should be present, then that name should be present `...\[the-custom-name-you-used]`. <br> 
+> ❗❗❗ Both of the terminals must have been opened on the same root. Both of them should end with `...\bilkent-exchange-network`. Or if you have cloned the directory with a different name, then that name should be present, then that name should be present `...\[the-custom-name-you-used]`. <br>
 
 6. From one of the terminals type: <br>
 

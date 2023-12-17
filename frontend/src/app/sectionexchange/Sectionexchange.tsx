@@ -185,25 +185,24 @@ export default function SectionExchange() {
           </div>
           <div className="container">
             <div className="row">
-              <div className="col-12">
-                <div className="card section-card row align-items-start justify-content-center bg-white font-bold">
-                  <div className="row align-items-start justify-content-start">
-                    <div className="col-md text-center border-r border-black">
-                      <p className="card-text">{"Username"}</p>
-                    </div>
-                    <div className="col-md text-center border-r border-black">
-                      <p className="card-text">{"Offered Course-Section"}</p>
-                    </div>
-                    <div className="col-md text-center border-r border-black">
-                      <p className="card-text">{"Desired Course-Section"}</p>
-                    </div>
-                    <div className="col-md text-center border-r border-black">
-                      <p className="card-text">{"DM"}</p>
-                    </div>
-                    <div className="col-md text-center">
-                      <p className="card-text">{"Date"}</p>
-                    </div>
-                  </div>
+              <div className="row align-items font-bold">
+                <div className="col-md text-center border-r border-black">
+                  <p className="card-text">{"Username"}</p>
+                </div>
+                <div className="col-md text-center border-r border-black">
+                  <p className="card-text">{"Offered Course-Section"}</p>
+                </div>
+                <div className="col-md text-center border-r border-black">
+                  <p className="card-text">{"Desired Course-Section"}</p>
+                </div>
+                <div className="col-md text-center border-r border-black">
+                  <p className="card-text">{"DM"}</p>
+                </div>
+                <div
+                  className="col-md text-center"
+                  style={{ marginRight: "35px" }}
+                >
+                  <p className="card-text">{"Date"}</p>
                 </div>
               </div>
             </div>
@@ -213,73 +212,77 @@ export default function SectionExchange() {
           ) : (
             <div className="container w-full">
               {sectionexchangePosts.map((post: SectionexchangePost) => (
-                <div className="row mb-2" key={post._id}>
-                  <div className="col-12">
-                    <div className="card section-card row align-items-start justify-content-center bg-white">
-                      <div className="row align-items-start justify-content-start">
-                        <div className="col-md text-center border-r border-black">
-                          <Link
-                            to={"../profile/" + post.poster}
-                            className="card-text"
-                          >
-                            {post.posterUsername}
-                          </Link>
-                        </div>
-                        <div className="col-md text-center border-r border-black">
-                          <p className="card-text">
-                            {post.offeredCourse + "-" + post.offeredSection}
-                          </p>
-                        </div>
-                        <div className="col-md text-center border-r border-black">
-                          <p className="card-text">
-                            {post.desiredCourse + "-" + post.desiredSection}
-                          </p>
-                        </div>
-                        <div className="col-md text-center border-r border-black">
-                          <div>
-                            <img
-                              className="img-fluid mx-auto d-block max-w-4vw max-h-4vh"
-                              src="./src/assets/dmbox.png"
-                              alt="DM Box"
-                              title="Send DM"
-                              onClick={() =>
-                                handleDMBoxClick(
-                                  post.poster,
-                                  "" + post.posterUsername
-                                )
-                              }
-                              style={{
-                                height: "35px",
-                                width: "35px",
-                              }}
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md text-center">
-                          <p className="card-text">{String(post.createdAt)}</p>
-                        </div>
-                        <div className="post-save-container-sectionexchange-type">
-                          {profile.savedPosts.some(
-                            (savedPost: SavedPost) => savedPost.id === post._id
-                          ) ? (
-                            <img
-                              src="/src/assets/saved.png"
-                              className="post-saved-icon"
-                              onClick={() => {
-                                handleSaveButton(post);
-                              }}
-                            ></img>
-                          ) : (
-                            <img
-                              src="/src/assets/notsaved.png"
-                              className="post-notsaved-icon"
-                              onClick={() => {
-                                handleSaveButton(post);
-                              }}
-                            ></img>
-                          )}
-                        </div>
+                <div className="row mb-3" key={post._id}>
+                  <div className="row align-items-start justify-content-start">
+                    <div className="col-md text-center border-r border-black">
+                      <Link
+                        to={"../profile/" + post.poster}
+                        className="card-text"
+                      >
+                        {post.posterUsername}
+                      </Link>
+                    </div>
+                    <div className="col-md text-center border-r border-black">
+                      <p className="card-text">
+                        {post.offeredCourse + "-" + post.offeredSection}
+                      </p>
+                    </div>
+                    <div className="col-md text-center border-r border-black">
+                      <p className="card-text">
+                        {post.desiredCourse + "-" + post.desiredSection}
+                      </p>
+                    </div>
+                    <div className="col-md text-center border-r border-black">
+                      <div>
+                        <img
+                          className="img-fluid mx-auto d-block max-w-4vw max-h-4vh"
+                          src="./src/assets/dmbox.png"
+                          alt="DM Box"
+                          title="Send DM"
+                          onClick={() =>
+                            handleDMBoxClick(
+                              post.poster,
+                              "" + post.posterUsername
+                            )
+                          }
+                          style={{
+                            height: "35px",
+                            width: "35px",
+                          }}
+                        />
                       </div>
+                    </div>
+                    <div
+                      className="col-md text-center"
+                      style={{ marginRight: "35px" }}
+                    >
+                      <p className="card-text">
+                        {"" +
+                          post.createdAt?.toString().slice(11, 16) +
+                          "   " +
+                          post.createdAt?.toString().slice(0, 10)}
+                      </p>
+                    </div>
+                    <div className=" post-save-container-sectionexchange-type">
+                      {profile.savedPosts.some(
+                        (savedPost: SavedPost) => savedPost.id === post._id
+                      ) ? (
+                        <img
+                          src="/src/assets/saved.png"
+                          className="post-saved-icon"
+                          onClick={() => {
+                            handleSaveButton(post);
+                          }}
+                        ></img>
+                      ) : (
+                        <img
+                          src="/src/assets/notsaved.png"
+                          className="post-notsaved-icon"
+                          onClick={() => {
+                            handleSaveButton(post);
+                          }}
+                        ></img>
+                      )}
                     </div>
                   </div>
                 </div>

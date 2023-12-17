@@ -3,7 +3,7 @@ import "./App.css";
 import { AuthContextProvider } from "./app/authentication/AuthContext";
 import { useAuthContext } from "./app/authentication/AuthHelpers";
 import Login from "./app/authentication/Login";
-import Signup from "./app/authentication/Signup";
+import Signup from "./app/authentication/signup";
 import VerificationPage from "./app/authentication/Verification";
 import ForgetPassword from "./app/authentication/forgetPassword";
 import Borrow from "./app/borrow/Borrow";
@@ -147,12 +147,14 @@ function AppContent() {
           <Route
             path="/admin"
             element={
-              user ? (
+              !user?.isAdmin? (
                 <AdminPage />
               ) : (
                 setTimeout(() => {
-                  <Navigate to="/login" />;
-                }, 100)
+                  console.log(user); 
+                  <p>You don't have permission to access this page.</p>; 
+                  <Navigate to="/secondhandpost" />;
+                }, 10)
               )
             }
           />
