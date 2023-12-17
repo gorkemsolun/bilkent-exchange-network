@@ -58,6 +58,9 @@ export default function DeletePost(props: DeletePostProps) {
     <div className="modal-overlay">
       {loading && <Loader />}
       <div className="delete-post-modal-body">
+        <span className="close" onClick={props.onClose}>
+          &times;
+        </span>
         <label>Are you sure you want to delete this post?</label>
         <div className="editProfileButtonContainer">
           <button

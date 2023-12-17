@@ -74,7 +74,9 @@ export default function Donate() {
       profileDispatch({ type: "UPDATE", payload: profile });
     } else {
       // Post is unsaved, save
+      const type = "donate";
       const body = {
+        typename: type,
         profileID: profile?._id,
         savedPost: post,
       };
@@ -86,7 +88,7 @@ export default function Donate() {
 
       const savedPost: SavedPost = {
         id: "" + post._id,
-        typename: "Secondhand,",
+        typename: "donate",
         title: post.title,
       };
 

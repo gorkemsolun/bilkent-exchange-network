@@ -93,8 +93,9 @@ export default function Borrow() {
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
     } else {
-      // Post is unsaved, save
+      const type = "borrow";
       const body = {
+        typename: type,
         profileID: profile?._id,
         savedPost: post,
       };
@@ -106,7 +107,7 @@ export default function Borrow() {
 
       const savedPost: SavedPost = {
         id: "" + post._id,
-        typename: "Secondhand,",
+        typename: "borrow",
         title: post.title,
       };
 

@@ -333,14 +333,14 @@ export default function Filters(props: FilterProps) {
         {/* tailwind button styles */}
         <button
           onClick={onResetClicked}
-          className="bg-black-500 text-white p-2 m-1 rounded-md w-20"
+          className="text-white p-2 m-1 rounded-md w-20 reset-button"
           type="reset"
         >
           Reset
         </button>
         <button
           onClick={onFilterClicked}
-          className="bg-grey-500 text-white p-2 m-1 rounded-md w-20"
+          className="bg-grey-500 text-white p-2 m-1 rounded-md w-20 filter-button"
           type="submit"
         >
           Filter

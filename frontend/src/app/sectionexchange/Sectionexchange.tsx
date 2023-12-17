@@ -140,7 +140,9 @@ export default function SectionExchange() {
       console.log(profile);
     } else {
       // Post is unsaved, save
+      const type = "sectionexchange";
       const body = {
+        typename: type,
         profileID: profile?._id,
         savedPost: post,
       };
@@ -151,7 +153,7 @@ export default function SectionExchange() {
 
       const savedPost: SavedPost = {
         id: "" + post._id,
-        typename: "Secondhand,",
+        typename: "sectionexchange",
         title: "Section Exchange",
       };
 

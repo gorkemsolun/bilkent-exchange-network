@@ -153,12 +153,22 @@ export const savePost = async (req, res) => {
       throw Error("Request body is empty");
     }
 
+    const typeName = req.body.typename;
     const profileId = req.body.profileID;
     const savedPost = req.body.savedPost;
 
+    const preparedPost = {
+      typename: typeName,
+      title: savedPost.title,
+      offeredCourse: savedPost.offeredCourse,
+      offeredSection: savedPost.offeredSectio,
+      desiredCourse: savedPost.desiredCourse,
+      desiredSection: savedPost.desiredSection,
+    };
+
     await UserProfile.updateOne(
       { _id: profileId },
-      { $push: { savedPosts: savedPost } }
+      { $push: { savedPosts: preparedPost } }
     );
 
     return res.status(200).json({});
