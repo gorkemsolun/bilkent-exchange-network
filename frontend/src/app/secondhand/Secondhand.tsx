@@ -1,26 +1,31 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultFilterParams } from "../../data-types/constants.ts";
+import {
+  defaultFilterParams,
+  saveUrl,
+  unsaveUrl,
+} from "../../data-types/constants.ts";
 import {
   FilterParams,
   ProfileContextType,
   SavedPost,
-  UserContextType,
 } from "../../data-types/datatypes.ts";
 import { SecondhandPost } from "../../data-types/posts.ts";
 import { prepareUrl } from "../PostHelpers.ts";
+import { useProfileContext } from "../authentication/AuthHelpers.ts";
 import CreatePostButton from "../components/CreatePostButton.tsx";
+import ErrorModal from "../components/ErrorModal.tsx";
 import Filters from "../components/Filters.tsx";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
-import { useProfileContext } from "../authentication/AuthHelpers.ts";
 export default function Secondhand() {
   const [loading, setLoading] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const [secondhandPosts, setSecondhandPosts] = useState<SecondhandPost[]>([]);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
@@ -50,19 +55,15 @@ export default function Secondhand() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/unsavepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(unsaveUrl, body).catch((err) => {
+        setError(err);
+      });
 
       profile.savedPosts = profile.savedPosts.filter(
         (savedPost: SavedPost) => savedPost.id !== post._id
       );
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
-      console.log(profile);
     } else {
       // Post is unsaved, save
       const body = {
@@ -70,12 +71,9 @@ export default function Secondhand() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/savepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(saveUrl, body).catch((err) => {
+        setError(err);
+      });
 
       const savedPost: SavedPost = {
         id: "" + post._id,
@@ -101,7 +99,6 @@ export default function Secondhand() {
     setLoading(true);
 
     const url = prepareUrl(sortType, searchTerm, "secondhand", filterParams);
-    console.log(url);
 
     axios
       .get(url)
@@ -109,7 +106,7 @@ export default function Secondhand() {
         setSecondhandPosts(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       })
       .finally(() => {
         setLoading(false);
@@ -199,6 +196,14 @@ export default function Secondhand() {
             </div>
           )}
         </div>
+        {error && (
+          <ErrorModal
+            message={error}
+            onClose={() => {
+              setError(null);
+            }}
+          />
+        )}
         <div
           className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
         >

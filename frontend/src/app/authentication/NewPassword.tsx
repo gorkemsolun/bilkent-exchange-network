@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { useEmailToken, forgotPassword, useLogin } from "./AuthHelpers";
+import { useSearchParams } from "react-router-dom";
+import ErrorModal from "../components/ErrorModal";
+import { forgotPassword, useEmailToken, useLogin } from "./AuthHelpers";
 
 export default function NewPassword() {
   const [password, setPassword] = useState<string>("");
-  const [username, setUsername] = useState<string>("");
   const [verified, setVerified] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const emailToken = searchParams.get("emailToken");
   const email = searchParams.get("email");
   const { getToken } = useEmailToken();
-  const {login} = useLogin();
-  
+  const { login } = useLogin();
+
   useEffect(() => {
     const fetchData = async () => {
       if (emailToken) {
@@ -19,13 +20,14 @@ export default function NewPassword() {
           const json = await getToken(emailToken);
 
           if (json.error) {
+            setError(json.error);
             return;
           }
 
           localStorage.setItem("verified", "true");
           setVerified(true);
         } catch (error) {
-          console.log(error);
+          setError(error as string);
         }
       }
     };
@@ -34,13 +36,12 @@ export default function NewPassword() {
   }, [emailToken, getToken]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (verified) {
-        if (email) {
-            await forgotPassword(email, password);
-            await login(email, password);
-        }
-
+      if (email) {
+        await forgotPassword(email, password);
+        await login(email, password);
+      }
     }
   };
 
@@ -80,7 +81,6 @@ export default function NewPassword() {
           placeholder="Enter your password"
         />
 
-
         <button
           className="flex items-center justify-center h-12 px-6 bg-blue-600 mt-8 rounded font-semibold text-sm text-blue-100 hover:bg-blue-700 w-full"
           type="submit"
@@ -88,6 +88,14 @@ export default function NewPassword() {
           Change Password And Login
         </button>
       </form>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

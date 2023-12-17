@@ -1,14 +1,17 @@
 import axios from "axios";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { localUrl } from "../../data-types/constants";
 import { OwnPost, ProfileContextType } from "../../data-types/datatypes";
 import { DeletePostProps } from "../../data-types/props";
 import { useProfileContext } from "../authentication/AuthHelpers";
+import ErrorModal from "./ErrorModal";
 import Loader from "./Loader";
 
 export default function DeletePost(props: DeletePostProps) {
-  const [isDeleted, setIsDeleted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -16,19 +19,9 @@ export default function DeletePost(props: DeletePostProps) {
   const handleDelete = async () => {
     setLoading(true);
     await axios
-      .delete(
-        "http://localhost:3000/" +
-          props.type +
-          "/" +
-          props.type +
-          "post/" +
-          props.postId
-      )
-      .then((res) => {
-        console.log(res);
-      })
+      .delete(localUrl + props.type + "/" + props.type + "post/" + props.postId)
       .catch((err) => {
-        console.log(err);
+        setError(err);
       });
 
     const profile = JSON.parse(localStorage.getItem("profile") as string);
@@ -45,7 +38,10 @@ export default function DeletePost(props: DeletePostProps) {
     localStorage.setItem("profile", JSON.stringify(profile));
     profileDispatch({ type: "UPDATE", payload: profile });
     setLoading(false);
-    setIsDeleted(true);
+
+    if (error === null || error === undefined) {
+      setIsDeleted(true);
+    }
   };
 
   const handleCancel = () => {
@@ -78,6 +74,14 @@ export default function DeletePost(props: DeletePostProps) {
           </button>
         </div>
       </div>
+      {error && (
+        <ErrorModal
+          message={error}
+          onClose={() => {
+            setError(null);
+          }}
+        />
+      )}
     </div>
   );
 }

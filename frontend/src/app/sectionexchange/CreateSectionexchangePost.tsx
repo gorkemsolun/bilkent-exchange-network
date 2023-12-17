@@ -1,12 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
-import { sectionexchangeUrl } from "../../data-types/constants";
+import { courses, sectionexchangeUrl } from "../../data-types/constants";
 import {
   ProfileContextType,
   UserContextType,
 } from "../../data-types/datatypes";
 import { SectionexchangePost } from "../../data-types/posts";
-import { CreatePostProps } from "../../data-types/props";
 import {
   useAuthContext,
   useProfileContext,
@@ -15,10 +14,10 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 import SuccessModal from "../components/SuccessModal";
 
-export default function CreateSectionExchangePost(props: CreatePostProps) {
-  const [loading, setLoading] = useState(false);
+export default function CreateSectionExchangePost() {
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -40,6 +39,24 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
       return;
     }
 
+    if (
+      formData.get("offeredCourse") === formData.get("desiredCourse") &&
+      formData.get("offeredSection") === formData.get("desiredSection")
+    ) {
+      setError("CANNOT OFFER AND DESIRE THE SAME COURSE");
+      setLoading(false);
+      return;
+    }
+
+    if (
+      Number(formData.get("offeredSection")) <= 0 ||
+      Number(formData.get("desiredSection")) <= 0
+    ) {
+      setError("INVALID SECTION NUMBER");
+      setLoading(false);
+      return;
+    }
+
     const profile = JSON.parse(localStorage.getItem("profile") as string);
 
     const post: SectionexchangePost = {
@@ -55,7 +72,6 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
     await axios
       .post(sectionexchangeUrl, post)
       .then((res) => {
-        // TODO SUCCESFULLY SENT
         postId = res.data._id;
       })
       .catch((err) => {
@@ -79,17 +95,12 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
     localStorage.setItem("profile", JSON.stringify(profile));
     profileDispatch({ type: "UPDATE", payload: profile });
     setLoading(false);
-    setIsSubmitted(true);
+    if (error === null || error === undefined) {
+      setIsSubmitted(true);
+    }
   };
 
-  /*
-  if (isSubmitted) {
-    window.location.reload();
-  }
-  */
-
   const handleClose = () => {
-    // Call the provided onClose callback
     window.location.reload();
   };
 
@@ -100,7 +111,6 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
         <span className="close" onClick={handleClose}>
           &times;
         </span>
-
         {isSubmitted ? (
           <SuccessModal />
         ) : (
@@ -110,12 +120,18 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
                 <div className="flex justify-center ">
                   <div className="mx-4">
                     <label htmlFor="offeredCourse">Offered Course</label>
-                    <input
-                      type="text"
+                    <select
                       id="offeredCourse"
                       name="offeredCourse"
                       className="form-control"
-                    />
+                    >
+                      <option value="">Select Course</option>
+                      {courses.map((course, index) => (
+                        <option key={index} value={course}>
+                          {course}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label htmlFor="offeredSection">Offered Section</label>
@@ -132,12 +148,18 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
                 <div className="flex justify-center ">
                   <div className="mx-4">
                     <label htmlFor="desiredCourse">Desired Course</label>
-                    <input
-                      type="text"
+                    <select
                       id="desiredCourse"
                       name="desiredCourse"
                       className="form-control"
-                    />
+                    >
+                      <option value="">Select Course</option>
+                      {courses.map((course, index) => (
+                        <option key={index} value={course}>
+                          {course}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <label htmlFor="desiredSection">Desired Section</label>
@@ -151,7 +173,6 @@ export default function CreateSectionExchangePost(props: CreatePostProps) {
                 </div>
               </div>
             </div>
-
             <div className="modal-form-group mt-4">
               <button type="submit" className="btn btn-primary">
                 Create Post

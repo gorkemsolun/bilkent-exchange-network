@@ -7,15 +7,9 @@ import {
 import {
   OwnPost,
   ProfileContextType,
-  UserContextType,
   UserProfile,
 } from "../../data-types/datatypes.ts";
-import {
-  deleteUser,
-  useAuthContext,
-  useLogout,
-  useProfileContext,
-} from "../authentication/AuthHelpers.js";
+import { useProfileContext } from "../authentication/AuthHelpers.js";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
@@ -27,7 +21,6 @@ export default function MyProfile() {
   );
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
-  const user = (useAuthContext() as unknown as UserContextType).user;
 
   useEffect(() => {
     setLoading(true);

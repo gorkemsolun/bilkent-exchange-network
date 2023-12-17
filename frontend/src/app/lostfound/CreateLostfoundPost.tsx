@@ -10,7 +10,6 @@ import {
   UserContextType,
 } from "../../data-types/datatypes";
 import { LostFoundPost } from "../../data-types/posts";
-import { CreatePostProps } from "../../data-types/props";
 import { resizeImageFile } from "../PostHelpers";
 import {
   useAuthContext,
@@ -20,10 +19,10 @@ import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
 import SuccessModal from "../components/SuccessModal";
 
-export default function CreateLostAndFoundPost(props: CreatePostProps) {
-  const [loading, setLoading] = useState(false);
+export default function CreateLostAndFoundPost() {
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const user = (useAuthContext() as unknown as UserContextType).user;
   const profileDispatch = (useProfileContext() as unknown as ProfileContextType)
     .profileDispatch;
@@ -55,15 +54,10 @@ export default function CreateLostAndFoundPost(props: CreatePostProps) {
       poster: user?._id as string,
     };
 
-    await axios
-      .post(lostfoundUrl, post)
-      .then((res) => {
-        // TODO SUCCESFULLY SENT
-      })
-      .catch((err) => {
-        setError(err);
-        setError("Could not create post");
-      });
+    await axios.post(lostfoundUrl, post).catch((err) => {
+      setError(err);
+      setError("Could not create post");
+    });
 
     await axios
       .get(`${profileUrl}/${user?._id}`)
@@ -76,7 +70,10 @@ export default function CreateLostAndFoundPost(props: CreatePostProps) {
       });
 
     setLoading(false);
-    setIsSubmitted(true);
+
+    if (error === null || error === undefined) {
+      setIsSubmitted(true);
+    }
   };
 
   const handleClose = () => {

@@ -1,7 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { defaultFilterParams } from "../../data-types/constants.ts";
+import {
+  defaultFilterParams,
+  saveUrl,
+  unsaveUrl,
+} from "../../data-types/constants.ts";
 import {
   FilterParams,
   ProfileContextType,
@@ -9,19 +13,21 @@ import {
 } from "../../data-types/datatypes.ts";
 import { LostFoundPost } from "../../data-types/posts.ts";
 import { prepareUrl } from "../PostHelpers.ts";
+import { useProfileContext } from "../authentication/AuthHelpers.ts";
 import CreatePostButton from "../components/CreatePostButton.tsx";
+import ErrorModal from "../components/ErrorModal.tsx";
 import Filters from "../components/Filters.tsx";
 import Header from "../components/Header.tsx";
 import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
-import { useProfileContext } from "../authentication/AuthHelpers.ts";
 
 export default function LostFound() {
   const [loading, setLoading] = useState<boolean>(false);
   const [lostFoundPosts, setLostFoundPosts] = useState<LostFoundPost[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
   const [filterParams, setFilterParams] =
     useState<FilterParams>(defaultFilterParams);
   const [sortType, setSortType] = useState<string>("");
@@ -58,19 +64,15 @@ export default function LostFound() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/unsavepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(unsaveUrl, body).catch((err) => {
+        setError(err);
+      });
 
       profile.savedPosts = profile.savedPosts.filter(
         (savedPost: SavedPost) => savedPost.id !== post._id
       );
       localStorage.setItem("profile", JSON.stringify(profile));
       profileDispatch({ type: "UPDATE", payload: profile });
-      console.log(profile);
     } else {
       // Post is unsaved, save
       const body = {
@@ -78,12 +80,9 @@ export default function LostFound() {
         savedPost: post,
       };
 
-      axios
-        .put("http://localhost:3000/profile/savepost", body)
-        .then((res) => {})
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.put(saveUrl, body).catch((err) => {
+        setError(err);
+      });
 
       const savedPost: SavedPost = {
         id: "" + post._id,
@@ -101,41 +100,18 @@ export default function LostFound() {
     setLoading(true);
     const url = prepareUrl(sortType, searchTerm, "lostfound", filterParams);
 
-    console.log(url);
-
     axios
       .get(url)
       .then((res) => {
         setLostFoundPosts(res.data);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       })
       .finally(() => {
         setLoading(false);
       });
-  }, [searchTerm, filterParams]);
-
-  useEffect(() => {
-    if (sortType === "date-asc") {
-      setLostFoundPosts(
-        [...lostFoundPosts].sort(
-          (a: LostFoundPost, b: LostFoundPost) =>
-            new Date(a.createdAt as Date).getTime() -
-            new Date(b.createdAt as Date).getTime()
-        )
-      );
-    } else {
-      setLostFoundPosts(
-        [...lostFoundPosts].sort(
-          (a: LostFoundPost, b: LostFoundPost) =>
-            new Date(b.createdAt as Date).getTime() -
-            new Date(a.createdAt as Date).getTime()
-        )
-      );
-    }
-    // do not add lostFoundPosts to the dependency array
-  }, [sortType]);
+  }, [searchTerm, filterParams, sortType]);
 
   return (
     <div className="outer-container">
@@ -224,6 +200,14 @@ export default function LostFound() {
             </div>
           )}
         </div>
+        {error && (
+          <ErrorModal
+            message={error}
+            onClose={() => {
+              setError(null);
+            }}
+          />
+        )}
         <div
           className={`messenger-box ${isMessengerVisible ? "open" : "closed"}`}
         >

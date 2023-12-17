@@ -103,42 +103,42 @@ td {
 }
 
 .filter-sectionexchange-course-outer-wrapper {
-  align-items: center;
-  max-width: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .filter-sectionexchange-course-wrapper {
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
 }
 
 .filter-sectionexchange-course-select {
-  border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #fff;
 }
 
 .filter-sectionexchange-course-select-option {
+  padding: 0.5rem;
+  border-radius: 0.25rem;
 }
 
 .filter-sectionexchange-section-outer-wrapper {
-  align-items: center;
-  max-width: 140px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .filter-sectionexchange-section-wrapper {
-  margin-bottom: 1rem;
-  max-width: 140px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
 }
 
 .filter-sectionexchange-section-input {
-  border: 2px solid;
   padding: 0.5rem;
   border-radius: 0.25rem;
-  background-color: #fff;
-  max-width: 140px;
 }
 
 .filter-date-input {

@@ -95,6 +95,10 @@ export const forumUrl = "http://localhost:3000/forum/forumpost";
 export const profileUrl = "http://localhost:3000/profile/profile";
 export const conversationUrl =
   "http://localhost:3000/conversation/conversation";
+export const messageUrl = "http://localhost:3000/message/message";
+export const saveUrl = "http://localhost:3000/profile/savepost";
+export const unsaveUrl = "http://localhost:3000/profile/unsavepost";
+export const localUrl = "http://localhost:3000/";
 
 export const defaultFilterParams = {
   categories: [],

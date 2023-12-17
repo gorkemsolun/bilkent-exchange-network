@@ -3,9 +3,8 @@ import "./App.css";
 import { AuthContextProvider } from "./app/authentication/AuthContext";
 import { useAuthContext } from "./app/authentication/AuthHelpers";
 import Login from "./app/authentication/Login";
-import Signup from "./app/authentication/signup";
+import Signup from "./app/authentication/Signup";
 import VerificationPage from "./app/authentication/Verification";
-import ForgetPassword from "./app/authentication/forgetPassword";
 import Borrow from "./app/borrow/Borrow";
 import BorrowPostDetails from "./app/borrow/BorrowPostDetails";
 import Donate from "./app/donate/Donate";
@@ -24,8 +23,9 @@ import SectionExchange from "./app/sectionexchange/Sectionexchange";
 import "./bootstrap.css";
 import { UserContextType } from "./data-types/datatypes";
 import SavedPosts from "./app/savedposts/SavedPosts";
-import AdminPage from "./app/admin/admin";
-import NewPassword from "./app/authentication/newPassword";
+import NewPassword from "./app/authentication/NewPassword";
+import ForgetPassword from "./app/authentication/ForgotPassword";
+import AdminPage from "./app/admin/Admin";
 
 export default function App() {
   return (
@@ -147,12 +147,12 @@ function AppContent() {
           <Route
             path="/admin"
             element={
-              !user?.isAdmin? (
+              !user?.isAdmin ? (
                 <AdminPage />
               ) : (
                 setTimeout(() => {
-                  console.log(user); 
-                  <p>You don't have permission to access this page.</p>; 
+                  console.log(user);
+                  <p>You don't have permission to access this page.</p>;
                   <Navigate to="/secondhandpost" />;
                 }, 10)
               )

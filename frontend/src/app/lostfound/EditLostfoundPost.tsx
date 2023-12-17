@@ -15,6 +15,7 @@ import {
 } from "../authentication/AuthHelpers";
 import ErrorModal from "../components/ErrorModal";
 import Loader from "../components/Loader";
+import SuccessModal from "../components/SuccessModal";
 
 export default function EditLostAndFoundPost(props: EditPostProps) {
   const [loading, setLoading] = useState<boolean>(false);
@@ -43,7 +44,7 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
         setSelectedCategory(res.data.category);
       })
       .catch((err) => {
-        console.log(err);
+        setError(err);
       })
       .finally(() => {
         setLoading(false);
@@ -80,9 +81,6 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
 
     await axios
       .put(`${lostfoundUrl}/${props.postId}`, editedPost)
-      .then((res) => {
-        console.log(res);
-      })
       .catch((err) => {
         setError(err);
       });
@@ -102,7 +100,9 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
     profileDispatch({ type: "UPDATE", payload: profile });
 
     setLoading(false);
-    setIsEdited(true);
+    if (error === null || error === undefined) {
+      setIsEdited(true);
+    }
   };
 
   if (isEdited) {
@@ -120,72 +120,80 @@ export default function EditLostAndFoundPost(props: EditPostProps) {
         <span className="close" onClick={props.onClose}>
           &times;
         </span>
+        {isEdited ? (
+          <SuccessModal />
+        ) : (
+          <>
+            <div>
+              <div
+                className="modal-form-group pt-4"
+                style={{ textAlign: "left" }}
+              >
+                <label htmlFor="name">Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  className="form-control"
+                  defaultValue={post.title}
+                  placeholder="Enter title"
+                />
+              </div>
+              <div className="modal-form-group" style={{ textAlign: "left" }}>
+                <label htmlFor="description">Description:</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  className="form-control"
+                  defaultValue={post.description}
+                  style={{ height: "15vh" }}
+                />
+              </div>
+            </div>
 
-        <div>
-          <div className="modal-form-group pt-4" style={{ textAlign: "left" }}>
-            <label htmlFor="name">Title:</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              className="form-control"
-              defaultValue={post.title}
-              placeholder="Enter title"
-            />
-          </div>
-          <div className="modal-form-group" style={{ textAlign: "left" }}>
-            <label htmlFor="description">Description:</label>
-            <textarea
-              id="description"
-              name="description"
-              className="form-control"
-              defaultValue={post.description}
-              style={{ height: "15vh" }}
-            />
-          </div>
-        </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                name="category"
+                className="form-control"
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+              >
+                {categories.lostfound.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="category">Category</label>
-          <select
-            id="category"
-            name="category"
-            className="form-control"
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-          >
-            {categories.lostfound.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </div>
+            <div className="modal-form-group" style={{ textAlign: "left" }}>
+              <label htmlFor="image">Image:</label>
+              <input
+                type="file"
+                id="image"
+                name="image"
+                accept="jpg, jpeg, png"
+                className="form-control"
+                defaultValue={post.image}
+              />
+            </div>
 
-        <div className="modal-form-group" style={{ textAlign: "left" }}>
-          <label htmlFor="image">Image:</label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="jpg, jpeg, png"
-            className="form-control"
-            defaultValue={post.image}
-          />
-        </div>
-
-        <div className="modal-form-group mt-4">
-          <button type="submit" className="btn btn-primary">
-            Edit Post
-          </button>
-        </div>
-        {error && (
-          <ErrorModal
-            message={error}
-            onClose={() => {
-              setError(null);
-            }}
-          />
+            <div className="modal-form-group mt-4">
+              <button type="submit" className="btn btn-primary">
+                Edit Post
+              </button>
+            </div>
+            {error && (
+              <ErrorModal
+                message={error}
+                onClose={() => {
+                  setError(null);
+                }}
+              />
+            )}
+          </>
         )}
       </form>
     </div>
