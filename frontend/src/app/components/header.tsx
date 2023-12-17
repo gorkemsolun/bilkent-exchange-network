@@ -13,9 +13,10 @@ export default function Header(props: HeaderProps) {
   );
   const profile = (useProfileContext() as unknown as ProfileContextType)
     .profile;
-
+  console.log(profile)
   const handleClick = () => {
     logout();
+    
   };
 
   useEffect(() => {
@@ -54,13 +55,13 @@ export default function Header(props: HeaderProps) {
               >
                 Logout
               </Link>
-              <Link
+              { profile?._isAdmin == true && (<Link
                 to="/admin"
                 className="header-profile-dropdown-link"
-                onClick={handleClick}
               >
-                OnlyAdmins
-              </Link>
+                Admin Page
+              </Link>) }
+              
             </div>
           )}
         </div>
