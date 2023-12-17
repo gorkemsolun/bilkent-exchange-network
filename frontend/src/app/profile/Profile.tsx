@@ -117,7 +117,7 @@ export default function Profile() {
       ) : (
         <div className="profileContainer">
           <div className="profileDMBoxReportContainer">
-            {user?.isAdmin === true && (
+            {true && (
               <button
                 type="button"
                 className="btn btn-danger "
