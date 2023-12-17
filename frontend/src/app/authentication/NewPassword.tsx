@@ -1,3 +1,11 @@
+/**
+ * Component for resetting password.
+ *
+ * This component allows the user to enter a new password after receiving a password reset email.
+ * It verifies the email token and updates the password in the backend.
+ *
+ * @returns JSX.Element
+ */
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import ErrorModal from "../components/ErrorModal";
@@ -13,6 +21,12 @@ export default function NewPassword() {
   const { getToken } = useEmailToken();
   const { login } = useLogin();
 
+  /**
+   * React component for the New Password page.
+   *
+   * This component handles the logic for verifying the email token,
+   * setting the verified state, and submitting the new password.
+   */
   useEffect(() => {
     const fetchData = async () => {
       if (emailToken) {
@@ -37,6 +51,15 @@ export default function NewPassword() {
     fetchData();
   }, [emailToken, getToken]);
 
+  /**
+   * Handles the form submission for the New Password page.
+   *
+   * This function is called when the user submits the form to set
+   * a new password. It checks if the email is verified and then
+   * calls the forgotPassword and login functions.
+   *
+   * @param e - The form event
+   */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (verified) {

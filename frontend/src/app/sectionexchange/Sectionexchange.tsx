@@ -29,7 +29,6 @@ import Loader from "../components/Loader.tsx";
 import Navbar from "../components/Navbar.tsx";
 import SearchBar from "../components/Searchbar.tsx";
 import Messenger from "../message/Messenger.tsx";
-import ErrorModal from "../components/ErrorModal.tsx";
 
 export default function SectionExchange() {
   const [sectionexchangePosts, setSectionexchangePosts] = useState<

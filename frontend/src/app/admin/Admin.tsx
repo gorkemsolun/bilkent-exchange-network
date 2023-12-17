@@ -1,16 +1,18 @@
+/**
+ * Renders the Admin page component.
+ * Fetches reported posts from the server and displays them.
+ */
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { PostReport } from "../../data-types/datatypes";
 import Header from "../components/Header";
 import Loader from "../components/Loader";
 import Navbar from "../components/Navbar";
-import { PostReport } from "../../data-types/datatypes";
-import { Link } from "react-router-dom";
 
 export default function AdminPage() {
   const [reportedPosts, setReportedPosts] = useState<PostReport[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  console.log(reportedPosts);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setLoading(true);

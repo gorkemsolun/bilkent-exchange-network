@@ -1,38 +1,35 @@
-import axios from "axios";
+/**
+ * Component for the forgot password page.
+ * Allows users to enter their email and submit a request to reset their password.
+ */
 import { useState } from "react";
-import BackgroundManager from "../components/BackgroundManager";
-import { useLogin } from "./AuthHelpers";
 import { Link } from "react-router-dom";
+import BackgroundManager from "../components/BackgroundManager";
 import VerificationModal from "../components/VerificationModal";
+import { useLogin } from "./AuthHelpers";
 
 const bg = new BackgroundManager();
 const url = bg.getRandomImageUrl();
 
 export default function ForgetPassword() {
   const [email, setEmail] = useState<string>("");
-  const [message, setMessage] = useState<string>("");
-  const { login, error, isLoading } = useLogin();
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
+  const { error } = useLogin();
 
+  /**
+   * Handles the change event of the email input field.
+   * @param e - The change event
+   */
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
+  /**
+   * Handles the form submission event.
+   * @param e - The form submission event
+   */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/user/forgetPassword",
-        {
-          email: email,
-        }
-      );
-      setMessage(response.data.message);
-    } catch (error) {
-      console.error("Error sending forgot password request:", error);
-      setMessage("An error occurred. Please try again.");
-    }
     setIsVerifying(true);
   };
 

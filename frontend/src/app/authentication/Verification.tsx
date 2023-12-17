@@ -1,3 +1,7 @@
+/**
+ * Represents the Verification Page component.
+ * This component is responsible for rendering the email verification page.
+ */
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import BackgroundManager from "../components/BackgroundManager";
@@ -15,6 +19,11 @@ export default function VerificationPage() {
   const [error, setError] = useState<string>("");
   const { sendEmail } = useVerificationEmail();
 
+  /**
+   * Handles the form submission for email verification.
+   * 
+   * @param e - The form event.
+   */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 

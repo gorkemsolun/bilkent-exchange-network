@@ -1,8 +1,16 @@
+/**
+ * Represents the Login component.
+ * This component is responsible for rendering the login form and handling user login functionality.
+ */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import BackgroundManager from "../components/BackgroundManager";
 import { useLogin } from "./AuthHelpers";
 
+/**
+ * This function initializes a new BackgroundManager instance and retrieves a random image URL.
+ * @returns {string} The URL of a random image.
+ */
 const bg = new BackgroundManager();
 const url = bg.getRandomImageUrl();
 
@@ -12,6 +20,14 @@ export default function Login() {
   const [loadingMessage, setLoadingMessage] = useState<string>("Loading");
   const { login, error, isLoading } = useLogin();
 
+  /**
+   * React component for the login page.
+   *
+   * This component displays a login form and handles user authentication.
+   * It includes a loading message that updates periodically while waiting for the login process to complete.
+   *
+   * @returns JSX element representing the login page.
+   */
   useEffect(() => {
     const intervalId = setInterval(() => {
       setLoadingMessage((prevMessage) => {
@@ -23,12 +39,19 @@ export default function Login() {
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array to run the effect only once on mount
 
+  /**
+   * Handles the login process when the login button is clicked.
+   *
+   * @param e - The click event object.
+   * @returns Promise that resolves when the login process is complete.
+   */
   const handleLogin = async (
     e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
     e.preventDefault();
     await login(email, password);
   };
+
   return (
     <div
       className="flex flex-col items-center justify-center bg-gray-200 text-gray-700 bg-cover bg-no-repeat bg-center w-screen h-screen"

@@ -1,3 +1,8 @@
+/**
+ * Component for user signup.
+ *
+ * @returns JSX.Element
+ */
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useEmailToken, useSignup } from "./AuthHelpers";
@@ -11,7 +16,12 @@ export default function Signup() {
   const email = searchParams.get("email");
   const { signUpRequest } = useSignup();
   const { getToken } = useEmailToken();
-  
+
+  /**
+   * Fetches the token from the server and updates the local storage and state
+   * based on the response.
+   * @returns {void}
+   */
   useEffect(() => {
     const fetchData = async () => {
       if (emailToken) {
@@ -33,11 +43,16 @@ export default function Signup() {
     fetchData();
   }, [emailToken, getToken]);
 
+  /**
+   * Handles the form submission for the signup component.
+   *
+   * @param e - The form event.
+   */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     if (verified) {
       await signUpRequest(username, email as string, password);
-    } 
+    }
   };
 
   return (
