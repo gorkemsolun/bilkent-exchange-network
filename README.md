@@ -65,14 +65,14 @@ npm install
 
 > ❗❗❗ Once again make sure that both of the terminals are opened on the same root before continuing. Both of the roots should end with `...\bilkent-exchange-network`. <br>
 
-8. From one of the terminals type: <br>
+9. From one of the terminals type: <br>
 
 ```
 cd frontend
 npm run dev
 ```
 
-9. And from the other terminal type:
+10. And from the other terminal type:
 
 ```
 cd backend
@@ -81,6 +81,6 @@ npm run dev
 
 > ❗ WHILE TRYING OUT THE PROJECT DO NOT CLOSE NEITHER OF THE LAST TWO TERMINALS ❗ <br>
 
-10. Open up your desired browser and type `http://localhost:5000` to address bar. <br>
-11. Either log in to the system with credentials provided in the directory, or create yourself an account. <br>
-12. Enjoy and BEN-d the rules of social network. <br>
+11. Open up your desired browser and type `http://localhost:5000` to address bar. <br>
+12. Either log in to the system with credentials provided in the directory, or create yourself an account. <br>
+13. Enjoy and BEN-d the rules of social network. <br>
