@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import BackgroundManager from "../components/BackgroundManager";
 import VerificationModal from "../components/VerificationModal";
 import { useLogin } from "./AuthHelpers";
+import axios from "axios";
 
 const bg = new BackgroundManager();
 const url = bg.getRandomImageUrl();
@@ -16,20 +17,23 @@ export default function ForgotPassword() {
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const { error } = useLogin();
 
-  /**
-   * Handles the change event of the email input field.
-   * @param e - The change event
-   */
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  /**
-   * Handles the form submission event.
-   * @param e - The form submission event
-   */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/user/forgetPassword",
+        {
+          email: email,
+        }
+      );
+    } catch (error) {
+      console.error("Error sending forgot password request:", error);
+    }
     setIsVerifying(true);
   };
 
