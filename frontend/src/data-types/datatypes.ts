@@ -19,7 +19,6 @@ export interface OwnPost {
 }
 
 export interface SavedPost {
-  _id?: string;
   id: string;
   typename: string;
   title: string;

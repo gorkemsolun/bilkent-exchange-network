@@ -158,6 +158,7 @@ export const savePost = async (req, res) => {
     const savedPost = req.body.savedPost;
 
     const preparedPost = {
+      id: savedPost._id,
       typename: typeName,
       title: savedPost.title,
       offeredCourse: savedPost.offeredCourse,

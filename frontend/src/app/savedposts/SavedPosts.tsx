@@ -60,7 +60,7 @@ export default function SavedPosts() {
           <div className="saved-posts-container">
             {profile?.savedPosts
               ? profile.savedPosts.map((post: SavedPost) => (
-                  <div className="col-12 mb-4" key={post?._id}>
+                  <div className="col-12 mb-4" key={post.id}>
                     <div className="profilePost w-full">
                       <div className="card-body">
                         <div className="saved-posts-save-icon">
