@@ -2,6 +2,11 @@ import { ForumEntry, ForumPost } from "../models/forumpost.js";
 import { UserProfile } from "../models/userProfile.js";
 import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
+/**
+ * Checks if the required fields are present in the request body.
+ * @param {Object} reqBody - The request body object.
+ * @returns {boolean} - Returns true if all required fields are present, false otherwise.
+ */
 function fieldController(reqBody) {
   if (!reqBody.title || !reqBody.description || !reqBody.poster) {
     return false;
@@ -9,6 +14,14 @@ function fieldController(reqBody) {
   return true;
 }
 
+/**
+ * Handles the creation of a new forum post.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the forum post is created.
+ * @throws {Error} - If there is an error during the creation process.
+ */
 export const forumPostPOST = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -47,6 +60,12 @@ export const forumPostPOST = async (req, res) => {
   }
 };
 
+/**
+ * Handles the creation of a new forum entry.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the forum entry is created.
+ */
 export const forumEntryPOST = async (req, res) => {
   try {
     if (!req.body.content || !req.body.poster) {
@@ -71,6 +90,14 @@ export const forumEntryPOST = async (req, res) => {
   }
 };
 
+/**
+ * Updates a forum entry.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the forum entry is updated.
+ * @throws {Error} - If there is an error updating the forum entry.
+ */
 export const forumEntryPUT = async (req, res) => {
   try {
     const { id: postId, entryId } = req.params;
@@ -102,6 +129,13 @@ export const forumEntryPUT = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a forum entry from a forum post.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the forum entry is deleted.
+ * @throws {Error} - If there is an error while deleting the forum entry.
+ */
 export const forumEntryDEL = async (req, res) => {
   try {
     const id = req.params.id;
@@ -134,6 +168,14 @@ export const forumEntryDEL = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves forum posts based on the provided search parameters.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} - The response object containing the retrieved forum posts.
+ * @throws {Error} - If an error occurs while retrieving the forum posts.
+ */
 export const forumPostGET = async (req, res) => {
   try {
     let query = {};
@@ -177,6 +219,12 @@ export const forumPostGET = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves a forum post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the forum post is retrieved.
+ */
 export const forumPostGETId = async (req, res) => {
   try {
     const forumpost = await ForumPost.findById(req.params.id);
@@ -192,6 +240,15 @@ export const forumPostGETId = async (req, res) => {
   }
 };
 
+/**
+ * Updates a forum post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body containing the updated fields for the forum post.
+ * @param {string} req.params.id - The ID of the forum post to be updated.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves once the forum post is updated.
+ * @throws {Error} - If there is an error during the update process.
+ */
 export const forumPostPUT = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -219,6 +276,12 @@ export const forumPostPUT = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a forum post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the forum post is deleted.
+ */
 export const forumPostDEL = async (req, res) => {
   try {
     const result = await ForumPost.findByIdAndDelete(req.params.id);

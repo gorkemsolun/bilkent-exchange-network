@@ -3,12 +3,24 @@ import { User } from "../models/user.js";
 import { UserProfile } from "../models/userProfile.js";
 import bcrypt from "bcrypt";
 
+/**
+ * Creates a token for the given user ID.
+ * @param {string} _id - The user ID.
+ * @returns {string} The generated token.
+ */
 const createToken = (_id) => {
   return jwt.sign({ _id }, "bununbirsecretolmasılazımnormalde", {
     expiresIn: "2d",
   });
 };
 
+/**
+ * Logs in a user.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the login process is complete.
+ */
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -24,6 +36,13 @@ export const loginUser = async (req, res) => {
   }
 };
 
+/**
+ * Sign up a user.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the user is signed up.
+ */
 export const signupUser = async (req, res) => {
   const { username, email, password } = req.body;
 
@@ -41,6 +60,13 @@ export const signupUser = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a user by their ID.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the user is deleted.
+ */
 export const deleteUser = async (req, res) => {
   const userId = req.params.userId;
   try {
@@ -57,6 +83,12 @@ export const deleteUser = async (req, res) => {
   }
 };
 
+/**
+ * Verifies the user's email using the provided email token.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves once the email verification is complete.
+ */
 export const verifyEmail = async (req, res) => {
   try {
     const emailToken = req.body.emailToken;
@@ -82,6 +114,13 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
+/**
+ * Handles the forgot password functionality.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the operation is complete.
+ */
 export const forgotPassword = async (req, res) => {
   const {email, password} = req.body
   try{
@@ -96,5 +135,4 @@ export const forgotPassword = async (req, res) => {
   } catch (error) {
     res.status(500).json({error:error.message})
   }
-  
 }

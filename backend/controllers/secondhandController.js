@@ -2,6 +2,11 @@ import { SecondhandPost } from "../models/secondhandpost.js";
 import { UserProfile } from "../models/userProfile.js";
 import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
+/**
+ * Validates the required fields in the request body.
+ * @param {Object} reqBody - The request body object.
+ * @returns {boolean} - Returns true if all required fields are present, otherwise false.
+ */
 function fieldController(reqBody) {
   if (
     !reqBody.title ||
@@ -16,6 +21,12 @@ function fieldController(reqBody) {
   return true;
 }
 
+/**
+ * Handles the creation of a new secondhand post.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The created secondhand post.
+ */
 export const secondhandPostPOST = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -54,6 +65,12 @@ export const secondhandPostPOST = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves a secondhand post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the secondhand post is retrieved.
+ */
 export const secondhandPostGETId = async (req, res) => {
   try {
     const secondhandpost = await SecondhandPost.findById(req.params.id);
@@ -69,6 +86,13 @@ export const secondhandPostGETId = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves a list of secondhand posts based on the provided search criteria.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} - The list of secondhand posts.
+ * @throws {Error} - If an error occurs while retrieving the secondhand posts.
+ */
 export const secondhandPostGET = async (req, res) => {
   try {
     let query = {};
@@ -125,6 +149,14 @@ export const secondhandPostGET = async (req, res) => {
   }
 };
 
+/**
+ * Updates a secondhand post by ID.
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body containing the updated fields.
+ * @param {string} req.params.id - The ID of the secondhand post to update.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the updated secondhand post or an error message.
+ */
 export const secondhandPostPUT = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -153,6 +185,13 @@ export const secondhandPostPUT = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a secondhand post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the post is deleted.
+ * @throws {Error} - If there is an error while deleting the post.
+ */
 export const secondhandPostDEL = async (req, res) => {
   try {
     const result = await SecondhandPost.findByIdAndDelete(req.params.id);

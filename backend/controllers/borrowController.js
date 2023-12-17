@@ -2,6 +2,11 @@ import { BorrowPost } from "../models/borrowpost.js";
 import { UserProfile } from "../models/userProfile.js";
 import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
+/**
+ * Validates the required fields in the request body.
+ * @param {Object} reqBody - The request body object.
+ * @returns {boolean} - Returns true if all required fields are present, otherwise false.
+ */
 function fieldController(reqBody) {
   if (
     !reqBody.title ||
@@ -14,6 +19,12 @@ function fieldController(reqBody) {
   return true;
 }
 
+/**
+ * Handles the POST request for creating a new borrow post.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the borrow post is created.
+ */
 export const borrowPostPOST = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -51,6 +62,13 @@ export const borrowPostPOST = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves a list of borrow posts based on the provided search criteria.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} - The response object containing the list of borrow posts.
+ * @throws {Error} - If an error occurs while retrieving the borrow posts.
+ */
 export const borrowPostGET = async (req, res) => {
   try {
     let query = {};
@@ -94,6 +112,12 @@ export const borrowPostGET = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves a specific borrow post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the borrow post is retrieved.
+ */
 export const borrowPostGETId = async (req, res) => {
   try {
     const borrowpost = await BorrowPost.findById(req.params.id);
@@ -109,6 +133,15 @@ export const borrowPostGETId = async (req, res) => {
   }
 };
 
+/**
+ * Updates a BorrowPost in the database.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body containing the updated fields.
+ * @param {string} req.params.id - The ID of the BorrowPost to be updated.
+ * @param {Object} res - The response object.
+ * @returns {Promise} - A promise that resolves to the updated BorrowPost or an error message.
+ */
 export const borrowPostPUT = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -135,6 +168,14 @@ export const borrowPostPUT = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a BorrowPost by its ID.
+ * 
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the BorrowPost is deleted.
+ * @throws {Error} - If there is an error while deleting the BorrowPost.
+ */
 export const borrowPostDEL = async (req, res) => {
   try {
     const result = await BorrowPost.findByIdAndDelete(req.params.id);

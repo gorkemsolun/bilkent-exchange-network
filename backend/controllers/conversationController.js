@@ -1,5 +1,11 @@
 import { Conversation } from "../models/conversation.js";
 
+/**
+ * Handles the POST request for creating a new conversation.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object with the created conversation.
+ */
 export const conversationPOST = async (req, res) => {
   try {
     const conversation = new Conversation(req.body);
@@ -13,6 +19,13 @@ export const conversationPOST = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves conversations by user ID.
+ *
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the retrieved conversations or an error response.
+ */
 export const conversationGETByUserID = async (req, res) => {
   try {
     let query = {};
@@ -32,6 +45,12 @@ export const conversationGETByUserID = async (req, res) => {
   }
 };
 
+/**
+ * Get a conversation by ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves with the conversation or an error response.
+ */
 export const conversationGETByID = async (req, res) => {
   try {
     const conversation = await Conversation.findById(req.params.id);
@@ -47,6 +66,12 @@ export const conversationGETByID = async (req, res) => {
   }
 };
 
+/**
+ * Updates a conversation by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the conversation is updated.
+ */
 export const conversationPUTUpdate = async (req, res) => {
   try {
     const conversation = await Conversation.findByIdAndUpdate(

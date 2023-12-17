@@ -2,6 +2,11 @@ import { DonatePost } from "../models/donatepost.js";
 import { UserProfile } from "../models/userProfile.js";
 import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
+/**
+ * Validates the required fields in the request body.
+ * @param {Object} reqBody - The request body object.
+ * @returns {boolean} - Returns true if all required fields are present, otherwise false.
+ */
 function fieldController(reqBody) {
   if (
     !reqBody.title ||
@@ -15,6 +20,13 @@ function fieldController(reqBody) {
   return true;
 }
 
+/**
+ * Handles the creation of a new donate post.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The created donate post.
+ * @throws {Error} If there is an error during the creation process.
+ */
 export const donatePostPOST = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -52,6 +64,13 @@ export const donatePostPOST = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves donate posts based on specified filters and sorting options.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} - The response containing the retrieved donate posts.
+ * @throws {Error} - If there is an error while retrieving the donate posts.
+ */
 export const donatePostGET = async (req, res) => {
   try {
     let query = {};
@@ -95,6 +114,12 @@ export const donatePostGET = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves a specific donate post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the donate post is retrieved.
+ */
 export const donatePostGETId = async (req, res) => {
   try {
     const donatepost = await DonatePost.findById(req.params.id);
@@ -110,6 +135,13 @@ export const donatePostGETId = async (req, res) => {
   }
 };
 
+/**
+ * Updates a donate post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the donate post is updated.
+ * @throws {Error} - If there is an error during the update process.
+ */
 export const donatePostPUT = async (req, res) => {
   try {
     if (fieldController(req.body)) {
@@ -136,6 +168,12 @@ export const donatePostPUT = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a donate post by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the donate post is deleted.
+ */
 export const donatePostDEL = async (req, res) => {
   try {
     const result = await DonatePost.findByIdAndDelete(req.params.id);

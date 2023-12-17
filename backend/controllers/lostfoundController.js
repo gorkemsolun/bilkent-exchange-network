@@ -2,6 +2,11 @@ import { LostfoundPost } from "../models/lostfoundpost.js";
 import { UserProfile } from "../models/userProfile.js";
 import { deleteOwnedPosts, updateOwnedPosts } from "./profileController.js";
 
+/**
+ * Checks if all required fields are present in the request body.
+ * @param {object} reqBody - The request body object.
+ * @returns {boolean} - Returns true if all required fields are present, false otherwise.
+ */
 function fieldController(reqBody) {
   if (
     !reqBody.title ||
@@ -16,6 +21,13 @@ function fieldController(reqBody) {
   return true;
 }
 
+/**
+ * Handles the creation of a new lost and found post.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} The created lost and found post.
+ * @throws {Error} If there is an error during the creation process.
+ */
 export const lostfoundPostPOST = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -53,6 +65,13 @@ export const lostfoundPostPOST = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves lost and found posts based on specified filters.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Object} - The response containing the retrieved lost and found posts.
+ * @throws {Error} - If an error occurs while retrieving the lost and found posts.
+ */
 export const lostfoundPostGET = async (req, res) => {
   try {
     let query = {};
@@ -100,6 +119,12 @@ export const lostfoundPostGET = async (req, res) => {
   }
 };
 
+/**
+ * Retrieves a specific LostfoundPost by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A Promise that resolves when the LostfoundPost is retrieved.
+ */
 export const lostfoundPostGETId = async (req, res) => {
   try {
     const lostfoundpost = await LostfoundPost.findById(req.params.id);
@@ -115,6 +140,15 @@ export const lostfoundPostGETId = async (req, res) => {
   }
 };
 
+/**
+ * Updates a lostfound post by ID.
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body containing the updated fields.
+ * @param {string} req.params.id - The ID of the lostfound post to update.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves once the lostfound post is updated.
+ * @throws {Error} - If there is an error during the update process.
+ */
 export const lostfoundPostPUT = async (req, res) => {
   try {
     if (!fieldController(req.body)) {
@@ -143,6 +177,12 @@ export const lostfoundPostPUT = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a LostfoundPost by its ID.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @returns {Promise<void>} - A promise that resolves when the LostfoundPost is deleted.
+ */
 export const lostfoundPostDEL = async (req, res) => {
   try {
     const result = await LostfoundPost.findByIdAndDelete(req.params.id);
