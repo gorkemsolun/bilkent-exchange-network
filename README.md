@@ -1,7 +1,3 @@
-## SPECIAL THANKS TO
-
-![](readme-res/sponsors.jpg) <br>
-
 # BILKENT EXCHANCE NETWORK (BEN)
 
 ![](readme-res/logo.png) <br>
@@ -39,18 +35,14 @@
 3. Using the command `git clone https://github.com/gorkemsolun/bilkent-exchange-network.git`, install the required files. <br>
 4. Once the installation is complete, change your directory to `...\bilkent-exchange-network` using `cd` command <br>
 
-![](readme-res/cd-com.png) <br>
-
 > ❗❗❗ Terminal must have been opened on the specified root which should end with `\bilkent-exchange-network`. <br>
-
-![](readme-res/root-red.png) <br>
 
 5. Type the following commands in order: <br>
 
 ```
 cd frontend
 npm install
-cd..
+cd ..
 cd backend
 npm install
 ```
